@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-picks-app';
+  events: string[] = [];
+  opened: boolean;
 }
