@@ -1,7 +1,53 @@
 .example-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.header  {
+	flex: 1;
+}
+
+h1.title {
+	margin-left: 10%;
+}
+
+.nav-title {
+	text-align: center;
+	margin-left: 10%;
+	border-bottom: solid lightgrey 1px;
+	width:80%;
+}
+
+h1.nav-text-title {
+	margin-bottom:10px;
+}
+
+.sidenav {
+	border-radius: 0px 6px 6px 0px;
+	width:30%;
+	z-index: 2;
+}
+
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
 }

@@ -41,10 +41,20 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import { PicksDashboardComponent } from './picks-dashboard/picks-dashboard.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { StandingsComponent } from './standings/standings.component';
+import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PicksDashboardComponent,
+    StandingsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +94,15 @@ import {
 	MatToolbarModule,
 	MatTooltipModule,
 	MatTreeModule,
-	FormsModule
+	FormsModule,
+  AppRoutingModule,
+  HttpClientModule,
+  // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+  // and returns simulated server responses.
+  // Remove it when a real server is ready to receive requests.
+  HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
