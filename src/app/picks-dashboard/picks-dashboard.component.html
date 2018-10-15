@@ -1,0 +1,25 @@
+<div *ngFor="let game of games">
+  <mat-card class="game-card">
+    <div class="icon-group">
+      <mat-card class="game-card-status">
+        <p>STATUS</p>
+        <p>{{game.number}}</p>
+      </mat-card>
+      <mat-card class="game-card-icon">
+      	<p>AWAY</p>
+        <p class="large-text">{{game.awayTeam}}</p>
+      </mat-card>
+      <mat-card class="game-card-icon">
+        <p>HOME</p>
+        <p class="large-text">{{game.homeTeam}}</p>
+      </mat-card>
+      <mat-card class="game-card-spread">
+        <p>SPREAD</p>
+        <p class="medium-text">{{game.spread}}</p>
+      </mat-card>
+    </div>
+    <mat-card-content>
+      {{game.date}}
+    </mat-card-content>
+  </mat-card>
+</div>
