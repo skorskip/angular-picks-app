@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-sidenav-container  class="example-container">
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav">
+  <mat-sidenav #sidenav mode="push" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav" position="end">
     <div class="nav-title">
       <h1 class="nav-text-title">PickEm</h1>
     </div>
@@ -16,12 +16,14 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar class="header">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <h1 class="title">
-        {{ title }}
-      </h1>
+      <div class="title-header">
+          <h1 class="title">
+            {{ title }}
+          </h1>
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+      </div>
     </mat-toolbar>
     <div>
       <router-outlet></router-outlet>

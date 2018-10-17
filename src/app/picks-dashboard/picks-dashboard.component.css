@@ -14,11 +14,23 @@
 .game-card-icon {
 	border-radius: 12px;
 	width: 20%;
-	height: 130px;
-	margin-top: -50px !important;
+	height: 150px;
+	margin-top: -50px;
 	float: left;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05) !important;
 	margin-right: 20px;
+	border-style :  solid;
+	border-width : 4px;
+}
+
+.game-card-date {
+	border-top: 1px solid lightgrey;
+	width: 100%;
+	text-align:left;
+}
+
+.date-text {
+	font-size: 1em;
+	padding-top: 5px;
 }
 
 .large-text{
@@ -34,7 +46,8 @@
 }
 
 .game-card-icon:hover {
-	margin-top: -80px !important;
+	margin-top: -60px !important;
+	cursor: pointer;
 }
 
 .game-card-spread {

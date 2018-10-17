@@ -1,10 +1,10 @@
 export class Game {
 	id: number;
 	number: number;
-	date: String;
-	submitDate: String;
-	homeTeam: string;
-	awayTeam: string;
+	date: string;
+	submitDate: string;
+	homeTeam: number;
+	awayTeam: number;
 	homeScore: number;
 	awayScore: number;
 	spread: string;
