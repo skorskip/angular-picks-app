@@ -5,13 +5,13 @@
       <h1 class="nav-text-title">PickEm</h1>
     </div>
     <nav>
-      <a routerLink="/picks">Picks</a>
-    </nav>
-        <nav>
-      <a routerLink="/standings">Standings</a>
+      <a routerLink="/picks" (click)="changeTitle('Picks')">Picks</a>
     </nav>
     <nav>
-      <a routerLink="/profile">Profile</a>
+      <a routerLink="/standings" (click)="changeTitle('Standings')">Standings</a>
+    </nav>
+    <nav>
+      <a routerLink="/profile" (click)="changeTitle('Profile')">Profile</a>
     </nav>
   </mat-sidenav>
   <mat-sidenav-content>

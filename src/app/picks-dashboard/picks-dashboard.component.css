@@ -68,3 +68,22 @@
 	text-align: center;
 	margin-right:30px;
 }
+
+#submit-container {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    margin-left: 75%;
+    margin-bottom: 5%;
+    background-color: #d3d3d35c;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    height: 50px;
+}
+
+#submit-button {
+	border-style: solid;
+	border-radius: 8px;
+	border-color: lightgrey;
+	width:50%;
+}
