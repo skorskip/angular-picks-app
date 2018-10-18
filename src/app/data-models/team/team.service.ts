@@ -12,55 +12,55 @@ export class TeamService {
   private teams: Team[] = [
       {
           'id': 101,
-          'primaryColor': 'rgba(0, 40,106,1)',
+          'primaryColor': 'rgba(1,35,82,1)',
+          'secondaryColor' : 'rgba(163,13,45,1)',
           'name': 'GIANTS',
           'abbrevation': 'NYG',
-          'city': 'NEW YORK CITY',
           'wins': 3,
           'loses': 1
       },
             {
           'id': 102,
-          'primaryColor': 'rgba(23,100,40,1)',
+          'primaryColor': 'rgba(24,48,40,1)',
+          'secondaryColor' : 'rgba(255,184,28,1)',
           'name': 'PACKERS',
           'abbrevation': 'GB',
-          'city': 'GREEN BAY',
           'wins': 0,
           'loses': 4
       },
             {
           'id': 103,
-          'primaryColor': 'rgba(0,28,51,1)',
+          'primaryColor': 'rgba(0,34,68,1)',
+          'secondaryColor' : 'rgba(134,109,75,1)',
           'name': 'RAMS',
           'abbrevation': 'LAR',
-          'city': 'LOS ANGELOS',
           'wins': 0,
           'loses': 4
       },
             {
           'id': 104,
           'primaryColor': 'rgba(207,34,52,1)',
+          'secondaryColor' : 'rgba(255,184,28,1)',
           'name': 'CHIEFS',
           'abbrevation': 'KC',
-          'city': 'KANSAS CITY',
           'wins': 2,
           'loses': 2
       },
       {
         'id': 105,
-        'primaryColor': 'rgba(88,51,139,1)',
+        'primaryColor': 'rgba(79,38,131,1)',
+        'secondaryColor' : 'rgba(255,198,47,1)',
         'name': 'VIKINGS',
         'abbrevation': 'MN',
-        'city': 'MINNESOTA',
         'wins': 2,
         'loses': 2
     },
     {
       'id': 106,
-      'primaryColor': 'rgba(255,88,0,1)',
+      'primaryColor': 'rgba(251,79,20,1)',
+      'secondaryColor' : 'rgba(0,0,0,1)',
       'name': 'BENGALS',
       'abbrevation': 'CIN',
-      'city': 'CINCINNATI',
       'wins': 2,
       'loses': 2
   }
