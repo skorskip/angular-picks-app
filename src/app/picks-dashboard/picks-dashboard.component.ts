@@ -4,6 +4,13 @@ import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';  
 import { GameService } from '../data-models/game/game.service';
 import { TeamService } from '../data-models/team/team.service';
+import { ICON_REGISTRY_PROVIDER } from '@angular/material';
+import { MatDialog } from '@angular/material';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -15,7 +22,8 @@ export class PicksDashboardComponent implements OnInit {
   games: Game[] = [];
   teams: Team[] = [];
   selectedTeam;
-  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document) { }
+  submitOpened = false;
+  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getGames();
@@ -46,7 +54,8 @@ export class PicksDashboardComponent implements OnInit {
     var otherTeamId = game.homeTeam == teamId ? game.awayTeam : game.homeTeam;
     var teamElement = document.getElementById(teamId + "-team-card");
     var otherTeamElement = document.getElementById(otherTeamId + "-team-card");
-
+    document.getElementById("submit-container").style.left = "75%";
+    this.submitOpened = true;
     if(teamElement.classList.contains("selectedTeam")){
       this.unSelectTeam(teamId);
     } else if(otherTeamElement.classList.contains("selectedTeam")){
@@ -96,4 +105,28 @@ export class PicksDashboardComponent implements OnInit {
     return game;
   }
 
+  showSubmit() {
+    if(!this.submitOpened){
+      document.getElementById("submit-container").style.left = "75%";
+      this.submitOpened = true;
+    }else{
+      document.getElementById("submit-container").style.left = "95%";
+      this.submitOpened = false;
+    }
+  }
+  
+  openDialog() {
+    const dialogRef = this.dialog.open(SubmitPicksDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
+
+@Component({
+  selector: 'submit-picks-dialog',
+  templateUrl: '../dialog-content/submit-picks-dialog.html',
+})
+export class SubmitPicksDialog {}
+

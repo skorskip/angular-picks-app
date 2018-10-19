@@ -41,7 +41,7 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { PicksDashboardComponent } from './picks-dashboard/picks-dashboard.component';
+import { PicksDashboardComponent,SubmitPicksDialog } from './picks-dashboard/picks-dashboard.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { StandingsComponent } from './standings/standings.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -54,7 +54,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
     AppComponent,
     PicksDashboardComponent,
     StandingsComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubmitPicksDialog
   ],
   imports: [
     BrowserModule,
@@ -104,6 +105,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
+  entryComponents: [SubmitPicksDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

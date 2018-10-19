@@ -1,6 +1,6 @@
 <div *ngFor="let game of games">
-  <mat-card class="game-card">
-    <div attr.id={{game.id}}-game-card class="icon-group">
+  <mat-card class="game-card" attr.id={{game.id}}-game-card>
+    <div  class="icon-group">
       <mat-card class="game-card-status">
         <p>STATUS</p>
         <p>{{game.number}}</p>
@@ -22,7 +22,7 @@
         <p class="medium-text">{{game.spread}}</p>
       </mat-card>
     </div>
-    <mat-card-content>
+    <mat-card-content style="width: 100%">
       <div class="game-card-date">
         <div class="date-text">
           {{game.date}}
@@ -32,7 +32,8 @@
   </mat-card>
 </div>
 <div id="submit-container">
-    <div id="submit-button">
-      submit
-    </div>
+  <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
+  <button mat-raised-button id="submit-button" (click)="openDialog()">
+    submit
+  </button>
 </div>
