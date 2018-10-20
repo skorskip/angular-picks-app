@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PicksDashboardComponent } from '../picks-dashboard/picks-dashboard.component';
+import { GamesComponent } from '../games/games.component';
 import { StandingsComponent } from '../standings/standings.component';
 import { ProfileComponent } from '../profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/picks', pathMatch: 'full' },
-  { path: 'picks', component: PicksDashboardComponent },
+  { path: 'picks', component: GamesComponent },
   { path: 'standings', component: StandingsComponent },
   { path: 'profile', component: ProfileComponent }
 ];

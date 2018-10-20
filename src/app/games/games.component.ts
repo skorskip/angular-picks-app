@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';  
@@ -13,11 +13,11 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-picks-dashboard',
-  templateUrl: './picks-dashboard.component.html',
-  styleUrls: ['./picks-dashboard.component.css']
+  selector: 'games',
+  templateUrl: './games.component.html',
+  styleUrls: ['./games.component.css']
 })
-export class PicksDashboardComponent implements OnInit {
+export class GamesComponent implements OnInit {
 	
   games: Game[] = [];
   teams: Team[] = [];

@@ -87,13 +87,10 @@
     background-color: #e69033;
     border-color:  #e69033;
     width: 30%;
-    text-align: center;
-    margin-top: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
     margin-left: 10%;
     color: white;
-    height: 25px;
-    text-align: center;
-    padding-top: 3px;
 }
 
 #submit-button:hover {

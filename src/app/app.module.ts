@@ -41,7 +41,7 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { PicksDashboardComponent,SubmitPicksDialog } from './picks-dashboard/picks-dashboard.component';
+import { GamesComponent,SubmitPicksDialog } from './games/games.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { StandingsComponent } from './standings/standings.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -52,7 +52,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
 @NgModule({
   declarations: [
     AppComponent,
-    PicksDashboardComponent,
+    GamesComponent,
     StandingsComponent,
     ProfileComponent,
     SubmitPicksDialog
