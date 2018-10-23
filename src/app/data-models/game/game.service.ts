@@ -10,59 +10,109 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
+
 @Injectable({ providedIn: 'root' })
 export class GameService {
 
   private gamesUrl = 'api/games';  // URL to web api
+  private games: Game[] = [
+    {
+      id: 101,
+      number: 101,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 101,
+      awayTeam: 102,
+      homeScore: 21,
+      awayScore: 7,
+      spread: '+7.0',
+      inProgess: true
+    },
+    {
+      id: 102,
+      number: 102,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 103,
+      awayTeam: 104,
+      homeScore: 21,
+      awayScore: 7,
+      spread: '+6.0',
+      inProgess: true
+    },
+    {
+      id: 103,
+      number: 103,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 105,
+      awayTeam: 106,
+      homeScore: 0,
+      awayScore: 0,
+      spread: '-3.0',
+      inProgess: false
+    }
+  ];
+
+  private gameByIds: Game[] = [];
 
   constructor(
     private http: HttpClient) { }
 
   /** GET games from the server */
-  getGames (): Observable<Game[]> {
-    return this.http.get<Game[]>(this.gamesUrl)
-      .pipe(
-        tap(games => console.log('fetched games')),
-        catchError(this.handleError('getGames', []))
-      );
+  getGames (): Game[] {
+    return this.games;
   }
 
-  /** GET game by id. Will 404 if id not found */
-  getGame(id: number): Observable<Game> {
-    const url = `${this.gamesUrl}/${id}`;
-    return this.http.get<Game>(url).pipe(
-      tap(_ => console.log(`fetched game id=${id}`)),
-      catchError(this.handleError<Game>(`getGame id=${id}`))
-    );
+  getGameByIds (gameIds:number[]): Game[] {
+    this.gameByIds = [];
+    gameIds.forEach((gameId)=>{
+      this.games.forEach((gameItem) => {
+          if(gameItem.id == gameId){
+              this.gameByIds.push(gameItem);
+          }
+        });
+    })
+    return this.gameByIds;
   }
 
-  //////// Save methods //////////
+  // /** GET game by id. Will 404 if id not found */
+  // getGame(id: number): Observable<Game> {
+  //   const url = `${this.gamesUrl}/${id}`;
+  //   return this.http.get<Game>(url).pipe(
+  //     tap(_ => console.log(`fetched game id=${id}`)),
+  //     catchError(this.handleError<Game>(`getGame id=${id}`))
+  //   );
+  // }
 
-  /** PUT: update the game on the server */
-  updateGame (game: Game): Observable<any> {
-    return this.http.put(this.gamesUrl, game, httpOptions).pipe(
-      tap(_ => console.log(`updated game id=${game.id}`)),
-      catchError(this.handleError<any>('updateGame'))
-    );
-  }
+  // //////// Save methods //////////
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  // /** PUT: update the game on the server */
+  // updateGame (game: Game): Observable<any> {
+  //   return this.http.put(this.gamesUrl, game, httpOptions).pipe(
+  //     tap(_ => console.log(`updated game id=${game.id}`)),
+  //     catchError(this.handleError<any>('updateGame'))
+  //   );
+  // }
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+  // /**
+  //  * Handle Http operation that failed.
+  //  * Let the app continue.
+  //  * @param operation - name of the operation that failed
+  //  * @param result - optional value to return as the observable result
+  //  */
+  // private handleError<T> (operation = 'operation', result?: T) {
+  //   return (error: any): Observable<T> => {
 
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
+  //     // TODO: send the error to remote logging infrastructure
+  //     console.error(error); // log to console instead
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
+  //     // TODO: better job of transforming error for user consumption
+  //     console.log(`${operation} failed: ${error.message}`);
+
+  //     // Let the app keep running by returning an empty result.
+  //     return of(result as T);
+  //   };
+  // }
 }

@@ -1,5 +1,8 @@
 .icon-group {
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 .game-card {
@@ -9,7 +12,6 @@
 	display: flex;
 	flex-direction: column;
 	margin: 40px;
-	align-items:center;
 }
 
 .game-card-icon {
@@ -44,7 +46,6 @@
 .medium-text{
 	font-size:3em; 
 	margin:0; 
-	text-align:center;
 }
 
 .game-card-icon:hover {
@@ -56,53 +57,13 @@
 	width: 15%;
 	box-shadow: none !important;
 	float: left;
+	text-align: right;
 }
 
 .game-card-status {
 	width: 15%;
 	box-shadow: none !important;
 	float: left;
-	text-align: center;
+	text-align: left;
 	margin-right:2%;
-}
-
-#submit-container {
-    position: fixed;
-	bottom: 10%;
-	left: 95%;
-    width: 30%;
-    background-color: rgba(0, 0, 0, 0.64);
-    border-top-left-radius: 12px;
-	border-bottom-left-radius: 12px;
-	height: 60px;
-	transition-duration: 500ms;
-	transition-timing-function: ease-in-out;
-	display:flex;
-}
-
-#submit-button {
-	border-style: solid;
-    border-radius: 8px;
-    border-width: 2px;
-    background-color: #e69033;
-    border-color:  #e69033;
-    width: 30%;
-	margin-top: 10px;
-	margin-bottom: 10px;
-    margin-left: 10%;
-    color: white;
-}
-
-#submit-button:hover {
-	background-color: lightgrey;
-	border-color:  lightgrey;
-	cursor: pointer;
-}
-
-#submit-icon {
-	padding-top:12px;
-	margin-left:4%;
-	color:white;
-	transform: scale(1.5);
-	cursor: pointer;
 }

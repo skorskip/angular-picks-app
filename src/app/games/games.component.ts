@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';  
@@ -19,25 +19,13 @@ export interface DialogData {
 })
 export class GamesComponent implements OnInit {
 	
-  games: Game[] = [];
-  teams: Team[] = [];
-  selectedTeam;
-  submitOpened = false;
-  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, public dialog: MatDialog) { }
+  @Input() games: Game[];
+  @Input() teams: Team[];
+  @Input('submitOpened') submitOpened: boolean;
+  @Output() openSubmit = new EventEmitter<boolean> ();
+  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document) { }
 
-  ngOnInit() {
-    this.getGames();
-    this.getTeams();
-  }
-
-  getGames(): void  {
-  	this.gameService.getGames()
-      .subscribe(games => this.games = games);
-  }
-
-  getTeams(){
-    this.teams = this.teamService.getTeams();
-  }
+  ngOnInit() {}
 
   getBorderColor(id:number) {
     var team = this.getTeam(id);
@@ -49,15 +37,16 @@ export class GamesComponent implements OnInit {
   }
 
   selectTeam(teamId:number, gameId:number) {
+    document.getElementById(gameId + "-game-card").classList.add("selectedGame");
     var team = this.getTeam(teamId);
     var game = this.getGame(gameId);
     var otherTeamId = game.homeTeam == teamId ? game.awayTeam : game.homeTeam;
     var teamElement = document.getElementById(teamId + "-team-card");
     var otherTeamElement = document.getElementById(otherTeamId + "-team-card");
-    document.getElementById("submit-container").style.left = "75%";
-    this.submitOpened = true;
+    this.openSubmit.emit(true);
     if(teamElement.classList.contains("selectedTeam")){
       this.unSelectTeam(teamId);
+      document.getElementById(gameId + "-game-card").classList.remove("selectedGame");
     } else if(otherTeamElement.classList.contains("selectedTeam")){
       this.unSelectTeam(otherTeamId);
       this.highlightSelectTeam(team);
@@ -104,29 +93,5 @@ export class GamesComponent implements OnInit {
     })
     return game;
   }
-
-  showSubmit() {
-    if(!this.submitOpened){
-      document.getElementById("submit-container").style.left = "75%";
-      this.submitOpened = true;
-    }else{
-      document.getElementById("submit-container").style.left = "95%";
-      this.submitOpened = false;
-    }
-  }
-  
-  openDialog() {
-    const dialogRef = this.dialog.open(SubmitPicksDialog);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
 }
-
-@Component({
-  selector: 'submit-picks-dialog',
-  templateUrl: '../dialog-content/submit-picks-dialog.html',
-})
-export class SubmitPicksDialog {}
 

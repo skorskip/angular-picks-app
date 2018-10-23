@@ -1,0 +1,14 @@
+<div>
+    <games
+        [teams] = "teams"
+        [games] = "games"
+        [submitOpened] = "submitOpened"
+        (openSubmit) = "teamClicked($event)">
+    </games>
+</div>
+<div id="submit-container">
+    <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
+    <button mat-raised-button id="submit-button" (click)="openDialog()">
+      submit
+    </button>
+</div>

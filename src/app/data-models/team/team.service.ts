@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
 import { Team } from './team';
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 
-  private teamUrl = 'api/teams';  // URL to web api
+  private teamUrl = 'api/team';  // URL to web api
   private teams: Team[] = [
       {
           'id': 101,
@@ -67,6 +63,7 @@ export class TeamService {
     ];
 
     private team: Team;
+    private teamByIds: Team[] = [];
 
   constructor() { }
 
@@ -75,9 +72,20 @@ export class TeamService {
     return this.teams;
   }
 
+  getTeamByIds (teamIds:number[]): Team[] {
+    this.teamByIds = [];
+    teamIds.forEach((teamId) => {
+      this.teams.forEach((teamItem) => {
+        if(teamItem.id == teamId){
+          this.teamByIds.push(teamItem);
+        }
+      });
+    });
+    return this.teamByIds;
+  }
+
   /** GET game by id. Will 404 if id not found */
   getTeam (id: number): Team {
-    team: Team;
     this.teams.forEach((teamItem) => {
       if(teamItem.id === id){
         this.team = teamItem;

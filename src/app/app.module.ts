@@ -41,13 +41,15 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { GamesComponent,SubmitPicksDialog } from './games/games.component';
+import { GamesComponent} from './games/games.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { StandingsComponent } from './standings/standings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { PicksDashboardComponent, SubmitPicksDialog } from './picks-dashboard/picks-dashboard.component';
+import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { InMemoryDataService }  from './in-memory-data.service';
     GamesComponent,
     StandingsComponent,
     ProfileComponent,
-    SubmitPicksDialog
+    SubmitPicksDialog,
+    PicksDashboardComponent,
+    MyPicksDashboardComponent
   ],
   imports: [
     BrowserModule,

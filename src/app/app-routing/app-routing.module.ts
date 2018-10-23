@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { GamesComponent } from '../games/games.component';
 import { StandingsComponent } from '../standings/standings.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { PicksDashboardComponent } from '../picks-dashboard/picks-dashboard.component';
+import { MyPicksDashboardComponent } from '../my-picks-dashboard/my-picks-dashboard.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/picks', pathMatch: 'full' },
-  { path: 'picks', component: GamesComponent },
+  { path: '', redirectTo: '/weeklyPicks', pathMatch: 'full' },
+  { path: 'myPicks', component: MyPicksDashboardComponent },
+  { path: 'weeklyPicks', component: PicksDashboardComponent },
   { path: 'standings', component: StandingsComponent },
   { path: 'profile', component: ProfileComponent }
 ];

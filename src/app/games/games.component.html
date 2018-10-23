@@ -1,10 +1,10 @@
 <div *ngFor="let game of games">
   <mat-card class="game-card" attr.id={{game.id}}-game-card>
     <div  class="icon-group">
-      <mat-card class="game-card-status">
+      <div class="game-card-status">
         <p>STATUS</p>
         <p>{{game.number}}</p>
-      </mat-card>
+      </div>
       <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon" 
       [ngStyle]="getBorderColor(game.awayTeam)" 
       (click)="selectTeam(game.awayTeam, game.id)">
@@ -17,10 +17,10 @@
         <p style="margin-left:5px">HOME</p>
         <p class="large-text">{{getTeamName(game.homeTeam)}}</p>
       </div>
-      <mat-card class="game-card-spread">
+      <div class="game-card-spread">
         <p>SPREAD</p>
         <p class="medium-text">{{game.spread}}</p>
-      </mat-card>
+      </div>
     </div>
     <mat-card-content style="width: 100%">
       <div class="game-card-date">
@@ -30,10 +30,4 @@
       </div>
     </mat-card-content>
   </mat-card>
-</div>
-<div id="submit-container">
-  <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
-  <button mat-raised-button id="submit-button" (click)="openDialog()">
-    submit
-  </button>
 </div>

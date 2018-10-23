@@ -1,0 +1,40 @@
+#submit-container {
+    position: fixed;
+	bottom: 10%;
+	left: 95%;
+    width: 30%;
+    background-color: rgba(0, 0, 0, 0.64);
+    border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	height: 60px;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+	display:flex;
+}
+
+#submit-button {
+	border-style: solid;
+    border-radius: 8px;
+    border-width: 2px;
+    background-color: #e69033;
+    border-color:  #e69033;
+    width: 30%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+    margin-left: 10%;
+    color: white;
+}
+
+#submit-button:hover {
+	background-color: lightgrey;
+	border-color:  lightgrey;
+	cursor: pointer;
+}
+
+#submit-icon {
+	padding-top:12px;
+	margin-left:4%;
+	color:white;
+	transform: scale(1.5);
+	cursor: pointer;
+}
