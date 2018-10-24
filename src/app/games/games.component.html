@@ -7,13 +7,13 @@
       </div>
       <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon" 
       [ngStyle]="getBorderColor(game.awayTeam)" 
-      (click)="selectTeam(game.awayTeam, game.id)">
+      (click)="selectTeam(game.awayTeam, game)">
       	<p style="margin-left:5px">AWAY</p>
         <p class="large-text">{{getTeamName(game.awayTeam)}}</p>
       </div>
       <div attr.id="{{game.homeTeam}}-team-card" class="game-card-icon" 
       [ngStyle]="getBorderColor(game.homeTeam)" 
-      (click)="selectTeam(game.homeTeam, game.id)">
+      (click)="selectTeam(game.homeTeam, game)">
         <p style="margin-left:5px">HOME</p>
         <p class="large-text">{{getTeamName(game.homeTeam)}}</p>
       </div>

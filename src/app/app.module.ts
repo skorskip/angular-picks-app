@@ -48,7 +48,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
-import { PicksDashboardComponent, SubmitPicksDialog } from './picks-dashboard/picks-dashboard.component';
+import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog } from './picks-dashboard/picks-dashboard.component';
 import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboard.component';
 
 @NgModule({
@@ -58,6 +58,7 @@ import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboa
     StandingsComponent,
     ProfileComponent,
     SubmitPicksDialog,
+    NoPicksDialog,
     PicksDashboardComponent,
     MyPicksDashboardComponent
   ],
@@ -109,7 +110,7 @@ import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboa
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  entryComponents: [SubmitPicksDialog],
+  entryComponents: [SubmitPicksDialog, NoPicksDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

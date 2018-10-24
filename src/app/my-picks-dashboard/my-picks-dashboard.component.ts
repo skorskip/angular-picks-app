@@ -14,7 +14,6 @@ import { Pick } from '../data-models/pick/pick';
 export class MyPicksDashboardComponent implements OnInit {
   myGames: Game[];
   myTeams: Team[];
-  selectedTeams: Team[];
   picks: Pick[];
   constructor(private pickService: PickService, private gameService: GameService, private teamService: TeamService) { }
 
@@ -25,19 +24,10 @@ export class MyPicksDashboardComponent implements OnInit {
   getPicks() {
     this.picks = this.pickService.getPicks();
     var gameIds: number[] = [];
-    var teamIds: number[] = [];
     this.picks.forEach(element => {
       gameIds.push(element.gameId);
     });
     this.myGames = this.gameService.getGameByIds(gameIds);
-    console.log(this.myGames);
-
-    this.myGames.forEach(element => {
-        teamIds.push(element.awayTeam);
-        teamIds.push(element.awayTeam);
-    });
-    this.myTeams = this.teamService.getTeamByIds(teamIds);
-
   }
 
 }

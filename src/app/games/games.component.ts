@@ -1,9 +1,11 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Game } from '../data-models/game/game';
-import { Team } from '../data-models/team/team';  
+import { Team } from '../data-models/team/team';
+import { PickService } from '../data-models/pick/pick.service';
 import { GameService } from '../data-models/game/game.service';
 import { TeamService } from '../data-models/team/team.service';
+import { Pick } from '../data-models/pick/pick';
 import { ICON_REGISTRY_PROVIDER } from '@angular/material';
 import { MatDialog } from '@angular/material';
 
@@ -20,12 +22,33 @@ export interface DialogData {
 export class GamesComponent implements OnInit {
 	
   @Input() games: Game[];
-  @Input() teams: Team[];
   @Input('submitOpened') submitOpened: boolean;
   @Output() openSubmit = new EventEmitter<boolean> ();
-  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document) { }
+  @Output() stageSelectedPick = new EventEmitter ();
+  selectablePicks = true;
+  teams: Team[];
+  editMode = false;
+  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, private pickService: PickService) { }
 
-  ngOnInit() {}
+  ngOnInit(){
+    this.getTeamsInit(this.games);
+  }
+
+  ngAfterViewInit() {
+    this.highLightSelected();
+  }
+
+  highLightSelected(){
+    var picks = this.pickService.getPicks();
+    picks.forEach(element =>{
+      this.games.forEach(game => {
+        if(game.id == element.gameId){
+          this.selectablePicks = false;
+          this.highlightSelectTeam(this.getTeam(element.teamId));
+        }
+      })
+    })
+  }
 
   getBorderColor(id:number) {
     var team = this.getTeam(id);
@@ -36,23 +59,32 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  selectTeam(teamId:number, gameId:number) {
-    document.getElementById(gameId + "-game-card").classList.add("selectedGame");
-    var team = this.getTeam(teamId);
-    var game = this.getGame(gameId);
-    var otherTeamId = game.homeTeam == teamId ? game.awayTeam : game.homeTeam;
-    var teamElement = document.getElementById(teamId + "-team-card");
-    var otherTeamElement = document.getElementById(otherTeamId + "-team-card");
-    this.openSubmit.emit(true);
-    if(teamElement.classList.contains("selectedTeam")){
-      this.unSelectTeam(teamId);
-      document.getElementById(gameId + "-game-card").classList.remove("selectedGame");
-    } else if(otherTeamElement.classList.contains("selectedTeam")){
-      this.unSelectTeam(otherTeamId);
-      this.highlightSelectTeam(team);
-    } else {
-      this.highlightSelectTeam(team);
+  selectTeam(selectedTeamId:number, game:Game) {
+    if(this.selectablePicks){
+      var selectedTeam = this.getTeam(selectedTeamId);
+      var otherTeamId = game.homeTeam == selectedTeamId ? game.awayTeam : game.homeTeam;
+      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, game.id));
+      if(this.editMode){
+        //auto update pick through pick service, not staged
+        this.highLightSelected();
+      }
+      this.openSubmit.emit(true);
+      if(document.getElementById(selectedTeamId + "-team-card").classList.contains("selectedTeam")){
+        this.unSelectTeam(selectedTeamId);
+      } else if(document.getElementById(otherTeamId + "-team-card").classList.contains("selectedTeam")){
+        this.unSelectTeam(otherTeamId);
+        this.highlightSelectTeam(selectedTeam);
+      } else {
+        this.highlightSelectTeam(selectedTeam);
+      }   
     }
+  }
+
+  stagePick(teamId:number, gameId:number){
+    var stagedPick = {} as Pick;
+    stagedPick.gameId = gameId;
+    stagedPick.teamId = teamId;
+    return stagedPick;
   }
 
   unSelectTeam(teamId:number){
@@ -67,6 +99,15 @@ export class GamesComponent implements OnInit {
     teamElement.style.backgroundColor = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
+  }
+
+  getTeamsInit(games:Game[]) {
+    var teamIds: number[] = [];
+    games.forEach(element => {
+      teamIds.push(element.homeTeam);
+      teamIds.push(element.awayTeam);
+    });
+    this.teams = this.teamService.getTeamByIds(teamIds);
   }
 
   getTeamName(id:number) {

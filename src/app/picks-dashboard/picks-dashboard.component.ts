@@ -34,7 +34,18 @@ export class PicksDashboardComponent implements OnInit {
   getWeekInfo() {
     this.week = this.weekService.getWeek(100);
     this.games = this.gameService.getGameByIds(this.week.games);
-    this.teams = this.teamService.getTeamByIds(this.week.teams);
+    this.removePickedTeams();
+  }
+
+  removePickedTeams() {
+    var picks = this.pickService.getPicks();
+    picks.forEach(element => {
+      this.games.forEach((game, i) => {
+        if(element.gameId == game.id) {
+          this.games.splice(i, 1);
+        }
+      })
+    });
   }
 
   teamClicked(opened: boolean){
@@ -52,37 +63,49 @@ export class PicksDashboardComponent implements OnInit {
     }
   }
 
-  submitPicks():boolean {
-    var selectedGameElem = document.getElementsByClassName("selectedGame");
-    var selectedTeamElem = document.getElementsByClassName("selectedTeam");
-    for(var i = 0; i < selectedGameElem.length; i++){
-      var gameID = selectedGameElem[i].getAttribute("id");
-      var teamID = selectedTeamElem[i].getAttribute("id");
-      gameID = gameID.substring(0, gameID.indexOf("-"));
-      teamID = teamID.substring(0, teamID.indexOf("-"));
-      this.pick.gameId = parseInt(gameID);
-      this.pick.teamId = parseInt(teamID);
-      this.pick.weekId = this.week.id;
-      this.pick.id += 1;
-      console.log("pick", this.pick);
-      this.picks.push(this.pick);      
+  stageSelectedPick(selectedPick: Pick){
+    selectedPick.weekId = 100;
+    var pickAdded = false;
+    this.picks.forEach((element, i) =>{
+      if(element.gameId == selectedPick.gameId && element.teamId == selectedPick.teamId) {
+        this.picks.splice(i, 1);
+        pickAdded = true;
+      } else {
+        this.picks.splice(i, 1, selectedPick);
+        pickAdded = true;
+      }
+    });
+    if(!pickAdded){
+      this.picks.push(selectedPick);
     }
-    console.log("Picks Submit:", this.picks);
+  }
+
+  submitPicks():boolean {
     return this.pickService.addPicks(this.picks);
   }
   
   openDialog() {
-    const dialogRef = this.dialog.open(SubmitPicksDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        if(this.submitPicks()){
-          this.snackBar.open("picks submitted", "",{duration: 2000});
+    if(this.picks.length == 0){
+      const dialogRef = this.dialog.open(NoPicksDialog);
+    } else {
+      const dialogRef = this.dialog.open(SubmitPicksDialog);
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          if(this.submitPicks()){
+            this.removePickedTeams();
+            this.snackBar.open("picks submitted", "",{duration: 2000});
+          }
         }
-      }
-    });
+      });
+    }
   }
-
 }
+
+@Component({
+  selector: 'no-picks-dialog',
+  templateUrl: '../dialog-content/no-picks-dialog.html',
+})
+export class NoPicksDialog {}
 
 @Component({
   selector: 'submit-picks-dialog',

@@ -10,12 +10,26 @@ export class PickService {
         picks.forEach(element => {
             this.picks.push(element);
         });
-        console.log("adding", this.picks);
         return true;
     }
 
+    deletePick(pickId: number){
+        this.picks.forEach((element,i) => {
+            if(element.id === pickId) {
+                this.picks.splice(i,1);
+            }
+        });
+    }
+    
+    updatePick(pickUpdate:Pick){
+        this.picks.forEach((element,i) => {
+            if(element.id === pickUpdate.id) {
+                this.picks.splice(i,1,pickUpdate);
+            }
+        });
+    }
+
     getPicks():Pick[] {
-        console.log("getting", this.picks);
         return this.picks;
     }
 }
