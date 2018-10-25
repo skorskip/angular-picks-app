@@ -38,3 +38,27 @@
 	transform: scale(1.5);
 	cursor: pointer;
 }
+
+.week-card {
+	padding: 2px;
+	background-color: white;
+	border-radius: 24px;
+	margin: 20px;
+}
+
+.week-header {
+	display: flex;
+	flex-direction: row;
+	align-items:start;
+}
+
+.week-title {
+	font-size:1.5em;
+	width: 45%;
+	margin:8px;
+}
+
+.week-arrow-icon {
+	transform: scale(1.5);
+	cursor: pointer;
+}

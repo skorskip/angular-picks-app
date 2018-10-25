@@ -4,10 +4,13 @@ import { Pick } from './pick';
 @Injectable({ providedIn: 'root' })
 export class PickService {
     private picks:Pick[] = [];
+    id:number = 0;
 
     constructor() {}
     addPicks(picks: Pick[]):boolean {
         picks.forEach(element => {
+            element.id = this.id
+            this.id = this.id + 1;
             this.picks.push(element);
         });
         return true;
@@ -15,7 +18,7 @@ export class PickService {
 
     deletePick(pickId: number){
         this.picks.forEach((element,i) => {
-            if(element.id === pickId) {
+            if(element.id == pickId) {
                 this.picks.splice(i,1);
             }
         });
@@ -23,8 +26,10 @@ export class PickService {
     
     updatePick(pickUpdate:Pick){
         this.picks.forEach((element,i) => {
-            if(element.id === pickUpdate.id) {
+            if(element.id == pickUpdate.id) {
+                console.log("UPDATING", pickUpdate);
                 this.picks.splice(i,1,pickUpdate);
+                console.log(this.picks);
             }
         });
     }

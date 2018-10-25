@@ -11,14 +11,16 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	margin: 40px;
+	margin: 20px;
+	background: white;
+	margin-top: 27px;
 }
 
 .game-card-icon {
 	border-radius: 12px;
-	width: 20%;
-	height: 150px;
-	margin-top: -50px;
+	width: 100px;
+	height: 100px;
+	margin-top: -25px;
 	float: left;
 	margin-right: 2%;
 	border-style :  solid;
@@ -34,27 +36,26 @@
 
 .date-text {
 	font-size: 1em;
-	padding-top: 5px;
+	padding: 10px;
 }
 
 .large-text{
-	font-size:5em; 
+	font-size:2em; 
 	margin:0; 
 	text-align:center;
 }
 
 .medium-text{
-	font-size:3em; 
+	font-size:2em; 
 	margin:0; 
 }
 
 .game-card-icon:hover {
-	margin-top: -60px !important;
+	margin-top: -35px !important;
 	cursor: pointer;
 }
 
 .game-card-spread {
-	width: 15%;
 	box-shadow: none !important;
 	float: left;
 	text-align: right;
@@ -66,4 +67,11 @@
 	float: left;
 	text-align: left;
 	margin-right:2%;
+}
+
+.status-icon {
+	transform: scale(1.5);
+	margin-top: 35px;
+	margin-right: 2%;
+	margin-left: 2%;
 }

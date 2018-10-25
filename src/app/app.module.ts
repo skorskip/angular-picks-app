@@ -41,7 +41,7 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { GamesComponent} from './games/games.component';
+import { GameComponent} from './game/game.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { StandingsComponent } from './standings/standings.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -54,7 +54,7 @@ import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboa
 @NgModule({
   declarations: [
     AppComponent,
-    GamesComponent,
+    GameComponent,
     StandingsComponent,
     ProfileComponent,
     SubmitPicksDialog,

@@ -4,30 +4,43 @@
     <div class="nav-title">
       <h1 class="nav-text-title">PickEm</h1>
     </div>
-    <nav>
+    <div class="sidenav-opt">
+      <nav>
+        <mat-icon class="sidenav-icon">bookmark</mat-icon>
         <a routerLink="/myPicks" (click)="changeTitle('My Picks')">My Picks</a>
-    </nav>
-    <nav>
-      <a routerLink="/weeklyPicks" (click)="changeTitle('Picks Dashboard')">Picks Dashboard</a>
-    </nav>
-    <nav>
-      <a routerLink="/standings" (click)="changeTitle('Standings')">Standings</a>
-    </nav>
-    <nav>
-      <a routerLink="/profile" (click)="changeTitle('Profile')">Profile</a>
-    </nav>
+      </nav>
+    </div>
+    <div class="sidenav-opt">
+      <nav>
+        <mat-icon class="sidenav-icon">view_list</mat-icon>
+        <a routerLink="/weeklyPicks" (click)="changeTitle('Picks Dashboard')">Weekly Games</a>
+      </nav>
+    </div>
+    <div class="sidenav-opt">
+      <nav>
+        <mat-icon class="sidenav-icon">public</mat-icon>
+        <a routerLink="/standings" (click)="changeTitle('Standings')">Standings</a>
+      </nav>
+    </div>
+    <div class="sidenav-opt">
+        <nav>
+          <mat-icon class="sidenav-icon">timeline</mat-icon>
+          <a routerLink="/profile" (click)="changeTitle('Profile')">Stats</a>
+        </nav>
+      </div>
+    <div class="sidenav-opt">
+      <nav>
+        <mat-icon class="sidenav-icon">person</mat-icon>
+        <a routerLink="/profile" (click)="changeTitle('Profile')">Profile</a>
+      </nav>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar class="header">
-      <div class="title-header">
-          <h1 class="title">
-            {{ title }}
-          </h1>
-          <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
-          </button>
-      </div>
-    </mat-toolbar>
+    <div class="sidenav-button-group">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon class="sidenav-button">menu</mat-icon>
+        </button>
+    </div>
     <div>
       <router-outlet></router-outlet>
     </div>

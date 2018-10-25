@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 import { Game } from '../data-models/game/game';
@@ -19,13 +20,13 @@ import { PickService } from '../data-models/pick/pick.service';
 export class PicksDashboardComponent implements OnInit {
   games: Game[] = [];
   teams: Team[] = [];
-  picks: Pick[] = [];
-  pick = {} as Pick;
+  stagedPicks: Pick[] = [];
   week: Week;
   submitOpened = false;
 
   constructor(public dialog: MatDialog, private weekService: WeekService, private gameService: GameService,
-    private teamService: TeamService, private pickService: PickService, public snackBar: MatSnackBar, @Inject(DOCUMENT) document) { }
+    private teamService: TeamService, private pickService: PickService, public snackBar: MatSnackBar, 
+    @Inject(DOCUMENT) document, private router:Router) { }
 
   ngOnInit() {
     this.getWeekInfo();
@@ -34,10 +35,10 @@ export class PicksDashboardComponent implements OnInit {
   getWeekInfo() {
     this.week = this.weekService.getWeek(100);
     this.games = this.gameService.getGameByIds(this.week.games);
-    this.removePickedTeams();
+    this.removePickedGames();
   }
 
-  removePickedTeams() {
+  removePickedGames() {
     var picks = this.pickService.getPicks();
     picks.forEach(element => {
       this.games.forEach((game, i) => {
@@ -66,34 +67,35 @@ export class PicksDashboardComponent implements OnInit {
   stageSelectedPick(selectedPick: Pick){
     selectedPick.weekId = 100;
     var pickAdded = false;
-    this.picks.forEach((element, i) =>{
+    this.stagedPicks.forEach((element, i) =>{
       if(element.gameId == selectedPick.gameId && element.teamId == selectedPick.teamId) {
-        this.picks.splice(i, 1);
+        this.stagedPicks.splice(i, 1);
         pickAdded = true;
-      } else {
-        this.picks.splice(i, 1, selectedPick);
+      } else if(element.gameId == selectedPick.gameId) {
+        this.stagedPicks.splice(i, 1, selectedPick);
         pickAdded = true;
       }
     });
     if(!pickAdded){
-      this.picks.push(selectedPick);
+      this.stagedPicks.push(selectedPick);
     }
   }
 
   submitPicks():boolean {
-    return this.pickService.addPicks(this.picks);
+    return this.pickService.addPicks(this.stagedPicks);
   }
   
   openDialog() {
-    if(this.picks.length == 0){
+    if(this.stagedPicks.length == 0){
       const dialogRef = this.dialog.open(NoPicksDialog);
     } else {
       const dialogRef = this.dialog.open(SubmitPicksDialog);
       dialogRef.afterClosed().subscribe(result => {
         if(result){
           if(this.submitPicks()){
-            this.removePickedTeams();
+            this.removePickedGames();
             this.snackBar.open("picks submitted", "",{duration: 2000});
+            this.router.navigate(['/myPicks']);
           }
         }
       });

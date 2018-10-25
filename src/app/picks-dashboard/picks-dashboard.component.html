@@ -1,10 +1,21 @@
-<div>
-    <games
-        [games] = "games"
+<div class="title">
+    WEEKLY GAMES
+</div>
+<div class="week-card">
+    <div class="week-header">
+        <div class=week-title>
+            WEEK 6
+        </div>
+        <mat-icon class="week-arrow-icon">
+            keyboard_arrow_up
+        </mat-icon>
+    </div>
+    <game *ngFor="let game of games"
+        [game] = "game"
         [submitOpened] = "submitOpened"
         (openSubmit) = "teamClicked($event)"
         (stageSelectedPick) = "stageSelectedPick($event)">
-    </games>
+    </game>
 </div>
 <div id="submit-container">
     <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>

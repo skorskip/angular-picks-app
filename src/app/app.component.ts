@@ -6,9 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Picks';
+  title = 'Picks Dashboard';
+  
   changeTitle(newTitle:string){
     this.title = newTitle;
+    this.opened = false;
   }
   events: string[] = [];
   opened: boolean;

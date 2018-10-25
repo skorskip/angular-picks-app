@@ -15,39 +15,22 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'games',
-  templateUrl: './games.component.html',
-  styleUrls: ['./games.component.css']
+  selector: 'game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.css']
 })
-export class GamesComponent implements OnInit {
+export class GameComponent implements OnInit {
 	
-  @Input() games: Game[];
+  @Input() game: Game;
   @Input('submitOpened') submitOpened: boolean;
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
-  selectablePicks = true;
+  @Input() selectablePicks = true;
   teams: Team[];
-  editMode = false;
   constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, private pickService: PickService) { }
 
   ngOnInit(){
-    this.getTeamsInit(this.games);
-  }
-
-  ngAfterViewInit() {
-    this.highLightSelected();
-  }
-
-  highLightSelected(){
-    var picks = this.pickService.getPicks();
-    picks.forEach(element =>{
-      this.games.forEach(game => {
-        if(game.id == element.gameId){
-          this.selectablePicks = false;
-          this.highlightSelectTeam(this.getTeam(element.teamId));
-        }
-      })
-    })
+    this.getTeamsInit(this.game);
   }
 
   getBorderColor(id:number) {
@@ -59,15 +42,11 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  selectTeam(selectedTeamId:number, game:Game) {
+  selectTeam(selectedTeamId:number) {
     if(this.selectablePicks){
       var selectedTeam = this.getTeam(selectedTeamId);
-      var otherTeamId = game.homeTeam == selectedTeamId ? game.awayTeam : game.homeTeam;
-      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, game.id));
-      if(this.editMode){
-        //auto update pick through pick service, not staged
-        this.highLightSelected();
-      }
+      var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;
+      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.id));
       this.openSubmit.emit(true);
       if(document.getElementById(selectedTeamId + "-team-card").classList.contains("selectedTeam")){
         this.unSelectTeam(selectedTeamId);
@@ -101,12 +80,10 @@ export class GamesComponent implements OnInit {
     teamElement.classList.add("selectedTeam");
   }
 
-  getTeamsInit(games:Game[]) {
+  getTeamsInit(game:Game) {
     var teamIds: number[] = [];
-    games.forEach(element => {
-      teamIds.push(element.homeTeam);
-      teamIds.push(element.awayTeam);
-    });
+    teamIds.push(game.homeTeam);
+    teamIds.push(game.awayTeam);
     this.teams = this.teamService.getTeamByIds(teamIds);
   }
 
@@ -123,16 +100,6 @@ export class GamesComponent implements OnInit {
       }
     })
     return team;
-  }
-
-  getGame(id : number): Game {
-    var game
-    this.games.forEach((gameItem) => {
-      if(id == gameItem.id){
-        game = gameItem;
-      }
-    })
-    return game;
   }
 }
 

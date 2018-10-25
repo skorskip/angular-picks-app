@@ -1,5 +1,24 @@
-<div>
-  <games
-  [games] = "myGames">
-  </games>
+<div class="title">
+  MY PICKS
+</div>
+<button mat-raised-button class="edit-button" (click)="editPicks()">
+  <mat-icon class="edit-icon">
+    mode_edit
+  </mat-icon>
+  edit
+</button>
+<div *ngFor="let myGame of myGames" [ngClass]="{'pick-game':edit}">
+  <div *ngIf="edit" class="edit-tools">
+    <div class="edit-opt edit-opt-delete" (click) = "deletePick(myGame)">
+        <p class="opt-text">DELETE</p>
+    </div>
+    <div class="edit-opt edit-opt-edit" (click) = "changeTeam(myGame)">
+        <p class="opt-text">CHANGE TEAM</p>
+    </div>
+  </div>
+  <game 
+    [game] = "myGame" 
+    [selectablePicks] = "selectablePicks" 
+    style="width:100%"> 
+  </game>
 </div>

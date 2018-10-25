@@ -4,3 +4,9 @@
 html, body { height: 100%; }
 * { font-family: Comfortaa, sans-serif}
 body { margin: 0; background-color: lightgrey;}
+
+.title {
+    margin: 20px;
+    font-size: 2em;
+    color: grey;
+}
