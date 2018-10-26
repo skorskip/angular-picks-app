@@ -6,8 +6,43 @@ export class WeekService {
     private weekUrl = 'api/week';
     private weeks:Week[] = [
         {
-            'id':100,
+            'id':106,
             'number': 6,
+            'games' : [101, 102, 103],
+            'teams' : [101, 102, 103, 104, 105, 106],
+            'date' : 'SUN, OCT 8, 2018'
+        },
+        {
+            'id':105,
+            'number': 5,
+            'games' : [101, 102, 103],
+            'teams' : [101, 102, 103, 104, 105, 106],
+            'date' : 'SUN, OCT 8, 2018'
+        },
+        {
+            'id':104,
+            'number': 4,
+            'games' : [101, 102, 103],
+            'teams' : [101, 102, 103, 104, 105, 106],
+            'date' : 'SUN, OCT 8, 2018'
+        },
+        {
+            'id':103,
+            'number': 3,
+            'games' : [101, 102, 103],
+            'teams' : [101, 102, 103, 104, 105, 106],
+            'date' : 'SUN, OCT 8, 2018'
+        },
+        {
+            'id':102,
+            'number': 2,
+            'games' : [101, 102, 103],
+            'teams' : [101, 102, 103, 104, 105, 106],
+            'date' : 'SUN, OCT 8, 2018'
+        },
+        {
+            'id':101,
+            'number': 1,
             'games' : [101, 102, 103],
             'teams' : [101, 102, 103, 104, 105, 106],
             'date' : 'SUN, OCT 8, 2018'
@@ -24,5 +59,9 @@ export class WeekService {
           }
         });
         return this.week;
+    }
+
+    getWeeks(): Week[] {
+        return this.weeks;
     }
 }

@@ -1,24 +1,46 @@
-<div class="title">
-  MY PICKS
+<div class="myPicks-header">
+  <div class="title">
+    MY PICKS
+  </div>
+  <button mat-raised-button class="edit-button" (click)="editPicks()">
+    <mat-icon class="edit-icon">
+      mode_edit
+    </mat-icon>
+    edit
+  </button>
 </div>
-<button mat-raised-button class="edit-button" (click)="editPicks()">
-  <mat-icon class="edit-icon">
-    mode_edit
-  </mat-icon>
-  edit
-</button>
-<div *ngFor="let myGame of myGames" [ngClass]="{'pick-game':edit}">
-  <div *ngIf="edit" class="edit-tools">
-    <div class="edit-opt edit-opt-delete" (click) = "deletePick(myGame)">
-        <p class="opt-text">DELETE</p>
+<div *ngIf="weeksView == false">
+  <div class="week-card">
+    <div class="week-header">
+        <div class=week-title>
+              WEEK {{week.number}}
+        </div>
+        <mat-icon class="week-arrow-icon" (click)="showWeeks()">
+            keyboard_arrow_up
+        </mat-icon>
     </div>
-    <div class="edit-opt edit-opt-edit" (click) = "changeTeam(myGame)">
-        <p class="opt-text">CHANGE TEAM</p>
+    <div *ngIf = "myGames.length == 0" class="no-picks-view">
+      No Picks Made
+    </div>
+    <div *ngFor="let myGame of myGames" [ngClass]="{'pick-game':edit}">
+      <div *ngIf="edit" class="edit-tools">
+        <div class="edit-opt edit-opt-delete" (click) = "deletePick(myGame)">
+            <p class="opt-text">DELETE</p>
+        </div>
+        <div class="edit-opt edit-opt-edit" (click) = "changeTeam(myGame)">
+            <p class="opt-text">CHANGE TEAM</p>
+        </div>
+      </div>
+      <game 
+        [game] = "myGame" 
+        [selectablePicks] = "selectablePicks" 
+        style="width:100%"> 
+      </game>
     </div>
   </div>
-  <game 
-    [game] = "myGame" 
-    [selectablePicks] = "selectablePicks" 
-    style="width:100%"> 
-  </game>
+</div>
+<div *ngIf="weeksView">
+    <div *ngFor="let weekCard of weeks" class="week-cards" (click) = "weekSelected(weekCard)">
+        week {{weekCard.number}}
+    </div>
 </div>

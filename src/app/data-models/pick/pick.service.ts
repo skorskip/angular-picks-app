@@ -34,6 +34,16 @@ export class PickService {
         });
     }
 
+    getPicksByWeek(weekId:number):Pick[] {
+        var picksByWeek: Pick[] = [];
+        this.picks.forEach((pick,i) =>{
+            if(pick.weekId == weekId){
+                picksByWeek.push(pick);
+            }
+        });
+        return picksByWeek;
+    }
+
     getPicks():Pick[] {
         return this.picks;
     }

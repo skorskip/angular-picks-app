@@ -27,7 +27,7 @@ export class GameService {
       homeScore: 21,
       awayScore: 7,
       spread: '+7.0',
-      inProgess: true
+      inProgress: true
     },
     {
       id: 102,
@@ -39,7 +39,7 @@ export class GameService {
       homeScore: 21,
       awayScore: 7,
       spread: '+6.0',
-      inProgess: true
+      inProgress: true
     },
     {
       id: 103,
@@ -51,7 +51,7 @@ export class GameService {
       homeScore: 0,
       awayScore: 0,
       spread: '-3.0',
-      inProgess: false
+      inProgress: false
     }
   ];
 

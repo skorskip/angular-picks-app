@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PickService } from '../data-models/pick/pick.service';
 import { GameService } from '../data-models/game/game.service';
 import { TeamService } from '../data-models/team/team.service';
+import { WeekService } from '../data-models/week/week.service';
+import { Week } from '../data-models/week/week';
 import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';
 import { Pick } from '../data-models/pick/pick';
@@ -16,20 +18,31 @@ export class MyPicksDashboardComponent implements OnInit {
   myGames: Game[];
   myTeams: Team[];
   picks: Pick[];
+  weeks: Week[];
+  week: Week;
   edit = false;
   selectablePicks = false;
-  constructor(private pickService: PickService, private gameService: GameService, private teamService: TeamService) { }
+  weeksView = false;
+  constructor(private pickService: PickService, private gameService: GameService, 
+    private teamService: TeamService, private weekService: WeekService) { }
 
   ngOnInit() {
-    this.getPicks();
+    this.getPicksByWeek(106);
   }
 
   ngAfterViewInit() {
     this.highLightSelected();
+    var delay = .5;
+    this.myGames.forEach((game,i) => {
+      var element = document.getElementById(game.id + "-game-card");
+
+        element.style.animationDuration = (delay + (i * .5)) + 's';
+    })  
   }
 
-  getPicks() {
-    this.picks = this.pickService.getPicks();
+  getPicksByWeek(weekId:number) {
+    this.week = this.weekService.getWeek(weekId);
+    this.picks = this.pickService.getPicksByWeek(weekId);
     var gameIds: number[] = [];
     var teamIds: number[] = [];
     this.picks.forEach(element => {
@@ -51,7 +64,7 @@ export class MyPicksDashboardComponent implements OnInit {
     this.picks.forEach(pick => {
       if(pick.gameId == game.id){
         this.pickService.deletePick(pick.id);
-        this.getPicks();
+        this.getPicksByWeek(this.week.id);
       }
     }); 
   }
@@ -63,7 +76,7 @@ export class MyPicksDashboardComponent implements OnInit {
         var newPick = pick;
         newPick.teamId = newTeam;
         this.pickService.updatePick(newPick);
-        this.getPicks();
+        this.getPicksByWeek(this.week.id);
         this.highLightSelected();
       }
     });
@@ -101,6 +114,16 @@ export class MyPicksDashboardComponent implements OnInit {
       }
     })
     return team;
+  }
+
+  showWeeks() {
+    this.weeksView = true;
+    this.weeks = this.weekService.getWeeks();
+  }
+
+  weekSelected(weekSelected:Week) {
+    this.getPicksByWeek(weekSelected.id);
+    this.weeksView = false;
   }
 
 }

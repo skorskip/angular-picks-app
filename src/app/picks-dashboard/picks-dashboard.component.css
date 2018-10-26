@@ -1,8 +1,8 @@
 #submit-container {
     position: fixed;
 	bottom: 10%;
-	left: 95%;
-    width: 30%;
+	width: 200px;
+	right: -150px;
     background-color: rgba(0, 0, 0, 0.64);
     border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
@@ -39,11 +39,19 @@
 	cursor: pointer;
 }
 
+@keyframes weekCardAnimation {
+	0%{margin-top:1000px;opacity:0;}
+	90%{margin-top:0px; opacity: .9;}
+	100%{margin-top:10px; opacity: 1}
+}
+
 .week-card {
 	padding: 2px;
 	background-color: white;
 	border-radius: 24px;
-	margin: 20px;
+	margin: 10px;
+	animation-name:weekCardAnimation;
+	animation-duration: .75s;
 }
 
 .week-header {
@@ -61,4 +69,20 @@
 .week-arrow-icon {
 	transform: scale(1.5);
 	cursor: pointer;
+}
+
+.week-cards {
+	padding: 2px;
+	background-color: white;
+	border-radius: 24px;
+	margin: 20px;
+	box-shadow: 4px -2px 20px 3px rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+	margin-bottom: -225px;
+	height: 250px;
+	font-size: 1.5em;
+	padding: 10px;
+	cursor: pointer;
+}
+.week-cards:hover{
+	margin-top: -50px;
 }

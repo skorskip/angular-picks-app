@@ -22,18 +22,28 @@ export class PicksDashboardComponent implements OnInit {
   teams: Team[] = [];
   stagedPicks: Pick[] = [];
   week: Week;
+  weeks: Week[] = [];
   submitOpened = false;
-
+  weeksView = false;
   constructor(public dialog: MatDialog, private weekService: WeekService, private gameService: GameService,
     private teamService: TeamService, private pickService: PickService, public snackBar: MatSnackBar, 
     @Inject(DOCUMENT) document, private router:Router) { }
 
   ngOnInit() {
-    this.getWeekInfo();
+    this.getWeekInfo(this.weekService.getWeek(106));
   }
 
-  getWeekInfo() {
-    this.week = this.weekService.getWeek(100);
+  ngAfterViewInit() {
+    var delay = .5;
+    this.games.forEach((game,i) => {
+      var element = document.getElementById(game.id + "-game-card");
+
+        element.style.animationDuration = (delay + (i * .5)) + 's';
+    })  
+  }
+
+  getWeekInfo(week: Week) {
+    this.week = week;
     this.games = this.gameService.getGameByIds(this.week.games);
     this.removePickedGames();
   }
@@ -56,16 +66,16 @@ export class PicksDashboardComponent implements OnInit {
 
   showSubmit() {
     if(this.submitOpened){
-      document.getElementById("submit-container").style.left = "75%";
+      document.getElementById("submit-container").style.right = "0px";
       this.submitOpened = false;
     }else{
-      document.getElementById("submit-container").style.left = "95%";
+      document.getElementById("submit-container").style.right = "-150px";
       this.submitOpened = true;
     }
   }
 
   stageSelectedPick(selectedPick: Pick){
-    selectedPick.weekId = 100;
+    selectedPick.weekId = this.week.id;
     var pickAdded = false;
     this.stagedPicks.forEach((element, i) =>{
       if(element.gameId == selectedPick.gameId && element.teamId == selectedPick.teamId) {
@@ -100,6 +110,16 @@ export class PicksDashboardComponent implements OnInit {
         }
       });
     }
+  }
+
+  showWeeks() {
+    this.weeksView = true;
+    this.weeks = this.weekService.getWeeks();
+  }
+
+  weekSelected(weekSelected:Week) {
+    this.getWeekInfo(weekSelected);
+    this.weeksView = false;
   }
 }
 
