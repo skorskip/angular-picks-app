@@ -6,13 +6,6 @@ import { PickService } from '../data-models/pick/pick.service';
 import { GameService } from '../data-models/game/game.service';
 import { TeamService } from '../data-models/team/team.service';
 import { Pick } from '../data-models/pick/pick';
-import { ICON_REGISTRY_PROVIDER } from '@angular/material';
-import { MatDialog } from '@angular/material';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
 
 @Component({
   selector: 'game',
@@ -25,7 +18,7 @@ export class GameComponent implements OnInit {
   @Input('submitOpened') submitOpened: boolean;
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
-  @Input() selectablePicks = true;
+  @Input() notSelectablePicks = false;
   teams: Team[];
   constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, private pickService: PickService) { }
 
@@ -43,7 +36,8 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeamId:number) {
-    if(this.selectablePicks){
+    if(this.notSelectablePicks  || this.game.inProgress){   
+    } else {
       var selectedTeam = this.getTeam(selectedTeamId);
       var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;
       this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.id));
@@ -55,7 +49,7 @@ export class GameComponent implements OnInit {
         this.highlightSelectTeam(selectedTeam);
       } else {
         this.highlightSelectTeam(selectedTeam);
-      }   
+      }
     }
   }
 
@@ -90,6 +84,14 @@ export class GameComponent implements OnInit {
   getTeamName(id:number) {
     var team = this.getTeam(id);
     return team.abbrevation;
+  }
+
+  getGameSpread(number:number) {
+    if(number > 0) {
+      return '+' + number;
+    } else {
+      return number;
+    }
   }
 
   getTeam(id: number): Team {

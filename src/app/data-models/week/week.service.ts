@@ -49,7 +49,6 @@ export class WeekService {
         }
     ]
     private week;
-
     constructor(){}
     
     getWeek(id:number): Week {
@@ -63,5 +62,17 @@ export class WeekService {
 
     getWeeks(): Week[] {
         return this.weeks;
+    }
+
+    getCurrentWeek(): Week {
+        var maxValue = 0;
+        var maxIndex:number = 0;
+        this.weeks.forEach((weekItem, i) => {
+            if(weekItem.number > maxValue){
+                maxValue = weekItem.number;
+                maxIndex = weekItem.id;
+            }
+        });
+        return this.getWeek(maxIndex);
     }
 }

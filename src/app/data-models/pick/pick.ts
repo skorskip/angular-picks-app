@@ -4,5 +4,4 @@ export class Pick {
     weekId: number;
     gameId: number;
     teamId: number;
-    outCome: string;
 }

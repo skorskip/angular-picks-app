@@ -30,7 +30,7 @@ export class PicksDashboardComponent implements OnInit {
     @Inject(DOCUMENT) document, private router:Router) { }
 
   ngOnInit() {
-    this.getWeekInfo(this.weekService.getWeek(106));
+    this.getWeekInfo(this.weekService.getCurrentWeek());
   }
 
   ngAfterViewInit() {
@@ -48,7 +48,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   removePickedGames() {
-    var picks = this.pickService.getPicks();
+    var picks = this.pickService.getPicksByWeek(this.week.id);
     picks.forEach(element => {
       this.games.forEach((game, i) => {
         if(element.gameId == game.id) {
@@ -117,12 +117,7 @@ export class PicksDashboardComponent implements OnInit {
     element.className = "week-out-animation";
 
     setTimeout(()=>{
-      this.weeksView = true;
-      var delay = 0;
-      this.weeks.forEach((week,i) => {
-        var element = document.getElementById(week.id + "-week-cards");
-          element.style.animationDuration = (delay + (i * 500)) + 'ms';
-      })  
+      this.weeksView = true; 
     },500);
   }
 

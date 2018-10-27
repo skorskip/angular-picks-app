@@ -26,7 +26,7 @@ export class GameService {
       awayTeam: 102,
       homeScore: 21,
       awayScore: 7,
-      spread: '+7.0',
+      spread: 7.0,
       inProgress: true
     },
     {
@@ -38,7 +38,7 @@ export class GameService {
       awayTeam: 104,
       homeScore: 21,
       awayScore: 7,
-      spread: '+6.0',
+      spread: 6.0,
       inProgress: true
     },
     {
@@ -50,7 +50,7 @@ export class GameService {
       awayTeam: 106,
       homeScore: 0,
       awayScore: 0,
-      spread: '-3.0',
+      spread: -3.0,
       inProgress: false
     }
   ];

@@ -21,13 +21,13 @@ export class MyPicksDashboardComponent implements OnInit {
   weeks: Week[];
   week: Week;
   edit = false;
-  selectablePicks = false;
+  notSelectablePicks = true;
   weeksView = false;
   constructor(private pickService: PickService, private gameService: GameService, 
     private teamService: TeamService, private weekService: WeekService) { }
 
   ngOnInit() {
-    this.getPicksByWeek(106);
+    this.getPicksByWeek(this.weekService.getCurrentWeek().id);
   }
 
   ngAfterViewInit() {
@@ -87,7 +87,8 @@ export class MyPicksDashboardComponent implements OnInit {
       this.unSelectTeam(team.id);
     });
     this.picks.forEach(pick =>{
-        this.selectablePicks = false;
+        this.notSelectablePicks = false;
+        this.highlightPickResult(pick);
         this.highlightSelectTeam(this.getTeam(pick.teamId));
     });
   }
@@ -106,6 +107,21 @@ export class MyPicksDashboardComponent implements OnInit {
     teamElement.classList.add("selectedTeam");
   }
 
+  highlightPickResult(pick:Pick){
+    var game = this.getGame(pick.gameId);
+    var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
+    var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
+    if(game.inProgress){
+      var gameElement = document.getElementById(game.id + "-game-card");
+      if(pickedTeamScore > otherTeamScore){
+        gameElement.style.background = "lightgreen";
+      }
+      else{
+        gameElement.style.background = "lightcoral";
+      }
+    }
+  }
+
   getTeam(id: number): Team {
     var team
     this.myTeams.forEach((teamItem) => {
@@ -116,18 +132,23 @@ export class MyPicksDashboardComponent implements OnInit {
     return team;
   }
 
+  getGame(id: number): Game {
+    var game
+    this.myGames.forEach((gameItem) => {
+      if(id == gameItem.id){
+        game = gameItem;
+      }
+    })
+    return game;
+  }
+
   showWeeks() {
     this.weeks = this.weekService.getWeeks();
     var element = document.getElementById("week-card");
     element.className = "week-out-animation";
-
+    
     setTimeout(()=>{
       this.weeksView = true;
-      var delay = 0;
-      this.weeks.forEach((week,i) => {
-        var element = document.getElementById(week.id + "-week-cards");
-          element.style.animationDuration = (delay + (i * 500)) + 'ms';
-      })  
     },500);
   }
 
@@ -137,6 +158,9 @@ export class MyPicksDashboardComponent implements OnInit {
     element.className = "week-out-animation";
     setTimeout(()=>{
       this.weeksView = false;
+      setTimeout(()=>{
+        this.ngAfterViewInit();
+      })
     },500);
   }
 

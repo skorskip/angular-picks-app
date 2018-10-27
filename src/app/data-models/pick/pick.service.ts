@@ -3,8 +3,23 @@ import { Pick } from './pick';
 
 @Injectable({ providedIn: 'root' })
 export class PickService {
-    private picks:Pick[] = [];
-    id:number = 0;
+    private picks:Pick[] = [
+        {
+            'id' : 100,
+            'user': 'pskorski',
+            'weekId':101,
+            'gameId':101,
+            'teamId':101
+        },
+        {
+            'id' : 101,
+            'user': 'pskorski',
+            'weekId':101,
+            'gameId':102,
+            'teamId':104
+        }
+    ];
+    id:number = 102;
 
     constructor() {}
     addPicks(picks: Pick[]):boolean {
@@ -27,9 +42,7 @@ export class PickService {
     updatePick(pickUpdate:Pick){
         this.picks.forEach((element,i) => {
             if(element.id == pickUpdate.id) {
-                console.log("UPDATING", pickUpdate);
                 this.picks.splice(i,1,pickUpdate);
-                console.log(this.picks);
             }
         });
     }

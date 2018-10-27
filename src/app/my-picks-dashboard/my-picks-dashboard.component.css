@@ -73,7 +73,7 @@
 
 @keyframes weekCardAnimationOut {
 	0%{margin-top:10px; opacity: 100;}
-	100%{margin-top:1000px; opacity: 0; visibility: hidden}
+	100%{margin-top:1000px; opacity: 0;}
 }
 @keyframes weekCardsAnimation {
 	0%{margin-top:100px;opacity:0;}
