@@ -117,13 +117,27 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showWeeks() {
-    this.weeksView = true;
     this.weeks = this.weekService.getWeeks();
+    var element = document.getElementById("week-card");
+    element.className = "week-out-animation";
+
+    setTimeout(()=>{
+      this.weeksView = true;
+      var delay = 0;
+      this.weeks.forEach((week,i) => {
+        var element = document.getElementById(week.id + "-week-cards");
+          element.style.animationDuration = (delay + (i * 500)) + 'ms';
+      })  
+    },500);
   }
 
   weekSelected(weekSelected:Week) {
     this.getPicksByWeek(weekSelected.id);
-    this.weeksView = false;
+    var element = document.getElementById("weeks-container");
+    element.className = "week-out-animation";
+    setTimeout(()=>{
+      this.weeksView = false;
+    },500);
   }
 
 }

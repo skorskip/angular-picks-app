@@ -66,19 +66,44 @@
 	margin-top:20%;
 }
 
-@keyframes weekCardAnimation {
+@keyframes weekCardAnimationIn {
 	0%{margin-top:1000px;opacity:0;}
-	90%{margin-top:0px; opacity: .90;}
 	100%{margin-top:10px; opacity: 1}
 }
 
-.week-card {
+@keyframes weekCardAnimationOut {
+	0%{margin-top:10px; opacity: 100;}
+	100%{margin-top:1000px; opacity: 0; visibility: hidden}
+}
+@keyframes weekCardsAnimation {
+	0%{margin-top:100px;opacity:0;}
+	100%{margin-top:20px; opacity: 1}
+}
+.week-cards-animation {
+	animation-name:weekCardsAnimation;
+	animation-duration: 500ms;
+	animation-timing-function: ease-in-out;
+	animation-delay: 0s;
+}
+
+#week-card {
 	padding: 2px;
 	background-color: white;
 	border-radius: 24px;
 	margin: 10px;
-	animation-name:weekCardAnimation;
+}
+
+.week-in-animation {
+	animation-name:weekCardAnimationIn;
+	animation-timing-function: ease-in-out;
 	animation-duration: .75s;
+}
+
+.week-out-animation {
+	animation: forwards;
+	animation-name:weekCardAnimationOut;
+	animation-timing-function: ease-in-out;
+	animation-duration: 1s;
 }
 
 .week-header {
@@ -112,4 +137,6 @@
 }
 .week-cards:hover{
 	margin-top: -50px;
+	transition-duration: 500ms;
+	transition-timing-function: ease;
 }

@@ -2,7 +2,7 @@
     WEEKLY GAMES
 </div>
 <div *ngIf="weeksView == false">
-    <div class="week-card">
+    <div id="week-card" class="week-in-animation">
         <div class="week-header">
             <div class=week-title>
                  WEEK {{week.number}}
@@ -25,8 +25,9 @@
         </button>
     </div>
 </div>
-<div *ngIf="weeksView">
-    <div *ngFor="let weekCard of weeks" class="week-cards" (click) = "weekSelected(weekCard)">
+<div *ngIf="weeksView" id="weeks-container">
+    <div *ngFor="let weekCard of weeks" class="week-cards week-cards-animation" 
+    id="{{week.id}}-week-cards" (click) = "weekSelected(weekCard)">
         week {{weekCard.number}}
     </div>
 </div>

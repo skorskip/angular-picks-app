@@ -37,8 +37,7 @@ export class PicksDashboardComponent implements OnInit {
     var delay = .5;
     this.games.forEach((game,i) => {
       var element = document.getElementById(game.id + "-game-card");
-
-        element.style.animationDuration = (delay + (i * .5)) + 's';
+        element.style.animationDuration = (delay + (i * 500)) + 'ms';
     })  
   }
 
@@ -113,13 +112,28 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showWeeks() {
-    this.weeksView = true;
     this.weeks = this.weekService.getWeeks();
+    var element = document.getElementById("week-card");
+    element.className = "week-out-animation";
+
+    setTimeout(()=>{
+      this.weeksView = true;
+      var delay = 0;
+      this.weeks.forEach((week,i) => {
+        var element = document.getElementById(week.id + "-week-cards");
+          element.style.animationDuration = (delay + (i * 500)) + 'ms';
+      })  
+    },500);
   }
 
   weekSelected(weekSelected:Week) {
     this.getWeekInfo(weekSelected);
-    this.weeksView = false;
+    var element = document.getElementById("weeks-container");
+    element.className = "week-out-animation";
+    setTimeout(()=>{
+      this.weeksView = false;
+    },500);
+  
   }
 }
 
