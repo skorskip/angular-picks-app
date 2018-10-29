@@ -87,7 +87,6 @@ export class MyPicksDashboardComponent implements OnInit {
       this.unSelectTeam(team.id);
     });
     this.picks.forEach(pick =>{
-        this.notSelectablePicks = false;
         this.highlightPickResult(pick);
         this.highlightSelectTeam(this.getTeam(pick.teamId));
     });
@@ -111,7 +110,7 @@ export class MyPicksDashboardComponent implements OnInit {
     var game = this.getGame(pick.gameId);
     var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
     var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
-    if(game.inProgress){
+    if(game.progress == 'FINAL'){
       var gameElement = document.getElementById(game.id + "-game-card");
       if(pickedTeamScore > otherTeamScore){
         gameElement.style.background = "lightgreen";

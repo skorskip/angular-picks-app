@@ -36,7 +36,7 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeamId:number) {
-    if(this.notSelectablePicks  || this.game.inProgress){   
+    if(this.notSelectablePicks  || (this.game.progress != 'PENDING')){   
     } else {
       var selectedTeam = this.getTeam(selectedTeamId);
       var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;
@@ -69,7 +69,7 @@ export class GameComponent implements OnInit {
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.id + "-team-card");
-    teamElement.style.backgroundColor = team.primaryColor;
+    teamElement.style.background = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
   }

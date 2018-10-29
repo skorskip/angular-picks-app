@@ -38,7 +38,8 @@ export class PicksDashboardComponent implements OnInit {
     this.games.forEach((game,i) => {
       var element = document.getElementById(game.id + "-game-card");
         element.style.animationDuration = (delay + (i * 500)) + 'ms';
-    })  
+    });
+    this.highlightGameResult();
   }
 
   getWeekInfo(week: Week) {
@@ -129,6 +130,45 @@ export class PicksDashboardComponent implements OnInit {
       this.weeksView = false;
     },500);
   
+  }
+
+  highlightGameResult(){
+    this.games.forEach(game => {
+      if(game.progress == 'FINAL'){
+        var gameElement = document.getElementById(game.id + "-game-card");
+        if(game.homeScore + game.spread > game.awayScore){
+          document.getElementById(game.homeTeam + "-team-card").style.background = "linear-gradient(to right, #f857a6, #ff5858)";
+          document.getElementById(game.homeTeam + "-team-card").style.color = "white";
+
+        }
+        else if(game.homeScore + game.spread < game.awayScore) {
+          document.getElementById(game.awayTeam + "-team-card").style.background = "linear-gradient(to right, #f857a6, #ff5858)";
+          document.getElementById(game.homeTeam + "-team-card").style.color = "white";
+
+        }
+      }
+    })
+
+  }
+
+  getGame(id: number): Game {
+    var game
+    this.games.forEach((gameItem) => {
+      if(id == gameItem.id){
+        game = gameItem;
+      }
+    })
+    return game;
+  }
+
+  getTeam(id: number): Team {
+    var team
+    this.teams.forEach((teamItem) => {
+      if(id == teamItem.id){
+        team = teamItem;
+      }
+    })
+    return team;
   }
 }
 

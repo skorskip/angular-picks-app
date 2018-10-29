@@ -1,43 +1,80 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-sidenav-container  class="example-container">
-  <mat-sidenav #sidenav mode="push" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav" position="end">
+<mat-sidenav-container  id="side-nav" class="example-container" (window:resize)="onResize($event)" >
+  <mat-sidenav #sidenav mode="push" 
+  [(opened)]="openedSmall" (opened)="events.push('open!')" (closed)="events.push('close!')" 
+  class="sidenav" position="end">
     <div class="nav-title">
       <h1 class="nav-text-title">PickEm</h1>
     </div>
     <div class="sidenav-opt">
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
-        <a routerLink="/myPicks" (click)="changeTitle('My Picks')">My Picks</a>
+        <a routerLink="/myPicks" (click)="sidenav.toggle()">My Picks</a>
       </nav>
     </div>
     <div class="sidenav-opt">
       <nav>
         <mat-icon class="sidenav-icon">view_list</mat-icon>
-        <a routerLink="/weeklyPicks" (click)="changeTitle('Picks Dashboard')">Weekly Games</a>
+        <a routerLink="/weeklyPicks" (click)="sidenav.toggle()">Weekly Games</a>
       </nav>
     </div>
     <div class="sidenav-opt">
       <nav>
         <mat-icon class="sidenav-icon">public</mat-icon>
-        <a routerLink="/standings" (click)="changeTitle('Standings')">Standings</a>
+        <a routerLink="/standings" (click)="sidenav.toggle()">Standings</a>
       </nav>
     </div>
     <div class="sidenav-opt">
         <nav>
           <mat-icon class="sidenav-icon">timeline</mat-icon>
-          <a routerLink="/profile" (click)="changeTitle('Profile')">Stats</a>
+          <a routerLink="/profile" (click)="sidenav.toggle()">Stats</a>
         </nav>
       </div>
     <div class="sidenav-opt">
       <nav>
         <mat-icon class="sidenav-icon">person</mat-icon>
-        <a routerLink="/profile" (click)="changeTitle('Profile')">Profile</a>
+        <a routerLink="/profile" (click)="sidenav.toggle()">Profile</a>
       </nav>
     </div>
   </mat-sidenav>
+  <mat-sidenav *ngIf="largeScreen == true" mode="side" opened class="sidenav-large" position="start">
+      <div class="nav-title">
+        <h1 class="nav-text-title">PickEm</h1>
+      </div>
+      <div class="sidenav-opt">
+        <nav>
+          <mat-icon class="sidenav-icon">bookmark</mat-icon>
+          <a routerLink="/myPicks">My Picks</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt">
+        <nav>
+          <mat-icon class="sidenav-icon">view_list</mat-icon>
+          <a routerLink="/weeklyPicks">Weekly Games</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt">
+        <nav>
+          <mat-icon class="sidenav-icon">public</mat-icon>
+          <a routerLink="/standings">Standings</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt">
+          <nav>
+            <mat-icon class="sidenav-icon">timeline</mat-icon>
+            <a routerLink="/profile">My Stats</a>
+          </nav>
+        </div>
+      <div class="sidenav-opt">
+        <nav>
+          <mat-icon class="sidenav-icon">person</mat-icon>
+          <a routerLink="/profile">Profile</a>
+        </nav>
+      </div>
+  </mat-sidenav>
   <mat-sidenav-content>
     <div class="sidenav-button-group">
-        <button mat-icon-button (click)="sidenav.toggle()">
+        <button *ngIf="largeScreen == false" mat-icon-button (click)="sidenav.toggle()">
           <mat-icon class="sidenav-button">menu</mat-icon>
         </button>
     </div>

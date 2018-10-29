@@ -1,20 +1,20 @@
 <div class="game-card game-card-animation" attr.id={{game.id}}-game-card>
   <div  class="icon-group">
-    <mat-icon class="status-icon" *ngIf="game.inProgress == false">
+    <mat-icon class="status-icon" *ngIf="game.progress == 'PENDING' ">
       lock_open
     </mat-icon>
-    <mat-icon class="status-icon" *ngIf="game.inProgress == true">
+    <mat-icon class="status-icon" *ngIf="game.progress != 'PENDING'">
         lock
     </mat-icon>
     <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon" 
     [ngStyle]="getBorderColor(game.awayTeam)" 
     (click)="selectTeam(game.awayTeam, game)">
-      <div *ngIf="game.inProgress == true">
+      <div *ngIf="game.progress != 'PENDING'">
         <div style="margin:5px 0 0 5px">AWAY</div>
         <div class="large-text-padding">{{game.awayScore}}</div>
         <div class="small-text-middle">{{getTeamName(game.awayTeam)}}</div>
       </div>
-      <div *ngIf="game.inProgress == false">
+      <div *ngIf="game.progress == 'PENDING'">
         <p style="margin-left:5px">AWAY</p>
         <p class="large-text">{{getTeamName(game.awayTeam)}}</p>
       </div>
@@ -22,12 +22,12 @@
     <div attr.id="{{game.homeTeam}}-team-card" class="game-card-icon" 
     [ngStyle]="getBorderColor(game.homeTeam)" 
     (click)="selectTeam(game.homeTeam, game)">
-      <div *ngIf="game.inProgress == true">
+      <div *ngIf="game.progress != 'PENDING'">
         <div style="margin:5px 0 0 5px">HOME</div>
         <div class="large-text-padding">{{game.homeScore}}</div>
         <div class="small-text-middle">{{getTeamName(game.homeTeam)}}</div>
       </div>
-      <div *ngIf="game.inProgress == false">
+      <div *ngIf="game.progress == 'PENDING'">
         <p style="margin-left:5px">HOME</p>
         <p class="large-text">{{getTeamName(game.homeTeam)}}</p>
       </div>
@@ -39,12 +39,15 @@
   </div>
   <div style="width: 100%">
     <div class="game-card-date">
-      <div *ngIf="game.inProgress == false" class="date-text">
+      <div *ngIf="game.progress == 'PENDING'" class="date-text">
         {{game.date}}
       </div>
-      <div *ngIf="game.inProgress" class="date-text">
-          GAME IN PROGRESS
-        </div>
+      <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">
+        GAME IN PROGRESS
+      </div>
+      <div *ngIf="game.progress == 'FINAL'" class="date-text">
+        FINAL
+      </div>
     </div>
   </div>
 </div>

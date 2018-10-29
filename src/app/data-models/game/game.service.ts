@@ -27,7 +27,7 @@ export class GameService {
       homeScore: 21,
       awayScore: 7,
       spread: 7.0,
-      inProgress: true
+      progress: 'FINAL'
     },
     {
       id: 102,
@@ -36,10 +36,10 @@ export class GameService {
       submitDate: 'SUN, OCT 10 @ 03:00PM',
       homeTeam: 103,
       awayTeam: 104,
-      homeScore: 21,
-      awayScore: 7,
+      homeScore: 0,
+      awayScore: 0,
       spread: 6.0,
-      inProgress: true
+      progress: 'INPROGRESS'
     },
     {
       id: 103,
@@ -51,7 +51,79 @@ export class GameService {
       homeScore: 0,
       awayScore: 0,
       spread: -3.0,
-      inProgress: false
+      progress: 'PENDING'
+    },
+    {
+      id: 104,
+      number: 104,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 107,
+      awayTeam: 108,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
+    },
+    {
+      id: 105,
+      number: 105,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 109,
+      awayTeam: 110,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
+    },
+    {
+      id: 106,
+      number: 106,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 111,
+      awayTeam: 112,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
+    },
+    {
+      id: 107,
+      number: 107,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 113,
+      awayTeam: 114,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
+    },
+    {
+      id: 108,
+      number: 109,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 115,
+      awayTeam: 116,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
+    },
+    {
+      id: 109,
+      number: 109,
+      date: 'SUN, OCT 10 @ 04:00PM',
+      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      homeTeam: 117,
+      awayTeam: 118,
+      homeScore: 0,
+      awayScore: 0,
+      spread: -3.0,
+      progress: 'PENDING'
     }
   ];
 

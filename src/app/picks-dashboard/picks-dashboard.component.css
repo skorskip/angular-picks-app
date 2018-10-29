@@ -13,12 +13,9 @@
 }
 
 #submit-button {
-	border-style: solid;
     border-radius: 8px;
-    border-width: 2px;
-    background-color: #e69033;
-    border-color:  #e69033;
-    width: 30%;
+	background: linear-gradient(to right, #f857a6, #ff5858);;
+	width: 30%;
 	margin-top: 10px;
 	margin-bottom: 10px;
     margin-left: 10%;
@@ -26,8 +23,7 @@
 }
 
 #submit-button:hover {
-	background-color: lightgrey;
-	border-color:  lightgrey;
+	background: lightgray;
 	cursor: pointer;
 }
 
@@ -61,7 +57,7 @@
 
 #week-card {
 	padding: 2px;
-	background-color: white;
+	background-color: #eaeaea;
 	border-radius: 24px;
 	margin: 10px;
 }
@@ -98,7 +94,7 @@
 
 .week-cards {
 	padding: 2px;
-	background-color: white;
+	background-color: #eaeaea;
 	border-radius: 24px;
 	margin: 20px;
 	box-shadow: 4px -2px 20px 3px rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);

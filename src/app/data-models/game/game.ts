@@ -8,5 +8,6 @@ export class Game {
 	homeScore: number;
 	awayScore: number;
 	spread: number;
-	inProgress: boolean;
+	//FINAL, INPROGRESS, PENDING
+	progress: string;
 }
