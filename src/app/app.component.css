@@ -28,7 +28,7 @@ h1.title {
 	margin-left: 10%;
 	border-bottom: solid lightgrey 1px;
 	width:80%;
-	color: grey;
+	color: black;
 }
 
 h1.nav-text-title {
@@ -62,7 +62,7 @@ a {
 	font-size: 1.5em;
 	text-align:left;
 	text-decoration: none;
-	color:grey;
+	color:black;
 }
 
 .sidenav-opt{
@@ -72,11 +72,14 @@ a {
 }
 
 .sidenav-opt:hover {
-	/* background-color: rgb(83, 178, 255); */
+	background: linear-gradient(to right, #f857a6, #ff5858);
+}
+
+.select {
 	background: linear-gradient(to right, #f857a6, #ff5858);
 }
 
 .sidenav-icon {
 	transform: scale(1.5);
-	color: grey;
+	color: black;
 }

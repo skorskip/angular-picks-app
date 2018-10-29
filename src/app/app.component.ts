@@ -7,11 +7,12 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Picks Dashboard';
   events: string[] = [];
   openedSmall: boolean;
   opened:boolean;
   largeScreen: boolean;
+  selectedLarge = "weekly-games-large";
+  selectedSmall = "weekly-games";
 
   constructor(@Inject(DOCUMENT) document){}
 
@@ -25,15 +26,36 @@ export class AppComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    if(this.largeScreen){
+      document.getElementById(this.selectedLarge).classList.add("select");
+    } else {
+      document.getElementById(this.selectedSmall).classList.add("select");
+    }    
+  }
+
   onResize(event) {
-    console.log(event.target.innerWidth);
     if(event.target.innerWidth > 950){
       this.largeScreen = true;
       this.openedSmall = false;
+      this.highlight(this.selectedLarge);
     } else {
       this.opened = false;
       this.largeScreen = false;
       this.openedSmall = true;
+      this.highlight(this.selectedSmall);
+    }
+  }
+
+  highlight(id:string) {
+    if(id != this.selectedLarge && this.largeScreen){
+      document.getElementById(id).classList.add("select");
+      document.getElementById(this.selectedLarge).classList.remove("select");
+      this.selectedLarge = id;
+    } else if(id != this.selectedSmall && !this.largeScreen){
+      document.getElementById(id).classList.add("select");
+      document.getElementById(this.selectedSmall).classList.remove("select");
+      this.selectedSmall = id;
     }
   }
 }
