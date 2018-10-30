@@ -35,7 +35,6 @@ export class MyPicksDashboardComponent implements OnInit {
     var delay = .5;
     this.myGames.forEach((game,i) => {
       var element = document.getElementById(game.id + "-game-card");
-
         element.style.animationDuration = (delay + (i * .5)) + 's';
     })  
   }

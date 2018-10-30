@@ -50,6 +50,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog } from './picks-dashboard/picks-dashboard.component';
 import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboard.component';
+import { MyStatsComponent } from './my-stats/my-stats.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboa
     SubmitPicksDialog,
     NoPicksDialog,
     PicksDashboardComponent,
-    MyPicksDashboardComponent
+    MyPicksDashboardComponent,
+    MyStatsComponent
   ],
   imports: [
     BrowserModule,
