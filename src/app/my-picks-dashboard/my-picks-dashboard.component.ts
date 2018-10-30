@@ -119,6 +119,9 @@ export class MyPicksDashboardComponent implements OnInit {
         gameElement.style.background = "lightcoral";
       }
     }
+    else if(game.progress == 'INPROGRESS') {
+      document.getElementById(game.id + "-game-card").style.backgroundColor = "#f857a6";
+    }
   }
 
   getTeam(id: number): Team {

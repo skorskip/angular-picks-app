@@ -139,13 +139,16 @@ export class PicksDashboardComponent implements OnInit {
         if(game.homeScore + game.spread > game.awayScore){
           document.getElementById(game.homeTeam + "-team-card").style.background = "linear-gradient(to right, #f857a6, #ff5858)";
           document.getElementById(game.homeTeam + "-team-card").style.color = "white";
-
         }
         else if(game.homeScore + game.spread < game.awayScore) {
           document.getElementById(game.awayTeam + "-team-card").style.background = "linear-gradient(to right, #f857a6, #ff5858)";
           document.getElementById(game.homeTeam + "-team-card").style.color = "white";
 
         }
+        document.getElementById(game.id + "-game-card").style.backgroundColor = "#ff5858";
+      }
+      if(game.progress == 'INPROGRESS') {
+        document.getElementById(game.id + "-game-card").style.backgroundColor = "#f857a6";
       }
     })
 
