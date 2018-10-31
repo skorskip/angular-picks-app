@@ -8,9 +8,10 @@ import { Chart } from 'chart.js';
 export class MyStatsComponent implements OnInit {
 
   picksChart = [];
-  chartLabels = ["week 1", "week 2", "week 3", "week 4", "week 5", "week 6"];
-  numberWins = ["2", "3", "1", "6", "2"];
-  numberLoss = ["0", "1", "3", "0", "1"];
+  chartLabels = ["week 1", "week 2", "week 3", "week 4"];
+  numberWins = [2,3, 1,6];
+  numberLoss = [0, -1, -3, 0];
+  
   constructor() { }
 
   ngOnInit() {
@@ -25,40 +26,59 @@ export class MyStatsComponent implements OnInit {
         datasets: [
           {
             data: this.numberWins,
-            borderColor: "lightgreen",
-            backgroundColor:"#90ee907a",
+            borderColor: "white",
+            backgroundColor:"#ffffff78",
             fill: true,
-            pointRadius: 5
+            pointRadius: 10
           },
           {
             data: this.numberLoss,
-            borderColor: "lightcoral",
-            backgroundColor: "#f080807a",
+            borderColor: "white",
+            backgroundColor: "#ffffff78",
             fill: true,
-            pointRadius: 5
+            pointRadius: 10
           }
         ]
       },
       options: {
         legend: {
-          display: false
+          display: false,
+          fullWidth: false,
         },
+        onClick: this.graphClicked.bind(this),
         scales: {
           xAxes: [{
             display: true,
             gridLines: {
-              display:false
+              display:true,
+              color: "white"
+            },
+            ticks: {
+              fontColor: "white",
+              fontFamily: "Comfortaa"
             }
           }],
           yAxes: [{
             display: true,
             gridLines: {
-              display:false
+              color: "transparent",
+              display: true,
+              drawBorder: false,
+              zeroLineColor: "white",
+              zeroLineWidth: 1
+            },
+            ticks: {
+              fontColor: "white",
+              fontFamily: "Comfortaa"
             }
           }]
         }
       }
     })
   }
+
+  graphClicked(event, array){
+    console.log("ARRAY", array._index);
+    }
 
 }
