@@ -7,6 +7,8 @@ import { Week } from '../data-models/week/week';
 import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';
 import { Pick } from '../data-models/pick/pick';
+import { WeeksService } from '../weeks.service';
+import { Subscription }   from 'rxjs';
 import { element } from 'protractor';
 
 @Component({
@@ -23,8 +25,16 @@ export class MyPicksDashboardComponent implements OnInit {
   edit = false;
   notSelectablePicks = true;
   weeksView = false;
+  subscription: Subscription;
+
   constructor(private pickService: PickService, private gameService: GameService, 
-    private teamService: TeamService, private weekService: WeekService) { }
+    private teamService: TeamService, private weekService: WeekService, private weeksService: WeeksService) { 
+      this.subscription = weeksService.weekSelected$.subscribe(
+        weekId => {
+          this.weekSelected(weekId);
+        }
+      )
+    }
 
   ngOnInit() {
     this.getPicksByWeek(this.weekService.getCurrentWeek().id);
@@ -153,16 +163,18 @@ export class MyPicksDashboardComponent implements OnInit {
     },500);
   }
 
-  weekSelected(weekSelected:Week) {
-    this.getPicksByWeek(weekSelected.id);
-    var element = document.getElementById("weeks-container");
-    element.className = "week-out-animation";
+  weekSelected(weekId:number) {
+    this.getPicksByWeek(weekId);
     setTimeout(()=>{
       this.weeksView = false;
       setTimeout(()=>{
         this.ngAfterViewInit();
       })
     },500);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

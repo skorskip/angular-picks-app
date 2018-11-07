@@ -8,17 +8,46 @@ import { Chart } from 'chart.js';
 export class MyStatsComponent implements OnInit {
 
   picksChart = [];
+  picksCountChart = [];
   chartLabels = ["week 1", "week 2", "week 3", "week 4"];
+  doughnutLabels = ["correct", "incorrect"];
+  numberOfPicks = [.60, .40];
+  totalNumberOfPicks= [];
   numberWins = [2,3, 1,6];
   numberLoss = [0, -1, -3, 0];
   
   constructor() { }
 
   ngOnInit() {
-    this.initChart();
+    this.initPicksGraphChart();
+    this.initPicksDoughnutChart();
   }
 
-  initChart(){
+  initPicksDoughnutChart(){
+    this.picksCountChart = new Chart('pick-counts-chart', {
+      type:'doughnut',
+      data: {
+        labels: this.doughnutLabels,
+        datasets: [
+          {
+            data: this.numberOfPicks,
+            backgroundColor:["#ffffff","#ffffff78"]
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1,
+        responsive: true,
+        maintainAspectRatio: true,
+        legend:{
+          display: false,
+          fullWidth: false
+        }
+      }
+    })
+  }
+
+  initPicksGraphChart(){
     this.picksChart = new Chart('picks-chart', {
       type: 'line',
       data: {
@@ -78,7 +107,7 @@ export class MyStatsComponent implements OnInit {
   }
 
   graphClicked(event, array){
-    console.log("ARRAY", array._index);
+    console.log("ARRAY", array[0]._index);
     }
 
 }

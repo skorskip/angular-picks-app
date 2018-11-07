@@ -1,0 +1,6 @@
+<div id="weeks-container">
+    <div *ngFor="let weekCard of weeks" class="week-cards week-cards-animation" 
+    id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard)">
+        week {{weekCard.number}}
+    </div>
+</div>

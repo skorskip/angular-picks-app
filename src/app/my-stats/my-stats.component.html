@@ -2,6 +2,38 @@
     MY STATS
 </div>
 <div class="picks-chart-card">
+  <div class="progress-container">
+    <div class="picks-progress">
+        <div class="progress-count">
+            25%
+        </div>
+    </div>
+  </div>
+  <div class="pick-progress-text">
+    30/165 PICKS MADE
+  </div>
+</div>
+<div class="picks-chart-card">
+  <div class="pick-count-container">
+    <div>
+    <canvas id="pick-counts-chart">
+      {{ chart }}
+    </canvas>
+  </div>
+    <div class="pick-count-text">
+      <div>
+        60%
+      </div>
+      <div>
+        PICK ACCURACY
+      </div>
+    </div>
+  </div>
+</div>
+<div class="picks-chart-card">
+  <h3>
+    MY PICKS
+  </h3>
   <canvas id="picks-chart">
     {{ chart }}
   </canvas>

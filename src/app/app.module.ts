@@ -51,6 +51,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
 import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog } from './picks-dashboard/picks-dashboard.component';
 import { MyPicksDashboardComponent } from './my-picks-dashboard/my-picks-dashboard.component';
 import { MyStatsComponent } from './my-stats/my-stats.component';
+import { WeeksComponent } from './weeks/weeks.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { MyStatsComponent } from './my-stats/my-stats.component';
     NoPicksDialog,
     PicksDashboardComponent,
     MyPicksDashboardComponent,
-    MyStatsComponent
+    MyStatsComponent,
+    WeeksComponent
   ],
   imports: [
     BrowserModule,
