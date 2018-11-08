@@ -7,9 +7,11 @@ import { Week } from '../data-models/week/week';
 import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';
 import { Pick } from '../data-models/pick/pick';
-import { WeeksService } from '../weeks.service';
+import { WeeksService } from '../weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 import { element } from 'protractor';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -27,25 +29,32 @@ export class MyPicksDashboardComponent implements OnInit {
   weeksView = false;
   subscription: Subscription;
 
-  constructor(private pickService: PickService, private gameService: GameService, 
-    private teamService: TeamService, private weekService: WeekService, private weeksService: WeeksService) { 
-      this.subscription = weeksService.weekSelected$.subscribe(
+  constructor(
+    private pickService: PickService, 
+    private gameService: GameService, 
+    private teamService: TeamService, 
+    private weekService: WeekService, 
+    private weeksService: WeeksService,
+    private route:ActivatedRoute,
+    private router:Router) { 
+      this.subscription = this.weeksService.weekSelected$.subscribe(
         weekId => {
           this.weekSelected(weekId);
+          this.router.navigate(['/myPicks/' + weekId]);
         }
       )
     }
 
   ngOnInit() {
-    this.getPicksByWeek(this.weekService.getCurrentWeek().id);
+    const id = +this.route.snapshot.paramMap.get('weekId');
+    this.getPicksByWeek(id);
   }
 
   ngAfterViewInit() {
     this.highLightSelected();
-    var delay = .5;
     this.myGames.forEach((game,i) => {
       var element = document.getElementById(game.id + "-game-card");
-        element.style.animationDuration = (delay + (i * .5)) + 's';
+        element.style.animationDuration = (.5 + (i * .5)) + 's';
     })  
   }
 
@@ -154,10 +163,8 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showWeeks() {
-    this.weeks = this.weekService.getWeeks();
     var element = document.getElementById("week-card");
-    element.className = "week-out-animation";
-    
+    element.className = "week-out-animation";    
     setTimeout(()=>{
       this.weeksView = true;
     },500);

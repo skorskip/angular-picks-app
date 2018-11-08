@@ -10,6 +10,9 @@ import { TeamService } from '../data-models/team/team.service';
 import { WeekService } from '../data-models/week/week.service';
 import { Pick } from '../data-models/pick/pick';
 import { PickService } from '../data-models/pick/pick.service';
+import { WeeksService } from '../weeks/weeks.service';
+import { Subscription }   from 'rxjs';
+
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -25,9 +28,24 @@ export class PicksDashboardComponent implements OnInit {
   weeks: Week[] = [];
   submitOpened = false;
   weeksView = false;
-  constructor(public dialog: MatDialog, private weekService: WeekService, private gameService: GameService,
-    private teamService: TeamService, private pickService: PickService, public snackBar: MatSnackBar, 
-    @Inject(DOCUMENT) document, private router:Router) { }
+  subscription: Subscription;
+
+  constructor(
+    public dialog: MatDialog, 
+    private weekService: WeekService, 
+    private gameService: GameService,
+    private teamService: TeamService, 
+    private pickService: PickService, 
+    public snackBar: MatSnackBar, 
+    @Inject(DOCUMENT) document, 
+    private router:Router,
+    private weeksService:WeeksService) { 
+      this.subscription = this.weeksService.weekSelected$.subscribe(
+        weekId => {
+          this.weekSelected(weekId);
+        }
+      )
+    }
 
   ngOnInit() {
     this.getWeekInfo(this.weekService.getCurrentWeek());
@@ -105,7 +123,7 @@ export class PicksDashboardComponent implements OnInit {
           if(this.submitPicks()){
             this.removePickedGames();
             this.snackBar.open("picks submitted", "",{duration: 2000});
-            this.router.navigate(['/myPicks']);
+            this.router.navigate(['/myPicks/' + this.week.id]);
           }
         }
       });
@@ -113,23 +131,23 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showWeeks() {
-    this.weeks = this.weekService.getWeeks();
     var element = document.getElementById("week-card");
     element.className = "week-out-animation";
-
     setTimeout(()=>{
       this.weeksView = true; 
     },500);
   }
 
-  weekSelected(weekSelected:Week) {
-    this.getWeekInfo(weekSelected);
+  weekSelected(weekId:number) {
+    this.getWeekInfo(this.weekService.getWeek(weekId));
     var element = document.getElementById("weeks-container");
     element.className = "week-out-animation";
     setTimeout(()=>{
       this.weeksView = false;
+      setTimeout(()=>{
+        this.ngAfterViewInit();
+      })
     },500);
-  
   }
 
   highlightGameResult(){
@@ -172,6 +190,10 @@ export class PicksDashboardComponent implements OnInit {
       }
     })
     return team;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 

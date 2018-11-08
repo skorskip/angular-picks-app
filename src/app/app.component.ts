@@ -1,5 +1,7 @@
 import { Component, OnInit,Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
+import { WeekService } from '../app/data-models/week/week.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,7 @@ export class AppComponent implements OnInit {
   selectedLarge = "weekly-games-large";
   selectedSmall = "weekly-games";
 
-  constructor(@Inject(DOCUMENT) document){}
+  constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){}
 
   ngOnInit() {
     if(document.getElementById("side-nav").scrollWidth > 950){
@@ -57,5 +59,10 @@ export class AppComponent implements OnInit {
       document.getElementById(this.selectedSmall).classList.remove("select");
       this.selectedSmall = id;
     }
+  }
+
+  navigateToMyPicks() {
+    var week = this.weekService.getCurrentWeek();
+    this.router.navigate(['/myPicks/' + week.id]);
   }
 }

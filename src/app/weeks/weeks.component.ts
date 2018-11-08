@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WeekService } from '../data-models/week/week.service';
-import { WeeksService } from '../weeks.service';
+import { WeeksService } from './weeks.service';
 import { Week } from '../data-models/week/week';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'weeks',
@@ -11,7 +12,10 @@ import { Week } from '../data-models/week/week';
 export class WeeksComponent implements OnInit {
 
   weeks: Week[] = [];
-  constructor(private weekService: WeekService, private weeksService: WeeksService) { }
+  constructor(
+    private weekService: WeekService, 
+    private weeksService: WeeksService,
+    private router:Router) { }
 
   ngOnInit() {
     this.showWeeks();

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-my-stats',
   templateUrl: './my-stats.component.html',
   styleUrls: ['./my-stats.component.css']
 })
 export class MyStatsComponent implements OnInit {
-
+  
   picksChart = [];
   picksCountChart = [];
   chartLabels = ["week 1", "week 2", "week 3", "week 4"];
@@ -16,7 +18,9 @@ export class MyStatsComponent implements OnInit {
   numberWins = [2,3, 1,6];
   numberLoss = [0, -1, -3, 0];
   
-  constructor() { }
+  constructor(
+    private router:Router,
+  ) { }
 
   ngOnInit() {
     this.initPicksGraphChart();
@@ -107,7 +111,7 @@ export class MyStatsComponent implements OnInit {
   }
 
   graphClicked(event, array){
-    console.log("ARRAY", array[0]._index);
-    }
+    this.router.navigate(['/myPicks/' + (array[0]._index + 101)]);
+  }
 
 }

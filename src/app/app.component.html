@@ -9,7 +9,7 @@
     <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')">
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
-        <a routerLink="/myPicks" (click)="sidenav.toggle()">My Picks</a>
+        <a (click)="sidenav.toggle(); navigateToMyPicks()">My Picks</a>
       </nav>
     </div>
     <div class="sidenav-opt" id="weekly-games" (click)="highlight('weekly-games')">
@@ -44,7 +44,7 @@
     <div class="sidenav-opt" id="my-picks-large" (click)="highlight('my-picks-large')">
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
-        <a routerLink="/myPicks">My Picks</a>
+        <a (click)="navigateToMyPicks()">My Picks</a>
       </nav>
     </div>
     <div class="sidenav-opt" id="weekly-games-large" (click)="highlight('weekly-games-large')">

@@ -8,8 +8,8 @@ import { MyPicksDashboardComponent } from '../my-picks-dashboard/my-picks-dashbo
 import { MyStatsComponent } from '../my-stats/my-stats.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/weeklyPicks', pathMatch: 'full' },
-  { path: 'myPicks', component: MyPicksDashboardComponent },
+  { path: '', redirectTo: '/weeklyGames', pathMatch: 'full' },
+  { path: 'myPicks/:weekId', component: MyPicksDashboardComponent },
   { path: 'weeklyGames', component: PicksDashboardComponent },
   { path: 'myStats', component: MyStatsComponent },
   { path: 'standings', component: StandingsComponent },
