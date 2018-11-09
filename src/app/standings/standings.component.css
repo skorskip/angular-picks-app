@@ -1,0 +1,81 @@
+@keyframes standingsCardAnimationIn {
+	0%{margin-top:1000px;opacity:0;}
+	100%{margin-top:30px; opacity: 1}
+}
+
+@keyframes standingCardAnimation {
+	0%{margin-top:100px;opacity:0;}
+	70%{margin-top:20px; opacity: 0;}
+	100%{margin-top:2px; opacity: 1}
+}
+
+@keyframes standingCardHeaderAnimation {
+	0%{margin-top:100px;opacity:0;}
+	70%{margin-top:0px; opacity: 0;}
+	100%{margin-top:-25px; opacity: 1}
+}
+
+#standings-card {
+	padding: 2px;
+	background-color: #eaeaea;
+	border-radius: 24px;
+    margin: 10px;
+    margin-top: 30px;
+}
+
+.standings-in-animation {
+	animation-name:standingsCardAnimationIn;
+	animation-timing-function: ease-in-out;
+	animation-duration: .75s;
+}
+
+.standing-card-animation {
+	animation-name:standingCardAnimation;
+	animation-duration: 1.5s;
+	animation-timing-function: ease;
+	animation-delay: 0s;
+}
+
+.standing-card-header-animation {
+	animation-name:standingCardHeaderAnimation;
+	animation-duration: 1.5s;
+	animation-timing-function: ease;
+	animation-delay: 0s;
+}
+
+.standing-card-header {
+	border-radius: 18px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+    background: linear-gradient(to right, #f857a6, #ff5858);
+    color: white;
+	margin-top: -25px;
+}
+
+.standing-card {
+	border-radius: 18px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+	background: white;
+	margin-top: 2px;
+}
+
+.standing-info {
+    display: flex;
+    justify-content: start;
+    padding:20px;
+}
+
+.field-small {
+    width: 15%;
+    margin-right: 5px;
+}
+
+.field {
+    width: 30%;
+    margin-right: 15px;
+}

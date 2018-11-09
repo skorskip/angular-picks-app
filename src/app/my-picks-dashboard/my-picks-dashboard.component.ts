@@ -82,7 +82,7 @@ export class MyPicksDashboardComponent implements OnInit {
     this.picks.forEach(pick => {
       if(pick.gameId == game.id){
         this.pickService.deletePick(pick.id);
-        this.getPicksByWeek(this.week.id);
+        this.ngOnInit();
       }
     }); 
   }

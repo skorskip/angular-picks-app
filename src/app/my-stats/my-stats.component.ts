@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-my-stats',
@@ -20,6 +21,7 @@ export class MyStatsComponent implements OnInit {
   
   constructor(
     private router:Router,
+    private dialog:MatDialog
   ) { }
 
   ngOnInit() {
@@ -111,7 +113,17 @@ export class MyStatsComponent implements OnInit {
   }
 
   graphClicked(event, array){
-    this.router.navigate(['/myPicks/' + (array[0]._index + 101)]);
+    const dialogRef = this.dialog.open(NavigateToPicksDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.router.navigate(['/myPicks/' + (array[0]._index + 101)]);
+      }
+    });
   }
-
 }
+
+@Component({
+  selector: 'navigate-to-picks-dialog',
+  templateUrl: '../dialog-content/navigate-to-picks-dialog.html',
+})
+export class NavigateToPicksDialog {}

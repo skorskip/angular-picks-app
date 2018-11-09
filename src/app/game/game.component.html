@@ -1,4 +1,4 @@
-<div class="game-card game-card-animation" attr.id={{game.id}}-game-card>
+<div class="game-card game-card-animation body-color-primary" attr.id={{game.id}}-game-card>
   <div  class="icon-group">
     <!-- <mat-icon class="status-icon" *ngIf="game.progress == 'PENDING' ">
       lock_open
@@ -6,7 +6,7 @@
     <mat-icon class="status-icon" *ngIf="game.progress != 'PENDING'">
         lock
     </mat-icon> -->
-    <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon" 
+    <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon body-color-primary" 
     [ngStyle]="getBorderColor(game.awayTeam)" 
     (click)="selectTeam(game.awayTeam, game)">
       <div *ngIf="game.progress != 'PENDING'">
@@ -19,7 +19,7 @@
         <p class="large-text">{{getTeamName(game.awayTeam)}}</p>
       </div>
     </div>
-    <div attr.id="{{game.homeTeam}}-team-card" class="game-card-icon" 
+    <div attr.id="{{game.homeTeam}}-team-card" class="game-card-icon body-color-primary" 
     [ngStyle]="getBorderColor(game.homeTeam)" 
     (click)="selectTeam(game.homeTeam, game)">
       <div *ngIf="game.progress != 'PENDING'">

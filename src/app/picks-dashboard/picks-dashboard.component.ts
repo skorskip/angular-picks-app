@@ -6,7 +6,6 @@ import { Game } from '../data-models/game/game';
 import { Team } from '../data-models/team/team';
 import { Week } from '../data-models/week/week';
 import { GameService } from '../data-models/game/game.service';
-import { TeamService } from '../data-models/team/team.service';
 import { WeekService } from '../data-models/week/week.service';
 import { Pick } from '../data-models/pick/pick';
 import { PickService } from '../data-models/pick/pick.service';
@@ -22,7 +21,6 @@ import { Subscription }   from 'rxjs';
 
 export class PicksDashboardComponent implements OnInit {
   games: Game[] = [];
-  teams: Team[] = [];
   stagedPicks: Pick[] = [];
   week: Week;
   weeks: Week[] = [];
@@ -34,7 +32,6 @@ export class PicksDashboardComponent implements OnInit {
     public dialog: MatDialog, 
     private weekService: WeekService, 
     private gameService: GameService,
-    private teamService: TeamService, 
     private pickService: PickService, 
     public snackBar: MatSnackBar, 
     @Inject(DOCUMENT) document, 
@@ -52,10 +49,9 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    var delay = .5;
     this.games.forEach((game,i) => {
       var element = document.getElementById(game.id + "-game-card");
-        element.style.animationDuration = (delay + (i * 500)) + 'ms';
+        element.style.animationDuration = (.5 + (i * 500)) + 'ms';
     });
     this.highlightGameResult();
   }
@@ -68,9 +64,9 @@ export class PicksDashboardComponent implements OnInit {
 
   removePickedGames() {
     var picks = this.pickService.getPicksByWeek(this.week.id);
-    picks.forEach(element => {
+    picks.forEach(pick => {
       this.games.forEach((game, i) => {
-        if(element.gameId == game.id) {
+        if(pick.gameId == game.id) {
           this.games.splice(i, 1);
         }
       })
@@ -95,12 +91,11 @@ export class PicksDashboardComponent implements OnInit {
   stageSelectedPick(selectedPick: Pick){
     selectedPick.weekId = this.week.id;
     var pickAdded = false;
-    this.stagedPicks.forEach((element, i) =>{
-      if(element.gameId == selectedPick.gameId && element.teamId == selectedPick.teamId) {
-        this.stagedPicks.splice(i, 1);
-        pickAdded = true;
-      } else if(element.gameId == selectedPick.gameId) {
-        this.stagedPicks.splice(i, 1, selectedPick);
+    this.stagedPicks.forEach((stagedPick, i) =>{
+      if(stagedPick.gameId == selectedPick.gameId) {
+        if(stagedPick.teamId == selectedPick.teamId) {
+          this.stagedPicks.splice(i, 1);
+        } else this.stagedPicks.splice(i, 1, selectedPick);
         pickAdded = true;
       }
     });
@@ -121,7 +116,6 @@ export class PicksDashboardComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if(result){
           if(this.submitPicks()){
-            this.removePickedGames();
             this.snackBar.open("picks submitted", "",{duration: 2000});
             this.router.navigate(['/myPicks/' + this.week.id]);
           }
@@ -180,16 +174,6 @@ export class PicksDashboardComponent implements OnInit {
       }
     })
     return game;
-  }
-
-  getTeam(id: number): Team {
-    var team
-    this.teams.forEach((teamItem) => {
-      if(id == teamItem.id){
-        team = teamItem;
-      }
-    })
-    return team;
   }
 
   ngOnDestroy() {
