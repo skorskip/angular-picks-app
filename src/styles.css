@@ -14,7 +14,6 @@ body { margin: 0;}
 .title{
     margin: 20px;
     font-size: 2em;
-    color: grey;
 	animation-name:titleSlide;
 	animation-duration: .5s;
 }
@@ -29,10 +28,11 @@ body { margin: 0;}
 
 .body-color-primary {
     background-color:white;
+    color: black !important;
 }
 
 .body-color-secondary {
-    background-color: lightgray;
+    background-color: #eaeaea !important;
     color: black;
 }
 
@@ -52,13 +52,13 @@ body { margin: 0;}
 }
 
 .success-color {
-    background-color: green;
+    background-color: lightgreen;
     color:white;
 }
 
 .failure-color {
-    background-color: red;
-    color:white
+    background-color: rgb(228, 46, 46);
+    color:white;
 }
 
 

@@ -2,77 +2,87 @@
 <mat-sidenav-container  id="side-nav" class="example-container" (window:resize)="onResize($event)" >
   <mat-sidenav #sidenav mode="push" 
   [(opened)]="openedSmall" (opened)="events.push('open!')" (closed)="events.push('close!')" 
-  class="sidenav" position="end">
+  class="sidenav body-color-secondary" position="end">
     <div class="nav-title">
       <h1 class="nav-text-title">PickEm</h1>
     </div>
-    <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')">
+    <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)">
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
         <a (click)="sidenav.toggle(); navigateToMyPicks()">My Picks</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="weekly-games" (click)="highlight('weekly-games')">
+    <div class="sidenav-opt" id="weekly-games" (click)="highlight('weekly-games')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">view_list</mat-icon>
-        <a routerLink="/weeklyGames" (click)="sidenav.toggle()">Weekly Games</a>
+        <a (click)="sidenav.toggle(); navigateToPage('weeklyGames')">Weekly Games</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="standings" (click)="highlight('standings')">
+    <div class="sidenav-opt" id="standings" (click)="highlight('standings')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">public</mat-icon>
-        <a routerLink="/standings" (click)="sidenav.toggle()">Standings</a>
+        <a (click)="sidenav.toggle(); navigateToPage('standings')">Standings</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="my-stats" (click)="highlight('my-stats')">
+    <div class="sidenav-opt" id="my-stats" (click)="highlight('my-stats')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
         <nav>
           <mat-icon class="sidenav-icon">timeline</mat-icon>
-          <a routerLink="/myStats" (click)="sidenav.toggle()">My Stats</a>
+          <a (click)="sidenav.toggle(); navigateToPage('myStats')">My Stats</a>
         </nav>
       </div>
-    <div class="sidenav-opt" id="my-profile" (click)="highlight('my-profile')">
+    <div class="sidenav-opt" id="my-profile" (click)="highlight('my-profile')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">person</mat-icon>
-        <a routerLink="/profile" (click)="sidenav.toggle()">Profile</a>
+        <a (click)="sidenav.toggle(); navigateToPage('profile')">Profile</a>
       </nav>
     </div>
   </mat-sidenav>
-  <mat-sidenav *ngIf="largeScreen == true" mode="side" opened class="sidenav-large" position="start">
+  <mat-sidenav *ngIf="largeScreen == true" mode="side" opened class="sidenav-large body-color-secondary" position="start">
     <div class="nav-title">
       <h1 class="nav-text-title">PickEm</h1>
     </div>
-    <div class="sidenav-opt" id="my-picks-large" (click)="highlight('my-picks-large')">
+    <div class="sidenav-opt" id="my-picks-large" (click)="highlight('my-picks-large')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
         <a (click)="navigateToMyPicks()">My Picks</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="weekly-games-large" (click)="highlight('weekly-games-large')">
+    <div class="sidenav-opt" id="weekly-games-large" (click)="highlight('weekly-games-large')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">view_list</mat-icon>
-        <a routerLink="/weeklyGames">Weekly Games</a>
+        <a (click)="navigateToPage('weeklyGames')">Weekly Games</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="standings-large" (click)="highlight('standings-large')">
+    <div class="sidenav-opt" id="standings-large" (click)="highlight('standings-large')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">public</mat-icon>
-        <a routerLink="/standings">Standings</a>
+        <a (click)="navigateToPage('standings')">Standings</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="my-stats-large" (click)="highlight('my-stats-large')">
+    <div class="sidenav-opt" id="my-stats-large" (click)="highlight('my-stats-large')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
         <nav>
           <mat-icon class="sidenav-icon">timeline</mat-icon>
-          <a routerLink="/myStats">My Stats</a>
+          <a (click)="navigateToPage('myStats')">My Stats</a>
         </nav>
       </div>
-    <div class="sidenav-opt" id="my-profile-large" (click)="highlight('my-profile-large')">
+    <div class="sidenav-opt" id="my-profile-large" (click)="highlight('my-profile-large')" (mouseover) = "mouseover($event)"
+    (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">person</mat-icon>
-        <a routerLink="/profile">Profile</a>
+        <a (click)="navigateToPage('profile')">Profile</a>
       </nav>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="body-color-primary">
     <div class="sidenav-button-group">
         <button *ngIf="largeScreen == false" mat-icon-button (click)="sidenav.toggle()">
           <mat-icon class="sidenav-button">menu</mat-icon>

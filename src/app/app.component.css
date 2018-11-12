@@ -6,7 +6,6 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: white;
 }
 
 h1.title {
@@ -20,7 +19,6 @@ h1.title {
 
 .sidenav-button {
 	transform: scale(2);
-	color: grey;
 }
 
 .nav-title {
@@ -28,7 +26,6 @@ h1.title {
 	margin-left: 10%;
 	border-bottom: solid lightgrey 1px;
 	width:80%;
-	color: black;
 }
 
 h1.nav-text-title {
@@ -36,14 +33,13 @@ h1.nav-text-title {
 }
 
 .sidenav {
-	border-radius: 8px 0px 0px 8px;
+	border-radius: 18px 0px 0px 18px;
 	width:300px;
 }
 
 .sidenav-large {
-	border-radius: 0px 8px 8px 0px;
+	border-radius: 0px 18px 18px 0px;
 	width:300px;
-	background-color: #eaeaea;
 }
 
 nav {
@@ -62,24 +58,15 @@ a {
 	font-size: 1.5em;
 	text-align:left;
 	text-decoration: none;
-	color:black;
 }
 
 .sidenav-opt{
 	border-radius: 8px;
 	margin-left: 40px;
 	margin-top:20px;
-}
-
-.sidenav-opt:hover {
-	background: linear-gradient(to right, #f857a6, #ff5858);
-}
-
-.select {
-	background: linear-gradient(to right, #f857a6, #ff5858);
+	cursor: pointer;
 }
 
 .sidenav-icon {
 	transform: scale(1.5);
-	color: black;
 }

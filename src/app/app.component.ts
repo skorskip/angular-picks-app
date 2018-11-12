@@ -29,11 +29,16 @@ export class AppComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    var element;
     if(this.largeScreen){
-      document.getElementById(this.selectedLarge).classList.add("select");
+      element = document.getElementById(this.selectedLarge);
     } else {
-      document.getElementById(this.selectedSmall).classList.add("select");
+      element = document.getElementById(this.selectedSmall);
     }    
+    if(element != null){
+      element.classList.add("accent-color-primary");
+      element.classList.add("selected");
+    }
   }
 
   onResize(event) {
@@ -50,19 +55,39 @@ export class AppComponent implements OnInit {
   }
 
   highlight(id:string) {
+    document.getElementById(id).classList.add("accent-color-primary");
+    document.getElementById(id).classList.add("selected");
     if(id != this.selectedLarge && this.largeScreen){
-      document.getElementById(id).classList.add("select");
-      document.getElementById(this.selectedLarge).classList.remove("select");
+      document.getElementById(this.selectedLarge).classList.remove("accent-color-primary");
+      document.getElementById(this.selectedLarge).classList.remove("selected");
       this.selectedLarge = id;
     } else if(id != this.selectedSmall && !this.largeScreen){
-      document.getElementById(id).classList.add("select");
-      document.getElementById(this.selectedSmall).classList.remove("select");
+      document.getElementById(this.selectedSmall).classList.remove("accent-color-primary");
+      document.getElementById(this.selectedSmall).classList.remove("selected");
       this.selectedSmall = id;
     }
+  }
+
+  navigateToPage(link:string){
+    this.router.navigate(['/'+link]);
   }
 
   navigateToMyPicks() {
     var week = this.weekService.getCurrentWeek();
     this.router.navigate(['/myPicks/' + week.id]);
+  }
+
+  mouseover(event:any){
+    var element  = document.getElementById(event.path[2].id);
+    if(element != null){
+      element.classList.add("accent-color-primary");
+    }
+  }
+
+  mouseout(event:any){
+    var element  = document.getElementById(event.path[2].id);
+    if(element != null){
+      if(!element.classList.contains("selected")) element.classList.remove("accent-color-primary");
+    }
   }
 }

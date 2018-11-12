@@ -2,20 +2,20 @@
   <div class="title">
     MY PICKS
   </div>
-  <button mat-raised-button class="edit-button accent-color" (click)="editPicks()">
-    <mat-icon class="edit-icon">
+  <button mat-raised-button class="edit-button accent-color-primary" (click)="editPicks()">
+    <mat-icon>
       mode_edit
     </mat-icon>
     edit
   </button>
 </div>
 <div *ngIf="weeksView == false">
-  <div id="week-card" class="week-in-animation">
-    <div class="week-header">
+  <div id="week-card" class="week-in-animation body-color-secondary">
+    <div class="week-header accent-color-primary" (click)="showWeeks()">
         <div class=week-title>
               WEEK {{week.number}}
         </div>
-        <mat-icon class="week-arrow-icon" (click)="showWeeks()">
+        <mat-icon class="week-arrow-icon">
             keyboard_arrow_up
         </mat-icon>
     </div>
@@ -24,10 +24,10 @@
     </div>
     <div *ngFor="let myGame of myGames" [ngClass]="{'pick-game':edit}">
       <div *ngIf="edit" class="edit-tools">
-        <div class="edit-opt edit-opt-delete" (click) = "deletePick(myGame)">
+        <div class="edit-opt failure-color" (click) = "deletePick(myGame)">
             <p class="opt-text">DELETE</p>
         </div>
-        <div class="edit-opt edit-opt-edit" (click) = "changeTeam(myGame)">
+        <div class="edit-opt body-color-primary" (click) = "changeTeam(myGame)">
             <p class="opt-text">CHANGE TEAM</p>
         </div>
       </div>

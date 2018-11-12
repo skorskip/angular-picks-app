@@ -58,8 +58,20 @@
 	text-align:center;
 }
 
+.tiny-text-middle{
+	font-size:.75em; 
+	margin:0; 
+	text-align:center;
+}
+
 .small-text-middle{
 	font-size:1em; 
+	margin:0; 
+	text-align:center;
+}
+
+.medium-text-middle {
+	font-size:1.5em; 
 	margin:0; 
 	text-align:center;
 }
@@ -76,10 +88,25 @@
 	cursor: pointer;
 }
 
-.game-card-spread {
+/* .game-card-spread {
 	box-shadow: none !important;
 	float: left;
 	text-align: right;
+} */
+
+.game-card-spread {
+	float: left;
+    text-align: right;
+    background-color: #fffeffe0;
+    color: #4a4a4a;
+    margin-top: -9px;
+    margin-left: -26px;
+    height: 40px;
+    padding: -3px;
+    text-align: center;
+	border-radius: 5px;
+	padding: 4px;
+    box-shadow: 6px 4px 12px -3px;
 }
 
 .game-card-status {

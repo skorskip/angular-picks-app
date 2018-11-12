@@ -1,5 +1,4 @@
 .picks-chart-card {
-    background: linear-gradient(to right, #f857a6, #ff5858);
     border-radius: 24px;
     margin:10px;
     padding:5px; 
@@ -27,7 +26,6 @@
 
 .pick-progress-text {
     font-size: 1.5em;
-    color:white;
     margin:10px;
 }
 
@@ -39,7 +37,6 @@
 .pick-count-text {
     margin-top:5%;
     text-align: left;
-    color: white;
     font-size: 1.5em;
 
 }

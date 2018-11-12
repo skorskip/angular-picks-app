@@ -112,13 +112,15 @@ export class MyPicksDashboardComponent implements OnInit {
 
   unSelectTeam(teamId:number){
     var team = document.getElementById(teamId + "-team-card");
-    team.style.backgroundColor = "white";
+    team.style.backgroundColor = "";
     team.style.color = "";
+    team.classList.add("body-color-primary");
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.id + "-team-card");
+    teamElement.classList.remove("body-color-primary");
     teamElement.style.backgroundColor = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
@@ -131,14 +133,17 @@ export class MyPicksDashboardComponent implements OnInit {
     if(game.progress == 'FINAL'){
       var gameElement = document.getElementById(game.id + "-game-card");
       if(pickedTeamScore > otherTeamScore){
-        gameElement.style.background = "lightgreen";
+        gameElement.classList.remove("body-color-primary");
+        gameElement.classList.add("success-color");
       }
       else{
-        gameElement.style.background = "lightcoral";
+        gameElement.classList.remove("body-color-primary");
+        gameElement.classList.add("failure-color");
       }
     }
     else if(game.progress == 'INPROGRESS') {
-      document.getElementById(game.id + "-game-card").style.backgroundColor = "#f857a6";
+      document.getElementById(game.id + "-game-card").classList.remove("body-color-primary");
+      document.getElementById(game.id + "-game-card").classList.add("accent-color-secondary");
     }
   }
 

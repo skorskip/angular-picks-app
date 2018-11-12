@@ -31,7 +31,7 @@ export class GameComponent implements OnInit {
     var shadowColor = team.secondaryColor.substring(0, team.secondaryColor.lastIndexOf("1")) + ".7)"
     return {
       'border-color' : team.primaryColor,
-      'box-shadow': '0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px ' + shadowColor
+      //'box-shadow': '0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px ' + shadowColor
     }
   }
 
@@ -62,17 +62,21 @@ export class GameComponent implements OnInit {
 
   unSelectTeam(teamId:number){
     var team = document.getElementById(teamId + "-team-card");
-    team.style.backgroundColor = "white";
+    team.style.backgroundColor = "";
     team.style.color = "";
+    team.classList.add("body-color-primary")
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.id + "-team-card");
+    teamElement.classList.remove("body-color-primary");
     teamElement.style.background = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
+    
   }
+  
 
   getTeamsInit(game:Game) {
     var teamIds: number[] = [];
