@@ -27,12 +27,12 @@ body { margin: 0;}
 }
 
 .body-color-primary {
-    background-color:white;
+    background-color:rgb(236, 235, 235) !important;
     color: black !important;
 }
 
 .body-color-secondary {
-    background-color: #eaeaea !important;
+    background-color: white;
     color: black;
 }
 

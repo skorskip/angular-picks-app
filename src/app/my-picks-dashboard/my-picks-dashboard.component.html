@@ -2,7 +2,7 @@
   <div class="title">
     MY PICKS
   </div>
-  <button mat-raised-button class="edit-button accent-color-primary" (click)="editPicks()">
+  <button mat-raised-button class="edit-button body-color-primary" (click)="editPicks()">
     <mat-icon>
       mode_edit
     </mat-icon>
@@ -10,9 +10,9 @@
   </button>
 </div>
 <div *ngIf="weeksView == false">
-  <div id="week-card" class="week-in-animation body-color-secondary">
+  <div id="week-card" class="week-in-animation body-color-primary">
     <div class="week-header" (click)="showWeeks()">
-      <div class="circle-container">
+      <div class="circle-container body-color-primary">
         <mat-icon class="week-arrow-icon">
             keyboard_arrow_up
         </mat-icon>

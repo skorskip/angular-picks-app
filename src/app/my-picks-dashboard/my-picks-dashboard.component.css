@@ -107,9 +107,8 @@
 .circle-container {
 	height: 75px;
 	width: 75px;
-	background-color: white;
 	border-radius: 50%;
 	text-align: center;
-	margin-top: -35px;
+	margin-top: -30px;
 	cursor: pointer;
 }
