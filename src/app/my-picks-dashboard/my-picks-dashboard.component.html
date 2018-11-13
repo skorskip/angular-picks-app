@@ -11,13 +11,15 @@
 </div>
 <div *ngIf="weeksView == false">
   <div id="week-card" class="week-in-animation body-color-secondary">
-    <div class="week-header accent-color-primary" (click)="showWeeks()">
-        <div class=week-title>
-              WEEK {{week.number}}
-        </div>
+    <div class="week-header" (click)="showWeeks()">
+      <div class="circle-container">
         <mat-icon class="week-arrow-icon">
             keyboard_arrow_up
         </mat-icon>
+      </div>  
+    </div>
+    <div class=week-title>
+      WEEK {{week.number}}
     </div>
     <div *ngIf = "myGames.length == 0" class="no-picks-view">
       No Picks Made
