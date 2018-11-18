@@ -149,19 +149,21 @@ export class PicksDashboardComponent implements OnInit {
       if(game.progress == 'FINAL'){
         var gameElement = document.getElementById(game.id + "-game-card");
         if(game.homeScore + game.spread > game.awayScore){
-          document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-primary");
+          document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
           document.getElementById(game.homeTeam + "-team-card").classList.add("accent-color-primary");
         }
         else if(game.homeScore + game.spread < game.awayScore) {
-          document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-primary");
+          document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
           document.getElementById(game.homeTeam + "-team-card").classList.add("accent-color-primary");
         }
-        document.getElementById(game.id + "-game-card").classList.remove("body-color-primary");
+        document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
         document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
+        document.getElementById(game.id + "-game-card").classList.add("disabled");
       }
       if(game.progress == 'INPROGRESS') {
-        document.getElementById(game.id + "-game-card").classList.remove("body-color-primary");
+        document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
         document.getElementById(game.id + "-game-card").classList.add("accent-color-secondary");
+        document.getElementById(game.id + "-game-card").classList.add("disabled");
       }
     })
 

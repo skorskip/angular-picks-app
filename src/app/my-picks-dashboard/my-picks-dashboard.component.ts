@@ -142,8 +142,10 @@ export class MyPicksDashboardComponent implements OnInit {
       }
     }
     else if(game.progress == 'INPROGRESS') {
-      document.getElementById(game.id + "-game-card").classList.remove("body-color-primary");
-      document.getElementById(game.id + "-game-card").classList.add("accent-color-secondary");
+      document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
+      document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
+      document.getElementById(game.id + "-game-card").classList.add("disabled");
+  
     }
   }
 

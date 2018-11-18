@@ -23,6 +23,7 @@
 	flex-direction: column;
 	margin: 5px;
 	margin-top: 35px;
+	box-shadow: 0px 7px 35px -5px grey;
 }
 
 .game-card-icon {
@@ -83,6 +84,7 @@
 
 .game-card-icon:hover {
 	margin-top: -35px !important;
+	margin-top: -10px;
 	transition-timing-function: ease;
 	transition-duration: 200ms;
 	cursor: pointer;
