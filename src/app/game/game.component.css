@@ -18,28 +18,24 @@
 }
 
 .game-card {
-	border-radius: 18px;
 	display: flex;
 	flex-direction: column;
 	margin: 5px;
-	margin-top: 35px;
-	box-shadow: 0px 7px 35px -5px grey;
+	margin-top: 15px;
 }
 
 .game-card-icon {
-	border-radius: 12px;
-	width: 100px;
-	height: 100px;
-	margin-top: -25px;
+	border-radius: 18px;
+	width: 150px;
+	height: 150px;
 	float: left;
 	margin-right: 2%;
-	border-style :  solid;
-	border-width : 4px;
+	box-shadow: 0px 0px 20px -5px #b7b7b7;
 }
 
 .game-card-date {
 	width: 100%;
-	text-align:left;
+	text-align:right;
 }
 
 .date-text {
@@ -83,32 +79,22 @@
 }
 
 .game-card-icon:hover {
-	margin-top: -35px !important;
-	margin-top: -10px;
+	margin-top: -10px !important;
 	transition-timing-function: ease;
 	transition-duration: 200ms;
 	cursor: pointer;
 }
 
-/* .game-card-spread {
-	box-shadow: none !important;
-	float: left;
-	text-align: right;
-} */
-
 .game-card-spread {
 	float: left;
     text-align: right;
-    background-color: #fffeffe0;
-    color: #4a4a4a;
-    margin-top: -9px;
-    margin-left: -26px;
+    margin-left: -50px;
     height: 40px;
     padding: -3px;
     text-align: center;
 	border-radius: 5px;
 	padding: 4px;
-    box-shadow: 6px 4px 12px -3px;
+	opacity: .8;
 }
 
 .game-card-status {

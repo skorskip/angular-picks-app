@@ -1,16 +1,23 @@
-<div class="game-card game-card-animation body-color-secondary" attr.id={{game.id}}-game-card>
+<div class="game-card game-card-animation body-color-primary" attr.id={{game.id}}-game-card>
+  <div style="width: 100%" *ngIf="showSubmitTime">
+    <div class="game-card-date">
+      <div *ngIf="game.progress == 'PENDING'" class="date-text">
+        {{game.submitDate}}
+      </div>
+      <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">
+        GAME IN PROGRESS
+      </div>
+      <div *ngIf="game.progress == 'FINAL'" class="date-text">
+        FINAL
+      </div>
+    </div>
+  </div> 
   <div  class="icon-group">
-    <!-- <mat-icon class="status-icon" *ngIf="game.progress == 'PENDING' ">
-      lock_open
-    </mat-icon>
-    <mat-icon class="status-icon" *ngIf="game.progress != 'PENDING'">
-        lock
-    </mat-icon> -->
     <div attr.id="{{game.awayTeam}}-team-card" class="game-card-icon body-color-secondary" 
     [ngStyle]="getBorderColor(game.awayTeam)" 
     (click)="selectTeam(game.awayTeam, game)">
       <div *ngIf="game.progress != 'PENDING'">
-        <div style="margin:5px 0 0 5px">AWAY</div>
+        <div style="margin:15px 0 0 5px">AWAY</div>
         <div class="large-text-padding">{{game.awayScore}}</div>
         <div class="small-text-middle">{{getTeamName(game.awayTeam)}}</div>
       </div>
@@ -23,7 +30,7 @@
     [ngStyle]="getBorderColor(game.homeTeam)" 
     (click)="selectTeam(game.homeTeam, game)">
       <div *ngIf="game.progress != 'PENDING'">
-        <div style="margin:5px 0 0 5px">HOME</div>
+        <div style="margin:51px 0 0 5px">HOME</div>
         <div class="large-text-padding">{{game.homeScore}}</div>
         <div class="small-text-middle">{{getTeamName(game.homeTeam)}}</div>
       </div>
@@ -32,22 +39,9 @@
         <p class="large-text">{{getTeamName(game.homeTeam)}}</p>
       </div>
     </div>
-    <div class="game-card-spread">
+    <div class="game-card-spread accent-color-primary">
       <p class="tiny-text-middle">SPREAD</p>
       <p class="medium-text-middle">{{getGameSpread(game.spread)}}</p>
-    </div>
-  </div>
-  <div style="width: 100%">
-    <div class="game-card-date">
-      <div *ngIf="game.progress == 'PENDING'" class="date-text">
-        SUBMIT: {{game.submitDate}}
-      </div>
-      <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">
-        GAME IN PROGRESS
-      </div>
-      <div *ngIf="game.progress == 'FINAL'" class="date-text">
-        FINAL
-      </div>
     </div>
   </div>
 </div>

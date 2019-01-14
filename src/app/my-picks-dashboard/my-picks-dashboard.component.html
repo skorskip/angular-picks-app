@@ -10,21 +10,19 @@
   </button>
 </div>
 <div *ngIf="weeksView == false">
+  <div class=week-title>
+    WEEK {{week.number}}
+  </div>
   <div id="week-card" class="week-card week-in-animation body-color-primary">
     <div class="week-header" (click)="showWeeks()">
-      <div class="circle-container body-color-primary">
-        <mat-icon class="week-arrow-icon">
-            keyboard_arrow_up
-        </mat-icon>
-      </div>  
-    </div>
-    <div class=week-title>
-      WEEK {{week.number}}
+      <mat-icon class="week-arrow-icon">
+          keyboard_arrow_up
+      </mat-icon>
     </div>
     <div *ngIf = "myGames.length == 0" class="no-picks-view">
       No Picks Made
     </div>
-    <div *ngFor="let myGame of myGames" [ngClass]="{'pick-game':edit}">
+    <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
       <div *ngIf="edit" class="edit-tools">
         <div class="edit-opt failure-color" (click) = "deletePick(myGame)">
             <p class="opt-text">DELETE</p>
@@ -34,7 +32,8 @@
         </div>
       </div>
       <game 
-        [game] = "myGame" 
+        [game] = "myGame"
+        [showSubmitTime] = "showSubmitTime(i)"
         [notSelectablePicks] = "notSelectablePicks" 
         style="width:100%"> 
       </game>

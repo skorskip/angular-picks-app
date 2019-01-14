@@ -156,17 +156,20 @@ export class PicksDashboardComponent implements OnInit {
           document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
           document.getElementById(game.homeTeam + "-team-card").classList.add("accent-color-primary");
         }
-        document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
-        document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
         document.getElementById(game.id + "-game-card").classList.add("disabled");
       }
       if(game.progress == 'INPROGRESS') {
-        document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
-        document.getElementById(game.id + "-game-card").classList.add("accent-color-secondary");
         document.getElementById(game.id + "-game-card").classList.add("disabled");
       }
     })
 
+  }
+
+  showSubmitTime(index: number): boolean {
+    if((index == 0) || this.games[index - 1].submitDate != this.games[index].submitDate){
+      return true;
+    }
+    else return false;
   }
 
   getGame(id: number): Game {

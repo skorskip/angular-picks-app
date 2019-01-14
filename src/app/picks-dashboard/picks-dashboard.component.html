@@ -2,19 +2,18 @@
     WEEKLY GAMES
 </div>
 <div *ngIf="weeksView == false">
+    <div class=week-title>
+        WEEK {{week.number}}
+    </div>
     <div id="week-card" class="week-card week-in-animation body-color-primary">
         <div class="week-header" (click)="showWeeks()">
-            <div class="circle-container body-color-primary">
-              <mat-icon class="week-arrow-icon">
-                  keyboard_arrow_up
-              </mat-icon>
-            </div>  
+            <mat-icon class="week-arrow-icon">
+                keyboard_arrow_up
+            </mat-icon>
         </div>
-        <div class=week-title>
-            WEEK {{week.number}}
-        </div>
-        <game *ngFor="let game of games"
+        <game *ngFor="let game of games, let i = index"
             [game] = "game"
+            [showSubmitTime] = "showSubmitTime(i)"
             [submitOpened] = "submitOpened"
             (openSubmit) = "teamClicked($event)"
             (stageSelectedPick) = "stageSelectedPick($event)">

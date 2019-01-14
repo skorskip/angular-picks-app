@@ -16,6 +16,7 @@ export class GameComponent implements OnInit {
 	
   @Input() game: Game;
   @Input('submitOpened') submitOpened: boolean;
+  @Input() showSubmitTime: boolean;
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
   @Input() notSelectablePicks = false;
@@ -28,10 +29,9 @@ export class GameComponent implements OnInit {
 
   getBorderColor(id:number) {
     var team = this.getTeam(id);
-    var shadowColor = team.secondaryColor.substring(0, team.secondaryColor.lastIndexOf("1")) + ".7)"
+    var shadowColor = team.primaryColor.substring(0, team.primaryColor.lastIndexOf("1")) + ".7)"
     return {
-      'border-color' : team.primaryColor,
-      'box-shadow': '0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px ' + shadowColor
+      'color' : team.primaryColor,
     }
   }
 
@@ -62,8 +62,9 @@ export class GameComponent implements OnInit {
 
   unSelectTeam(teamId:number){
     var team = document.getElementById(teamId + "-team-card");
+    var selectedTeam = this.getTeam(teamId);
     team.style.backgroundColor = "";
-    team.style.color = "";
+    team.style.color = selectedTeam.primaryColor;
     team.classList.add("body-color-secondary")
     team.classList.remove("selectedTeam");
   }

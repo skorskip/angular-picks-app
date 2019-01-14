@@ -114,13 +114,13 @@ export class MyPicksDashboardComponent implements OnInit {
     var team = document.getElementById(teamId + "-team-card");
     team.style.backgroundColor = "";
     team.style.color = "";
-    team.classList.add("body-color-primary");
+    team.classList.add("body-color-secondary");
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.id + "-team-card");
-    teamElement.classList.remove("body-color-primary");
+    teamElement.classList.remove("body-color-secondary");
     teamElement.style.backgroundColor = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
@@ -185,6 +185,13 @@ export class MyPicksDashboardComponent implements OnInit {
         this.ngAfterViewInit();
       })
     },500);
+  }
+
+  showSubmitTime(index: number): boolean {
+    if((index == 0) || this.myGames[index - 1].submitDate != this.myGames[index].submitDate){
+      return true;
+    }
+    else return false;
   }
 
   ngOnDestroy() {
