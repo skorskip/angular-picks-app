@@ -30,7 +30,7 @@
     [ngStyle]="getBorderColor(game.homeTeam)" 
     (click)="selectTeam(game.homeTeam, game)">
       <div *ngIf="game.progress != 'PENDING'">
-        <div style="margin:51px 0 0 5px">HOME</div>
+        <div style="margin:15px 0 0 5px">HOME</div>
         <div class="large-text-padding">{{game.homeScore}}</div>
         <div class="small-text-middle">{{getTeamName(game.homeTeam)}}</div>
       </div>

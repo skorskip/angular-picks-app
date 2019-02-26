@@ -15,7 +15,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class GameService {
 
-  private gamesUrl = 'api/games';  // URL to web api
+  private gamesUrl = 'localhost:3000/game/';  // URL to web api
   private games: Game[] = [
     {
       id: 101,

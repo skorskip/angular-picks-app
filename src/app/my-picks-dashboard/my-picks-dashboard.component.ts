@@ -131,13 +131,13 @@ export class MyPicksDashboardComponent implements OnInit {
     var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
     var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
     if(game.progress == 'FINAL'){
-      var gameElement = document.getElementById(game.id + "-game-card");
+      var gameElement = document.getElementById(pick.teamId + "-team-card");
       if(pickedTeamScore > otherTeamScore){
-        gameElement.classList.remove("body-color-primary");
+        gameElement.classList.remove("selectedTeam");
         gameElement.classList.add("success-color");
       }
       else{
-        gameElement.classList.remove("body-color-primary");
+        gameElement.classList.remove("body-color-secondary");
         gameElement.classList.add("failure-color");
       }
     }
