@@ -18,47 +18,109 @@ body { margin: 0;}
 	animation-duration: .5s;
 }
 
-.main-card {
-    border-radius: 24px;
-}
-
-.sub-card {
-    border-radius: 18px;
-}
-
 .body-color-primary {
-    background-color:white;
+    background-color:white !important;
     color: black !important;
 }
 
 .body-color-secondary {
-    background-color: #eaeaea !important;
+    background-color: white;
     color: black;
 }
 
 .accent-color-primary {
-    background: linear-gradient(to right, #f857a6, #ff5858);
+    background: #3e5dce;
     color: white;
 }
 
+.background-card{
+	position: absolute;
+	width:100%;
+	height:300px;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
+	z-index: -1;
+}
+
 .accent-color-secondary {
-    background-color: #f857a6;
-    color:white;
+    background-color: rgb(150, 157, 165);
+    color:black;
 }
 
 .accent-color-tietary {
-    background-color: #ff5858;
-    color:white;
+    background-color: rgb(198, 203, 210);
+    color:black;
 }
 
 .success-color {
-    background-color: lightgreen;
+    background-color: lightgreen !important;
     color:white;
 }
 
 .failure-color {
     background-color: rgb(228, 46, 46);
     color:white;
+}
+
+.disabled {
+    opacity: .6;
+}
+
+@keyframes weekCardAnimationIn {
+	0%{margin-top:1000px;opacity:0;}
+	100%{margin-top:10px; opacity: 1}
+}
+
+@keyframes weekCardAnimationOut {
+	0%{margin-top:10px; opacity: 100;}
+	100%{margin-top:1000px; opacity: 0;}
+}
+
+.week-card {
+	padding: 2px;
+	border-radius: 50px;
+	margin: 10px;
+	box-shadow: 0px 7px 35px -5px grey;
+}
+
+.week-in-animation {
+	animation-name:weekCardAnimationIn;
+	animation-timing-function: ease-in-out;
+	animation-duration: .75s;
+}
+
+.week-out-animation {
+	animation: forwards;
+	animation-name:weekCardAnimationOut;
+	animation-timing-function: ease-in-out;
+	animation-duration: 1s;
+}
+
+.week-header {
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+	/* margin: 5px; */
+}
+
+.week-title {
+	margin-top: 20px;
+	font-size:2em;
+    margin: 20px;
+}
+
+.week-arrow-icon {
+	transform: scale(2);
+	margin-top:10px;
+}
+
+.circle-container {
+	height: 75px;
+	width: 75px;
+	border-radius: 50%;
+	text-align: center;
+	margin-top: -30px;
+	cursor: pointer;
 }
 
 

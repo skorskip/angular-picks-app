@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { WeekService } from '../data-models/week/week.service';
+import { WeekService } from '../../data-models/week/week.service';
 import { WeeksService } from './weeks.service';
-import { Week } from '../data-models/week/week';
+import { Week } from '../../data-models/week/week';
 import { Router } from '@angular/router';
 
 @Component({

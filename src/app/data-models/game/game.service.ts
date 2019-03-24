@@ -15,13 +15,13 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class GameService {
 
-  private gamesUrl = 'api/games';  // URL to web api
+  private gamesUrl = 'localhost:3000/game/';  // URL to web api
   private games: Game[] = [
     {
       id: 101,
       number: 101,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 9 @ 04:00PM',
+      submitDate: 'SUN, OCT 9 @ 03:00PM',
       homeTeam: 101,
       awayTeam: 102,
       homeScore: 21,
@@ -44,8 +44,8 @@ export class GameService {
     {
       id: 103,
       number: 103,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 105,
       awayTeam: 106,
       homeScore: 0,
@@ -56,8 +56,8 @@ export class GameService {
     {
       id: 104,
       number: 104,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 107,
       awayTeam: 108,
       homeScore: 0,
@@ -68,8 +68,8 @@ export class GameService {
     {
       id: 105,
       number: 105,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 109,
       awayTeam: 110,
       homeScore: 0,
@@ -80,8 +80,8 @@ export class GameService {
     {
       id: 106,
       number: 106,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 111,
       awayTeam: 112,
       homeScore: 0,
@@ -92,8 +92,8 @@ export class GameService {
     {
       id: 107,
       number: 107,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 113,
       awayTeam: 114,
       homeScore: 0,
@@ -104,8 +104,8 @@ export class GameService {
     {
       id: 108,
       number: 109,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 11 @ 04:00PM',
+      submitDate: 'SUN, OCT 11 @ 03:00PM',
       homeTeam: 115,
       awayTeam: 116,
       homeScore: 0,
@@ -116,8 +116,8 @@ export class GameService {
     {
       id: 109,
       number: 109,
-      date: 'SUN, OCT 10 @ 04:00PM',
-      submitDate: 'SUN, OCT 10 @ 03:00PM',
+      date: 'SUN, OCT 12 @ 04:00PM',
+      submitDate: 'SUN, OCT 12 @ 03:00PM',
       homeTeam: 117,
       awayTeam: 118,
       homeScore: 0,

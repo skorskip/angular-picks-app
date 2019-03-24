@@ -4,7 +4,7 @@ import { Team } from './team';
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 
-  private teamUrl = 'api/team';  // URL to web api
+  private teamUrl = 'localhost:3000/team/';  // URL to web api
   private teams: Team[] = [
       {
           'id': 101,

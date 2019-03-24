@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Week } from './week';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { Game } from '../game/game';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({ providedIn: 'root' })
 export class WeekService {
-    private weekUrl = 'api/week';
+    private weekUrl = 'localhost:3000/week/';
     private weeks:Week[] = [
         {
             'id':106,
@@ -49,7 +59,7 @@ export class WeekService {
         }
     ]
     private week;
-    constructor(){}
+    constructor(private http: HttpClient) { }
     
     getWeek(id:number): Week {
         this.weeks.forEach((weekItem) => {
@@ -75,4 +85,33 @@ export class WeekService {
         });
         return this.getWeek(maxIndex);
     }
+
+    // /** GET game by id. Will 404 if id not found */
+    // getWeek(season: number, week: number): Observable<Game> {
+    //     const url = `${this.weekUrl}/season/${season}/week/${week}`;
+    //     return this.http.get<Game>(url).pipe(
+    //         tap(_ => console.log(`fetched week season=${season} week=${week}`)),
+    //         catchError(this.handleError<Game>(`getWeek season=${season} week=${week}`))
+    //     );
+    // }
+
+    // /**
+    //  * Handle Http operation that failed.
+    //  * Let the app continue.
+    //  * @param operation - name of the operation that failed
+    //  * @param result - optional value to return as the observable result
+    //  */
+    // private handleError<T> (operation = 'operation', result?: T) {
+    //     return (error: any): Observable<T> => {
+
+    //     // TODO: send the error to remote logging infrastructure
+    //     console.error(error); // log to console instead
+
+    //     // TODO: better job of transforming error for user consumption
+    //     console.log(`${operation} failed: ${error.message}`);
+
+    //     // Let the app keep running by returning an empty result.
+    //     return of(result as T);
+    //     };
+    // }
 }

@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { PickService } from '../data-models/pick/pick.service';
-import { GameService } from '../data-models/game/game.service';
-import { TeamService } from '../data-models/team/team.service';
-import { WeekService } from '../data-models/week/week.service';
-import { Week } from '../data-models/week/week';
-import { Game } from '../data-models/game/game';
-import { Team } from '../data-models/team/team';
-import { Pick } from '../data-models/pick/pick';
-import { WeeksService } from '../weeks/weeks.service';
+import { PickService } from '../../data-models/pick/pick.service';
+import { GameService } from '../../data-models/game/game.service';
+import { TeamService } from '../../data-models/team/team.service';
+import { WeekService } from '../../data-models/week/week.service';
+import { Week } from '../../data-models/week/week';
+import { Game } from '../../data-models/game/game';
+import { Team } from '../../data-models/team/team';
+import { Pick } from '../../data-models/pick/pick';
+import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
-import { element } from 'protractor';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -114,13 +113,13 @@ export class MyPicksDashboardComponent implements OnInit {
     var team = document.getElementById(teamId + "-team-card");
     team.style.backgroundColor = "";
     team.style.color = "";
-    team.classList.add("body-color-primary");
+    team.classList.add("body-color-secondary");
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.id + "-team-card");
-    teamElement.classList.remove("body-color-primary");
+    teamElement.classList.remove("body-color-secondary");
     teamElement.style.backgroundColor = team.primaryColor;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
@@ -131,19 +130,23 @@ export class MyPicksDashboardComponent implements OnInit {
     var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
     var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
     if(game.progress == 'FINAL'){
-      var gameElement = document.getElementById(game.id + "-game-card");
+      var gameElement = document.getElementById(pick.teamId + "-team-card");
       if(pickedTeamScore > otherTeamScore){
-        gameElement.classList.remove("body-color-primary");
-        gameElement.classList.add("success-color");
+        var gameElement = document.getElementById(pick.teamId + "-team-card");
+        gameElement.style.borderColor = "lightgreen";
       }
       else{
-        gameElement.classList.remove("body-color-primary");
-        gameElement.classList.add("failure-color");
+        var  otherTeamId = pick.teamId 
+        var gameElement = document.getElementById(pick.teamId + "-team-card");
+        gameElement.classList.remove("body-color-secondary");
+        gameElement.style.borderColor = "rgb(228, 46, 46)";
       }
     }
     else if(game.progress == 'INPROGRESS') {
-      document.getElementById(game.id + "-game-card").classList.remove("body-color-primary");
-      document.getElementById(game.id + "-game-card").classList.add("accent-color-secondary");
+      document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
+      document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
+      document.getElementById(game.id + "-game-card").classList.add("disabled");
+  
     }
   }
 
@@ -183,6 +186,13 @@ export class MyPicksDashboardComponent implements OnInit {
         this.ngAfterViewInit();
       })
     },500);
+  }
+
+  showSubmitTime(index: number): boolean {
+    if((index == 0) || this.myGames[index - 1].submitDate != this.myGames[index].submitDate){
+      return true;
+    }
+    else return false;
   }
 
   ngOnDestroy() {
