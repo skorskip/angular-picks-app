@@ -124,6 +124,6 @@ export class MyStatsComponent implements OnInit {
 
 @Component({
   selector: 'navigate-to-picks-dialog',
-  templateUrl: '../dialog-content/navigate-to-picks-dialog.html',
+  templateUrl: '../../components/dialog-content/navigate-to-picks-dialog.html',
 })
 export class NavigateToPicksDialog {}

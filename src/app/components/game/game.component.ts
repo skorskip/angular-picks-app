@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Game } from '../data-models/game/game';
-import { Team } from '../data-models/team/team';
-import { PickService } from '../data-models/pick/pick.service';
-import { GameService } from '../data-models/game/game.service';
-import { TeamService } from '../data-models/team/team.service';
-import { Pick } from '../data-models/pick/pick';
+import { Game } from '../../data-models/game/game';
+import { Team } from '../../data-models/team/team';
+import { PickService } from '../../data-models/pick/pick.service';
+import { GameService } from '../../data-models/game/game.service';
+import { TeamService } from '../../data-models/team/team.service';
+import { Pick } from '../../data-models/pick/pick';
 
 @Component({
   selector: 'game',
@@ -25,14 +25,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit(){
     this.getTeamsInit(this.game);
-  }
-
-  getBorderColor(id:number) {
-    var team = this.getTeam(id);
-    var shadowColor = team.primaryColor.substring(0, team.primaryColor.lastIndexOf("1")) + ".7)"
-    return {
-      'color' : team.primaryColor,
-    }
   }
 
   selectTeam(selectedTeamId:number) {
@@ -74,21 +66,14 @@ export class GameComponent implements OnInit {
     teamElement.classList.remove("body-color-secondary");
     teamElement.style.background = team.primaryColor;
     teamElement.style.color = "white";
-    teamElement.classList.add("selectedTeam");
-    
+    teamElement.classList.add("selectedTeam"); 
   }
   
-
   getTeamsInit(game:Game) {
     var teamIds: number[] = [];
     teamIds.push(game.homeTeam);
     teamIds.push(game.awayTeam);
     this.teams = this.teamService.getTeamByIds(teamIds);
-  }
-
-  getTeamName(id:number) {
-    var team = this.getTeam(id);
-    return team.abbrevation;
   }
 
   getGameSpread(number:number) {

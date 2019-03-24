@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { PickService } from '../data-models/pick/pick.service';
-import { GameService } from '../data-models/game/game.service';
-import { TeamService } from '../data-models/team/team.service';
-import { WeekService } from '../data-models/week/week.service';
-import { Week } from '../data-models/week/week';
-import { Game } from '../data-models/game/game';
-import { Team } from '../data-models/team/team';
-import { Pick } from '../data-models/pick/pick';
-import { WeeksService } from '../weeks/weeks.service';
+import { PickService } from '../../data-models/pick/pick.service';
+import { GameService } from '../../data-models/game/game.service';
+import { TeamService } from '../../data-models/team/team.service';
+import { WeekService } from '../../data-models/week/week.service';
+import { Week } from '../../data-models/week/week';
+import { Game } from '../../data-models/game/game';
+import { Team } from '../../data-models/team/team';
+import { Pick } from '../../data-models/pick/pick';
+import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
-import { element } from 'protractor';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -133,12 +132,14 @@ export class MyPicksDashboardComponent implements OnInit {
     if(game.progress == 'FINAL'){
       var gameElement = document.getElementById(pick.teamId + "-team-card");
       if(pickedTeamScore > otherTeamScore){
-        gameElement.classList.remove("selectedTeam");
-        gameElement.classList.add("success-color");
+        var gameElement = document.getElementById(pick.teamId + "-team-card");
+        gameElement.style.borderColor = "lightgreen";
       }
       else{
+        var  otherTeamId = pick.teamId 
+        var gameElement = document.getElementById(pick.teamId + "-team-card");
         gameElement.classList.remove("body-color-secondary");
-        gameElement.classList.add("failure-color");
+        gameElement.style.borderColor = "rgb(228, 46, 46)";
       }
     }
     else if(game.progress == 'INPROGRESS') {

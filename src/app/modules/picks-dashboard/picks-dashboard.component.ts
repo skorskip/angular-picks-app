@@ -2,14 +2,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
-import { Game } from '../data-models/game/game';
-import { Team } from '../data-models/team/team';
-import { Week } from '../data-models/week/week';
-import { GameService } from '../data-models/game/game.service';
-import { WeekService } from '../data-models/week/week.service';
-import { Pick } from '../data-models/pick/pick';
-import { PickService } from '../data-models/pick/pick.service';
-import { WeeksService } from '../weeks/weeks.service';
+import { Game } from '../../data-models/game/game';
+import { Team } from '../../data-models/team/team';
+import { Week } from '../../data-models/week/week';
+import { GameService } from '../../data-models/game/game.service';
+import { WeekService } from '../../data-models/week/week.service';
+import { Pick } from '../../data-models/pick/pick';
+import { PickService } from '../../data-models/pick/pick.service';
+import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 
 
@@ -189,12 +189,12 @@ export class PicksDashboardComponent implements OnInit {
 
 @Component({
   selector: 'no-picks-dialog',
-  templateUrl: '../dialog-content/no-picks-dialog.html',
+  templateUrl: '../../components/dialog-content/no-picks-dialog.html',
 })
 export class NoPicksDialog {}
 
 @Component({
   selector: 'submit-picks-dialog',
-  templateUrl: '../dialog-content/submit-picks-dialog.html',
+  templateUrl: '../../components/dialog-content/submit-picks-dialog.html',
 })
 export class SubmitPicksDialog {}

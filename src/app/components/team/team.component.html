@@ -1,0 +1,12 @@
+<div attr.id="{{team.id}}-team-card" class="team-card body-color-secondary" 
+    [ngStyle]="getBorderColor(team.id)">
+    <div *ngIf="progress != 'PENDING'">
+      <div style="margin:15px 0 0 5px">{{title}}</div>
+      <div class="large-text-padding">{{score}}</div>
+      <div class="small-text-middle">{{getTeamName()}}</div>
+    </div>
+    <div *ngIf="progress == 'PENDING'">
+      <p style="margin-left:5px">{{title}}</p>
+      <p class="large-text">{{getTeamName()}}</p>
+    </div>
+</div>

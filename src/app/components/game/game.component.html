@@ -1,0 +1,35 @@
+<div class="game-card game-card-animation body-color-primary" attr.id={{game.id}}-game-card>
+  <div style="width: 100%" *ngIf="showSubmitTime">
+    <div class="game-card-date">
+      <div *ngIf="game.progress == 'PENDING'" class="date-text">
+        {{game.submitDate}}
+      </div>
+      <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">
+        GAME IN PROGRESS
+      </div>
+      <div *ngIf="game.progress == 'FINAL'" class="date-text">
+        FINAL
+      </div>
+    </div>
+  </div> 
+  <div class="team-group">
+    <team 
+      [team] = "getTeam(game.awayTeam)"
+      [score] = "game.awayScore"
+      [title] = "'AWAY'"
+      [progress] = "game.progress"
+      (click)="selectTeam(game.awayTeam, game)">
+    </team>
+    <team 
+      [team] = "getTeam(game.homeTeam)"
+      [score] = "game.homeScore"
+      [title] = "'HOME'"
+      [progress] = "game.progress"
+      (click)="selectTeam(game.homeTeam, game)">
+    </team>
+    <div class="game-card-spread accent-color-primary">
+      <p class="tiny-text-middle">SPREAD</p>
+      <p class="medium-text-middle">{{getGameSpread(game.spread)}}</p>
+    </div>
+  </div>
+</div>

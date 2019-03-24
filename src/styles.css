@@ -53,7 +53,7 @@ body { margin: 0;}
 }
 
 .success-color {
-    background-color: lightgreen;
+    background-color: lightgreen !important;
     color:white;
 }
 
