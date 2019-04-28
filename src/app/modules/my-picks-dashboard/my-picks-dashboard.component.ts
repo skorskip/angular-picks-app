@@ -26,6 +26,7 @@ export class MyPicksDashboardComponent implements OnInit {
   edit = false;
   notSelectablePicks = true;
   weeksView = false;
+  pickSuccess = null;
   subscription: Subscription;
 
   constructor(
@@ -127,26 +128,30 @@ export class MyPicksDashboardComponent implements OnInit {
 
   highlightPickResult(pick:Pick){
     var game = this.getGame(pick.gameId);
-    var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
-    var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
-    if(game.progress == 'FINAL'){
-      var gameElement = document.getElementById(pick.teamId + "-team-card");
-      if(pickedTeamScore > otherTeamScore){
-        var gameElement = document.getElementById(pick.teamId + "-team-card");
-        gameElement.style.borderColor = "lightgreen";
-      }
-      else{
-        var  otherTeamId = pick.teamId 
-        var gameElement = document.getElementById(pick.teamId + "-team-card");
-        gameElement.classList.remove("body-color-secondary");
-        gameElement.style.borderColor = "rgb(228, 46, 46)";
-      }
-    }
-    else if(game.progress == 'INPROGRESS') {
+    if(game.progress == 'INPROGRESS') {
       document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
       document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
       document.getElementById(game.id + "-game-card").classList.add("disabled");
-  
+      this.pickSuccess = null;
+    }
+  }
+
+  pickResult(game: Game, index: number):boolean {
+    if(game.progress == 'FINAL'){
+      var pick = this.picks[index];
+      if(pick.gameId == game.id) {
+        var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
+        var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
+        if(pickedTeamScore > otherTeamScore){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+    else {
+      return null;
     }
   }
 

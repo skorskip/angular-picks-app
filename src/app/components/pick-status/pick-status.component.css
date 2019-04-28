@@ -1,0 +1,26 @@
+.pick-status-open {
+	color: #3e5dce;
+	background-color: white;
+}
+
+.pick-status-close {
+	color: #000000;
+	background-color: white;
+}
+
+.pick-status-success {
+	color: lightgreen;
+	background-color: white;
+}
+
+.pick-status-wrong {
+	color: rgb(228, 46, 46);
+	background-color: white;
+}
+
+.pick-icon {
+    border: solid 2px;
+    border-radius: 50%;
+    height: 25px;
+    padding: 10px;
+}

@@ -1,9 +1,6 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
-import { PickService } from '../../data-models/pick/pick.service';
-import { GameService } from '../../data-models/game/game.service';
 import { TeamService } from '../../data-models/team/team.service';
 import { Pick } from '../../data-models/pick/pick';
 
@@ -20,8 +17,9 @@ export class GameComponent implements OnInit {
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
   @Input() notSelectablePicks = false;
+  @Input() pickSuccess = null;
   teams: Team[];
-  constructor(private gameService: GameService, private teamService: TeamService, @Inject(DOCUMENT) document, private pickService: PickService) { }
+  constructor(private teamService: TeamService) { }
 
   ngOnInit(){
     this.getTeamsInit(this.game);

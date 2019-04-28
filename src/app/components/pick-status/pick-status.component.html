@@ -1,0 +1,18 @@
+<div attr.id="{{game.id}}-pick-status" class="pick-icon">
+  <mat-icon 
+    *ngIf="game.progress == 'PENDING' && pickSuccess == null" 
+    class="pick-status-icon">lock_open
+  </mat-icon>
+  <mat-icon 
+    *ngIf="game.progress != 'PENDING' && pickSuccess == null" 
+    class="pick-status-icon">lock_outline
+  </mat-icon>
+  <mat-icon 
+    *ngIf="game.progress == 'FINAL' && pickSuccess == true" 
+    class="pick-status-icon">done
+  </mat-icon>
+  <mat-icon 
+    *ngIf="game.progress == 'FINAL' && pickSuccess == false" 
+    class="pick-status-icon">clear
+  </mat-icon>
+</div>

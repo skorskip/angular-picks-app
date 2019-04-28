@@ -30,5 +30,4 @@ export class WeeksComponent implements OnInit {
     var element = document.getElementById("weeks-container");
     element.className = "week-out-animation";
   }
-
 }

@@ -20,6 +20,11 @@
       [progress] = "game.progress"
       (click)="selectTeam(game.awayTeam, game)">
     </team>
+    <pick-status
+      class="pick-status"
+      [pickSuccess]="pickSuccess"
+      [game]="game">
+    </pick-status>
     <team 
       [team] = "getTeam(game.homeTeam)"
       [score] = "game.homeScore"
@@ -27,9 +32,8 @@
       [progress] = "game.progress"
       (click)="selectTeam(game.homeTeam, game)">
     </team>
-    <div class="game-card-spread accent-color-primary">
-      <p class="tiny-text-middle">SPREAD</p>
-      <p class="medium-text-middle">{{getGameSpread(game.spread)}}</p>
+    <div class="game-card-spread">
+      <div class="game-card-spread-icon">{{getGameSpread(game.spread)}}</div>
     </div>
   </div>
 </div>

@@ -27,7 +27,7 @@ export class TeamComponent implements OnInit {
   }
 
   getTeamName() {
-    if(document.getElementById("side-nav").scrollWidth > 950){
+    if(document.getElementById("body").scrollWidth > 950){
       return this.team.name;
     } else {
       return this.team.abbrevation;

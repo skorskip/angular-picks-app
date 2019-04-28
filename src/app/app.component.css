@@ -8,6 +8,13 @@
 	right: 0;
 }
 
+.background-card{
+	position: absolute;
+	width:100%;
+	border-bottom-left-radius: 25px;
+	z-index: -1;
+}
+
 h1.title {
 	margin: 20px;
 }
