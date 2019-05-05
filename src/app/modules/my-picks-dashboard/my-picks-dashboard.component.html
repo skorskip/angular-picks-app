@@ -1,29 +1,17 @@
-<div class="myPicks-header">
-  <div class="title">
-    MY PICKS
-  </div>
+<weeks 
+  [title]="'MY PICKS'"
+  [number] = "week.number">
   <button mat-raised-button class="edit-button body-color-primary" (click)="editPicks()">
-    <mat-icon>
-      mode_edit
-    </mat-icon>
-    edit
-  </button>
-</div>
-<div *ngIf="weeksView == false">
-  <div class=week-title>
-    WEEK {{week.number}}
-  </div>
-  <div id="week-card" class="week-card week-in-animation body-color-primary">
-    <div class="week-header" (click)="showWeeks()">
-      <mat-icon class="week-arrow-icon">
-          keyboard_arrow_up
+      <mat-icon>
+        mode_edit
       </mat-icon>
-    </div>
-    <div *ngIf = "myGames.length == 0" class="no-picks-view">
-      No Picks Made
-    </div>
-    <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
-      <div *ngIf="edit" class="edit-tools">
+      edit
+  </button>
+  <div *ngIf = "myGames.length == 0" class="no-picks-view">
+    No Picks Made
+  </div>
+  <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
+      <div *ngIf="showEdit(myGame)" class="edit-tools">
         <div class="edit-opt failure-color" (click) = "deletePick(myGame)">
             <p class="opt-text">DELETE</p>
         </div>
@@ -39,9 +27,4 @@
         style="width:100%"> 
       </game>
     </div>
-  </div>
-</div>
-<div *ngIf="weeksView">
-  <weeks>
-  </weeks>
-</div>
+</weeks>

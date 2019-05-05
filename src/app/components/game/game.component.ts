@@ -14,10 +14,11 @@ export class GameComponent implements OnInit {
   @Input() game: Game;
   @Input('submitOpened') submitOpened: boolean;
   @Input() showSubmitTime: boolean;
-  @Output() openSubmit = new EventEmitter<boolean> ();
-  @Output() stageSelectedPick = new EventEmitter ();
   @Input() notSelectablePicks = false;
   @Input() pickSuccess = null;
+  @Output() openSubmit = new EventEmitter<boolean> ();
+  @Output() stageSelectedPick = new EventEmitter ();
+
   teams: Team[];
   constructor(private teamService: TeamService) { }
 

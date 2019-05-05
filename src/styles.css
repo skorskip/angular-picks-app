@@ -66,43 +66,6 @@ body { margin: 0;}
     opacity: .6;
 }
 
-.week-card {
-	padding: 2px;
-	border-radius: 18px;
-	margin: 10px;
-    border: 2px solid lightgrey;
-}
-
-.week-in-animation {
-	animation-name:weekCardAnimationIn;
-	animation-timing-function: ease-in-out;
-	animation-duration: .75s;
-}
-
-.week-out-animation {
-	animation: forwards;
-	animation-name:weekCardAnimationOut;
-	animation-timing-function: ease-in-out;
-	animation-duration: 1s;
-}
-
-.week-header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.week-title {
-	margin-top: 20px;
-	font-size:2em;
-    margin: 20px;
-}
-
-.week-arrow-icon {
-	transform: scale(2);
-	margin:20px;
-}
-
 .circle-container {
 	height: 75px;
 	width: 75px;

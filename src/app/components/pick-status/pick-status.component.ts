@@ -10,23 +10,32 @@ export class PickStatusComponent implements OnInit {
 
   @Input() game;
   @Input() pickSuccess = null;
+  closed = false;
+  open = false;
+  correct = false;
+  wrong = false;
+
 
   constructor(@Inject(DOCUMENT) document) { }
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
+  getPickStatus() {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
       if(this.game.progress == "PENDING") {
-        document.getElementById(this.game.id + "-pick-status").classList.add("pick-status-open");
+        this.open = true;
+        return "pick-status-open";
       } else {
-        document.getElementById(this.game.id + "-pick-status").classList.add("pick-status-close");
+        this.closed = true;
+        return "pick-status-close";
       }
     } else {
       if(this.pickSuccess == true) {
-        document.getElementById(this.game.id + "-pick-status").classList.add("pick-status-success");
+        this.correct = true;
+        return "pick-status-success";
       } else {
-        document.getElementById(this.game.id + "-pick-status").classList.add("pick-status-wrong");
+        this.wrong = true;
+        return "pick-status-wrong";
       }
     }
   }

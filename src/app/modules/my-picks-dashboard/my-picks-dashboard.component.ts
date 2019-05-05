@@ -175,22 +175,11 @@ export class MyPicksDashboardComponent implements OnInit {
     return game;
   }
 
-  showWeeks() {
-    var element = document.getElementById("week-card");
-    element.className = "week-out-animation";    
-    setTimeout(()=>{
-      this.weeksView = true;
-    },500);
-  }
-
   weekSelected(weekId:number) {
     this.getPicksByWeek(weekId);
     setTimeout(()=>{
-      this.weeksView = false;
-      setTimeout(()=>{
-        this.ngAfterViewInit();
-      })
-    },500);
+      this.ngAfterViewInit();
+    });
   }
 
   showSubmitTime(index: number): boolean {
@@ -198,6 +187,14 @@ export class MyPicksDashboardComponent implements OnInit {
       return true;
     }
     else return false;
+  }
+
+  showEdit(game: Game): boolean {
+    if(this.edit && game.progress == "PENDING") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnDestroy() {

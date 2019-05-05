@@ -20,10 +20,10 @@ import { Subscription }   from 'rxjs';
 })
 
 export class PicksDashboardComponent implements OnInit {
-  games: Game[] = [];
-  stagedPicks: Pick[] = [];
+  games: Game[] = [] as Game[];
+  stagedPicks: Pick[] = [] as Pick[];
   week: Week;
-  weeks: Week[] = [];
+  weeks: Week[] = [] as Week[];
   submitOpened = false;
   weeksView = false;
   subscription: Subscription;
@@ -124,24 +124,8 @@ export class PicksDashboardComponent implements OnInit {
     }
   }
 
-  showWeeks() {
-    var element = document.getElementById("week-card");
-    element.className = "week-out-animation";
-    setTimeout(()=>{
-      this.weeksView = true; 
-    },500);
-  }
-
   weekSelected(weekId:number) {
     this.getWeekInfo(this.weekService.getWeek(weekId));
-    var element = document.getElementById("weeks-container");
-    element.className = "week-out-animation";
-    setTimeout(()=>{
-      this.weeksView = false;
-      setTimeout(()=>{
-        this.ngAfterViewInit();
-      })
-    },500);
   }
 
   highlightGameResult(){

@@ -1,33 +1,18 @@
-<div class="title">
-    WEEKLY GAMES
-</div>
-<div *ngIf="weeksView == false">
-    <div id="week-card" class="week-card week-in-animation body-color-primary">
-        <div class="week-header" (click)="showWeeks()">
-            <div class=week-title>
-                WEEK {{week.number}}
-            </div>
-            <mat-icon class="week-arrow-icon">
-                keyboard_arrow_up
-            </mat-icon>
-        </div>
-        <game *ngFor="let game of games, let i = index"
-            [game] = "game"
-            [showSubmitTime] = "showSubmitTime(i)"
-            [submitOpened] = "submitOpened"
-            [pickSuccess]="null"
-            (openSubmit) = "teamClicked($event)"
-            (stageSelectedPick) = "stageSelectedPick($event)">
-        </game>
-    </div>
+<weeks 
+    [title] = "'WEEKLY GAMES'"
+    [number] = "week.number">
+    <game *ngFor="let game of games, let i = index"
+        [game] = "game"
+        [showSubmitTime] = "showSubmitTime(i)"
+        [submitOpened] = "submitOpened"
+        [pickSuccess]="null"
+        (openSubmit) = "teamClicked($event)"
+        (stageSelectedPick) = "stageSelectedPick($event)">
+    </game>
     <div id="submit-container">
         <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
         <button mat-raised-button id="submit-button" class="accent-color-primary" (click)="openDialog()">
         submit
         </button>
     </div>
-</div>
-<div *ngIf="weeksView">
-    <weeks>
-    </weeks>
-</div>
+</weeks>

@@ -1,6 +1,27 @@
-<div id="weeks-container">
-    <div *ngFor="let weekCard of weeks" class="week-cards body-color-secondary week-cards-animation" 
+<div class="title">
+    {{title}}
+</div>
+<div *ngIf="weeksView == false">
+    <div id="week-card" class="week-card week-in-animation body-color-primary">
+        <div class="week-header" (click)="showWeeks()">
+            <div class=week-title>
+                WEEK {{number}}
+            </div>
+            <mat-icon class="week-arrow-icon">
+                keyboard_arrow_up
+            </mat-icon>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>
+<div id="weeks-container" *ngIf="weeksView == true">
+    <div *ngFor="let weekCard of weeks" class="week-card week-cards body-color-secondary week-cards-animation" 
     id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard)">
-        week {{weekCard.number}}
+        <div class="week-title">
+            WEEK {{weekCard.number}}
+        </div>
+        <mat-icon class="week-arrow-icon">
+            keyboard_arrow_right
+        </mat-icon>
     </div>
 </div>
