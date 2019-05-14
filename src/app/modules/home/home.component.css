@@ -1,0 +1,84 @@
+.example-container {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+}
+
+.background-card{
+	position: absolute;
+	width:100%;
+	border-bottom-left-radius: 25px;
+	z-index: -1;
+	height: 60px;
+}
+
+h1.title {
+	margin: 20px;
+}
+
+.sidenav-button-group {
+	margin: 10px;
+	float: left;
+}
+
+.sidenav-button {
+	transform: scale(2);
+}
+
+.nav-title {
+	text-align: center;
+	margin-left: 10%;
+	border-bottom: solid lightgrey 1px;
+	width:80%;
+}
+
+h1.nav-text-title {
+	margin-bottom:10px;
+}
+
+.sidenav {
+	border-radius: 0px 18px 18px 0px;
+	width:300px;
+}
+
+.sidenav-large {
+	border-radius: 0px 18px 18px 0px;
+	width:300px;
+}
+
+nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left:5px;
+}
+
+a {
+	width:90%;
+  	padding: 5px 10px;
+	margin-top: 10px;
+	margin-right:5px;
+	display: inline-block;
+	font-size: 1.5em;
+	text-align:left;
+	text-decoration: none;
+}
+
+.sidenav-opt{
+	border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+	margin-left: 40px;
+	margin-top:20px;
+	cursor: pointer;
+	margin-left: 0px;
+	padding-left: 20px;
+}
+
+.sidenav-icon {
+	transform: scale(1.5);
+}

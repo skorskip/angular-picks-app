@@ -16,6 +16,8 @@ import { StandingsModule} from './modules/standings/standings.module';
 import { MyPicksDashboardModule } from './modules/my-picks-dashboard/my-picks-dashboard.module';
 import { MyStatsModule } from './modules/my-stats/my-stats.module';
 import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.module';
+import { HomeModule } from './modules/home/home.module';
+import { LoginModule } from './modules/login/login.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +30,13 @@ import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.
     AppRoutingModule,
     MaterialModule,
     HttpClientModule,
+    HomeModule,
     MyPicksDashboardModule,
     MyStatsModule,
     PicksDashboardModule,
     StandingsModule,
     ProfileModule,
+    LoginModule,
   // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
   // and returns simulated server responses.
   // Remove it when a real server is ready to receive requests.

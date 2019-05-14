@@ -1,0 +1,26 @@
+<div class="login-container">
+  <div>
+    <h1>pickem</h1>
+  </div>
+  <mat-form-field appearance="outline" class="login-input">
+    <mat-label>username</mat-label>
+    <input matInput placeholder="username">
+    <mat-icon matSuffix>person</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="login-input padding-bottom">
+    <mat-label>password</mat-label>
+    <input matInput placeholder="password" [type]="hide ? 'password' : 'text'">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </mat-form-field>
+  <button (click)="attemptLogin()" class="login-button accent-primary">
+      login
+  </button>
+  <div class="hr-sect">
+    <span>
+      or
+    </span>
+  </div>
+  <button (click)="attemptLogin()" class="login-button accent-primary">
+    sign up
+  </button>
+</div>
