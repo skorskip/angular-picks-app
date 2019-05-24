@@ -1,6 +1,7 @@
 export class Game {
 	id: number;
-	number: number;
+	week: number;
+	season: number;
 	date: string;
 	submitDate: string;
 	homeTeam: number;
@@ -8,6 +9,7 @@ export class Game {
 	homeScore: number;
 	awayScore: number;
 	spread: number;
-	//FINAL, INPROGRESS, PENDING
+	//COMPLETED, INPROGRESS, PENDING
 	progress: string;
+	isOn: number;
 }

@@ -1,11 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { DOCUMENT } from '@angular/common';
 import { Game } from '../../data-models/game/game';
-import { Team } from '../../data-models/team/team';
 import { Week } from '../../data-models/week/week';
-import { GameService } from '../../data-models/game/game.service';
 import { WeekService } from '../../data-models/week/week.service';
 import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
@@ -31,10 +28,8 @@ export class PicksDashboardComponent implements OnInit {
   constructor(
     public dialog: MatDialog, 
     private weekService: WeekService, 
-    private gameService: GameService,
     private pickService: PickService, 
     public snackBar: MatSnackBar, 
-    @Inject(DOCUMENT) document, 
     private router:Router,
     private weeksService:WeeksService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
@@ -58,7 +53,7 @@ export class PicksDashboardComponent implements OnInit {
 
   getWeekInfo(week: Week) {
     this.week = week;
-    this.games = this.gameService.getGameByIds(this.week.games);
+    this.games = this.week.games;
     this.removePickedGames();
   }
 

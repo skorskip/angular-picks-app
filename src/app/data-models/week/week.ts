@@ -4,7 +4,7 @@ import { Team } from '../team/team';
 export class Week {
     id: number;
     number: number;
-    games: number[];
+    games: Game[];
     teams: number[];
-    date: string;
+    season: string;
 }
