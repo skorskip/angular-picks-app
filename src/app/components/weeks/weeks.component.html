@@ -1,11 +1,11 @@
-<div class="title">
+<div class="title accent-primary">
     {{title}}
 </div>
 <div *ngIf="weeksView == false">
-    <div id="week-card" class="week-card week-in-animation body-color-primary">
+    <div id="week-card" class="week-card week-in-animation body-color-secondary">
         <div class="week-header" (click)="showWeeks()">
             <div class=week-title>
-                WEEK {{number}}
+                Week {{number}}
             </div>
             <mat-icon class="week-arrow-icon">
                 keyboard_arrow_up
@@ -18,7 +18,7 @@
     <div *ngFor="let weekCard of weeks" class="week-card week-cards body-color-secondary week-cards-animation" 
     id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard)">
         <div class="week-title">
-            WEEK {{weekCard.number}}
+            Week {{weekCard.number}}
         </div>
         <mat-icon class="week-arrow-icon">
             keyboard_arrow_right

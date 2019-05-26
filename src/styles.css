@@ -2,7 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html, body { height: 100%; }
-* { font-family: Comfortaa, sans-serif}
+* { font-family: Helvetica Neue, Comfortaa, sans-serif}
 body { margin: 0;}
 
 @keyframes titleSlide {
@@ -34,12 +34,13 @@ body { margin: 0;}
 
 .body-color-secondary {
     background-color: white;
-    color: black;
+    color: grey;
 }
 
 .accent-color-primary {
-    background: #3e5dce;
-    color: white;
+    background: #a2aedb;
+    color:  #3e5dce;
+    border: solid #3e5dce;
 }
 
 .accent-primary {
