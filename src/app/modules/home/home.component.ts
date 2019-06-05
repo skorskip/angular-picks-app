@@ -67,8 +67,9 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToMyPicks() {
-    var week = this.weekService.getCurrentWeek();
-    this.router.navigate(['/myPicks/' + week.id]);
+    this.weekService.getCurrentWeek().subscribe( week => {
+      this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
+    });
   }
 
   mouseover(event:any){

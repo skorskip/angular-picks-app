@@ -7,14 +7,16 @@ export class PickService {
         {
             'id' : 100,
             'user': 'pskorski',
-            'weekId':101,
+            'season':2018,
+            'week': 1,
             'gameId':101,
             'teamId':101
         },
         {
             'id' : 101,
             'user': 'pskorski',
-            'weekId':101,
+            'season':2018,
+            'week': 1,
             'gameId':102,
             'teamId':104
         }
@@ -47,10 +49,10 @@ export class PickService {
         });
     }
 
-    getPicksByWeek(weekId:number):Pick[] {
+    getPicksByWeek(season:number, week:number):Pick[] {
         var picksByWeek: Pick[] = [];
         this.picks.forEach((pick,i) =>{
-            if(pick.weekId == weekId){
+            if(pick.season == season && pick.week == week){
                 picksByWeek.push(pick);
             }
         });

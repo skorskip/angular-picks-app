@@ -14,7 +14,7 @@ export class WeeksComponent implements OnInit {
   @Input() number;
   weeksView = false;
 
-  weeks: Week[] = [];
+  weeks: any = [];
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
@@ -23,16 +23,22 @@ export class WeeksComponent implements OnInit {
   ngOnInit() {}
 
   showWeeks() {
-    this.weeks = this.weekService.getWeeks();
-    var element = document.getElementById("week-card");
-    element.className = "week-out-animation";
-    setTimeout(()=>{
-      this.weeksView = true; 
-    },500);
+    this.weekService.getCurrentWeek().subscribe( currentWeek => {
+      for(var i = 1; i <= currentWeek.number; i++) {
+        var week = {} as any;
+        week.number = i;
+        this.weeks.push(week);
+      }
+      var element = document.getElementById("week-card");
+      element.className = "week-out-animation";
+      setTimeout(()=>{
+        this.weeksView = true; 
+      },500);
+    });
   }
 
   weekSelected(weekSelected:Week) {
-    this.weeksService.weekSelected(weekSelected.id)
+    this.weeksService.weekSelected(weekSelected);
     var element = document.getElementById("weeks-container");
     element.className = "week-out-animation";
     this.weeksView = false; 

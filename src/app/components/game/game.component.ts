@@ -72,7 +72,9 @@ export class GameComponent implements OnInit {
     var teamIds: number[] = [];
     teamIds.push(game.homeTeam);
     teamIds.push(game.awayTeam);
-    this.teams = this.teamService.getTeamByIds(teamIds);
+    this.teamService.getTeamByIds(teamIds).subscribe(
+      teams => this.teams = teams
+    );
   }
 
   getGameSpread(number:number) {

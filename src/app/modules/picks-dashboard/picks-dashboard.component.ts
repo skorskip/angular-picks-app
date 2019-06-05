@@ -33,14 +33,16 @@ export class PicksDashboardComponent implements OnInit {
     private router:Router,
     private weeksService:WeeksService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
-        weekId => {
-          this.weekSelected(weekId);
+        weekSeason => {
+          this.getWeekInfo(weekSeason);
         }
       )
     }
 
   ngOnInit() {
-    this.getWeekInfo(this.weekService.getCurrentWeek());
+    this.weekService.getCurrentWeek().subscribe(
+      currentWeek => this.getWeekInfo(currentWeek)
+    );
   }
 
   ngAfterViewInit() {
@@ -52,13 +54,14 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   getWeekInfo(week: Week) {
+    console.log("week:", week);
     this.week = week;
     this.games = this.week.games;
     this.removePickedGames();
   }
 
   removePickedGames() {
-    var picks = this.pickService.getPicksByWeek(this.week.id);
+    var picks = this.pickService.getPicksByWeek(this.week.season, this.week.number);
     picks.forEach(pick => {
       this.games.forEach((game, i) => {
         if(pick.gameId == game.id) {
@@ -84,7 +87,6 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   stageSelectedPick(selectedPick: Pick){
-    selectedPick.weekId = this.week.id;
     var pickAdded = false;
     this.stagedPicks.forEach((stagedPick, i) =>{
       if(stagedPick.gameId == selectedPick.gameId) {
@@ -117,10 +119,6 @@ export class PicksDashboardComponent implements OnInit {
         }
       });
     }
-  }
-
-  weekSelected(weekId:number) {
-    this.getWeekInfo(this.weekService.getWeek(weekId));
   }
 
   highlightGameResult(){

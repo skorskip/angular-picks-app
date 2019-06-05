@@ -38,16 +38,17 @@ export class MyPicksDashboardComponent implements OnInit {
     private route:ActivatedRoute,
     private router:Router) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
-        weekId => {
-          this.weekSelected(weekId);
-          this.router.navigate(['/myPicks/' + weekId]);
+        week => {
+          this.weekSelected(week);
+          this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
         }
       )
     }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('weekId');
-    this.getPicksByWeek(id);
+    const season = +this.route.snapshot.paramMap.get('season') as number;
+    const week = +this.route.snapshot.paramMap.get('week') as number;
+    this.getPicksByWeek(season, week);
   }
 
   ngAfterViewInit() {
@@ -58,20 +59,27 @@ export class MyPicksDashboardComponent implements OnInit {
     })  
   }
 
-  getPicksByWeek(weekId:number) {
-    this.week = this.weekService.getWeek(weekId);
-    this.picks = this.pickService.getPicksByWeek(weekId);
+  getPicksByWeek(season: number, week: number) {
+    this.picks = this.pickService.getPicksByWeek(season, week);
+    
     var gameIds: number[] = [];
     var teamIds: number[] = [];
+    
     this.picks.forEach(element => {
       gameIds.push(element.gameId);
     });
-    this.myGames = this.gameService.getGameByIds(gameIds);
-    this.myGames.forEach(element => {
-      teamIds.push(element.homeTeam);
-      teamIds.push(element.awayTeam);
-    })
-    this.myTeams = this.teamService.getTeamByIds(teamIds);
+    
+    this.gameService.getGameByIds(gameIds).subscribe(games => {
+      this.myGames = games;
+      this.myGames.forEach(element => {
+        teamIds.push(element.homeTeam);
+        teamIds.push(element.awayTeam);
+      })
+      this.teamService.getTeamByIds(teamIds).subscribe(
+        teams => this.myTeams = teams
+      );
+    });
+
   }
 
   editPicks() {
@@ -94,7 +102,7 @@ export class MyPicksDashboardComponent implements OnInit {
         var newPick = pick;
         newPick.teamId = newTeam;
         this.pickService.updatePick(newPick);
-        this.getPicksByWeek(this.week.id);
+        this.getPicksByWeek(this.week.season, this.week.number);
         this.highLightSelected();
       }
     });
@@ -175,8 +183,8 @@ export class MyPicksDashboardComponent implements OnInit {
     return game;
   }
 
-  weekSelected(weekId:number) {
-    this.getPicksByWeek(weekId);
+  weekSelected(week:Week) {
+    this.getPicksByWeek(week.season, week.number);
     setTimeout(()=>{
       this.ngAfterViewInit();
     });

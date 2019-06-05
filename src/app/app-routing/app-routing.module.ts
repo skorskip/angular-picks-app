@@ -10,7 +10,7 @@ import { MyStatsComponent } from '../modules/my-stats/my-stats.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: 'myPicks/:weekId', component: MyPicksDashboardComponent },
+  { path: 'myPicks/:season/:week', component: MyPicksDashboardComponent },
   { path: 'weeklyGames', component: PicksDashboardComponent },
   { path: 'myStats', component: MyStatsComponent },
   { path: 'standings', component: StandingsComponent },
