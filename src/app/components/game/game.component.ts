@@ -19,7 +19,7 @@ export class GameComponent implements OnInit {
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
 
-  teams: Team[];
+  teams: Team[] = [];
   constructor(private teamService: TeamService) { }
 
   ngOnInit(){

@@ -19,8 +19,7 @@ import { Subscription }   from 'rxjs';
 export class PicksDashboardComponent implements OnInit {
   games: Game[] = [] as Game[];
   stagedPicks: Pick[] = [] as Pick[];
-  week: Week;
-  weeks: Week[] = [] as Week[];
+  week: Week = new Week;
   submitOpened = false;
   weeksView = false;
   subscription: Subscription;
@@ -54,7 +53,6 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   getWeekInfo(week: Week) {
-    console.log("week:", week);
     this.week = week;
     this.games = this.week.games;
     this.removePickedGames();
@@ -114,7 +112,7 @@ export class PicksDashboardComponent implements OnInit {
         if(result){
           if(this.submitPicks()){
             this.snackBar.open("picks submitted", "",{duration: 2000});
-            this.router.navigate(['/myPicks/' + this.week.id]);
+            this.router.navigate(['/myPicks/' + this.week.season + '/' + this.week.number]);
           }
         }
       });

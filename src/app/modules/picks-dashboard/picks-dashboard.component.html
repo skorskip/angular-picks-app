@@ -1,4 +1,5 @@
 <weeks 
+    *ngIf="week.games.length > 0"
     [title] = "'Weekly Games'"
     [number] = "week.number">
     <game *ngFor="let game of games, let i = index"

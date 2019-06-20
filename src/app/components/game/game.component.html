@@ -7,12 +7,12 @@
       <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">
         Game in Progress
       </div>
-      <div *ngIf="game.progress == 'FINAL'" class="date-text">
+      <div *ngIf="game.progress == 'COMPLETED'" class="date-text">
         Final
       </div>
     </div>
   </div> 
-  <div class="team-group">
+  <div class="team-group" *ngIf="teams.length > 0">
     <team 
       [team] = "getTeam(game.awayTeam)"
       [score] = "game.awayScore"

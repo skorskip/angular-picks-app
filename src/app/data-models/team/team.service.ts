@@ -12,7 +12,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class TeamService {
 
-  private teamUrl = environment.serviceURL +' teams';  // URL to web api
+  private teamUrl = environment.serviceURL +'teams';  // URL to web api
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class TeamService {
     const url = `${this.teamUrl}`;
     return this.http.post(url, teamIds, httpOptions).pipe(
       tap((newTeams: Team[]) => console.log(`fetched teams`)),
-      catchError(this.handleError<Team[]>(`fetchec teams`))
+      catchError(this.handleError<Team[]>(`fetched teams`))
     );
   }
 
