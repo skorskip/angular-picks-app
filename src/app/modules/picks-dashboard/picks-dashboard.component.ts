@@ -17,9 +17,9 @@ import { Subscription }   from 'rxjs';
 })
 
 export class PicksDashboardComponent implements OnInit {
-  games: Game[] = [] as Game[];
-  stagedPicks: Pick[] = [] as Pick[];
-  week: Week = new Week;
+  games = [] as Game[];
+  stagedPicks = [] as Pick[];
+  week = new Week;
   submitOpened = false;
   weeksView = false;
   subscription: Subscription;
@@ -120,8 +120,10 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   highlightGameResult(){
+    console.log(this.games);
     this.games.forEach(game => {
-      if(game.progress == 'FINAL'){
+      console.log(game);
+      if(game.progress == 'COMPLETED'){
         var gameElement = document.getElementById(game.id + "-game-card");
         if(game.homeScore + game.spread > game.awayScore){
           document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");

@@ -3,7 +3,13 @@ export class Team {
 	primaryColor: string;
 	secondaryColor: string;
 	name: string;
-	abbrevation: string;
-	wins: number;
-	loses: number;
+	abbreviation: string;
+
+	constructor() {
+		this.id = 0;
+		this.primaryColor = "";
+		this.secondaryColor = "";
+		this.name = "";
+		this.abbreviation = "";
+	}
 }

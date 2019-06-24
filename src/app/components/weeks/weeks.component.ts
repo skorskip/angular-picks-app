@@ -13,8 +13,8 @@ export class WeeksComponent implements OnInit {
   @Input() title;
   @Input() number;
   weeksView = false;
-
-  weeks: any = [];
+  weeks = [] as number[];
+  season = 0;
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
@@ -23,12 +23,15 @@ export class WeeksComponent implements OnInit {
   ngOnInit() {}
 
   showWeeks() {
+    var tempWeeks = [];
     this.weekService.getCurrentWeek().subscribe( currentWeek => {
+      this.season = currentWeek.season;
       for(var i = 1; i <= currentWeek.number; i++) {
         var week = {} as any;
         week.number = i;
-        this.weeks.push(week);
+        tempWeeks.push(week);
       }
+      this.weeks = tempWeeks.reverse();
       var element = document.getElementById("week-card");
       element.className = "week-out-animation";
       setTimeout(()=>{
@@ -37,10 +40,13 @@ export class WeeksComponent implements OnInit {
     });
   }
 
-  weekSelected(weekSelected:Week) {
-    this.weeksService.weekSelected(weekSelected);
-    var element = document.getElementById("weeks-container");
-    element.className = "week-out-animation";
-    this.weeksView = false; 
+  weekSelected(weekSelected:number) {
+    console.log(weekSelected);
+    this.weekService.getWeek(this.season, weekSelected).subscribe( week => {
+      this.weeksService.weekSelected(week);
+      var element = document.getElementById("weeks-container");
+      element.className = "week-out-animation";
+      this.weeksView = false;
+    });
   }
 }

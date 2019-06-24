@@ -9,7 +9,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class TeamComponent implements OnInit {
 
-  @Input() team: Team;
+  @Input() team = new Team();
   @Input() score: any;
   @Input() title: string;
   @Input() progress: string;
@@ -30,9 +30,8 @@ export class TeamComponent implements OnInit {
     if(document.getElementById("body").scrollWidth > 950){
       return this.team.name;
     } else {
-      return this.team.abbrevation;
+      return this.team.abbreviation;
     }
-    
   }
 
 }

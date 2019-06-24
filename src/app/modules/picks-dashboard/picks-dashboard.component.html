@@ -1,8 +1,9 @@
 <weeks 
-    *ngIf="week.games.length > 0"
+    *ngIf="games.length > 0"
     [title] = "'Weekly Games'"
     [number] = "week.number">
-    <game *ngFor="let game of games, let i = index"
+    <game 
+        *ngFor="let game of games, let i = index"
         [game] = "game"
         [showSubmitTime] = "showSubmitTime(i)"
         [submitOpened] = "submitOpened"

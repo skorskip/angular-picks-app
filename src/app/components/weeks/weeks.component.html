@@ -16,7 +16,7 @@
 </div>
 <div id="weeks-container" *ngIf="weeksView == true">
     <div *ngFor="let weekCard of weeks" class="week-card week-cards body-color-secondary week-cards-animation" 
-    id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard)">
+    id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard.number)">
         <div class="week-title">
             Week {{weekCard.number}}
         </div>

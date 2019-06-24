@@ -13,7 +13,8 @@
     </div>
   </div> 
   <div class="team-group" *ngIf="teams.length > 0">
-    <team 
+    <team
+      *ngIf = "teams.length > 0"
       [team] = "getTeam(game.awayTeam)"
       [score] = "game.awayScore"
       [title] = "'AWAY'"
@@ -26,6 +27,7 @@
       [game]="game">
     </pick-status>
     <team 
+      *ngIf = "teams.length > 0"
       [team] = "getTeam(game.homeTeam)"
       [score] = "game.homeScore"
       [title] = "'HOME'"
