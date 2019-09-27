@@ -1,7 +1,7 @@
 <mat-sidenav-container  id="side-nav" class="example-container" (window:resize)="onResize($event)" >
   <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav body-color-secondary" position="start">
     <div class="nav-title">
-      <h2 class="nav-text-title">pickem</h2>
+      <div class="nav-text-title">pickem</div>
     </div>
     <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')" (mouseover) = "mouseover($event)"
     (mouseout)="mouseout($event)">
@@ -40,8 +40,6 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="background-card accent-color-primary">
-    </div>
     <div class="sidenav-button-group accent-primary">
       <button *ngIf="largeScreen == false" mat-icon-button (click)="toggle()">
         <mat-icon class="sidenav-button">menu</mat-icon>

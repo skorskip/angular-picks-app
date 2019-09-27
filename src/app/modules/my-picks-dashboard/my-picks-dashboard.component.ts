@@ -18,11 +18,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-picks-dashboard.component.css']
 })
 export class MyPicksDashboardComponent implements OnInit {
-  myGames: Game[];
-  myTeams: Team[];
-  picks: Pick[];
-  weeks: Week[];
-  week: Week;
+  myGames = [] as Game[];
+  myTeams = [] as Team[];
+  picks = [] as Pick[];
+  weeks = [] as Week[];
+  week = new Week();
   edit = false;
   notSelectablePicks = true;
   weeksView = false;
@@ -48,43 +48,42 @@ export class MyPicksDashboardComponent implements OnInit {
   ngOnInit() {
     const season = +this.route.snapshot.paramMap.get('season') as number;
     const week = +this.route.snapshot.paramMap.get('week') as number;
+    this.week.number = week;
+    this.week.season = season;
     this.getPicksByWeek(season, week);
   }
 
   ngAfterViewInit() {
     this.highLightSelected();
-    this.myGames.forEach((game,i) => {
-      var element = document.getElementById(game.id + "-game-card");
-        element.style.animationDuration = (.5 + (i * .5)) + 's';
-    })  
   }
 
   getPicksByWeek(season: number, week: number) {
     this.picks = this.pickService.getPicksByWeek(season, week);
+    if(this.picks.length != 0){
     
-    var gameIds: number[] = [];
-    var teamIds: number[] = [];
-    
-    this.picks.forEach(element => {
-      gameIds.push(element.gameId);
-    });
-    
-    this.gameService.getGameByIds(gameIds).subscribe(games => {
-      this.myGames = games;
-      this.myGames.forEach(element => {
-        teamIds.push(element.homeTeam);
-        teamIds.push(element.awayTeam);
-      })
-      this.teamService.getTeamByIds(teamIds).subscribe(
-        teams => this.myTeams = teams
-      );
-    });
-
+      var gameIds: number[] = [];
+      var teamIds: number[] = [];
+      
+      this.picks.forEach(element => {
+        gameIds.push(element.gameId);
+      });
+      
+      this.gameService.getGameByIds(gameIds).subscribe(games => {
+        this.myGames = games;
+        this.myGames.forEach(element => {
+          teamIds.push(element.homeTeam);
+          teamIds.push(element.awayTeam);
+        })
+        this.teamService.getTeamByIds(teamIds).subscribe(
+          teams => this.myTeams = teams
+        );
+      });
+    }
   }
 
   editPicks() {
     this.edit = this.edit ? false : true;
-  }
+  }Z
 
   deletePick(game:Game) {
     this.picks.forEach(pick => {
@@ -198,7 +197,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.progress == "PENDING") {
+    if(this.edit && game.progress == "UNPLAYED") {
       return true;
     } else {
       return false;

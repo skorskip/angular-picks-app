@@ -33,3 +33,10 @@
     padding: 20px;
     color: grey;
 }
+
+.login-title {
+    padding: 10px;
+    font-size: 2em;
+    margin-bottom:10px;
+
+}

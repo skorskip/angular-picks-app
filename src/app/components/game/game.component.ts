@@ -27,7 +27,7 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeamId:number) {
-    if(this.notSelectablePicks  || (this.game.progress != 'PENDING')){   
+    if(this.notSelectablePicks  || (this.game.progress != 'UNPLAYED')){   
     } else {
       var selectedTeam = this.getTeam(selectedTeamId);
       var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;

@@ -1,7 +1,7 @@
 <div class="game-card game-card-animation body-color-primary" attr.id={{game.id}}-game-card>
   <div style="width: 100%" *ngIf="showSubmitTime">
     <div class="game-card-date">
-      <div *ngIf="game.progress == 'PENDING'" class="date-text">
+      <div *ngIf="game.progress == 'UNPLAYED'" class="date-text">
         {{game.submitDate}}
       </div>
       <div *ngIf="game.progress == 'INPROGRESS'" class="date-text">

@@ -22,7 +22,7 @@ export class PickStatusComponent implements OnInit {
 
   getPickStatus() {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
-      if(this.game.progress == "PENDING") {
+      if(this.game.progress == "UNPLAYED") {
         this.open = true;
         return "pick-status-open";
       } else {

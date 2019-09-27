@@ -45,10 +45,6 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.games.forEach((game,i) => {
-      var element = document.getElementById(game.id + "-game-card");
-        element.style.animationDuration = (.5 + (i * 500)) + 'ms';
-    });
     this.highlightGameResult();
   }
 
