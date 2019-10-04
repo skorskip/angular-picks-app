@@ -58,7 +58,7 @@ export class PicksDashboardComponent implements OnInit {
     var picks = this.pickService.getPicksByWeek(this.week.season, this.week.number);
     picks.forEach(pick => {
       this.games.forEach((game, i) => {
-        if(pick.gameId == game.id) {
+        if(pick.gameId == game.gameId) {
           this.games.splice(i, 1);
         }
       })
@@ -119,8 +119,8 @@ export class PicksDashboardComponent implements OnInit {
     console.log(this.games);
     this.games.forEach(game => {
       console.log(game);
-      if(game.progress == 'COMPLETED'){
-        var gameElement = document.getElementById(game.id + "-game-card");
+      if(game.status == 'COMPLETED'){
+        var gameElement = document.getElementById(game.gameId + "-game-card");
         if(game.homeScore + game.spread > game.awayScore){
           document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
           document.getElementById(game.homeTeam + "-team-card").classList.add("accent-color-primary");
@@ -129,10 +129,10 @@ export class PicksDashboardComponent implements OnInit {
           document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
           document.getElementById(game.homeTeam + "-team-card").classList.add("accent-color-primary");
         }
-        document.getElementById(game.id + "-game-card").classList.add("disabled");
+        document.getElementById(game.gameId + "-game-card").classList.add("disabled");
       }
-      if(game.progress == 'INPROGRESS') {
-        document.getElementById(game.id + "-game-card").classList.add("disabled");
+      if(game.status == 'INPROGRESS') {
+        document.getElementById(game.gameId + "-game-card").classList.add("disabled");
       }
     })
 
@@ -148,7 +148,7 @@ export class PicksDashboardComponent implements OnInit {
   getGame(id: number): Game {
     var game
     this.games.forEach((gameItem) => {
-      if(id == gameItem.id){
+      if(id == gameItem.gameId){
         game = gameItem;
       }
     })

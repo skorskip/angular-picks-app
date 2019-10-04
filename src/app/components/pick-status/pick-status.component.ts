@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Game } from '../../data-models/game/game';
 
 @Component({
   selector: 'pick-status',
@@ -8,7 +9,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class PickStatusComponent implements OnInit {
 
-  @Input() game;
+  @Input() game = new Game();
   @Input() pickSuccess = null;
   closed = false;
   open = false;
@@ -22,9 +23,9 @@ export class PickStatusComponent implements OnInit {
 
   getPickStatus() {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
-      if(this.game.progress == "UNPLAYED") {
+      if(this.game.status == "UNPLAYED") {
         this.open = true;
-        return "pick-status-open";
+        return "pick-status-open accent-primary";
       } else {
         this.closed = true;
         return "pick-status-close";

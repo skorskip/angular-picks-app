@@ -5,16 +5,16 @@ import { Pick } from './pick';
 export class PickService {
     private picks:Pick[] = [
         {
-            'id' : 100,
-            'user': 'pskorski',
+            'pickId' : 100,
+            'userId': 'pskorski',
             'season':2018,
             'week': 1,
             'gameId':101,
             'teamId':101
         },
         {
-            'id' : 101,
-            'user': 'pskorski',
+            'pickId' : 101,
+            'userId': 'pskorski',
             'season':2018,
             'week': 1,
             'gameId':102,
@@ -26,7 +26,7 @@ export class PickService {
     constructor() {}
     addPicks(picks: Pick[]):boolean {
         picks.forEach(element => {
-            element.id = this.id
+            element.pickId = this.id
             this.id = this.id + 1;
             this.picks.push(element);
         });
@@ -35,7 +35,7 @@ export class PickService {
 
     deletePick(pickId: number){
         this.picks.forEach((element,i) => {
-            if(element.id == pickId) {
+            if(element.pickId == pickId) {
                 this.picks.splice(i,1);
             }
         });
@@ -43,7 +43,7 @@ export class PickService {
     
     updatePick(pickUpdate:Pick){
         this.picks.forEach((element,i) => {
-            if(element.id == pickUpdate.id) {
+            if(element.pickId == pickUpdate.pickId) {
                 this.picks.splice(i,1,pickUpdate);
             }
         });

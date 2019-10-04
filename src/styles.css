@@ -34,11 +34,11 @@ body { margin: 0;}
 
 .body-color-secondary {
     background-color: white;
-    color: rgb(55, 57, 68);
+    color: #455564;
 }
 
 .accent-color-primary {
-    background: #a2aedb;
+    background: #efefef;
     color:  #3e5dce;
 }
 

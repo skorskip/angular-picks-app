@@ -27,11 +27,11 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeamId:number) {
-    if(this.notSelectablePicks  || (this.game.progress != 'UNPLAYED')){   
+    if(this.notSelectablePicks  || (this.game.status != 'UNPLAYED')){   
     } else {
       var selectedTeam = this.getTeam(selectedTeamId);
       var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;
-      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.id));
+      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.gameId));
       this.openSubmit.emit(true);
       if(document.getElementById(selectedTeamId + "-team-card").classList.contains("selectedTeam")){
         this.unSelectTeam(selectedTeamId);
@@ -61,7 +61,7 @@ export class GameComponent implements OnInit {
   }
 
   highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.id + "-team-card");
+    var teamElement = document.getElementById(team.teamId + "-team-card");
     teamElement.classList.remove("body-color-secondary");
     teamElement.style.background = team.primaryColor;
     teamElement.style.color = "white";
@@ -88,7 +88,7 @@ export class GameComponent implements OnInit {
   getTeam(id: number): Team {
     var team
     this.teams.forEach((teamItem) => {
-      if(id == teamItem.id){
+      if(id == teamItem.teamId){
         team = teamItem;
       }
     })

@@ -87,8 +87,8 @@ export class MyPicksDashboardComponent implements OnInit {
 
   deletePick(game:Game) {
     this.picks.forEach(pick => {
-      if(pick.gameId == game.id){
-        this.pickService.deletePick(pick.id);
+      if(pick.gameId == game.gameId){
+        this.pickService.deletePick(pick.pickId);
         this.ngOnInit();
       }
     }); 
@@ -96,7 +96,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   changeTeam(game: Game) {
     this.picks.forEach(pick => {
-      if(pick.gameId == game.id){
+      if(pick.gameId == game.gameId){
         var newTeam = pick.teamId == game.homeTeam ? game.awayTeam : game.homeTeam;
         var newPick = pick;
         newPick.teamId = newTeam;
@@ -109,7 +109,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   highLightSelected(){
     this.myTeams.forEach(team => {
-      this.unSelectTeam(team.id);
+      this.unSelectTeam(team.teamId);
     });
     this.picks.forEach(pick =>{
         this.highlightPickResult(pick);
@@ -126,7 +126,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.id + "-team-card");
+    var teamElement = document.getElementById(team.teamId + "-team-card");
     teamElement.classList.remove("body-color-secondary");
     teamElement.style.backgroundColor = team.primaryColor;
     teamElement.style.color = "white";
@@ -135,18 +135,18 @@ export class MyPicksDashboardComponent implements OnInit {
 
   highlightPickResult(pick:Pick){
     var game = this.getGame(pick.gameId);
-    if(game.progress == 'INPROGRESS') {
-      document.getElementById(game.id + "-game-card").classList.remove("body-color-secondary");
-      document.getElementById(game.id + "-game-card").classList.add("accent-color-tietary");
-      document.getElementById(game.id + "-game-card").classList.add("disabled");
+    if(game.status == 'INPROGRESS') {
+      document.getElementById(game.gameId + "-game-card").classList.remove("body-color-secondary");
+      document.getElementById(game.gameId + "-game-card").classList.add("accent-color-tietary");
+      document.getElementById(game.gameId + "-game-card").classList.add("disabled");
       this.pickSuccess = null;
     }
   }
 
   pickResult(game: Game, index: number):boolean {
-    if(game.progress == 'FINAL'){
+    if(game.status == 'FINAL'){
       var pick = this.picks[index];
-      if(pick.gameId == game.id) {
+      if(pick.gameId == game.gameId) {
         var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
         var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
         if(pickedTeamScore > otherTeamScore){
@@ -165,7 +165,7 @@ export class MyPicksDashboardComponent implements OnInit {
   getTeam(id: number): Team {
     var team
     this.myTeams.forEach((teamItem) => {
-      if(id == teamItem.id){
+      if(id == teamItem.teamId){
         team = teamItem;
       }
     })
@@ -175,7 +175,7 @@ export class MyPicksDashboardComponent implements OnInit {
   getGame(id: number): Game {
     var game
     this.myGames.forEach((gameItem) => {
-      if(id == gameItem.id){
+      if(id == gameItem.gameId){
         game = gameItem;
       }
     })
@@ -197,7 +197,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.progress == "UNPLAYED") {
+    if(this.edit && game.status == "UNPLAYED") {
       return true;
     } else {
       return false;
