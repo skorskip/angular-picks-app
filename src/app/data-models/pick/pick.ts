@@ -1,6 +1,6 @@
 export class Pick {
     pickId: number;
-    userId: string;
+    userId: number;
     season: number;
     week: number;
     gameId: number;

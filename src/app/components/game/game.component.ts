@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { TeamService } from '../../data-models/team/team.service';
 import { Pick } from '../../data-models/pick/pick';
-
+import { DateFormatterService } from '../../services/date-formatter.service';
 @Component({
   selector: 'game',
   templateUrl: './game.component.html',
@@ -18,21 +18,33 @@ export class GameComponent implements OnInit {
   @Input() pickSuccess = null;
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
-
+  @Output() teamLoaded = new EventEmitter();
+  
+  submitDate = "";
   teams: Team[] = [];
-  constructor(private teamService: TeamService) { }
+  constructor(
+    private teamService: TeamService, 
+    private dateFormatter: DateFormatterService) { }
 
   ngOnInit(){
+    this.submitDate = this.dateFormatter.formatDate(new Date(this.game.submitDate));
     this.getTeamsInit(this.game);
+  }
+
+  teamLoadedEvent(event) {
+    this.teamLoaded.emit(this.game);
   }
 
   selectTeam(selectedTeamId:number) {
     if(this.notSelectablePicks  || (this.game.status != 'UNPLAYED')){   
     } else {
+      
       var selectedTeam = this.getTeam(selectedTeamId);
       var otherTeamId = this.game.homeTeam == selectedTeamId ? this.game.awayTeam : this.game.homeTeam;
+      
       this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.gameId));
       this.openSubmit.emit(true);
+      
       if(document.getElementById(selectedTeamId + "-team-card").classList.contains("selectedTeam")){
         this.unSelectTeam(selectedTeamId);
       } else if(document.getElementById(otherTeamId + "-team-card").classList.contains("selectedTeam")){
@@ -75,6 +87,10 @@ export class GameComponent implements OnInit {
     this.teamService.getTeamByIds(teamIds).subscribe(
       teams => this.teams = teams
     );
+  }
+
+  gameLocked():boolean {
+    return new Date(this.game.submitDate) > new Date()
   }
 
   getGameSpread(number:number) {

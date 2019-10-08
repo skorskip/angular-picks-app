@@ -7,13 +7,13 @@
         [game] = "game"
         [showSubmitTime] = "showSubmitTime(i)"
         [submitOpened] = "submitOpened"
-        [pickSuccess]="null"
         (openSubmit) = "teamClicked($event)"
-        (stageSelectedPick) = "stageSelectedPick($event)">
+        (stageSelectedPick) = "stageSelectedPick($event)"
+        (teamLoaded) = "teamLoaded($event)">
     </game>
     <div id="submit-container">
         <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
-        <button mat-raised-button id="submit-button" class="accent-color-primary" (click)="openDialog()">
+        <button mat-button id="submit-button" class="accent-color-primary" (click)="openDialog()">
         submit
         </button>
     </div>

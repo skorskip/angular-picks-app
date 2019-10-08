@@ -1,65 +1,87 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Pick } from './pick';
+import { environment } from '../../../environments/environment';
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
 @Injectable({ providedIn: 'root' })
 export class PickService {
-    private picks:Pick[] = [
-        {
-            'pickId' : 100,
-            'userId': 'pskorski',
-            'season':2018,
-            'week': 1,
-            'gameId':101,
-            'teamId':101
-        },
-        {
-            'pickId' : 101,
-            'userId': 'pskorski',
-            'season':2018,
-            'week': 1,
-            'gameId':102,
-            'teamId':104
-        }
-    ];
-    id:number = 102;
+    private picksUrl = environment.serviceURL + 'picks';  // URL to web api
 
-    constructor() {}
-    addPicks(picks: Pick[]):boolean {
-        picks.forEach(element => {
-            element.pickId = this.id
-            this.id = this.id + 1;
-            this.picks.push(element);
-        });
-        return true;
+    constructor(
+      private http: HttpClient) { }
+
+    addPicks(picks: Pick[]): Observable<boolean> {
+        const url = `${this.picksUrl}/create`;
+        return this.http.post(url, picks, httpOptions).pipe(
+            map((response) => {
+                console.log(`added picks`);
+                return response == 'SUCCESS';
+            }),
+            catchError(this.handleError<boolean>(`addded picks`))
+        );
     }
 
-    deletePick(pickId: number){
-        this.picks.forEach((element,i) => {
-            if(element.pickId == pickId) {
-                this.picks.splice(i,1);
-            }
-        });
+    deletePick(pickId: number): Observable<boolean> {
+        const url = `${this.picksUrl}/${pickId}`;
+        return this.http.delete(url, httpOptions).pipe(
+            map((response) => {
+                console.log(`delete pick`);
+                return response == 'SUCCESS';
+            }),
+            catchError(this.handleError<boolean>('added picks'))
+        );
     }
     
-    updatePick(pickUpdate:Pick){
-        this.picks.forEach((element,i) => {
-            if(element.pickId == pickUpdate.pickId) {
-                this.picks.splice(i,1,pickUpdate);
-            }
-        });
+    updatePick(pickUpdate:Pick): Observable<boolean> {
+        const url = `${this.picksUrl}/${pickUpdate.pickId}`;
+        return this.http.post(url, pickUpdate, httpOptions).pipe(
+            map((response) => {
+                console.log(`updated picks`);
+                return response == 'SUCCESS';
+            }),
+            catchError(this.handleError<boolean>(`updated picks`))
+        );
     }
 
-    getPicksByWeek(season:number, week:number):Pick[] {
-        var picksByWeek: Pick[] = [];
-        this.picks.forEach((pick,i) =>{
-            if(pick.season == season && pick.week == week){
-                picksByWeek.push(pick);
-            }
-        });
-        return picksByWeek;
+    getPicksByWeek(userId:number, season:number, week:number): Observable<Pick[]> {
+        const url = `${this.picksUrl}/user/${userId}/season/${season}/week/${week}`;
+        return this.http.get(url, httpOptions).pipe(
+            tap((picks: Pick[])  => console.log(`get picks`)),
+            catchError(this.handleError<Pick[]>(`get picks`))
+        );
     }
 
-    getPicks():Pick[] {
-        return this.picks;
+    getPicks(userId: number): Observable<Pick[]> {
+        const url = `${this.picksUrl}/user/${userId}`;
+        return this.http.get(url, httpOptions).pipe(
+            tap((picks: Pick[])  => console.log(`get user picks`)),
+            catchError(this.handleError<Pick[]>(`get user picks`))
+        );
     }
+
+      // /**
+  //  * Handle Http operation that failed.
+  //  * Let the app continue.
+  //  * @param operation - name of the operation that failed
+  //  * @param result - optional value to return as the observable result
+  //  */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 }

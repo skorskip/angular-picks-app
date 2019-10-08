@@ -71,8 +71,6 @@ a {
 }
 
 .sidenav-opt{
-	border-bottom-right-radius: 8px;
-    border-top-right-radius: 8px;
 	margin-left: 40px;
 	margin-top:20px;
 	cursor: pointer;

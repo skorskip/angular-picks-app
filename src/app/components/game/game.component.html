@@ -1,14 +1,8 @@
 <div class="game-card game-card-animation body-color-primary" attr.id={{game.gameId}}-game-card>
   <div style="width: 100%" *ngIf="showSubmitTime">
     <div class="game-card-date">
-      <div *ngIf="game.satus == 'UNPLAYED'" class="date-text">
-        {{game.submitDate}}
-      </div>
-      <div *ngIf="game.status == 'INPROGRESS'" class="date-text">
-        Game in Progress
-      </div>
-      <div *ngIf="game.status == 'COMPLETED'" class="date-text">
-        Final
+      <div class="date-text">
+        {{submitDate}}
       </div>
     </div>
   </div> 
@@ -18,7 +12,7 @@
       [team] = "getTeam(game.awayTeam)"
       [score] = "game.awayScore"
       [title] = "'AWAY'"
-      [progress] = "game.status"
+      [gameLocked] = "gameLocked()"
       (click)="selectTeam(game.awayTeam, game)">
     </team>
     <pick-status
@@ -31,8 +25,9 @@
       [team] = "getTeam(game.homeTeam)"
       [score] = "game.homeScore"
       [title] = "'HOME'"
-      [progress] = "game.status"
-      (click)="selectTeam(game.homeTeam, game)">
+      [gameLocked] = "gameLocked()"
+      (click)="selectTeam(game.homeTeam, game)"
+      (teamLoaded)="teamLoadedEvent($event)">
     </team>
     <div class="game-card-spread">
       <div class="game-card-spread-icon accent-primary">{{getGameSpread(game.spread)}}</div>

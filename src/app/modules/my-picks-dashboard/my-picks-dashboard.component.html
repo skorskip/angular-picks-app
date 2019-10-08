@@ -1,7 +1,7 @@
 <weeks 
   [title]="'My Picks'"
   [number] = "week.number">
-  <button mat-raised-button class="edit-button body-color-primary" (click)="editPicks()">
+  <button mat-button class="edit-button body-color-primary" (click)="editPicks()">
       <mat-icon>
         mode_edit
       </mat-icon>
@@ -23,7 +23,8 @@
         [game] = "myGame"
         [showSubmitTime] = "showSubmitTime(i)"
         [notSelectablePicks] = "notSelectablePicks" 
-        [pickSuccess] = "pickResult(myGame, i)"
+        [pickSuccess] = "pickResult(myGame)"
+        (teamLoaded) = "teamLoaded($event)"
         style="width:100%"> 
       </game>
     </div>

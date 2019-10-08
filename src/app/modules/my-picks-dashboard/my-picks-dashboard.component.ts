@@ -39,8 +39,8 @@ export class MyPicksDashboardComponent implements OnInit {
     private router:Router) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.weekSelected(week);
           this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
+          this.initWeek(week.season, week.number)
         }
       )
     }
@@ -48,42 +48,49 @@ export class MyPicksDashboardComponent implements OnInit {
   ngOnInit() {
     const season = +this.route.snapshot.paramMap.get('season') as number;
     const week = +this.route.snapshot.paramMap.get('week') as number;
+    this.initWeek(season, week);
+  }
+
+  initWeek(season, week) {
     this.week.number = week;
     this.week.season = season;
     this.getPicksByWeek(season, week);
+
   }
 
-  ngAfterViewInit() {
-    this.highLightSelected();
+  teamLoaded(event) {
+    this.highlightSelected(event);
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.picks = this.pickService.getPicksByWeek(season, week);
-    if(this.picks.length != 0){
+    this.pickService.getPicksByWeek(3, season, week).subscribe( picks => {
+      this.picks = picks;
+      if(this.picks.length != 0){
     
-      var gameIds: number[] = [];
-      var teamIds: number[] = [];
-      
-      this.picks.forEach(element => {
-        gameIds.push(element.gameId);
-      });
-      
-      this.gameService.getGameByIds(gameIds).subscribe(games => {
-        this.myGames = games;
-        this.myGames.forEach(element => {
-          teamIds.push(element.homeTeam);
-          teamIds.push(element.awayTeam);
-        })
-        this.teamService.getTeamByIds(teamIds).subscribe(
-          teams => this.myTeams = teams
-        );
-      });
-    }
+        var gameIds: number[] = [];
+        var teamIds: number[] = [];
+        
+        this.picks.forEach(pick => {
+          gameIds.push(pick.gameId);
+        });
+        
+        this.gameService.getGameByIds(gameIds).subscribe(games => {
+          this.myGames = games;
+          this.myGames.forEach(game => {
+            teamIds.push(game.homeTeam);
+            teamIds.push(game.awayTeam);
+          })
+          this.teamService.getTeamByIds(teamIds).subscribe(
+            teams => this.myTeams = teams
+          );
+        });
+      }
+    });
   }
 
   editPicks() {
     this.edit = this.edit ? false : true;
-  }Z
+  }
 
   deletePick(game:Game) {
     this.picks.forEach(pick => {
@@ -101,19 +108,18 @@ export class MyPicksDashboardComponent implements OnInit {
         var newPick = pick;
         newPick.teamId = newTeam;
         this.pickService.updatePick(newPick);
-        this.getPicksByWeek(this.week.season, this.week.number);
-        this.highLightSelected();
+        this.initWeek(this.week.season, this.week.number);
       }
     });
   }
 
-  highLightSelected(){
-    this.myTeams.forEach(team => {
-      this.unSelectTeam(team.teamId);
-    });
+  highlightSelected(game){
     this.picks.forEach(pick =>{
-        this.highlightPickResult(pick);
+      if(pick.gameId == game.gameId){
+        this.unSelectTeam(game.awayTeam);
+        this.unSelectTeam(game.homeTeam)
         this.highlightSelectTeam(this.getTeam(pick.teamId));
+      }
     });
   }
 
@@ -133,27 +139,14 @@ export class MyPicksDashboardComponent implements OnInit {
     teamElement.classList.add("selectedTeam");
   }
 
-  highlightPickResult(pick:Pick){
-    var game = this.getGame(pick.gameId);
-    if(game.status == 'INPROGRESS') {
-      document.getElementById(game.gameId + "-game-card").classList.remove("body-color-secondary");
-      document.getElementById(game.gameId + "-game-card").classList.add("accent-color-tietary");
-      document.getElementById(game.gameId + "-game-card").classList.add("disabled");
-      this.pickSuccess = null;
-    }
-  }
-
-  pickResult(game: Game, index: number):boolean {
-    if(game.status == 'FINAL'){
-      var pick = this.picks[index];
-      if(pick.gameId == game.gameId) {
-        var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
-        var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
-        if(pickedTeamScore > otherTeamScore){
-          return true;
-        }
-        else{
-          return false;
+  pickResult(game: Game):boolean {
+    if(game.status == 'COMPLETED'){
+      for(var i = 0; i < this.picks.length; i ++) {
+        var pick = this.picks[i];
+        if(pick.gameId == game.gameId) {
+          var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
+          var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
+          return pickedTeamScore > otherTeamScore;
         }
       }
     }
@@ -180,13 +173,6 @@ export class MyPicksDashboardComponent implements OnInit {
       }
     })
     return game;
-  }
-
-  weekSelected(week:Week) {
-    this.getPicksByWeek(week.season, week.number);
-    setTimeout(()=>{
-      this.ngAfterViewInit();
-    });
   }
 
   showSubmitTime(index: number): boolean {

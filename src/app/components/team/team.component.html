@@ -1,11 +1,11 @@
 <div attr.id="{{team.teamId}}-team-card" class="team-card body-color-secondary" 
     [ngStyle]="getBorderColor(team.teamId)">
-    <div *ngIf="progress != 'UNPLAYED'">
+    <div *ngIf="!gameLocked">
       <p style="margin-left:5px">{{title}}</p>
       <div class="large-text-padding">{{score}}</div>
       <div class="small-text-middle">{{getTeamName()}}</div>
     </div>
-    <div *ngIf="progress == 'UNPLAYED'">
+    <div *ngIf="gameLocked">
       <p style="margin-left:5px">{{title}}</p>
       <p class="large-text">{{getTeamName()}}</p>
     </div>

@@ -29,7 +29,7 @@ body { margin: 0;}
 
 .body-color-primary {
     background-color:white !important;
-    color: black !important;
+    color: #455564 !important;
 }
 
 .body-color-secondary {
@@ -40,6 +40,10 @@ body { margin: 0;}
 .accent-color-primary {
     background: #efefef;
     color:  #3e5dce;
+}
+
+.highlight-border {
+    border: solid 5px !important;
 }
 
 .accent-primary {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter } from '@angular/core';
 import { Team } from '../../data-models/team/team';
 import { DOCUMENT } from '@angular/common';
 
@@ -7,16 +7,24 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
-export class TeamComponent implements OnInit {
+export class TeamComponent implements OnInit, AfterViewInit {
 
   @Input() team = new Team();
-  @Input() score: any;
+  @Input() score = 0;
   @Input() title: string;
-  @Input() progress: string;
+  @Input() gameLocked: boolean;
+  @Output() teamLoaded = new EventEmitter();
 
   constructor(@Inject(DOCUMENT) document) { }
 
   ngOnInit() {
+    if(this.score == null) {
+      this.score = 0;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.teamLoaded.emit(true);
   }
 
   getBorderColor(id:number) {
