@@ -28,7 +28,6 @@ body { margin: 0;}
 }
 
 .body-color-primary {
-    background-color:white !important;
     color: #455564 !important;
 }
 
@@ -81,6 +80,10 @@ body { margin: 0;}
 	text-align: center;
 	margin-top: -30px;
 	cursor: pointer;
+}
+
+.noSelect {
+    outline: none !important;
 }
 
 

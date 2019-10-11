@@ -8,6 +8,8 @@ import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
 import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
+import { User } from 'src/app/data-models/user/user';
+import { UserService } from 'src/app/data-models/user/user.service';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class PicksDashboardComponent implements OnInit {
   submitOpened = false;
   weeksView = false;
   subscription: Subscription;
+  user = new User();
 
   constructor(
     public dialog: MatDialog, 
@@ -31,11 +34,13 @@ export class PicksDashboardComponent implements OnInit {
     private pickService: PickService, 
     public snackBar: MatSnackBar, 
     private router:Router,
-    private weeksService:WeeksService) { 
+    private weeksService:WeeksService,
+    private userService:UserService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => this.initWeek(weekSeason));
     }
 
   ngOnInit() {
+    this.user = this.userService.currentUser;
     this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
   }
 
@@ -50,8 +55,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   removePickedGames() {
-    //TODO: add user info
-    this.pickService.getPicksByWeek(3, this.week.season, this.week.number).subscribe(
+    this.pickService.getPicksByWeek(this.user.userId, this.week.season, this.week.number).subscribe(
       picks => {
         picks.forEach(pick => {
           this.games.forEach((game, i) => {
@@ -90,7 +94,7 @@ export class PicksDashboardComponent implements OnInit {
       }
     });
     if(!pickAdded){
-      selectedPick.userId = 3;
+      selectedPick.userId = this.user.userId;
       selectedPick.week = this.week.number;
       selectedPick.season = this.week.season;
       this.stagedPicks.push(selectedPick);

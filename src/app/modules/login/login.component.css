@@ -38,5 +38,12 @@
     padding: 10px;
     font-size: 2em;
     margin-bottom:10px;
+}
 
+.error {
+    color: rgb(228, 46, 46);
+}
+
+.pointer {
+    cursor: pointer;
 }

@@ -11,12 +11,20 @@
     No Picks Made
   </div>
   <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
-      <div *ngIf="showEdit(myGame)" class="edit-tools">
-        <div class="edit-opt failure-color" (click) = "deletePick(myGame)">
-            <p class="opt-text">DELETE</p>
+      <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
+        <div class="edit-opt body-color-primary bottom-margin" (click) = "changeTeam(myGame)">
+            <mat-icon
+            matTooltip="edit"
+            matTooltipPosition="right"
+            class="edit-icon-edit">mode_edit
+          </mat-icon>
         </div>
-        <div class="edit-opt body-color-primary" (click) = "changeTeam(myGame)">
-            <p class="opt-text">CHANGE TEAM</p>
+        <div class="edit-opt edit-icon-delete bottom-margin" (click) = "deletePick(myGame)">
+          <mat-icon
+            matTooltip="delete"
+            matTooltipPosition="right"
+            class="edit-icon-delete">clear
+          </mat-icon>
         </div>
       </div>
       <game 

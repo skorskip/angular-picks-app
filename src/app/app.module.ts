@@ -16,6 +16,7 @@ import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 
+
 @NgModule({
   declarations: [
     AppComponent

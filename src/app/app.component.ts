@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
 
   loggedIn = false;
+  registerSelected = false;
 
   constructor(
     private router:Router,
@@ -21,5 +22,9 @@ export class AppComponent implements OnInit {
     if(this.loggedIn) {
       this.router.navigate(['/weeklyGames']);
     }
+  }
+
+  register(event: any) {
+    this.registerSelected = event;
   }
 }

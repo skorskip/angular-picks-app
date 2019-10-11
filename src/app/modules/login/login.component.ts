@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { UserService } from '../../data-models/user/user.service';
+import { User } from 'src/app/data-models/user/user';
 
 @Component({
   selector: 'app-login',
@@ -7,16 +9,52 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   @Output() login = new EventEmitter<boolean>();
-  loginSucces = false;
+  @Output() registerEvent = new EventEmitter<boolean>();
 
-  constructor() { }
+  loginSucces = false;
+  hide = true;
+  forgotten = false;
+  registerSelected = false
+
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
   }
 
-  attemptLogin() {
-    this.loginSucces = true;
-    this.login.emit(this.loginSucces);
+  forgotUsername() {
+    console.log("sending email");
+  }
+
+  forgotPassword() {
+    console.log("Who are you?");
+  }
+
+  register() {
+    this.registerEvent.emit(true);
+    this.registerSelected = true;
+  }
+
+  registered(event: boolean) {
+    if(event) {
+      this.registerSelected = false;
+    }
+  }
+
+  attemptLogin(username, password) {
+    var user = new User();
+    user.name = username;
+    user.password = password;
+    
+    this.userService.login(user).subscribe((users) => {
+      if(users.length != 0) {
+        this.loginSucces = true;
+        this.login.emit(this.loginSucces);
+      } else {
+        this.forgotten = true;
+      }
+    });
   }
 
 }

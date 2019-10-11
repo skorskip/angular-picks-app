@@ -40,7 +40,7 @@ export class PickService {
     
     updatePick(pickUpdate:Pick): Observable<boolean> {
         const url = `${this.picksUrl}/${pickUpdate.pickId}`;
-        return this.http.post(url, pickUpdate, httpOptions).pipe(
+        return this.http.put(url, pickUpdate, httpOptions).pipe(
             map((response) => {
                 console.log(`updated picks`);
                 return response == 'SUCCESS';

@@ -22,27 +22,24 @@
 
 .edit-tools {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .edit-opt {
-    border-radius: 12px;
-	height: 150px;
-	margin-top: -25px;
-	float: left;
-    margin-right: 2%;
-    margin-left: 5%;
-    height: 100px;
-    text-align: center;
-    width: 100px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+    border: solid 2px;
+    border-radius: 50%;
+    height: 25px;
+    padding: 10px;
     cursor: pointer;
-}
-
-.edit-opt:hover {
-    margin-top: -35px;
 }
 
 .opt-text {
     padding-top:25%;
+}
+
+.edit-icon-delete {
+    color: rgb(228, 46, 46);
+	background-color: white;
 }
 
 .no-picks-view {
@@ -54,3 +51,19 @@
 	height: 250px;
 	margin-top:20%;
 }
+
+@keyframes editAnimation {
+	0%{margin-left:-50px; opacity: 0;}
+	100%{margin-left:-0px; opacity: 1}
+}
+.edit-animation {
+	animation-name: editAnimation;
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
+	animation-delay: 0s;
+}
+
+.bottom-margin {
+	margin-bottom: 5px;
+}
+

@@ -11,6 +11,8 @@ import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { User } from 'src/app/data-models/user/user';
+import { UserService } from 'src/app/data-models/user/user.service';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -28,6 +30,7 @@ export class MyPicksDashboardComponent implements OnInit {
   weeksView = false;
   pickSuccess = null;
   subscription: Subscription;
+  user = new User();
 
   constructor(
     private pickService: PickService, 
@@ -36,7 +39,8 @@ export class MyPicksDashboardComponent implements OnInit {
     private weekService: WeekService, 
     private weeksService: WeeksService,
     private route:ActivatedRoute,
-    private router:Router) { 
+    private router:Router,
+    private userService:UserService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
           this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
@@ -46,6 +50,7 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.user = this.userService.currentUser;
     const season = +this.route.snapshot.paramMap.get('season') as number;
     const week = +this.route.snapshot.paramMap.get('week') as number;
     this.initWeek(season, week);
@@ -55,7 +60,6 @@ export class MyPicksDashboardComponent implements OnInit {
     this.week.number = week;
     this.week.season = season;
     this.getPicksByWeek(season, week);
-
   }
 
   teamLoaded(event) {
@@ -63,7 +67,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.pickService.getPicksByWeek(3, season, week).subscribe( picks => {
+    this.pickService.getPicksByWeek(this.user.userId, season, week).subscribe( picks => {
       this.picks = picks;
       if(this.picks.length != 0){
     
@@ -95,8 +99,10 @@ export class MyPicksDashboardComponent implements OnInit {
   deletePick(game:Game) {
     this.picks.forEach(pick => {
       if(pick.gameId == game.gameId){
-        this.pickService.deletePick(pick.pickId);
-        this.ngOnInit();
+        this.pickService.deletePick(pick.pickId).subscribe(() => {
+          this.initWeek(this.week.season, this.week.number);
+          return;
+        });   
       }
     }); 
   }
@@ -107,8 +113,10 @@ export class MyPicksDashboardComponent implements OnInit {
         var newTeam = pick.teamId == game.homeTeam ? game.awayTeam : game.homeTeam;
         var newPick = pick;
         newPick.teamId = newTeam;
-        this.pickService.updatePick(newPick);
-        this.initWeek(this.week.season, this.week.number);
+        this.pickService.updatePick(newPick).subscribe(() => {
+          this.initWeek(this.week.season, this.week.number);
+          return;
+        });
       }
     });
   }

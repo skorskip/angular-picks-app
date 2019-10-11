@@ -1,0 +1,32 @@
+<div class="register-container">
+  <div class="title-container">
+    <mat-icon class="back-button" (click)="cancel()">
+      keyboard_arrow_left
+    </mat-icon>
+    <div class="register-title">Register</div>
+  </div>
+  <div class="input-form">
+    <mat-form-field appearance="outline" class="input-size">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="username" #username>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-size">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="username" #email>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-size">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="username" #password>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-size">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput placeholder="username" #password2>
+      <mat-hint *ngIf="password.value != password2.value" class="error pointer">Passwords don't match</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="button-container">
+    <button (click)="register(username.value, email.value, password.value)" class="register-button accent-primary noSelect" [disabled] = "password.value != password2.value">
+        register
+    </button>
+  </div>
+</div>
