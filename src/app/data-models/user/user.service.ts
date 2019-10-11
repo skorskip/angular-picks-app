@@ -25,9 +25,9 @@ export class UserService {
     return this.http.post(url, user, httpOptions).pipe(
       tap((users: User[]) => {
         this.currentUser = users[0];
-        console.log(`fetched user ${user.name}`)
+        console.log(`fetched user ${user.user_name}`)
       }),
-      catchError(this.handleError<User[]>(`fetched user ${user.name}`))
+      catchError(this.handleError<User[]>(`fetched user ${user.user_name}`))
     );
   }
 
@@ -35,21 +35,21 @@ export class UserService {
     const url = `${this.usersUrl}/register`;
     return this.http.post(url, user, httpOptions).pipe(
       map((response) => {
-        console.log(`updated user ${user.name}`);
+        console.log(`updated user ${user.user_name}`);
         return response == 'SUCCESS';
       }),
-      catchError(this.handleError<boolean>(`updated user ${user.name}`))
+      catchError(this.handleError<boolean>(`updated user ${user.user_name}`))
     );
   }
 
   update(user: User): Observable<boolean> {
-    const url = `${this.usersUrl}/${user.userId}`;
+    const url = `${this.usersUrl}/${user.user_id}`;
     return this.http.put(url, user, httpOptions).pipe(
       map((response) => {
-        console.log(`updated user ${user.name}`, response);
+        console.log(`updated user ${user.user_name}`, response);
         return response == 'SUCCESS';
       }),
-      catchError(this.handleError<boolean>(`updated user ${user.name}`))
+      catchError(this.handleError<boolean>(`updated user ${user.user_name}`))
     );
   }
 

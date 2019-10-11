@@ -1,8 +1,6 @@
 export class Pick {
-    pickId: number;
-    userId: number;
-    season: number;
-    week: number;
-    gameId: number;
-    teamId: number;
+    pick_id: number;
+    user_id: number;
+    game_id: number;
+    team_id: number;
 }

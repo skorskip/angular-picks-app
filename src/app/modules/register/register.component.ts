@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   register(username: string, email: string, password: string) {
     var user = new User();
-    user.name = username;
+    user.user_name = username;
     user.email = email;
     user.password = password;
 

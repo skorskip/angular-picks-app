@@ -67,7 +67,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.pickService.getPicksByWeek(this.user.userId, season, week).subscribe( picks => {
+    this.pickService.getPicksByWeek(this.user.user_id, season, week).subscribe( picks => {
       this.picks = picks;
       if(this.picks.length != 0){
     
@@ -75,14 +75,14 @@ export class MyPicksDashboardComponent implements OnInit {
         var teamIds: number[] = [];
         
         this.picks.forEach(pick => {
-          gameIds.push(pick.gameId);
+          gameIds.push(pick.game_id);
         });
         
         this.gameService.getGameByIds(gameIds).subscribe(games => {
           this.myGames = games;
           this.myGames.forEach(game => {
-            teamIds.push(game.homeTeam);
-            teamIds.push(game.awayTeam);
+            teamIds.push(game.home_team);
+            teamIds.push(game.away_team);
           })
           this.teamService.getTeamByIds(teamIds).subscribe(
             teams => this.myTeams = teams
@@ -98,8 +98,8 @@ export class MyPicksDashboardComponent implements OnInit {
 
   deletePick(game:Game) {
     this.picks.forEach(pick => {
-      if(pick.gameId == game.gameId){
-        this.pickService.deletePick(pick.pickId).subscribe(() => {
+      if(pick.game_id == game.game_id){
+        this.pickService.deletePick(pick.pick_id).subscribe(() => {
           this.initWeek(this.week.season, this.week.number);
           return;
         });   
@@ -109,10 +109,10 @@ export class MyPicksDashboardComponent implements OnInit {
 
   changeTeam(game: Game) {
     this.picks.forEach(pick => {
-      if(pick.gameId == game.gameId){
-        var newTeam = pick.teamId == game.homeTeam ? game.awayTeam : game.homeTeam;
+      if(pick.game_id == game.game_id){
+        var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
         var newPick = pick;
-        newPick.teamId = newTeam;
+        newPick.team_id = newTeam;
         this.pickService.updatePick(newPick).subscribe(() => {
           this.initWeek(this.week.season, this.week.number);
           return;
@@ -121,12 +121,12 @@ export class MyPicksDashboardComponent implements OnInit {
     });
   }
 
-  highlightSelected(game){
+  highlightSelected(game: Game){
     this.picks.forEach(pick =>{
-      if(pick.gameId == game.gameId){
-        this.unSelectTeam(game.awayTeam);
-        this.unSelectTeam(game.homeTeam)
-        this.highlightSelectTeam(this.getTeam(pick.teamId));
+      if(pick.game_id == game.game_id){
+        this.unSelectTeam(game.away_team);
+        this.unSelectTeam(game.home_team)
+        this.highlightSelectTeam(this.getTeam(pick.team_id));
       }
     });
   }
@@ -140,21 +140,19 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.teamId + "-team-card");
+    var teamElement = document.getElementById(team.team_id + "-team-card");
     teamElement.classList.remove("body-color-secondary");
-    teamElement.style.backgroundColor = team.primaryColor;
+    teamElement.style.backgroundColor = team.primary_color;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
   }
 
   pickResult(game: Game):boolean {
-    if(game.status == 'COMPLETED'){
+    if(game.game_status == 'COMPLETED'){
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
-        if(pick.gameId == game.gameId) {
-          var pickedTeamScore = pick.teamId === game.homeTeam ? (game.homeScore + game.spread): game.awayScore;
-          var otherTeamScore = pick.teamId === game.homeTeam ? game.awayScore : (game.homeScore + game.spread);
-          return pickedTeamScore > otherTeamScore;
+        if(pick.game_id == game.game_id) {
+          return pick.team_id == game.winning_team;
         }
       }
     }
@@ -166,7 +164,7 @@ export class MyPicksDashboardComponent implements OnInit {
   getTeam(id: number): Team {
     var team
     this.myTeams.forEach((teamItem) => {
-      if(id == teamItem.teamId){
+      if(id == teamItem.team_id){
         team = teamItem;
       }
     })
@@ -176,7 +174,7 @@ export class MyPicksDashboardComponent implements OnInit {
   getGame(id: number): Game {
     var game
     this.myGames.forEach((gameItem) => {
-      if(id == gameItem.gameId){
+      if(id == gameItem.game_id){
         game = gameItem;
       }
     })
@@ -184,14 +182,14 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showSubmitTime(index: number): boolean {
-    if((index == 0) || this.myGames[index - 1].submitDate != this.myGames[index].submitDate){
+    if((index == 0) || this.myGames[index - 1].pick_submit_by_date != this.myGames[index].pick_submit_by_date){
       return true;
     }
     else return false;
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.status == "UNPLAYED") {
+    if(this.edit && game.game_status == "UNPLAYED") {
       return true;
     } else {
       return false;

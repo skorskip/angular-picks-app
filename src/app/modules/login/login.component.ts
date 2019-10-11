@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
   attemptLogin(username, password) {
     var user = new User();
-    user.name = username;
+    user.user_name = username;
     user.password = password;
     
     this.userService.login(user).subscribe((users) => {

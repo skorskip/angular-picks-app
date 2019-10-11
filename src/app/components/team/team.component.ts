@@ -28,15 +28,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   getBorderColor(id:number) {
-    var shadowColor = this.team.primaryColor.substring(0, this.team.primaryColor.lastIndexOf("1")) + ".7)"
+    var shadowColor = this.team.primary_color.substring(0, this.team.primary_color.lastIndexOf("1")) + ".7)"
     return {
-      'color' : this.team.primaryColor,
+      'color' : this.team.primary_color,
     }
   }
 
   getTeamName() {
     if(document.getElementById("body").scrollWidth > 950){
-      return this.team.name;
+      return this.team.team_name;
     } else {
       return this.team.abbreviation;
     }

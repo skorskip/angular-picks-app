@@ -38,16 +38,6 @@ export class GameService {
     );
   }
 
-  // //////// Save methods //////////
-
-  // /** PUT: update the game on the server */
-  // updateGame (game: Game): Observable<any> {
-  //   return this.http.put(this.gamesUrl, game, httpOptions).pipe(
-  //     tap(_ => console.log(`updated game id=${game.id}`)),
-  //     catchError(this.handleError<any>('updateGame'))
-  //   );
-  // }
-
   // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.

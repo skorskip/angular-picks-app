@@ -23,7 +23,7 @@ export class PickStatusComponent implements OnInit {
 
   getPickStatus() {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
-      if(new Date(this.game.submitDate) > new Date()) {
+      if(new Date(this.game.pick_submit_by_date) > new Date()) {
         this.open = true;
         return "pick-status-open accent-primary";
       } else {

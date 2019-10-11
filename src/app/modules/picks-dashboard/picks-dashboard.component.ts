@@ -55,11 +55,11 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   removePickedGames() {
-    this.pickService.getPicksByWeek(this.user.userId, this.week.season, this.week.number).subscribe(
+    this.pickService.getPicksByWeek(this.user.user_id, this.week.season, this.week.number).subscribe(
       picks => {
         picks.forEach(pick => {
           this.games.forEach((game, i) => {
-            if(pick.gameId == game.gameId) {
+            if(pick.game_id == game.game_id) {
               this.games.splice(i, 1);
             }
           })
@@ -86,17 +86,15 @@ export class PicksDashboardComponent implements OnInit {
   stageSelectedPick(selectedPick: Pick){
     var pickAdded = false;
     this.stagedPicks.forEach((stagedPick, i) =>{
-      if(stagedPick.gameId == selectedPick.gameId) {
-        if(stagedPick.teamId == selectedPick.teamId) {
+      if(stagedPick.game_id == selectedPick.game_id) {
+        if(stagedPick.team_id == selectedPick.team_id) {
           this.stagedPicks.splice(i, 1);
         } else this.stagedPicks.splice(i, 1, selectedPick);
         pickAdded = true;
       }
     });
     if(!pickAdded){
-      selectedPick.userId = this.user.userId;
-      selectedPick.week = this.week.number;
-      selectedPick.season = this.week.season;
+      selectedPick.user_id = this.user.user_id;
       this.stagedPicks.push(selectedPick);
     }
   }
@@ -135,7 +133,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showSubmitTime(index: number): boolean {
-    if((index == 0) || this.games[index - 1].submitDate != this.games[index].submitDate){
+    if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
       return true;
     }
     else return false;
@@ -144,7 +142,7 @@ export class PicksDashboardComponent implements OnInit {
   getGame(id: number): Game {
     var game
     this.games.forEach((gameItem) => {
-      if(id == gameItem.gameId){
+      if(id == gameItem.game_id){
         game = gameItem;
       }
     })

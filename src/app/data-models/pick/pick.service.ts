@@ -39,7 +39,7 @@ export class PickService {
     }
     
     updatePick(pickUpdate:Pick): Observable<boolean> {
-        const url = `${this.picksUrl}/${pickUpdate.pickId}`;
+        const url = `${this.picksUrl}/${pickUpdate.pick_id}`;
         return this.http.put(url, pickUpdate, httpOptions).pipe(
             map((response) => {
                 console.log(`updated picks`);

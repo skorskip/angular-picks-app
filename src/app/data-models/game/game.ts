@@ -1,15 +1,15 @@
 export class Game {
-	gameId: number;
+	game_id: number;
 	week: number;
 	season: number;
-	date: string;
-	submitDate: string;
-	homeTeam: number;
-	awayTeam: number;
-	homeScore: number;
-	awayScore: number;
-	spread: number;
-	//COMPLETED, INPROGRESS, UNPLAYED
-	status: string;
-	isOn: number;
+	start_time: string;
+	pick_submit_by_date: string;
+	home_team: number;
+	away_team: number;
+	home_team_score: number;
+	away_team_score: number;
+	home_spread: number;
+	//COMPLETED, LIVE, UNPLAYED
+	game_status: string;
+	winning_team: number;
 }

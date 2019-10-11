@@ -1,15 +1,15 @@
 export class Team {
-	teamId: number;
-	primaryColor: string;
-	secondaryColor: string;
-	name: string;
+	team_id: number;
+	primary_color: string;
+	secondary_color: string;
+	team_name: string;
 	abbreviation: string;
 
 	constructor() {
-		this.teamId = 0;
-		this.primaryColor = "";
-		this.secondaryColor = "";
-		this.name = "";
+		this.team_id = 0;
+		this.primary_color = "";
+		this.secondary_color = "";
+		this.team_name = "";
 		this.abbreviation = "";
 	}
 }
