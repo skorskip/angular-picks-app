@@ -9,6 +9,7 @@ import { UserService } from '../../data-models/user/user.service';
 })
 export class RegisterComponent implements OnInit {
   @Output() registered = new EventEmitter();
+  formComplete = false;
 
   constructor(private userService:UserService) { }
 
@@ -16,18 +17,30 @@ export class RegisterComponent implements OnInit {
   }
 
   register(username: string, email: string, password: string) {
-    var user = new User();
-    user.user_name = username;
-    user.email = email;
-    user.password = password;
+    if(this.formComplete) { 
+      var user = new User();
+      user.user_name = username;
+      user.email = email;
+      user.password = password;
 
-    this.userService.register(user).subscribe((success) =>{
-      if(success) {
-        this.registered.emit(success);
-      } else {
-        console.log("ERROR");
-      }
-    });
+      this.userService.register(user).subscribe((success) =>{
+        if(success) {
+          this.registered.emit(success);
+        } else {
+          console.log("ERROR");
+        }
+      });
+    }
+  }
+
+  disableRegisterButton(username, ln, fn, email, password, password2):boolean {
+    if(username == '' || ln == '' || fn == '' || email == '' || password == '' || password2 == '') {
+      this.formComplete = false;
+      return true;
+    } else {
+      this.formComplete = password2 == password;
+      return password2 != password;
+    }
   }
 
   cancel() {

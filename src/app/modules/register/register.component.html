@@ -11,21 +11,34 @@
       <input matInput placeholder="username" #username>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" #firstName>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-size">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name" #lastName>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-size">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="username" #email>
+      <input matInput placeholder="Email" #email>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="username" #password>
+      <input matInput placeholder="Password" #password>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Confirm Password</mat-label>
-      <input matInput placeholder="username" #password2>
+      <input matInput placeholder="Password" #password2>
       <mat-hint *ngIf="password.value != password2.value" class="error pointer">Passwords don't match</mat-hint>
     </mat-form-field>
   </div>
+
   <div class="button-container">
-    <button (click)="register(username.value, email.value, password.value)" class="register-button accent-primary noSelect" [disabled] = "password.value != password2.value">
+    <button 
+      (click)="register(username.value, email.value, password.value)" 
+      class="register-button accent-primary noSelect" 
+      [ngClass] = "{'disabled':disableRegisterButton(username.value, firstName.value, lastName.value, email.value, password.value, password2.value), 
+        'hover':!(disableRegisterButton(username.value, firstName.value, lastName.value, email.value, password.value, password2.value))}">
         register
     </button>
   </div>

@@ -20,6 +20,7 @@ body { margin: 0;}
 	0%{margin-top:10px; opacity: 100;}
 	100%{margin-top:1000px; opacity: 0;}
 }
+
 .title{
     margin: 20px;
     font-size: 2em;
@@ -47,16 +48,6 @@ body { margin: 0;}
 
 .accent-primary {
     color:  #3e5dce;
-}
-
-.accent-color-secondary {
-    background-color: rgb(150, 157, 165);
-    color:black;
-}
-
-.accent-color-tietary {
-    background-color: rgb(198, 203, 210);
-    color:black;
 }
 
 .success-color {
