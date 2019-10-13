@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../../data-models/user/user';
 import { UserService } from '../../data-models/user/user.service';
+import { FormControl, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,8 @@ import { UserService } from '../../data-models/user/user.service';
 export class RegisterComponent implements OnInit {
   @Output() registered = new EventEmitter();
   formComplete = false;
+  hide = true;
+  email = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(private userService:UserService) { }
 
@@ -45,6 +48,12 @@ export class RegisterComponent implements OnInit {
 
   cancel() {
     this.registered.emit(true);
+  }
+
+  getErrorMessage() {
+    return this.email.hasError('required') ? 'You must enter a value' :
+        this.email.hasError('email') ? 'Not a valid email' :
+            '';
   }
 
 }

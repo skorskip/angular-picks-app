@@ -12,6 +12,7 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class WeekService {
+    currentWeek = null;
     private weekUrl = environment.serviceURL + 'weeks';
     constructor(private http: HttpClient) { }
 
@@ -26,10 +27,15 @@ export class WeekService {
 
     getCurrentWeek(): Observable<Week> {
       const url = `${this.weekUrl}/current`;
-      return this.http.get<Week>(url).pipe(
+      
+      if(this.currentWeek == null) {
+        this.currentWeek = this.http.get<Week>(url).pipe(
           tap(_ => console.log(`fetched current week`)),
           catchError(this.handleError<Week>(`fetched current week`))
-      );
+        );
+      } 
+
+      return this.currentWeek;
     }
 
   // /**

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module'; 
 import { SharedModule } from '../../shared/shared.module';
 
-import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog, PicksErrorDialog } from './picks-dashboard.component';
+import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog, PicksErrorDialog, PicksMadeSnackBar } from './picks-dashboard.component';
 
 
 @NgModule({
@@ -16,12 +16,14 @@ import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog, PicksErrorDi
     PicksDashboardComponent,
     SubmitPicksDialog,
     NoPicksDialog,
-    PicksErrorDialog
+    PicksErrorDialog,
+    PicksMadeSnackBar
   ],
   entryComponents: [
     SubmitPicksDialog,
     NoPicksDialog,
-    PicksErrorDialog
+    PicksErrorDialog,
+    PicksMadeSnackBar
   ]
 })
 export class PicksDashboardModule { }

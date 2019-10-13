@@ -10,6 +10,8 @@ import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 import { User } from 'src/app/data-models/user/user';
 import { UserService } from 'src/app/data-models/user/user.service';
+import { Team } from 'src/app/data-models/team/team';
+import { TeamService } from 'src/app/data-models/team/team.service';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class PicksDashboardComponent implements OnInit {
   weeksView = false;
   subscription: Subscription;
   user = new User();
+  teams = [] as Team[];
 
   constructor(
     public dialog: MatDialog, 
@@ -35,7 +38,8 @@ export class PicksDashboardComponent implements OnInit {
     public snackBar: MatSnackBar, 
     private router:Router,
     private weeksService:WeeksService,
-    private userService:UserService) { 
+    private userService:UserService,
+    private teamService:TeamService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => this.initWeek(weekSeason));
     }
 
@@ -47,11 +51,18 @@ export class PicksDashboardComponent implements OnInit {
   initWeek(week: Week) {
     this.week = week;
     this.games = week.games;
+    this.initTeams(week.teams);
     this.removePickedGames();
   }
 
   teamLoaded(event) {
     this.highlightGameResult(event);
+  }
+
+  initTeams(teamIds: number[]) {
+    this.teamService.getTeamByIds(teamIds).subscribe(
+      teams => this.teams = teams
+    );
   }
 
   removePickedGames() {
@@ -101,17 +112,17 @@ export class PicksDashboardComponent implements OnInit {
   
   openDialog() {
     if(this.stagedPicks.length == 0){
-      const dialogRef = this.dialog.open(NoPicksDialog);
+      const dialogRef = this.dialog.open(NoPicksDialog,{width: '500px'});
     } else {
-      const dialogRef = this.dialog.open(SubmitPicksDialog);
+      const dialogRef = this.dialog.open(SubmitPicksDialog,{width: '500px'});
       dialogRef.afterClosed().subscribe(result => {
         if(result){
           this.pickService.addPicks(this.stagedPicks).subscribe(status => {
             if(status) {
-              this.snackBar.open("picks submitted", "",{duration: 2000});
+              this.snackBar.openFromComponent(PicksMadeSnackBar, {duration: 2000});
               this.router.navigate(['/myPicks/' + this.week.season + '/' + this.week.number]);
             } else {
-              const dialogRef = this.dialog.open(PicksErrorDialog);
+              const dialogRef = this.dialog.open(PicksErrorDialog,{width: '500px'});
             }
           });
         }
@@ -119,16 +130,10 @@ export class PicksDashboardComponent implements OnInit {
     }
   }
 
-  highlightGameResult(game){
-    if(game.status == 'COMPLETED'){
-      if(game.homeScore + game.spread >= game.awayScore){
-        document.getElementById(game.homeTeam + "-team-card").classList.remove("body-color-secondary");
-        document.getElementById(game.homeTeam + "-team-card").classList.add("highlight-border");
-      }
-      else if(game.homeScore + game.spread < game.awayScore) {
-        document.getElementById(game.awayTeam + "-team-card").classList.remove("body-color-secondary");
-        document.getElementById(game.awayTeam + "-team-card").classList.add("highlight-border");
-      }
+  highlightGameResult(game: Game){
+    if(game.game_status == 'COMPLETED'){
+      document.getElementById(game.winning_team + "-team-card").classList.remove("body-color-secondary");
+      document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
     }
   }
 
@@ -171,3 +176,9 @@ export class SubmitPicksDialog {}
   templateUrl: '../../components/dialog-content/picks-error-dialog.html'
 })
 export class PicksErrorDialog {}
+
+@Component({
+  selector: 'picks-made-snack-bar',
+  templateUrl: '../../components/dialog-content/picks-made-snack-bar.html',
+})
+export class PicksMadeSnackBar {}

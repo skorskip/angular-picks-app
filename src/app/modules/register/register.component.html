@@ -8,27 +8,34 @@
   <div class="input-form">
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Username</mat-label>
-      <input matInput placeholder="username" #username>
+      <input matInput placeholder="username" #username required>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>First Name</mat-label>
-      <input matInput placeholder="First Name" #firstName>
+      <input matInput placeholder="First Name" #firstName required>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Last Name</mat-label>
-      <input matInput placeholder="Last Name" #lastName>
+      <input matInput placeholder="Last Name" #lastName required>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" #email>
+      <input matInput placeholder="Email" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="Password" #password>
+      <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password required>
+      <div matSuffix (click)="hide = !hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </div>
     </mat-form-field>
     <mat-form-field appearance="outline" class="input-size">
       <mat-label>Confirm Password</mat-label>
-      <input matInput placeholder="Password" #password2>
+      <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password2 required>
+      <div matSuffix (click)="hide = !hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </div>
       <mat-hint *ngIf="password.value != password2.value" class="error pointer">Passwords don't match</mat-hint>
     </mat-form-field>
   </div>

@@ -5,6 +5,7 @@
     <game 
         *ngFor="let game of games, let i = index"
         [game] = "game"
+        [teams] = "teams"
         [showSubmitTime] = "showSubmitTime(i)"
         [submitOpened] = "submitOpened"
         (openSubmit) = "teamClicked($event)"

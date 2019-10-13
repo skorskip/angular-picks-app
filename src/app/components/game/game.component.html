@@ -10,7 +10,7 @@
     <team
       *ngIf = "teams.length > 0"
       [team] = "getTeam(game.away_team)"
-      [score] = "game.away_score"
+      [score] = "game.away_team_score"
       [title] = "'AWAY'"
       [gameLocked] = "gameLocked()"
       (click)="selectTeam(game.away_team, game)">
@@ -23,7 +23,7 @@
     <team 
       *ngIf = "teams.length > 0"
       [team] = "getTeam(game.home_team)"
-      [score] = "game.home_score"
+      [score] = "game.home_team_score"
       [title] = "'HOME'"
       [gameLocked] = "gameLocked()"
       (click)="selectTeam(game.home_team, game)"

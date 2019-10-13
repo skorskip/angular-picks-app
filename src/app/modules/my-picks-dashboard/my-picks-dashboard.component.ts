@@ -152,9 +152,12 @@ export class MyPicksDashboardComponent implements OnInit {
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
         if(pick.game_id == game.game_id) {
+          console.log("WINNING TEAM::", game.winning_team);
+          console.log("MY TEAM::", pick);
           return pick.team_id == game.winning_team;
         }
       }
+      return null;
     }
     else {
       return null;
@@ -189,7 +192,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.game_status == "UNPLAYED") {
+    if(this.edit && game.game_status == null) {
       return true;
     } else {
       return false;

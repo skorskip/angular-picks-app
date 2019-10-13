@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
-import { TeamService } from '../../data-models/team/team.service';
 import { Pick } from '../../data-models/pick/pick';
 import { DateFormatterService } from '../../services/date-formatter.service';
 @Component({
@@ -16,19 +15,17 @@ export class GameComponent implements OnInit {
   @Input() showSubmitTime: boolean;
   @Input() notSelectablePicks = false;
   @Input() pickSuccess = null;
+  @Input() teams: Team[] = [];
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
   @Output() teamLoaded = new EventEmitter();
   
   submitDate = "";
-  teams: Team[] = [];
   constructor(
-    private teamService: TeamService, 
     private dateFormatter: DateFormatterService) { }
 
   ngOnInit(){
     this.submitDate = this.dateFormatter.formatDate(new Date(this.game.pick_submit_by_date));
-    this.getTeamsInit(this.game);
   }
 
   teamLoadedEvent(event) {
@@ -36,7 +33,7 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeamId:number) {
-    if(this.notSelectablePicks  || (this.game.game_status != 'UNPLAYED')){   
+    if(this.notSelectablePicks  || (this.game.game_status != null)){   
     } else {
       
       var selectedTeam = this.getTeam(selectedTeamId);
@@ -78,15 +75,6 @@ export class GameComponent implements OnInit {
     teamElement.style.background = team.primary_color;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam"); 
-  }
-  
-  getTeamsInit(game:Game) {
-    var teamIds: number[] = [];
-    teamIds.push(game.home_team);
-    teamIds.push(game.away_team);
-    this.teamService.getTeamByIds(teamIds).subscribe(
-      teams => this.teams = teams
-    );
   }
 
   gameLocked():boolean {
