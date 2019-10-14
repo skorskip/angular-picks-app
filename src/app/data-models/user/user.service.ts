@@ -4,7 +4,7 @@ import { User } from './user';
 import { environment } from '../../../environments/environment';
 import { catchError,map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,7 +18,9 @@ export class UserService {
 
   currentUser = new User();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar) { }
 
   login(user: User): Observable<User[]> {
     const url = `${this.usersUrl}/login`;
@@ -27,7 +29,7 @@ export class UserService {
         this.currentUser = users[0];
         console.log(`fetched user ${user.user_name}`)
       }),
-      catchError(this.handleError<User[]>(`fetched user ${user.user_name}`))
+      catchError(this.handleError<User[]>(`login failed`))
     );
   }
 
@@ -38,7 +40,7 @@ export class UserService {
         console.log(`updated user ${user.user_name}`);
         return response == 'SUCCESS';
       }),
-      catchError(this.handleError<boolean>(`updated user ${user.user_name}`))
+      catchError(this.handleError<boolean>(`register user failed`))
     );
   }
 
@@ -49,7 +51,7 @@ export class UserService {
         console.log(`updated user ${user.user_name}`, response);
         return response == 'SUCCESS';
       }),
-      catchError(this.handleError<boolean>(`updated user ${user.user_name}`))
+      catchError(this.handleError<boolean>(`updated user failed`))
     );
   }
 
@@ -61,7 +63,7 @@ export class UserService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
+      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 

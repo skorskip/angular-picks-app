@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,7 +15,9 @@ export class TeamService {
 
   private teamUrl = environment.serviceURL +'teams';  // URL to web api
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar) { }
 
   getTeamByIds (teamIds:number[]): Observable<Team[]> {
     const url = `${this.teamUrl}`;
@@ -41,6 +44,8 @@ export class TeamService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
+
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

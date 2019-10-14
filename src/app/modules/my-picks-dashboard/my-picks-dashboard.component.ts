@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
 import { GameService } from '../../data-models/game/game.service';
 import { TeamService } from '../../data-models/team/team.service';
-import { WeekService } from '../../data-models/week/week.service';
 import { Week } from '../../data-models/week/week';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
@@ -36,7 +35,6 @@ export class MyPicksDashboardComponent implements OnInit {
     private pickService: PickService, 
     private gameService: GameService, 
     private teamService: TeamService, 
-    private weekService: WeekService, 
     private weeksService: WeeksService,
     private route:ActivatedRoute,
     private router:Router,
@@ -152,8 +150,6 @@ export class MyPicksDashboardComponent implements OnInit {
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
         if(pick.game_id == game.game_id) {
-          console.log("WINNING TEAM::", game.winning_team);
-          console.log("MY TEAM::", pick);
           return pick.team_id == game.winning_team;
         }
       }

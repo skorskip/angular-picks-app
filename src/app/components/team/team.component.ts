@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter } from '@angular/core';
 import { Team } from '../../data-models/team/team';
 import { DOCUMENT } from '@angular/common';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'team',
@@ -24,7 +25,8 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.teamLoaded.emit(true);
+    console.log("ngAfterViewInit::", this.team.abbreviation);
+    setTimeout(() => this.teamLoaded.emit(true));
   }
 
   getBorderColor(id:number) {

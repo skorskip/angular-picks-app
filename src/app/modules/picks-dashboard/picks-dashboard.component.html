@@ -1,5 +1,5 @@
 <weeks 
-    *ngIf="games.length > 0"
+    *ngIf="(games.length > 0) && (teams.length > 0)"
     [title] = "'Weekly Games'"
     [number] = "week.number">
     <game 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../data-models/user/user.service';
 import { User } from 'src/app/data-models/user/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   registerSelected = false
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {

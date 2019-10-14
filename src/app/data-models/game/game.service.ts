@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Game } from './game';
 import { environment } from '../../../environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 const httpOptions = {
@@ -19,7 +20,8 @@ export class GameService {
   private gamesUrl = environment.serviceURL + 'games';  // URL to web api
 
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private snackBar: MatSnackBar) { }
 
   getGameByIds (gameIds:number[]): Observable<Game[]> {
     const url = `${this.gamesUrl}`;
@@ -46,6 +48,7 @@ export class GameService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

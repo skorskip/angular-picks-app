@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../../data-models/game/game';
 import { Week } from '../../data-models/week/week';
 import { WeekService } from '../../data-models/week/week.service';
@@ -119,7 +120,7 @@ export class PicksDashboardComponent implements OnInit {
         if(result){
           this.pickService.addPicks(this.stagedPicks).subscribe(status => {
             if(status) {
-              this.snackBar.openFromComponent(PicksMadeSnackBar, {duration: 2000});
+              this.snackBar.open("picks submitted",'', {duration:3000});
               this.router.navigate(['/myPicks/' + this.week.season + '/' + this.week.number]);
             } else {
               const dialogRef = this.dialog.open(PicksErrorDialog,{width: '500px'});
@@ -132,8 +133,10 @@ export class PicksDashboardComponent implements OnInit {
 
   highlightGameResult(game: Game){
     if(game.game_status == 'COMPLETED'){
-      document.getElementById(game.winning_team + "-team-card").classList.remove("body-color-secondary");
-      document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
+      if(game.winning_team != 0){
+        document.getElementById(game.winning_team + "-team-card").classList.remove("body-color-secondary");
+        document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
+      }
     }
   }
 
@@ -176,9 +179,3 @@ export class SubmitPicksDialog {}
   templateUrl: '../../components/dialog-content/picks-error-dialog.html'
 })
 export class PicksErrorDialog {}
-
-@Component({
-  selector: 'picks-made-snack-bar',
-  templateUrl: '../../components/dialog-content/picks-made-snack-bar.html',
-})
-export class PicksMadeSnackBar {}

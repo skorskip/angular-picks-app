@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../../data-models/user/user';
 import { UserService } from '../../data-models/user/user.service';
 import { FormControl, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,9 @@ export class RegisterComponent implements OnInit {
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(private userService:UserService) { }
+  constructor(
+    private userService:UserService,
+    private snackBar:MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -28,9 +31,10 @@ export class RegisterComponent implements OnInit {
 
       this.userService.register(user).subscribe((success) =>{
         if(success) {
+          this.snackBar.open("register successful", '', {duration:3000});
           this.registered.emit(success);
         } else {
-          console.log("ERROR");
+          this.snackBar.open("register error",'', {duration:3000});
         }
       });
     }

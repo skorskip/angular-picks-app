@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 const httpOptions = {
@@ -14,7 +15,9 @@ const httpOptions = {
 export class WeekService {
     currentWeek = null;
     private weekUrl = environment.serviceURL + 'weeks';
-    constructor(private http: HttpClient) { }
+    constructor(
+      private http: HttpClient,
+      private snackBar: MatSnackBar) { }
 
     /** GET game by id. Will 404 if id not found */
     getWeek(season: number, week: number): Observable<Week> {
@@ -46,6 +49,7 @@ export class WeekService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

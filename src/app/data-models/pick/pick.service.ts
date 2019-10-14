@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Pick } from './pick';
 import { environment } from '../../../environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,7 +15,8 @@ export class PickService {
     private picksUrl = environment.serviceURL + 'picks';  // URL to web api
 
     constructor(
-      private http: HttpClient) { }
+      private http: HttpClient,
+      private snackBar: MatSnackBar) { }
 
     addPicks(picks: Pick[]): Observable<boolean> {
         const url = `${this.picksUrl}/create`;
@@ -73,6 +75,8 @@ export class PickService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+
+        this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
