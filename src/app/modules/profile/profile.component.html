@@ -1,3 +1,41 @@
-<div class="title">
-  PROFILE
+<div class="title accent-primary">
+    Profile
+</div>
+<div class="card body-color-secondary" *ngIf=!editSelected>
+    <div class="card-header">
+        <div class=card-header-text>
+            {{user.first_name}} {{user.last_name}}
+        </div>
+    </div>
+    <div class="card-section">
+      <div class="info-header">
+        Info
+        <button mat-button class="edit-button body-color-primary" (click)="editUser()">
+            <mat-icon>
+              mode_edit
+            </mat-icon>
+            edit
+        </button>
+      </div>
+      <div class="info-content">
+        <div>
+          Username 
+        </div>
+        <div  class="field">
+          {{user.user_name}}
+        </div>
+        <div >
+          Email
+        </div>
+        <div class="field">
+          {{user.email}}
+        </div>
+      </div>
+    </div>
+</div>
+<div class="card body-color-secondary" *ngIf="editSelected">
+  <app-register
+    [editUser] = "editSelected"
+    (registered) = "updated($event)">
+  </app-register>
 </div>

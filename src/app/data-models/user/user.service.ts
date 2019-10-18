@@ -27,7 +27,6 @@ export class UserService {
     return this.http.post(url, user, httpOptions).pipe(
       tap((users: User[]) => {
         this.currentUser = users[0];
-        console.log(`fetched user ${user.user_name}`)
       }),
       catchError(this.handleError<User[]>(`login failed`))
     );
@@ -37,7 +36,6 @@ export class UserService {
     const url = `${this.usersUrl}/register`;
     return this.http.post(url, user, httpOptions).pipe(
       map((response) => {
-        console.log(`updated user ${user.user_name}`);
         return response == 'SUCCESS';
       }),
       catchError(this.handleError<boolean>(`register user failed`))
@@ -48,12 +46,20 @@ export class UserService {
     const url = `${this.usersUrl}/${user.user_id}`;
     return this.http.put(url, user, httpOptions).pipe(
       map((response) => {
-        console.log(`updated user ${user.user_name}`, response);
         return response == 'SUCCESS';
       }),
       catchError(this.handleError<boolean>(`updated user failed`))
     );
   }
+
+  setCurrentUser(fn, ln, username, email, password) {
+    if(fn != '') this.currentUser.first_name = fn;
+    if(ln != '') this.currentUser.last_name = ln;
+    if(username != '') this.currentUser.user_name = username;
+    if(email != '') this.currentUser.email = email;
+    if(password != '') this.currentUser.password = password;
+    return this.currentUser;
+}
 
     // /**
   //  * Handle Http operation that failed.

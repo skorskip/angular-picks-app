@@ -3,50 +3,66 @@
     <mat-icon class="back-button" (click)="cancel()">
       keyboard_arrow_left
     </mat-icon>
-    <div class="register-title">Register</div>
+    <div class="register-title">{{ formType }}</div>
   </div>
-  <div class="input-form">
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="username" #username required>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>First Name</mat-label>
-      <input matInput placeholder="First Name" #firstName required>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>Last Name</mat-label>
-      <input matInput placeholder="Last Name" #lastName required>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" [formControl]="email" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>Password</mat-label>
-      <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password required>
-      <div matSuffix (click)="hide = !hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </div>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="input-size">
-      <mat-label>Confirm Password</mat-label>
-      <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password2 required>
-      <div matSuffix (click)="hide = !hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </div>
-      <mat-hint *ngIf="password.value != password2.value" class="error pointer">Passwords don't match</mat-hint>
-    </mat-form-field>
-  </div>
+  <form [formGroup]="editUserForm" (ngSubmit)="submit(editUserForm.value)">
+    <div  class="input-form">
 
-  <div class="button-container">
-    <button 
-      (click)="register(username.value, email.value, password.value)" 
-      class="register-button accent-primary noSelect" 
-      [ngClass] = "{'disabled':disableRegisterButton(username.value, firstName.value, lastName.value, email.value, password.value, password2.value), 
-        'hover':!(disableRegisterButton(username.value, firstName.value, lastName.value, email.value, password.value, password2.value))}">
-        register
-    </button>
-  </div>
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>Username</mat-label>
+        <textarea *ngIf="editUser" matInput placeholder="Username" formControlName="username">{{ user.user_name }}</textarea>
+        <input *ngIf="!editUser" matInput placeholder="Username" formControlName="username" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>First Name</mat-label>
+        <textarea *ngIf="editUser" matInput placeholder="First Name" formControlName="firstName">{{ user.first_name }}</textarea>
+        <input *ngIf="!editUser" matInput placeholder="First Name" formControlName="firstName" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>Last Name</mat-label>
+        <textarea *ngIf="editUser" matInput placeholder="Last Name" formControlName="lastName">{{ user.last_name }}</textarea>
+        <input *ngIf="!editUser" matInput placeholder="Last Name" formControlName="lastName" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>Email</mat-label>
+        <textarea *ngIf="editUser" matInput placeholder="Email" formControlName="email">{{ user.email }}</textarea>
+        <input *ngIf="!editUser" matInput placeholder="Email" formControlName="email" required>
+        <mat-error *ngIf="editUserForm.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field *ngIf="editUser" appearance="outline" class="input-size">
+        <mat-label>Current Password</mat-label>
+        <input matInput placeholder="current password" [type]="hide ? 'password' : 'text'" formControlName="currentPassword">
+        <div matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>Password</mat-label>
+        <input *ngIf="editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password">
+        <input *ngIf="!editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <div matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-size">
+        <mat-label>Confirm Password</mat-label>
+        <input *ngIf="editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+        <input *ngIf="!editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" required>
+        <div matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </div>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button class="register-button accent-primary hover" type="submit">
+          {{ formType }}
+      </button>
+    </div>
+  </form>
 </div>

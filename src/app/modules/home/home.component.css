@@ -35,6 +35,7 @@ h1.title {
 	margin-left: 10%;
 	border-bottom: solid lightgrey 1px;
 	width:80%;
+	cursor: pointer;
 }
 
 .nav-text-title {

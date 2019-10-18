@@ -1,7 +1,7 @@
 <mat-sidenav-container  id="side-nav" class="example-container" (window:resize)="onResize($event)" >
   <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav body-color-secondary" position="start">
     <div class="nav-title">
-      <div class="nav-text-title">pickem</div>
+      <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
     </div>
     <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')" (mouseover) = "mouseover($event)"
     (mouseout)="mouseout($event)">

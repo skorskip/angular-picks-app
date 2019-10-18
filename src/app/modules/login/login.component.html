@@ -31,5 +31,6 @@
   </button>
 </div>
 <app-register *ngIf="registerSelected"
+[editUser]="false"
 (registered)="registered($event)">
 </app-register>
