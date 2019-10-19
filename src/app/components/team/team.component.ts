@@ -25,7 +25,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log("ngAfterViewInit::", this.team.abbreviation);
     setTimeout(() => this.teamLoaded.emit(true));
   }
 

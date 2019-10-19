@@ -21,10 +21,14 @@ export class GameComponent implements OnInit {
   @Output() teamLoaded = new EventEmitter();
   
   submitDate = "";
+  home_team = new Team();
+  away_team = new Team();
+  
   constructor(
     private dateFormatter: DateFormatterService) { }
 
   ngOnInit(){
+    this.setTeams(this.game, this.teams);
     this.submitDate = this.dateFormatter.formatDate(new Date(this.game.pick_submit_by_date));
   }
 
@@ -32,20 +36,19 @@ export class GameComponent implements OnInit {
     this.teamLoaded.emit(this.game);
   }
 
-  selectTeam(selectedTeamId:number) {
-    if(this.notSelectablePicks  || (this.game.game_status != null)){   
+  selectTeam(selectedTeam:Team) {
+    if(this.notSelectablePicks  || (this.game.game_status != "UNPLAYED")){   
     } else {
+
+      var otherTeam = this.game.home_team == selectedTeam.team_id ? this.away_team : this.home_team;
       
-      var selectedTeam = this.getTeam(selectedTeamId);
-      var otherTeamId = this.game.home_team == selectedTeamId ? this.game.away_team : this.game.home_team;
-      
-      this.stageSelectedPick.emit(this.stagePick(selectedTeamId, this.game.game_id));
+      this.stageSelectedPick.emit(this.stagePick(selectedTeam.team_id, this.game.game_id));
       this.openSubmit.emit(true);
       
-      if(document.getElementById(selectedTeamId + "-team-card").classList.contains("selectedTeam")){
-        this.unSelectTeam(selectedTeamId);
-      } else if(document.getElementById(otherTeamId + "-team-card").classList.contains("selectedTeam")){
-        this.unSelectTeam(otherTeamId);
+      if(document.getElementById(selectedTeam.team_id + "-team-card").classList.contains("selectedTeam")){
+        this.unSelectTeam(selectedTeam);
+      } else if(document.getElementById(otherTeam.team_id + "-team-card").classList.contains("selectedTeam")){
+        this.unSelectTeam(otherTeam);
         this.highlightSelectTeam(selectedTeam);
       } else {
         this.highlightSelectTeam(selectedTeam);
@@ -60,9 +63,8 @@ export class GameComponent implements OnInit {
     return stagedPick;
   }
 
-  unSelectTeam(teamId:number){
-    var team = document.getElementById(teamId + "-team-card");
-    var selectedTeam = this.getTeam(teamId);
+  unSelectTeam(selectedTeam:Team){
+    var team = document.getElementById(selectedTeam.team_id + "-team-card");
     team.style.backgroundColor = "";
     team.style.color = selectedTeam.primary_color;
     team.classList.add("body-color-secondary")
@@ -89,14 +91,18 @@ export class GameComponent implements OnInit {
     }
   }
 
-  getTeam(id: number): Team {
-    var team
-    this.teams.forEach((teamItem) => {
-      if(id == teamItem.team_id){
-        team = teamItem;
+  setTeams(game: Game, teams: Team[]) {
+    for(var i = 0; i < teams.length; i++) {
+      if(this.home_team.team_id != 0 && this.away_team.team_id != 0) {
+        return;
       }
-    })
-    return team;
+      if(game.home_team == teams[i].team_id){
+        this.home_team = teams[i];
+
+      } else if(game.away_team == teams[i].team_id) {
+        this.away_team = teams[i];
+      } 
+    }
   }
 }
 

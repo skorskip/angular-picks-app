@@ -9,11 +9,11 @@
   <div class="team-group" *ngIf="teams.length > 0">
     <team
       *ngIf = "teams.length > 0"
-      [team] = "getTeam(game.away_team)"
+      [team] = "away_team"
       [score] = "game.away_team_score"
       [title] = "'AWAY'"
       [gameLocked] = "gameLocked()"
-      (click)="selectTeam(game.away_team, game)">
+      (click)="selectTeam(away_team)">
     </team>
     <pick-status
       class="pick-status"
@@ -22,11 +22,11 @@
     </pick-status>
     <team 
       *ngIf = "teams.length > 0"
-      [team] = "getTeam(game.home_team)"
+      [team] = "home_team"
       [score] = "game.home_team_score"
       [title] = "'HOME'"
       [gameLocked] = "gameLocked()"
-      (click)="selectTeam(game.home_team, game)"
+      (click)="selectTeam(home_team)"
       (teamLoaded)="teamLoadedEvent($event)">
     </team>
     <div class="game-card-spread">

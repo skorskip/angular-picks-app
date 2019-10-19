@@ -3,7 +3,7 @@
     <mat-icon class="back-button" (click)="cancel()">
       keyboard_arrow_left
     </mat-icon>
-    <div class="register-title">{{ formType }}</div>
+    <div class="register-title">{{ formType | titlecase }}</div>
   </div>
   <form [formGroup]="editUserForm" (ngSubmit)="submit(editUserForm.value)">
     <div  class="input-form">

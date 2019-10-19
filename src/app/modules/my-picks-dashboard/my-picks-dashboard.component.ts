@@ -55,6 +55,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   initWeek(season, week) {
+    this.myTeams = [];
     this.week.number = week;
     this.week.season = season;
     this.getPicksByWeek(season, week);
@@ -188,7 +189,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.game_status == null) {
+    if(this.edit && game.game_status == "UNPLAYED") {
       return true;
     } else {
       return false;

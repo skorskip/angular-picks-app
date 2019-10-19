@@ -50,6 +50,8 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   initWeek(week: Week) {
+    this.games = [];
+    this.teams = [];
     this.week = week;
     this.games = week.games;
     this.initTeams(week.teams);
