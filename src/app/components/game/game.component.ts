@@ -60,6 +60,7 @@ export class GameComponent implements OnInit {
     var stagedPick = {} as Pick;
     stagedPick.game_id = gameId;
     stagedPick.team_id = teamId;
+    stagedPick.submitted_date = new Date();
     return stagedPick;
   }
 

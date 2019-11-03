@@ -6,6 +6,13 @@
     height: 100%;
 }
 
+.login-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .login-button {
     font-size: 1em;
     height: 5%;
@@ -14,6 +21,10 @@
     border: solid 1px;
     background-color: white;
     cursor: pointer;
+}
+
+.icon {
+    width: 100px;
 }
 
 .login-button:hover {

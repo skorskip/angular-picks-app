@@ -25,6 +25,4 @@ export class DateFormatterService {
 
       return formattedDate;
   }
-
-
 }

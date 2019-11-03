@@ -31,7 +31,7 @@ export class WeekService {
     getCurrentWeek(): Observable<Week> {
       const url = `${this.weekUrl}/current`;
       
-      if(this.currentWeek == null) {
+      if(this.currentWeek === null) {
         this.currentWeek = this.http.get<Week>(url).pipe(
           tap(_ => console.log(`fetched current week`)),
           catchError(this.handleError<Week>(`fetched current week`))

@@ -30,6 +30,7 @@ export class MyPicksDashboardComponent implements OnInit {
   pickSuccess = null;
   subscription: Subscription;
   user = new User();
+  stagedEdits = [] as Pick[];
 
   constructor(
     private pickService: PickService, 
@@ -92,7 +93,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   editPicks() {
-    this.edit = this.edit ? false : true;
+    this.edit = !this.edit;
   }
 
   deletePick(game:Game) {
@@ -109,15 +110,25 @@ export class MyPicksDashboardComponent implements OnInit {
   changeTeam(game: Game) {
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
+        this.unSelectTeam(pick.team_id);
         var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
         var newPick = pick;
         newPick.team_id = newTeam;
-        this.pickService.updatePick(newPick).subscribe(() => {
-          this.initWeek(this.week.season, this.week.number);
-          return;
-        });
+        this.highlightSelectTeam(this.getTeam(newTeam));
+        this.stagedEdits.push(newPick);
       }
     });
+  }
+
+  submitEdits() {
+    for(let i = 0; i < this.stagedEdits.length; i++) {
+      let newPick = this.stagedEdits[i];
+      this.pickService.updatePick(newPick).subscribe(() => {
+        this.initWeek(this.week.season, this.week.number);
+      });
+    }
+    this.editPicks();
+
   }
 
   highlightSelected(game: Game){
@@ -189,7 +200,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.game_status == "UNPLAYED") {
+    if(this.edit && game.game_status == "UNPLAYED" && new Date(game.pick_submit_by_date) > new Date()) {
       return true;
     } else {
       return false;

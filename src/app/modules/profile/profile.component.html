@@ -11,24 +11,28 @@
       <div class="info-header">
         Info
         <button mat-button class="edit-button body-color-primary" (click)="editUser()">
-            <mat-icon>
-              mode_edit
-            </mat-icon>
+          <mat-icon>
+            mode_edit
+          </mat-icon>
             edit
         </button>
       </div>
       <div class="info-content">
         <div class="info-field">
-          <div>
-            Username:
+          <div class="icon-container accent-primary">
+            <mat-icon class="accent-primary">
+              person
+            </mat-icon>
           </div>
           <div  class="field">
             {{user.user_name}}
           </div>
         </div>
         <div class="info-field">
-          <div >
-            Email:
+          <div class="icon-container accent-primary">
+            <mat-icon>
+              mail
+            </mat-icon>
           </div>
           <div class="field">
             {{user.email}}

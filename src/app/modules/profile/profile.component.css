@@ -42,7 +42,7 @@
 .info-content {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 5px;
 }
 
 .field {
@@ -53,6 +53,12 @@
 
 .info-field {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+}
+
+.icon-container {
+    border-radius: 50%;
+    height: 25px;
+    padding: 10px;
 }

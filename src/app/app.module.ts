@@ -11,7 +11,6 @@ import { HttpClientModule }    from '@angular/common/http';
 import { ProfileModule } from './modules/profile/profile.module';
 import { StandingsModule} from './modules/standings/standings.module';
 import { MyPicksDashboardModule } from './modules/my-picks-dashboard/my-picks-dashboard.module';
-import { MyStatsModule } from './modules/my-stats/my-stats.module';
 import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.module';
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
@@ -30,7 +29,6 @@ import { LoginModule } from './modules/login/login.module';
     HttpClientModule,
     HomeModule,
     MyPicksDashboardModule,
-    MyStatsModule,
     PicksDashboardModule,
     StandingsModule,
     ProfileModule,

@@ -1,6 +1,7 @@
 <mat-sidenav-container  id="side-nav" class="example-container" (window:resize)="onResize($event)" >
   <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav body-color-secondary" position="start">
     <div class="nav-title">
+      <img class="icon" src="../../../assets/icons/pickem_logo_soft.svg">
       <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
     </div>
     <div class="sidenav-opt" id="my-picks" (click)="highlight('my-picks')" (mouseover) = "mouseover($event)"
@@ -24,13 +25,6 @@
         <a (click)="toggle(); navigateToPage('standings')">Standings</a>
       </nav>
     </div>
-    <div class="sidenav-opt" id="my-stats" (click)="highlight('my-stats')" (mouseover) = "mouseover($event)"
-    (mouseout)="mouseout($event)" >
-        <nav>
-          <mat-icon class="sidenav-icon">timeline</mat-icon>
-          <a (click)="toggle(); navigateToPage('myStats')">My Stats</a>
-        </nav>
-      </div>
     <div class="sidenav-opt" id="my-profile" (click)="highlight('my-profile')" (mouseover) = "mouseover($event)"
     (mouseout)="mouseout($event)" >
       <nav>

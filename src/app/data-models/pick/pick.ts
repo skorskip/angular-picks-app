@@ -3,4 +3,5 @@ export class Pick {
     user_id: number;
     game_id: number;
     team_id: number;
+    submitted_date: Date;
 }
