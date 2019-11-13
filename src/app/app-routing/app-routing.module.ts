@@ -6,13 +6,18 @@ import { StandingsComponent } from '../modules/standings/standings.component';
 import { ProfileComponent } from '../modules/profile/profile.component';
 import { PicksDashboardComponent } from '../modules/picks-dashboard/picks-dashboard.component';
 import { MyPicksDashboardComponent } from '../modules/my-picks-dashboard/my-picks-dashboard.component';
+import { LoginComponent } from '../modules/login/login.component';
+
+import { AuthGuard } from '../services/guard/guard.service';
+import { AppComponent } from '../app.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: 'myPicks/:season/:week', component: MyPicksDashboardComponent },
-  { path: 'weeklyGames', component: PicksDashboardComponent },
-  { path: 'standings', component: StandingsComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: '', component: AppComponent, canActivate: [AuthGuard] },
+  { path: 'myPicks/:season/:week', component: MyPicksDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'weeklyGames', component: PicksDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'standings', component: StandingsComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

@@ -1,7 +1,9 @@
 <weeks 
     *ngIf="(games.length > 0) && (teams.length > 0)"
     [title] = "'Weekly Games'"
-    [number] = "week.number">
+    [number] = "week.number"
+    [season]= "week.season"
+    [view]="'games'">
     <game 
         *ngFor="let game of games, let i = index"
         [game] = "game"

@@ -15,13 +15,6 @@
 	animation-delay: 0s;
 }
 
-.week-out-animation {
-	animation: forwards;
-	animation-name:weekCardAnimationOut;
-	animation-timing-function: ease-in-out;
-	animation-duration: 1s;
-}
-
 .week-cards {
 	display: flex;
 	flex-direction: row;
@@ -69,4 +62,16 @@
 .week-arrow-icon {
 	transform: scale(2);
 	margin:20px;
+}
+
+.toggle-picks-container {
+	display: flex;
+	justify-content: center;
+}
+
+.toggle-pick {
+	display: flex;
+	align-items: center;
+	width: 100px;
+	height: 50px;
 }

@@ -15,6 +15,7 @@ export class PickStatusComponent implements OnInit {
   open = false;
   correct = false;
   wrong = false;
+  push = false;
 
 
   constructor(@Inject(DOCUMENT) document) { }
@@ -31,12 +32,15 @@ export class PickStatusComponent implements OnInit {
         return "pick-status-close";
       }
     } else {
-      if(this.pickSuccess == true) {
+      if(this.pickSuccess == "WIN") {
         this.correct = true;
         return "pick-status-success";
-      } else {
+      } else if (this.pickSuccess == "LOSE"){
         this.wrong = true;
         return "pick-status-wrong";
+      } else {
+        this.push = true;
+        return "pick-status-push";
       }
     }
   }

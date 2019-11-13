@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
+import { UserStanding } from './user-standing';
 import { environment } from '../../../environments/environment';
 import { catchError,map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,24 +18,13 @@ const httpOptions = {
 export class UserService {
   private usersUrl = environment.serviceURL + 'users';
 
-  currentUser = new User();
-
   constructor(
     private http: HttpClient,
-    private snackBar: MatSnackBar) { }
-
-  login(user: User): Observable<User[]> {
-    const url = `${this.usersUrl}/login`;
-    return this.http.post(url, user, httpOptions).pipe(
-      tap((users: User[]) => {
-        this.currentUser = users[0];
-      }),
-      catchError(this.handleError<User[]>(`login failed`))
-    );
-  }
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService) { }
 
   register(user: User): Observable<boolean> {
-    const url = `${this.usersUrl}/register`;
+    let url = `${this.usersUrl}/register`;
     return this.http.post(url, user, httpOptions).pipe(
       map((response) => {
         return response == 'SUCCESS';
@@ -43,7 +34,7 @@ export class UserService {
   }
 
   update(user: User): Observable<boolean> {
-    const url = `${this.usersUrl}/${user.user_id}`;
+    let url = `${this.usersUrl}/${user.user_id}`;
     return this.http.put(url, user, httpOptions).pipe(
       map((response) => {
         return response == 'SUCCESS';
@@ -53,12 +44,21 @@ export class UserService {
   }
 
   setCurrentUser(fn, ln, username, email, password) {
-    if(fn != '') this.currentUser.first_name = fn;
-    if(ln != '') this.currentUser.last_name = ln;
-    if(username != '') this.currentUser.user_name = username;
-    if(email != '') this.currentUser.email = email;
-    if(password != '') this.currentUser.password = password;
-    return this.currentUser;
+    var currentUser = this.authService.currentUserValue;
+    if(fn != '') currentUser.first_name = fn;
+    if(ln != '') currentUser.last_name = ln;
+    if(username != '') currentUser.user_name = username;
+    if(email != '') currentUser.email = email;
+    if(password != '') currentUser.password = password;
+    return currentUser;
+}
+
+getStandings(season: number):Observable<UserStanding[]> {
+  let url = `${this.usersUrl}/standings/${season}`;
+  return this.http.get<UserStanding[]>(url).pipe(
+    tap(_ => console.log(`get user standings`)), 
+    catchError(this.handleError<UserStanding[]>(`get user standings`))
+  );
 }
 
     // /**

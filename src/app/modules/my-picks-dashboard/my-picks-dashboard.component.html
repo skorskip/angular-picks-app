@@ -1,13 +1,15 @@
 <weeks 
   [title]="'My Picks'"
-  [number] = "week.number">
-  <button mat-button *ngIf="!edit" class="edit-button body-color-primary" (click)="editPicks()">
+  [number] = "week.number"
+  [season]= "week.season"
+  [view]="'picks'">
+  <button mat-button *ngIf="!edit && showEditButton" class="edit-button body-color-primary" (click)="editPicks()">
       <mat-icon>
         mode_edit
       </mat-icon>
       edit
   </button>
-  <button mat-button *ngIf="edit" class="edit-button body-color-primary" (click)="submitEdits()">
+  <button mat-button *ngIf="edit && showEditButton" class="edit-button body-color-primary" (click)="submitEdits()">
     done
   </button>
   <div *ngIf = "myGames.length == 0" class="no-picks-view">

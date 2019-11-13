@@ -8,7 +8,8 @@
 .card-header {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+    justify-content: flex-start;
+    padding: 15px;
 }
 
 .card-header-text {
@@ -61,4 +62,27 @@
     border-radius: 50%;
     height: 25px;
     padding: 10px;
+}
+
+.logout-button {
+    color: rgb(228, 46, 46);
+    border-radius: 8px;
+	cursor: pointer;
+    border: solid 1px;
+    margin:10px;
+    width: 60%;
+}
+
+.logout-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.init-icon {
+    border: solid 2px;
+    border-radius: 50%;
+    height: 50px;
+    padding: 10px;
+    font-size: 2.5em;
 }

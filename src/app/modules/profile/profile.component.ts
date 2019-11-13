@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/data-models/user/user';
-import { UserService } from 'src/app/data-models/user/user.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +13,11 @@ export class ProfileComponent implements OnInit {
   editSelected = false;
 
   constructor(
-    private userService: UserService
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-    this.user = this.userService.currentUser;
+    this.user = this.authService.currentUserValue;
   }
 
   editUser() {
@@ -26,6 +26,11 @@ export class ProfileComponent implements OnInit {
 
   updated() {
     this.editSelected = false;
+  }
+
+  logout() {
+    this.authService.logout();
+    window.location.reload();
   }
 
 }

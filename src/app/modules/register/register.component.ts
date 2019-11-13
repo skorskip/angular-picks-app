@@ -3,6 +3,7 @@ import { User } from '../../data-models/user/user';
 import { UserService } from '../../data-models/user/user.service';
 import { FormControl, Validators, FormBuilder } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +23,9 @@ export class RegisterComponent implements OnInit {
   constructor(
     private userService:UserService,
     private snackBar:MatSnackBar,
-    private formBuilder: FormBuilder) { 
-      this.user = this.userService.currentUser;
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService) { 
+      this.user = this.authService.currentUserValue;
       this.editUserForm = this.formBuilder.group({
         firstName: this.user.first_name,
         lastName: this.user.last_name,

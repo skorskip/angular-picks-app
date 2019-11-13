@@ -12,9 +12,11 @@ import { Router } from '@angular/router';
 export class WeeksComponent implements OnInit {
   @Input() title;
   @Input() number;
+  @Input() view;
+  @Input() season =0;
   weeksView = false;
   weeks = [] as number[];
-  season = 0;
+
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
@@ -48,5 +50,13 @@ export class WeeksComponent implements OnInit {
       element.className = "week-out-animation";
       this.weeksView = false;
     });
+  }
+
+  toggleView(view) {
+    if(view == "picks") {
+      this.router.navigate(['/myPicks/' + 2019 + '/' + 10]);
+    } else {
+      this.router.navigate(['/weeklyGames']);
+    }
   }
 }

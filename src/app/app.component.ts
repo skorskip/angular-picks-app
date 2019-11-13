@@ -18,19 +18,6 @@ export class AppComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    if(this.userService.currentUser.user_id != 0) {
-      this.loggedIn = true;
-    }
-  }
-
-  login(event: any) {
-    this.loggedIn = event;
-    if(this.loggedIn) {
-      this.router.navigate(['/weeklyGames']);
-    }
-  }
-
-  register(event: any) {
-    this.registerSelected = event;
+    this.router.navigate(['/weeklyGames']);
   }
 }

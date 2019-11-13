@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
-import { DateFormatterService } from '../../services/date-formatter.service';
+import { DateFormatterService } from '../../services/date-formatter/date-formatter.service';
 @Component({
   selector: 'game',
   templateUrl: './game.component.html',
@@ -15,6 +15,7 @@ export class GameComponent implements OnInit {
   @Input() showSubmitTime: boolean;
   @Input() notSelectablePicks = false;
   @Input() pickSuccess = null;
+  @Input() pickLock = false;
   @Input() teams: Team[] = [];
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();

@@ -32,11 +32,14 @@ h1.title {
 
 .nav-title {
 	display:flex;
-	text-align: center;
-	margin-left: 20%;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
 	border-bottom: solid lightgrey 1px;
-	width:80%;
+	width:100%;
+	justify-content: center;
 	cursor: pointer;
+	padding: 10px;
 }
 
 .nav-text-title {
@@ -85,5 +88,5 @@ a {
 }
 
 .icon {
-    width: 50px;
+	width: 50px;
 }

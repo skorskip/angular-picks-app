@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../../data-models/user/user.service';
 import { User } from 'src/app/data-models/user/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,9 @@ export class LoginComponent implements OnInit {
   registerSelected = false
 
   constructor(
-    private userService: UserService,
-    public snackBar: MatSnackBar
+    private authService: AuthenticationService,
+    public snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -49,10 +51,11 @@ export class LoginComponent implements OnInit {
     user.user_name = username;
     user.password = password;
     
-    this.userService.login(user).subscribe((users) => {
+    this.authService.login(user).subscribe((users) => {
       if(users.length != 0) {
         this.loginSucces = true;
-        this.login.emit(this.loginSucces);
+        this.router.navigate(['/weeklyGames']);
+        window.location.reload();
       } else {
         this.forgotten = true;
       }

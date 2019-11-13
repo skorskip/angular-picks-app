@@ -11,7 +11,7 @@ import { Subscription }   from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { User } from 'src/app/data-models/user/user';
-import { UserService } from 'src/app/data-models/user/user.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -31,6 +31,7 @@ export class MyPicksDashboardComponent implements OnInit {
   subscription: Subscription;
   user = new User();
   stagedEdits = [] as Pick[];
+  showEditButton = true;
 
   constructor(
     private pickService: PickService, 
@@ -39,7 +40,7 @@ export class MyPicksDashboardComponent implements OnInit {
     private weeksService: WeeksService,
     private route:ActivatedRoute,
     private router:Router,
-    private userService:UserService) { 
+    private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
           this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
@@ -49,7 +50,7 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.user = this.userService.currentUser;
+    this.user = this.authService.currentUserValue;
     const season = +this.route.snapshot.paramMap.get('season') as number;
     const week = +this.route.snapshot.paramMap.get('week') as number;
     this.initWeek(season, week);
@@ -80,7 +81,13 @@ export class MyPicksDashboardComponent implements OnInit {
         
         this.gameService.getGameByIds(gameIds).subscribe(games => {
           this.myGames = games;
+          console.log(games);
           this.myGames.forEach(game => {
+            if(game.game_status == "UNPLAYED" && new Date(game.pick_submit_by_date) > new Date()) {
+              this.showEditButton = true;
+            } else {
+              this.showEditButton = false;
+            }
             teamIds.push(game.home_team);
             teamIds.push(game.away_team);
           })
@@ -157,12 +164,18 @@ export class MyPicksDashboardComponent implements OnInit {
     teamElement.classList.add("selectedTeam");
   }
 
-  pickResult(game: Game):boolean {
+  pickResult(game: Game):string {
     if(game.game_status == 'COMPLETED'){
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
         if(pick.game_id == game.game_id) {
-          return pick.team_id == game.winning_team;
+          if(pick.team_id == game.winning_team) {
+            return "WIN";
+          } else if(game.winning_team == null) {
+            return "PUSH";
+          } else {
+            return "LOSE";
+          }
         }
       }
       return null;

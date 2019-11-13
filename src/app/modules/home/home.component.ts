@@ -1,6 +1,6 @@
 import { Component, OnInit,Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { WeekService } from '../../data-models/week/week.service';
 
 @Component({
@@ -17,22 +17,28 @@ export class HomeComponent implements OnInit {
   selected = "weekly-games";
   sideMenuType;
 
-  constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){}
+  constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){
+    this.router.events.subscribe((event) => {
+        if(event instanceof NavigationStart) {
+          var url = event.url;
 
-  ngOnInit() {
-    if(document.getElementById("side-nav").scrollWidth > 950){
-      this.largeScreen = true;
-      this.opened = true;
-      this.sideMenuType = "side";
-
-    } else {
-      this.largeScreen = false;
-      this.sideMenuType = "push";
-
-    }
+          if(url.indexOf("myPicks") != -1) {
+            this.highlight("my-picks");
+          } else if(url.indexOf("weeklyGames") != -1) {
+            this.highlight("weekly-games");
+          } else if(url.indexOf("standings") != -1) {
+            this.highlight("standings");
+          } else if(url.indexOf("profile") != -1) {
+            this.highlight("my-profile");
+          }
+        }
+    });
   }
 
+  ngOnInit() {}
+
   ngAfterViewInit() {
+    this.resize(document.getElementById("side-nav").scrollWidth);
     var element = document.getElementById(this.selected);
 
     if(element != null){
@@ -42,7 +48,11 @@ export class HomeComponent implements OnInit {
   }
 
   onResize(event) {
-    if(event.target.innerWidth > 950){
+    this.resize(event.target.innerWidth);
+  }
+
+  resize(windowSize: number) {
+    if(windowSize > 950){
       this.largeScreen = true;
       this.opened = true;
       this.sideMenuType = "side";
@@ -54,12 +64,16 @@ export class HomeComponent implements OnInit {
   }
 
   highlight(id:string) {
-    document.getElementById(id).classList.add("accent-color-primary");
-    document.getElementById(id).classList.add("selected");
-    document.getElementById(this.selected).classList.remove("accent-color-primary");
-    document.getElementById(this.selected).classList.remove("selected");
-    this.selected = id;
-    
+    var selected = document.getElementById(id);
+    var prevSelected = document.getElementById(this.selected);
+
+    if(selected != null && prevSelected != null) {
+      selected.classList.add("accent-color-primary");
+      selected.classList.add("selected");
+      prevSelected.classList.remove("accent-color-primary");
+      prevSelected.classList.remove("selected");
+      this.selected = id;
+    }    
   }
 
   navigateToPage(link:string){
@@ -92,6 +106,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.opened = true;
     }
+  }
+
+  getCurrentPageLogin(): boolean {
+    return (this.router.url.indexOf('login') > -1);
   }
 
 }

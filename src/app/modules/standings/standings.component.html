@@ -5,30 +5,31 @@
   <table mat-table [dataSource]="dataSource" class="rank-table">
   
     <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <ng-container matColumnDef="user_inits">
+      <th mat-header-cell *matHeaderCellDef> Inits </th>
+      <td mat-cell *matCellDef="let element"> {{element.user_inits}} </td>
     </ng-container>
   
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <ng-container matColumnDef="wins">
+      <th mat-header-cell *matHeaderCellDef> Wins </th>
+      <td mat-cell *matCellDef="let element"> {{element.wins}} </td>
     </ng-container>
   
     <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    <ng-container matColumnDef="picks">
+      <th mat-header-cell *matHeaderCellDef> Picks </th>
+      <td mat-cell *matCellDef="let element"> {{element.picks}} </td>
     </ng-container>
   
     <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    <ng-container matColumnDef="win_pct">
+      <th mat-header-cell *matHeaderCellDef> Win Pct </th>
+      <td mat-cell *matCellDef="let element"> {{ element.win_pct | number:'1.3-3'}} </td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+    [ngClass]="{'selected':row.user_id == currentUser.user_id}"></tr>
   </table>
 </div>

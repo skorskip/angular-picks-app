@@ -3,9 +3,12 @@
 </div>
 <div class="card body-color-secondary" *ngIf=!editSelected>
     <div class="card-header">
-        <div class=card-header-text>
-            {{user.first_name}} {{user.last_name}}
-        </div>
+      <div class="init-icon accent-primary">
+        {{ user.user_inits }}
+      </div>
+      <div class=card-header-text>
+        {{user.first_name}} {{user.last_name}}
+      </div>
     </div>
     <div class="card-section">
       <div class="info-header">
@@ -39,6 +42,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="logout-container">
+      <button mat-button class="logout-button" (click)="logout()">
+        logout
+      </button>
     </div>
 </div>
 <div class="card body-color-secondary" *ngIf="editSelected">

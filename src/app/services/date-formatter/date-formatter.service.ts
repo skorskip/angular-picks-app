@@ -15,7 +15,7 @@ export class DateFormatterService {
 
       formattedDate += this.days[date.getDay()];
       formattedDate += ", " +  this.months[date.getMonth()];
-      formattedDate += " " + (date.getDate() + 1);
+      formattedDate += " " + (date.getDate());
       if(date.getMinutes() < 10) {
         formattedDate += " at " + date.getHours() + ":" + 0+ date.getMinutes();
 

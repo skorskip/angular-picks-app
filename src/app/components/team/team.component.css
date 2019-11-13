@@ -42,8 +42,3 @@
 	margin:0; 
 	text-align:center;
 }
-
-.team-card:hover {
-	border: solid 3px;
-	cursor: pointer;
-}

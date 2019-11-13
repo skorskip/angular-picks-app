@@ -80,3 +80,7 @@
 	width: 100%;
 	box-shadow: 0px 0px;
 }
+
+.selected {
+	background-color: #3e5dce54;
+}

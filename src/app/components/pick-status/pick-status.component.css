@@ -8,12 +8,17 @@
 }
 
 .pick-status-success {
-	color: lightgreen;
+	color: green;
 	background-color: white;
 }
 
 .pick-status-wrong {
 	color: rgb(228, 46, 46);
+	background-color: white;
+}
+
+.pick-status-push {
+	color: grey;
 	background-color: white;
 }
 

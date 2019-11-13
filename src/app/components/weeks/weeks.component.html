@@ -2,6 +2,12 @@
     {{title}}
 </div>
 <div *ngIf="weeksView == false">
+    <div class="toggle-picks-container">
+        <mat-button-toggle-group>
+            <mat-button-toggle class="toggle-pick" value="games" (click)="toggleView('games')" [ngClass]="{'accent-color-primary-background':view == 'games'}">games</mat-button-toggle>
+            <mat-button-toggle class="toggle-pick" value="picks" (click)="toggleView('picks')" [ngClass]="{'accent-color-primary-background':view == 'picks'}">picks</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
     <div id="week-card" class="week-card week-in-animation body-color-secondary">
         <div class="week-header" (click)="showWeeks()">
             <div class=week-title>

@@ -10,9 +10,9 @@ import { PickService } from '../../data-models/pick/pick.service';
 import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 import { User } from 'src/app/data-models/user/user';
-import { UserService } from 'src/app/data-models/user/user.service';
 import { Team } from 'src/app/data-models/team/team';
 import { TeamService } from 'src/app/data-models/team/team.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 
 @Component({
@@ -39,13 +39,13 @@ export class PicksDashboardComponent implements OnInit {
     public snackBar: MatSnackBar, 
     private router:Router,
     private weeksService:WeeksService,
-    private userService:UserService,
+    private authService:AuthenticationService,
     private teamService:TeamService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => this.initWeek(weekSeason));
     }
 
   ngOnInit() {
-    this.user = this.userService.currentUser;
+    this.user = this.authService.currentUserValue;
     this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
   }
 
@@ -135,7 +135,7 @@ export class PicksDashboardComponent implements OnInit {
 
   highlightGameResult(game: Game){
     if(game.game_status == 'COMPLETED'){
-      if(game.winning_team != 0){
+      if(game.winning_team != null){
         document.getElementById(game.winning_team + "-team-card").classList.remove("body-color-secondary");
         document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
       }
