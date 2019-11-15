@@ -43,7 +43,6 @@ export class WeeksComponent implements OnInit {
   }
 
   weekSelected(weekSelected:number) {
-    console.log(weekSelected);
     this.weekService.getWeek(this.season, weekSelected).subscribe( week => {
       this.weeksService.weekSelected(week);
       var element = document.getElementById("weeks-container");
@@ -54,9 +53,9 @@ export class WeeksComponent implements OnInit {
 
   toggleView(view) {
     if(view == "picks") {
-      this.router.navigate(['/myPicks/' + 2019 + '/' + 10]);
+      this.router.navigate(['/myPicks/' + this.season + '/' + this.number]);
     } else {
-      this.router.navigate(['/weeklyGames']);
+      this.router.navigate(['/weeklyGames/' + this.season + '/' + this.number]);
     }
   }
 }

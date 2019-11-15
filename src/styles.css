@@ -24,8 +24,8 @@ body { margin: 0;}
 .title{
     margin: 20px;
     font-size: 2em;
-	animation-name:titleSlide;
-	animation-duration: .5s;
+	/* animation-name:titleSlide;
+	animation-duration: .5s; */
 }
 
 .body-color-primary {

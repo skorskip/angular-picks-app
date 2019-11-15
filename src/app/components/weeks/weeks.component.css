@@ -8,12 +8,25 @@
 	100%{margin-top:1000px; opacity: 0;}
 }
 
-.week-cards-animation {
+/* .week-cards-animation {
 	animation-name:weekCardsAnimation;
 	animation-duration: 500ms;
 	animation-timing-function: ease-in-out;
 	animation-delay: 0s;
 }
+
+.week-in-animation {
+	animation-name:weekCardAnimationIn;
+	animation-timing-function: ease-in-out;
+	animation-duration: .75s;
+}
+
+.week-out-animation {
+	animation: forwards;
+	animation-name:weekCardAnimationOut;
+	animation-timing-function: ease-in-out;
+	animation-duration: 1s;
+} */
 
 .week-cards {
 	display: flex;
@@ -32,19 +45,6 @@
 	border-radius: 18px;
 	margin: 10px;
 	cursor: pointer;
-}
-
-.week-in-animation {
-	animation-name:weekCardAnimationIn;
-	animation-timing-function: ease-in-out;
-	animation-duration: .75s;
-}
-
-.week-out-animation {
-	animation: forwards;
-	animation-name:weekCardAnimationOut;
-	animation-timing-function: ease-in-out;
-	animation-duration: 1s;
 }
 
 .week-header {
@@ -69,9 +69,13 @@
 	justify-content: center;
 }
 
-.toggle-pick {
-	display: flex;
-	align-items: center;
-	width: 100px;
-	height: 50px;
+.toggle-button {
+    border-radius: 8px;
+	cursor: pointer;
+    width: 100px;
+}
+
+.toggle-container {
+	border-radius: 8px;
+	background-color: white;
 }

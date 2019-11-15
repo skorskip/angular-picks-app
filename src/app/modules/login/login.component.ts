@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
       if(users.length != 0) {
         this.loginSucces = true;
         this.router.navigate(['/weeklyGames']);
-        window.location.reload();
       } else {
         this.forgotten = true;
       }

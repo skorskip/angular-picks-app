@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from './data-models/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +10,8 @@ export class AppComponent implements OnInit {
   loggedIn = false;
   registerSelected = false;
 
-  constructor(
-    private router:Router,
-    private userService: UserService
-  ){}
+  constructor(){}
 
   ngOnInit() {
-    this.router.navigate(['/weeklyGames']);
   }
 }

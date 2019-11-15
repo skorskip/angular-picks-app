@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../../data-models/game/game';
@@ -13,7 +13,6 @@ import { User } from 'src/app/data-models/user/user';
 import { Team } from 'src/app/data-models/team/team';
 import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -40,13 +39,20 @@ export class PicksDashboardComponent implements OnInit {
     private router:Router,
     private weeksService:WeeksService,
     private authService:AuthenticationService,
-    private teamService:TeamService) { 
+    private teamService:TeamService,
+    private route:ActivatedRoute) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => this.initWeek(weekSeason));
     }
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
-    this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
+    var season = +this.route.snapshot.paramMap.get('season') as number;
+    var week = +this.route.snapshot.paramMap.get('week') as number;
+    if(season == 0 || week == 0) {
+      this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
+    } else {
+      this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
+    }
   }
 
   initWeek(week: Week) {

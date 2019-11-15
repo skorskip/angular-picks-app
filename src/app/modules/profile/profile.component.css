@@ -10,6 +10,7 @@
 	flex-direction: row;
     justify-content: flex-start;
     padding: 15px;
+    align-items: center;
 }
 
 .card-header-text {
@@ -69,7 +70,7 @@
     border-radius: 8px;
 	cursor: pointer;
     border: solid 1px;
-    margin:10px;
+    margin:20px;
     width: 60%;
 }
 
@@ -82,7 +83,7 @@
 .init-icon {
     border: solid 2px;
     border-radius: 50%;
-    height: 50px;
+    height: 30px;
     padding: 10px;
-    font-size: 2.5em;
+    font-size: 1.5em;
 }

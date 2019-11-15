@@ -10,12 +10,13 @@
 	70%{margin-top:50px; opacity: 0;}
 	100%{margin-top:27px; opacity: 1}
 }
-.game-card-animation {
+
+/* .game-card-animation {
 	animation-name:gameCardAnimation;
 	animation-duration: 1.5s;
 	animation-timing-function: ease;
 	animation-delay: 0s;
-}
+} */
 
 .game-card {
 	display: flex;

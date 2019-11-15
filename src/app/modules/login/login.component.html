@@ -21,7 +21,7 @@
     <mat-hint *ngIf="forgotten" (click)="forgotPassword()" class="error pointer">Forgot password?</mat-hint>
   </mat-form-field>
 
-  <button (click)="attemptLogin(username.value, password.value)" class="login-button accent-color-primary-background noSelect">
+  <button mat-button (click)="attemptLogin(username.value, password.value)" class="login-button accent-color-primary-background noSelect">
       login
   </button>
   <!-- <div class="hr-sect">

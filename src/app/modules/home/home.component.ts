@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit,Inject, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import { WeekService } from '../../data-models/week/week.service';
@@ -8,7 +8,7 @@ import { WeekService } from '../../data-models/week/week.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   events: string[] = [];
   openedSmall: boolean;
@@ -20,24 +20,27 @@ export class HomeComponent implements OnInit {
   constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){
     this.router.events.subscribe((event) => {
         if(event instanceof NavigationStart) {
-          var url = event.url;
-
-          if(url.indexOf("myPicks") != -1) {
-            this.highlight("my-picks");
-          } else if(url.indexOf("weeklyGames") != -1) {
-            this.highlight("weekly-games");
-          } else if(url.indexOf("standings") != -1) {
-            this.highlight("standings");
-          } else if(url.indexOf("profile") != -1) {
-            this.highlight("my-profile");
-          }
+          this.highlightByRoute(event.url);
         }
     });
   }
 
   ngOnInit() {}
 
+  highlightByRoute(route: string) {
+    if(route.indexOf("myPicks") != -1) {
+      this.highlight("my-picks");
+    } else if(route.indexOf("weeklyGames") != -1) {
+      this.highlight("weekly-games");
+    } else if(route.indexOf("standings") != -1) {
+      this.highlight("standings");
+    } else if(route.indexOf("profile") != -1) {
+      this.highlight("my-profile");
+    }
+  }
+
   ngAfterViewInit() {
+    this.highlightByRoute(this.router.url);
     this.resize(document.getElementById("side-nav").scrollWidth);
     var element = document.getElementById(this.selected);
 

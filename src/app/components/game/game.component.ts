@@ -15,7 +15,6 @@ export class GameComponent implements OnInit {
   @Input() showSubmitTime: boolean;
   @Input() notSelectablePicks = false;
   @Input() pickSuccess = null;
-  @Input() pickLock = false;
   @Input() teams: Team[] = [];
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
@@ -39,7 +38,7 @@ export class GameComponent implements OnInit {
 
   selectTeam(selectedTeam:Team) {
     if(this.notSelectablePicks  || (this.game.game_status != "UNPLAYED")){   
-    } else {
+    } else if(new Date(this.game.pick_submit_by_date) > new Date()){
 
       var otherTeam = this.game.home_team == selectedTeam.team_id ? this.away_team : this.home_team;
       
@@ -82,7 +81,7 @@ export class GameComponent implements OnInit {
   }
 
   gameLocked():boolean {
-    return new Date(this.game.pick_submit_by_date) > new Date()
+    return new Date(this.game.pick_submit_by_date) > new Date();
   }
 
   getGameSpread(number:number) {
