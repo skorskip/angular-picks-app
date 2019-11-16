@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     if(this.formComplete(form)) {
       var newUser = this.userService.setCurrentUser(form.firstName, form.lastName, form.username, form.email, form.password);
       if(this.editUser) {
-        this.updateUser(newUser);
+        this.updateUser(newUser, form.currentPassword);
       } else {
         this.registerUser(newUser);
       }
@@ -56,18 +56,27 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  updateUser(user) {
-    this.userService.update(user).subscribe((success) =>{
-      if(success) {
-        this.snackBar.open("update successful", '', {duration:3000});
-        this.registered.emit(success);
-      } else {
-        this.snackBar.open("update error",'', {duration:3000});
+  updateUser(user: User, currentPassword: string) {
+
+    var checkUser = this.authService.currentUserValue;
+    checkUser.password = currentPassword;
+
+    this.authService.login(checkUser).subscribe((response) => {
+      if(response.length > 0){
+
+        this.userService.update(user).subscribe((success) =>{
+          if(success) {
+            this.snackBar.open("update successful", '', {duration:3000});
+            this.registered.emit(success);
+          } else {
+            this.snackBar.open("update error",'', {duration:3000});
+          }
+        });
       }
     });
   }
 
-  registerUser(user) {
+  registerUser(user: User) {
     this.userService.register(user).subscribe((success) =>{
       if(success) {
         this.snackBar.open("register successful", '', {duration:3000});
@@ -82,13 +91,7 @@ export class RegisterComponent implements OnInit {
     if(this.editUser) {
       if(form.password != '' || form.confirmPassword != '' || form.currentPassword != '') {
         if(form.password == form.confirmPassword) {
-          if(this.user.password == form.currentPassword) {
             return true;
-          } else {
-            this.errorMessage = "current password does not match"
-            return false;
-
-          }
         } else {
           this.errorMessage = "new passwords do not match"
           return false;

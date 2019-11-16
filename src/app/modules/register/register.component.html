@@ -35,7 +35,7 @@
       
       <mat-form-field *ngIf="editUser" appearance="outline" class="input-size">
         <mat-label>Current Password</mat-label>
-        <input matInput placeholder="current password" [type]="hide ? 'password' : 'text'" formControlName="currentPassword">
+        <input matInput placeholder="current password" [type]="hide ? 'password' : 'text'" formControlName="currentPassword" required>
         <div matSuffix (click)="hide = !hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </div>

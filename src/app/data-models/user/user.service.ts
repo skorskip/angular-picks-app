@@ -44,22 +44,23 @@ export class UserService {
   }
 
   setCurrentUser(fn, ln, username, email, password) {
-    var currentUser = this.authService.currentUserValue;
-    if(fn != '') currentUser.first_name = fn;
-    if(ln != '') currentUser.last_name = ln;
-    if(username != '') currentUser.user_name = username;
-    if(email != '') currentUser.email = email;
-    if(password != '') currentUser.password = password;
-    return currentUser;
-}
+    var currentUser = JSON.parse(JSON.stringify(this.authService.currentUserValue));
 
-getStandings(season: number):Observable<UserStanding[]> {
-  let url = `${this.usersUrl}/standings/${season}`;
-  return this.http.get<UserStanding[]>(url).pipe(
-    tap(_ => console.log(`get user standings`)), 
-    catchError(this.handleError<UserStanding[]>(`get user standings`))
-  );
-}
+    if(fn != '') { currentUser.first_name = fn; }
+    if(ln != '') { currentUser.last_name = ln; }
+    if(username != '') { currentUser.user_name = username; }
+    if(email != '') { currentUser.email = email; }
+    if(password != '') { currentUser.password = password; }
+    return currentUser;
+  }
+
+  getStandings(season: number):Observable<UserStanding[]> {
+    let url = `${this.usersUrl}/standings/${season}`;
+    return this.http.get<UserStanding[]>(url).pipe(
+      tap(_ => console.log(`get user standings`)), 
+      catchError(this.handleError<UserStanding[]>(`get user standings`))
+    );
+  }
 
     // /**
   //  * Handle Http operation that failed.

@@ -13,20 +13,20 @@
 	animation-duration: 500ms;
 	animation-timing-function: ease-in-out;
 	animation-delay: 0s;
-}
+}*/
 
-.week-in-animation {
+/* .week-in-animation {
 	animation-name:weekCardAnimationIn;
 	animation-timing-function: ease-in-out;
 	animation-duration: .75s;
-}
+} */
 
 .week-out-animation {
 	animation: forwards;
 	animation-name:weekCardAnimationOut;
 	animation-timing-function: ease-in-out;
 	animation-duration: 1s;
-} */
+}
 
 .week-cards {
 	display: flex;
