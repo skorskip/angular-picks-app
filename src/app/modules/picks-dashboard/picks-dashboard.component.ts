@@ -139,7 +139,7 @@ export class PicksDashboardComponent implements OnInit {
             if(status) {
               this.pickService.clearStagedPicks();
               this.snackBar.open("picks submitted",'', {duration:3000});
-              this.router.navigate(['/myPicks/' + this.week.season + '/' + this.week.number]);
+              this.router.navigate(['/picks/' + this.week.season + '/' + this.week.number]);
             } else {
               const dialogRef = this.dialog.open(PicksErrorDialog,{width: '500px'});
             }
