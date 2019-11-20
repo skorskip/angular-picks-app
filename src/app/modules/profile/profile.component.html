@@ -1,9 +1,9 @@
-<div class="title accent-primary">
+<div class="title primary">
     Profile
 </div>
-<div class="card body-color-secondary" *ngIf=!editSelected>
+<div class="card base-background secondary" *ngIf=!editSelected>
     <div class="card-header">
-      <div class="init-icon accent-primary">
+      <div class="init-icon primary">
         {{ user.user_inits }}
       </div>
       <div class=card-header-text>
@@ -13,7 +13,7 @@
     <div class="card-section">
       <div class="info-header">
         Info
-        <button mat-button class="edit-button body-color-primary" (click)="editUser()">
+        <button mat-button class="edit-button secondary" (click)="editUser()">
           <mat-icon>
             mode_edit
           </mat-icon>
@@ -22,8 +22,8 @@
       </div>
       <div class="info-content">
         <div class="info-field">
-          <div class="icon-container accent-primary">
-            <mat-icon class="accent-primary">
+          <div class="icon-container primary">
+            <mat-icon class="primary">
               person
             </mat-icon>
           </div>
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="info-field">
-          <div class="icon-container accent-primary">
+          <div class="icon-container primary">
             <mat-icon>
               mail
             </mat-icon>
@@ -49,7 +49,7 @@
       </button>
     </div>
 </div>
-<div class="card body-color-secondary" *ngIf="editSelected">
+<div class="card base-background secondary" *ngIf="editSelected">
   <app-register
     [editUser] = "editSelected"
     (registered) = "updated($event)">

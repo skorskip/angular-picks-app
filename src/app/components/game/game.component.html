@@ -1,8 +1,8 @@
-<div class="game-card game-card-animation body-color-primary" attr.id={{game.game_id}}-game-card>
-  <div style="width: 100%" *ngIf="showSubmitTime">
+<div class="game-card secondary" attr.id={{game.game_id}}-game-card>
+  <div style="width: 100%">
     <div class="game-card-date">
-      <div class="date-text">
-        Submit by: {{submitDate}}
+      <div class="date-text primary">
+        {{ timeStatus() }}
       </div>
     </div>
   </div> 
@@ -16,7 +16,7 @@
       (click)="selectTeam(away_team)">
     </team>
     <pick-status
-      class="pick-status"
+      class="pick-status base-background"
       [pickSuccess]="pickSuccess"
       [game]="game">
     </pick-status>
@@ -29,8 +29,8 @@
       (click)="selectTeam(home_team)"
       (teamLoaded)="teamLoadedEvent($event)">
     </team>
-    <div class="game-card-spread">
-      <div class="game-card-spread-icon accent-primary">{{getGameSpread(game.home_spread)}}</div>
+    <div class="game-card-spread base-background">
+      <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
     </div>
   </div>
 </div>

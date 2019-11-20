@@ -12,4 +12,6 @@ export class Game {
 	//COMPLETED, LIVE, UNPLAYED
 	game_status: string;
 	winning_team: number;
+	current_quarter: number;
+	seconds_left_in_quarter: number;
 }

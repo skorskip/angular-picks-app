@@ -26,21 +26,21 @@ export class PickStatusComponent implements OnInit {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
       if(new Date(this.game.pick_submit_by_date) > new Date()) {
         this.open = true;
-        return "pick-status-open accent-primary";
+        return "base-background primary";
       } else {
         this.closed = true;
-        return "pick-status-close";
+        return "base-background warn";
       }
     } else {
       if(this.pickSuccess == "WIN") {
         this.correct = true;
-        return "pick-status-success";
+        return "base-background success";
       } else if (this.pickSuccess == "LOSE"){
         this.wrong = true;
-        return "pick-status-wrong";
+        return "base-background failure";
       } else {
         this.push = true;
-        return "pick-status-push";
+        return "base-background secondary";
       }
     }
   }

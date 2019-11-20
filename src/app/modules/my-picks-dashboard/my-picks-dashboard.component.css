@@ -37,11 +37,6 @@
     padding-top:25%;
 }
 
-.edit-icon-delete {
-    color: rgb(228, 46, 46);
-	background-color: white;
-}
-
 .no-picks-view {
 	font-size: 2em;
 	display: flex;

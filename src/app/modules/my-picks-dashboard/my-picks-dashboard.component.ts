@@ -83,7 +83,7 @@ export class MyPicksDashboardComponent implements OnInit {
           this.myGames = games;
           console.log(games);
           this.myGames.forEach(game => {
-            if(game.game_status == "UNPLAYED" && new Date(game.pick_submit_by_date) > new Date()) {
+            if(new Date(game.pick_submit_by_date) > new Date()) {
               this.showEditButton = true;
             } else {
               this.showEditButton = false;
@@ -152,13 +152,13 @@ export class MyPicksDashboardComponent implements OnInit {
     var team = document.getElementById(teamId + "-team-card");
     team.style.backgroundColor = "";
     team.style.color = "";
-    team.classList.add("body-color-secondary");
+    team.classList.add("base-background");
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
-    teamElement.classList.remove("body-color-secondary");
+    teamElement.classList.remove("base-background");
     teamElement.style.backgroundColor = team.primary_color;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam");
@@ -213,7 +213,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   showEdit(game: Game): boolean {
-    if(this.edit && game.game_status == "UNPLAYED" && new Date(game.pick_submit_by_date) > new Date()) {
+    if(this.edit && new Date(game.pick_submit_by_date) > new Date()) {
       return true;
     } else {
       return false;

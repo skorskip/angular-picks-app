@@ -1,35 +1,36 @@
-<div class="title accent-primary">
+<div class="title primary">
   Standings
 </div>
-<div id="standings-card" class="standings-in-animation body-color-secondary">
+<div id="standings-card" class="standings-in-animation base-background secondary">
   <table mat-table [dataSource]="dataSource" class="rank-table">
+
+    <ng-container matColumnDef="pos">
+        <th mat-header-cell *matHeaderCellDef> Pos. </th>
+        <td mat-cell *matCellDef="let element; let j = index" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{j+1}} </td>
+      </ng-container>
   
-    <!-- Position Column -->
     <ng-container matColumnDef="user_inits">
       <th mat-header-cell *matHeaderCellDef> Inits </th>
-      <td mat-cell *matCellDef="let element"> {{element.user_inits}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.user_inits}} </td>
     </ng-container>
   
-    <!-- Name Column -->
     <ng-container matColumnDef="wins">
       <th mat-header-cell *matHeaderCellDef> Wins </th>
-      <td mat-cell *matCellDef="let element"> {{element.wins}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.wins}} </td>
     </ng-container>
   
-    <!-- Weight Column -->
     <ng-container matColumnDef="picks">
       <th mat-header-cell *matHeaderCellDef> Picks </th>
-      <td mat-cell *matCellDef="let element"> {{element.picks}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.picks}} </td>
     </ng-container>
   
-    <!-- Symbol Column -->
     <ng-container matColumnDef="win_pct">
-      <th mat-header-cell *matHeaderCellDef> Win Pct </th>
-      <td mat-cell *matCellDef="let element"> {{ element.win_pct | number:'1.3-3'}} </td>
+      <th mat-header-cell *matHeaderCellDef> Win % </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{ element.win_pct | number:'1.3-3'}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-    [ngClass]="{'selected':row.user_id == currentUser.user_id}"></tr>
+    [ngClass]="{'primary-background':row.user_id == currentUser.user_id}"></tr>
   </table>
 </div>

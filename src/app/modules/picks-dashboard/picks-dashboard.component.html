@@ -1,6 +1,6 @@
 <weeks 
     *ngIf="(games.length > 0) && (teams.length > 0)"
-    [title] = "'Weekly Games'"
+    [title] = "'Games'"
     [number] = "week.number"
     [season]= "week.season"
     [view]="'games'">
@@ -15,8 +15,8 @@
         (teamLoaded) = "teamLoaded($event)">
     </game>
     <div id="submit-container">
-        <mat-icon id="submit-icon" (click)="showSubmit()">call_made</mat-icon>
-        <button mat-button id="submit-button" class="accent-color-primary" (click)="openDialog()">
+        <mat-icon id="submit-icon" class="base" (click)="showSubmit()">call_made</mat-icon>
+        <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
         submit
         </button>
     </div>

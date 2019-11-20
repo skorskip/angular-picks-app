@@ -1,15 +1,15 @@
 <weeks 
-  [title]="'My Picks'"
+  [title]="'Picks'"
   [number] = "week.number"
   [season]= "week.season"
   [view]="'picks'">
-  <button mat-button *ngIf="!edit && showEditButton" class="edit-button body-color-primary" (click)="editPicks()">
+  <button mat-button *ngIf="!edit && showEditButton" class="edit-button secondary" (click)="editPicks()">
       <mat-icon>
         mode_edit
       </mat-icon>
       edit
   </button>
-  <button mat-button *ngIf="edit && showEditButton" class="edit-button body-color-primary" (click)="submitEdits()">
+  <button mat-button *ngIf="edit && showEditButton" class="edit-button secondary" (click)="submitEdits()">
     done
   </button>
   <div *ngIf = "myGames.length == 0" class="no-picks-view">
@@ -18,18 +18,18 @@
   <ng-container *ngIf="myTeams.length > 0">
     <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
         <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div class="edit-opt body-color-primary bottom-margin" (click) = "changeTeam(myGame)">
+          <div class="edit-opt secondary bottom-margin" (click) = "changeTeam(myGame)">
               <mat-icon
               matTooltip="edit"
               matTooltipPosition="right"
               class="edit-icon-edit">mode_edit
             </mat-icon>
           </div>
-          <div class="edit-opt edit-icon-delete bottom-margin" (click) = "deletePick(myGame)">
+          <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
             <mat-icon
               matTooltip="delete"
               matTooltipPosition="right"
-              class="edit-icon-delete">clear
+              class="failure">clear
             </mat-icon>
           </div>
         </div>

@@ -1,10 +1,10 @@
 <mat-sidenav-container  
   id="side-nav" 
-  class="example-container" 
+  class="nav-container tiertary-background" 
   (window:resize)="onResize($event)" 
   *ngIf="!getCurrentPageLogin()">
   
-  <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav body-color-secondary" position="start">
+  <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav base-background secondary" position="start">
     <div class="nav-title">
       <img class="icon" src="../../../assets/icons/pickem_logo_soft.svg">
       <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
@@ -13,14 +13,14 @@
     (mouseout)="mouseout($event)">
       <nav>
         <mat-icon class="sidenav-icon">bookmark</mat-icon>
-        <a (click)="toggle(); navigateToMyPicks()">My Picks</a>
+        <a (click)="toggle(); navigateToMyPicks()">Picks</a>
       </nav>
     </div>
     <div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
     (mouseout)="mouseout($event)" >
       <nav>
         <mat-icon class="sidenav-icon">view_list</mat-icon>
-        <a (click)="toggle(); navigateToPage('weeklyGames')">Weekly Games</a>
+        <a (click)="toggle(); navigateToPage('games')">Games</a>
       </nav>
     </div>
     <div class="sidenav-opt" id="standings" (mouseover) = "mouseover($event)"
@@ -39,7 +39,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="sidenav-button-group accent-primary">
+    <div class="sidenav-button-group primary">
       <button *ngIf="largeScreen == false" mat-icon-button (click)="toggle()">
         <mat-icon class="sidenav-button">menu</mat-icon>
       </button>

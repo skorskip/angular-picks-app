@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(user).subscribe((users) => {
       if(users.length != 0) {
         this.loginSucces = true;
-        this.router.navigate(['/weeklyGames']);
+        this.router.navigate(['/games']);
         setTimeout(() => {
           window.location.reload();
         });

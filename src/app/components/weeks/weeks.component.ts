@@ -54,9 +54,9 @@ export class WeeksComponent implements OnInit {
 
   toggleView(view) {
     if(view == "picks") {
-      this.router.navigate(['/myPicks/' + this.season + '/' + this.number]);
+      this.router.navigate(['/picks/' + this.season + '/' + this.number]);
     } else {
-      this.router.navigate(['/weeklyGames/' + this.season + '/' + this.number]);
+      this.router.navigate(['/games/' + this.season + '/' + this.number]);
     }
   }
 }

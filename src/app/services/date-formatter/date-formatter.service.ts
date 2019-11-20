@@ -7,8 +7,8 @@ export class DateFormatterService {
 
   constructor() { }
 
-  months = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  months = ["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
 
   formatDate(date: Date): string {
       var formattedDate = "";

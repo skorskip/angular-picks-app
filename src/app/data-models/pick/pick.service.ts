@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Pick } from './pick';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StagedPicks } from './stagedPicks';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -65,6 +66,30 @@ export class PickService {
             tap((picks: Pick[])  => console.log(`get user picks`)),
             catchError(this.handleError<Pick[]>(`get user picks`))
         );
+    }
+
+    setStagedPicks(picks: Pick[]) {
+        var stagedPicks = this.getStagedPicks();
+
+        if( stagedPicks == null) {
+            stagedPicks = new StagedPicks();
+        }
+
+        stagedPicks.picks = picks;
+
+        localStorage.setItem('stagedPicks', JSON.stringify(stagedPicks));
+    }
+
+    clearStagedPicks() {
+        localStorage.setItem('stagedPicks', null);
+    }
+    
+    getStagedPicks(): StagedPicks {
+        var picks = new BehaviorSubject<StagedPicks>(JSON.parse(localStorage.getItem('stagedPicks')));
+        if(picks.value == null) {
+            return new StagedPicks();
+        }
+        return picks.value;
     }
 
       // /**

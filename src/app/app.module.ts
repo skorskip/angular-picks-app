@@ -15,6 +15,8 @@ import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 
+import { WeekService } from './data-models/week/week.service';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,7 @@ import { LoginModule } from './modules/login/login.module';
     ProfileModule,
     LoginModule
   ],
-  providers: [],
+  providers: [WeekService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

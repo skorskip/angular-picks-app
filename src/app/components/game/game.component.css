@@ -5,25 +5,12 @@
 	justify-content: space-around;
 }
 
-@keyframes gameCardAnimation {
-	0%{margin-top:100px;opacity:0;}
-	70%{margin-top:50px; opacity: 0;}
-	100%{margin-top:27px; opacity: 1}
-}
-
-/* .game-card-animation {
-	animation-name:gameCardAnimation;
-	animation-duration: 1.5s;
-	animation-timing-function: ease;
-	animation-delay: 0s;
-} */
-
 .game-card {
 	display: flex;
 	flex-direction: column;
 	margin: 5px;
 	margin-top: 15px;
-	margin-bottom: 50px;
+	margin-bottom: 25px;
 }
 
 .game-card-date {
@@ -61,7 +48,6 @@
     text-align: center;
 	border-radius: 50%;
 	padding: 5px;
-	background-color: white;
 }
 
 .game-card-spread-icon {
@@ -91,6 +77,5 @@
 	border-radius: 50%;
 	padding: 5px;
 	margin-top:40px;
-	background-color: white;
 }
 

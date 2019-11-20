@@ -62,10 +62,13 @@ export class PicksDashboardComponent implements OnInit {
     this.games = week.games;
     this.initTeams(week.teams);
     this.removePickedGames();
+    this.stagedPicks = this.pickService.getStagedPicks().picks;
+    console.log("picks stage::", this.stagedPicks);
   }
 
   teamLoaded(event) {
     this.highlightGameResult(event);
+    this.highlightStagedPick(event);
   }
 
   initTeams(teamIds: number[]) {
@@ -105,18 +108,24 @@ export class PicksDashboardComponent implements OnInit {
 
   stageSelectedPick(selectedPick: Pick){
     var pickAdded = false;
-    this.stagedPicks.forEach((stagedPick, i) =>{
+    
+    for(var i = 0; i < this.stagedPicks.length; i++) {
+      var stagedPick = this.stagedPicks[i];
+
       if(stagedPick.game_id == selectedPick.game_id) {
         if(stagedPick.team_id == selectedPick.team_id) {
           this.stagedPicks.splice(i, 1);
         } else this.stagedPicks.splice(i, 1, selectedPick);
         pickAdded = true;
       }
-    });
+    }
+
     if(!pickAdded){
       selectedPick.user_id = this.user.user_id;
       this.stagedPicks.push(selectedPick);
     }
+
+    this.pickService.setStagedPicks(this.stagedPicks);
   }
   
   openDialog() {
@@ -128,6 +137,7 @@ export class PicksDashboardComponent implements OnInit {
         if(result){
           this.pickService.addPicks(this.stagedPicks).subscribe(status => {
             if(status) {
+              this.pickService.clearStagedPicks();
               this.snackBar.open("picks submitted",'', {duration:3000});
               this.router.navigate(['/myPicks/' + this.week.season + '/' + this.week.number]);
             } else {
@@ -142,17 +152,52 @@ export class PicksDashboardComponent implements OnInit {
   highlightGameResult(game: Game){
     if(game.game_status == 'COMPLETED'){
       if(game.winning_team != null){
-        document.getElementById(game.winning_team + "-team-card").classList.remove("body-color-secondary");
+        document.getElementById(game.winning_team + "-team-card").classList.remove("base-background");
         document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
       }
     }
   }
 
+  highlightStagedPick(game: Game){
+    this.stagedPicks.forEach(pick =>{
+      if(pick.game_id == game.game_id){
+        this.unSelectTeam(game.away_team);
+        this.unSelectTeam(game.home_team);
+        this.highlightSelectTeam(this.getTeam(pick.team_id));
+      }
+    });
+  }
+
+  unSelectTeam(teamId:number){
+    var team = document.getElementById(teamId + "-team-card");
+    team.style.backgroundColor = "";
+    team.style.color = "";
+    team.classList.add("base-background");
+    team.classList.remove("selectedTeam");
+  }
+
+  highlightSelectTeam(team:Team){
+    var teamElement = document.getElementById(team.team_id + "-team-card");
+    teamElement.classList.remove("base-background");
+    teamElement.style.backgroundColor = team.primary_color;
+    teamElement.style.color = "white";
+    teamElement.classList.add("selectedTeam");
+  }
+
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
       return true;
-    }
-    else return false;
+    } else return false;
+  }
+
+  getTeam(id: number): Team {
+    var team
+    this.teams.forEach((teamItem) => {
+      if(id == teamItem.team_id){
+        team = teamItem;
+      }
+    })
+    return team;
   }
 
   getGame(id: number): Game {

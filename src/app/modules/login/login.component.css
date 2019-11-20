@@ -26,11 +26,6 @@
     width: 100px;
 }
 
-.login-button:hover {
-    background-color: #3e5dce;
-    color: white;
-}
-
 .login-input {
     width: 65%;
 }

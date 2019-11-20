@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeam:Team) {
-    if(this.notSelectablePicks  || (this.game.game_status != "UNPLAYED")){   
+    if(this.notSelectablePicks){
     } else if(new Date(this.game.pick_submit_by_date) > new Date()){
 
       var otherTeam = this.game.home_team == selectedTeam.team_id ? this.away_team : this.home_team;
@@ -68,16 +68,43 @@ export class GameComponent implements OnInit {
     var team = document.getElementById(selectedTeam.team_id + "-team-card");
     team.style.backgroundColor = "";
     team.style.color = selectedTeam.primary_color;
-    team.classList.add("body-color-secondary")
+    team.classList.add("base-background")
     team.classList.remove("selectedTeam");
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
-    teamElement.classList.remove("body-color-secondary");
+    teamElement.classList.remove("base-background");
     teamElement.style.background = team.primary_color;
     teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam"); 
+  }
+
+  timeStatus() {
+    if(this.game.game_status == "UNPLAYED" || this.game.game_status == null) {
+      if(this.showSubmitTime) {
+        return "Submit by: " + this.submitDate;
+      } else if(new Date(this.game.pick_submit_by_date) < new Date()){
+        return "Start time: " + this.dateFormatter.formatDate(new Date(this.game.start_time));
+      }
+    } else {
+      if(this.game.game_status == "COMPLETED") {
+        return "Final";
+      } else {
+        var minutes = String(Math.floor(this.game.seconds_left_in_quarter / 60));
+        var seconds = String(this.game.seconds_left_in_quarter % 60);
+       
+        if(parseInt(seconds) < 10) { seconds = "0" + seconds}
+
+        if(parseInt(minutes) == 0 && parseInt(seconds) == 0 && this.game.current_quarter != 2) { 
+          return "Q" + this.game.current_quarter + " - END";
+        } else if(parseInt(minutes) == 0 && parseInt(seconds) == 0 && this.game.current_quarter == 2) {
+          return "HALFTIME"
+        } else {
+          return "Q" + this.game.current_quarter + " - " + minutes + ":" + seconds;
+        }
+      }
+    }
   }
 
   gameLocked():boolean {

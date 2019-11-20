@@ -37,7 +37,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   getTeamName() {
     if(document.getElementById("body").scrollWidth > 950){
-      return this.team.team_name;
+      return this.team.abbreviation + " - " + this.team.team_name;
     } else {
       return this.team.abbreviation;
     }

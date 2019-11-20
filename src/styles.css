@@ -24,45 +24,10 @@ body { margin: 0;}
 .title{
     margin: 20px;
     font-size: 2em;
-	/* animation-name:titleSlide;
-	animation-duration: .5s; */
-}
-
-.body-color-primary {
-    color: #455564 !important;
-}
-
-.body-color-secondary {
-    background-color: white;
-    color: #455564;
-}
-
-.accent-color-primary {
-    background: #efefef;
-    color:  #3e5dce;
-}
-
-.accent-color-primary-background {
-    background: #3e5dce;
-    color: #efefef !important;
 }
 
 .highlight-border {
     border: solid 5px !important;
-}
-
-.accent-primary {
-    color:  #3e5dce;
-}
-
-.success-color {
-    background-color: lightgreen !important;
-    color:white;
-}
-
-.failure-color {
-    background-color: rgb(228, 46, 46);
-    color:white;
 }
 
 .disabled {
@@ -82,4 +47,82 @@ body { margin: 0;}
     outline: none !important;
 }
 
+/*<-------COLORS-------->*/
+
+.primary {
+    color:  #3e5dce;
+}
+
+.secondary {
+    color: #455564;
+}
+
+.tiertary {
+    color: rgb(235, 235, 235);
+}
+
+.base {
+    color: white;
+}
+
+.primary-background {
+    background-color:  #3e5dce;
+}
+
+.secondary-background {
+    background-color: #455564;
+}
+
+.tiertary-background {
+    background-color: rgb(235, 235, 235);
+}
+
+.base-background {
+    background-color: white;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: rgb(228, 46, 46);
+}
+
+.warn {
+    color: #ca7220;
+}
+
+/*<-------DARK COLORS?-------->*/
+/* .primary {
+    color:  #3ece7a;
+}
+
+.secondary {
+    color: #adbbc9;
+}
+
+.tiertary {
+    color: rgb(17, 16, 24);
+}
+
+.base {
+    color:rgb(27, 26, 37);
+}
+
+.primary-background {
+    background-color:  #3ece7a;
+}
+
+.secondary-background {
+    background-color: #adbbc9;
+}
+
+.tiertary-background {
+    background-color: rgb(17, 16, 24);
+}
+
+.base-background {
+    background-color: rgb(27, 26, 37);
+} */
 
