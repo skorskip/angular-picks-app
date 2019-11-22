@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter, AfterViewChecked } from '@angular/core';
 import { Team } from '../../data-models/team/team';
 import { DOCUMENT } from '@angular/common';
 import { timeout } from 'rxjs/operators';
+import { TeamService } from 'src/app/data-models/team/team.service';
 
 @Component({
   selector: 'team',
@@ -16,7 +17,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() gameLocked: boolean;
   @Output() teamLoaded = new EventEmitter();
 
-  constructor(@Inject(DOCUMENT) document) { }
+  constructor(
+    @Inject(DOCUMENT) document,
+    private teamService: TeamService) { }
 
   ngOnInit() {
     if(this.score == null) {
@@ -25,13 +28,14 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.teamLoaded.emit(true));
+    setTimeout(() => {
+      this.teamLoaded.emit(true);
+    });
   }
 
-  getBorderColor(id:number) {
-    var shadowColor = this.team.primary_color.substring(0, this.team.primary_color.lastIndexOf("1")) + ".7)"
+  getBorderColor(team: Team) {
     return {
-      'color' : this.team.primary_color,
+      'color' : team.primary_color,
     }
   }
 

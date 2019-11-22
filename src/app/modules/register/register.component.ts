@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     if(this.formComplete(form)) {
       var newUser = this.userService.setCurrentUser(form.firstName, form.lastName, form.username, form.email, form.password);
       if(this.editUser) {
-        this.updateUser(newUser, form.currentPassword);
+        this.updateUser(newUser);
       } else {
         this.registerUser(newUser);
       }
@@ -56,22 +56,14 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  updateUser(user: User, currentPassword: string) {
+  updateUser(user: User) {
 
-    var checkUser = this.authService.currentUserValue;
-    checkUser.password = currentPassword;
-
-    this.authService.login(checkUser).subscribe((response) => {
-      if(response.length > 0){
-
-        this.userService.update(user).subscribe((success) =>{
-          if(success) {
-            this.snackBar.open("update successful", '', {duration:3000});
-            this.registered.emit(success);
-          } else {
-            this.snackBar.open("update error",'', {duration:3000});
-          }
-        });
+    this.userService.update(user).subscribe((success) =>{
+      if(success) {
+        this.snackBar.open("update successful", '', {duration:3000});
+        this.registered.emit(success);
+      } else {
+        this.snackBar.open("update error",'', {duration:3000});
       }
     });
   }

@@ -32,17 +32,9 @@
         <input *ngIf="!editUser" matInput placeholder="Email" formControlName="email" required>
         <mat-error *ngIf="editUserForm.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
-      
-      <mat-form-field *ngIf="editUser" appearance="outline" class="input-size">
-        <mat-label>Current Password</mat-label>
-        <input matInput placeholder="current password" [type]="hide ? 'password' : 'text'" formControlName="currentPassword" required>
-        <div matSuffix (click)="hide = !hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </div>
-      </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-size">
-        <mat-label>Password</mat-label>
+        <mat-label>New Password</mat-label>
         <input *ngIf="editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password">
         <input *ngIf="!editUser" matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
         <div matSuffix (click)="hide = !hide">

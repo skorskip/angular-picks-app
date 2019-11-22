@@ -1,5 +1,5 @@
-<div attr.id="{{team.team_id}}-team-card" class="team-card primary" 
-    [ngStyle]="getBorderColor(team.team_id)">
+<div attr.id="{{team.team_id}}-team-card" class="team-card" 
+    [ngStyle]="getBorderColor(team)">
     <div *ngIf="!gameLocked">
       <p style="margin-left:5px">{{title}}</p>
       <div class="large-text-padding">{{score}}</div>

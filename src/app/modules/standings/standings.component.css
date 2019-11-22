@@ -62,7 +62,7 @@
 
 .standing-info {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     padding:20px;
 }
 

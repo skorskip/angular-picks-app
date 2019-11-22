@@ -3,6 +3,7 @@ import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
 import { DateFormatterService } from '../../services/date-formatter/date-formatter.service';
+import { TeamService } from 'src/app/data-models/team/team.service';
 @Component({
   selector: 'game',
   templateUrl: './game.component.html',
@@ -25,7 +26,8 @@ export class GameComponent implements OnInit {
   away_team = new Team();
   
   constructor(
-    private dateFormatter: DateFormatterService) { }
+    private dateFormatter: DateFormatterService,
+    private teamService: TeamService) { }
 
   ngOnInit(){
     this.setTeams(this.game, this.teams);
@@ -46,12 +48,12 @@ export class GameComponent implements OnInit {
       this.openSubmit.emit(true);
       
       if(document.getElementById(selectedTeam.team_id + "-team-card").classList.contains("selectedTeam")){
-        this.unSelectTeam(selectedTeam);
+        this.teamService.unSelectTeam(selectedTeam);
       } else if(document.getElementById(otherTeam.team_id + "-team-card").classList.contains("selectedTeam")){
-        this.unSelectTeam(otherTeam);
-        this.highlightSelectTeam(selectedTeam);
+        this.teamService.unSelectTeam(otherTeam);
+        this.teamService.highlightSelectTeam(selectedTeam);
       } else {
-        this.highlightSelectTeam(selectedTeam);
+        this.teamService.highlightSelectTeam(selectedTeam);
       }
     }
   }
@@ -64,28 +66,12 @@ export class GameComponent implements OnInit {
     return stagedPick;
   }
 
-  unSelectTeam(selectedTeam:Team){
-    var team = document.getElementById(selectedTeam.team_id + "-team-card");
-    team.style.backgroundColor = "";
-    team.style.color = selectedTeam.primary_color;
-    team.classList.add("base-background")
-    team.classList.remove("selectedTeam");
-  }
-
-  highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.team_id + "-team-card");
-    teamElement.classList.remove("base-background");
-    teamElement.style.background = team.primary_color;
-    teamElement.style.color = "white";
-    teamElement.classList.add("selectedTeam"); 
-  }
-
   timeStatus() {
     if(this.game.game_status == "UNPLAYED" || this.game.game_status == null) {
-      if(this.showSubmitTime) {
-        return "Submit by: " + this.submitDate;
-      } else if(new Date(this.game.pick_submit_by_date) < new Date()){
+      if(new Date(this.game.pick_submit_by_date) < new Date()){
         return "Start time: " + this.dateFormatter.formatDate(new Date(this.game.start_time));
+      }else if(this.showSubmitTime) {
+        return "Submit by: " + this.submitDate;
       }
     } else {
       if(this.game.game_status == "COMPLETED") {

@@ -81,7 +81,6 @@ export class MyPicksDashboardComponent implements OnInit {
         
         this.gameService.getGameByIds(gameIds).subscribe(games => {
           this.myGames = games;
-          console.log(games);
           this.myGames.forEach(game => {
             if(new Date(game.pick_submit_by_date) > new Date()) {
               this.showEditButton = true;
@@ -117,11 +116,11 @@ export class MyPicksDashboardComponent implements OnInit {
   changeTeam(game: Game) {
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
-        this.unSelectTeam(pick.team_id);
+        this.teamService.unSelectTeam(this.getTeam(pick.team_id));
         var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
         var newPick = pick;
         newPick.team_id = newTeam;
-        this.highlightSelectTeam(this.getTeam(newTeam));
+        this.teamService.highlightSelectTeam(this.getTeam(newTeam));
         this.stagedEdits.push(newPick);
       }
     });
@@ -141,27 +140,9 @@ export class MyPicksDashboardComponent implements OnInit {
   highlightSelected(game: Game){
     this.picks.forEach(pick =>{
       if(pick.game_id == game.game_id){
-        this.unSelectTeam(game.away_team);
-        this.unSelectTeam(game.home_team)
-        this.highlightSelectTeam(this.getTeam(pick.team_id));
+        this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
       }
     });
-  }
-
-  unSelectTeam(teamId:number){
-    var team = document.getElementById(teamId + "-team-card");
-    team.style.backgroundColor = "";
-    team.style.color = "";
-    team.classList.add("base-background");
-    team.classList.remove("selectedTeam");
-  }
-
-  highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.team_id + "-team-card");
-    teamElement.classList.remove("base-background");
-    teamElement.style.backgroundColor = team.primary_color;
-    teamElement.style.color = "white";
-    teamElement.classList.add("selectedTeam");
   }
 
   pickResult(game: Game):string {

@@ -36,6 +36,34 @@ export class TeamService {
     );
   }
 
+  unSelectTeam(selectedTeam:Team){
+    var team = document.getElementById(selectedTeam.team_id + "-team-card");
+    team.style.backgroundColor = "";
+    team.style.color = selectedTeam.primary_color;
+    team.classList.add("base-background")
+    team.classList.remove("selectedTeam");
+
+    // team.classList.remove('selectedTeam');
+    // team.classList.remove('secondary-background');
+    // team.classList.remove('base');
+    // team.classList.add('secondary');
+    // team.classList.add('base-background');
+  }
+
+  highlightSelectTeam(team:Team){
+    var teamElement = document.getElementById(team.team_id + "-team-card");
+    teamElement.classList.remove("base-background");
+    teamElement.style.background = team.primary_color;
+    teamElement.style.color = "white";
+    teamElement.classList.add("selectedTeam"); 
+
+    // teamElement.classList.remove('secondary');
+    // teamElement.classList.remove('base-background');
+    // teamElement.classList.add('selectedTeam');
+    // teamElement.classList.add('secondary-background');
+    // teamElement.classList.add('base');
+  }
+
   // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.

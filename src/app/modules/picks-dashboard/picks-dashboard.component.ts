@@ -63,7 +63,6 @@ export class PicksDashboardComponent implements OnInit {
     this.initTeams(week.teams);
     this.removePickedGames();
     this.stagedPicks = this.pickService.getStagedPicks().picks;
-    console.log("picks stage::", this.stagedPicks);
   }
 
   teamLoaded(event) {
@@ -161,27 +160,9 @@ export class PicksDashboardComponent implements OnInit {
   highlightStagedPick(game: Game){
     this.stagedPicks.forEach(pick =>{
       if(pick.game_id == game.game_id){
-        this.unSelectTeam(game.away_team);
-        this.unSelectTeam(game.home_team);
-        this.highlightSelectTeam(this.getTeam(pick.team_id));
+        this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
       }
     });
-  }
-
-  unSelectTeam(teamId:number){
-    var team = document.getElementById(teamId + "-team-card");
-    team.style.backgroundColor = "";
-    team.style.color = "";
-    team.classList.add("base-background");
-    team.classList.remove("selectedTeam");
-  }
-
-  highlightSelectTeam(team:Team){
-    var teamElement = document.getElementById(team.team_id + "-team-card");
-    teamElement.classList.remove("base-background");
-    teamElement.style.backgroundColor = team.primary_color;
-    teamElement.style.color = "white";
-    teamElement.classList.add("selectedTeam");
   }
 
   showSubmitTime(index: number): boolean {
