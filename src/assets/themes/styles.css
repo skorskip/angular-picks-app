@@ -1,0 +1,94 @@
+body { 
+    height: 100%; 
+    margin: 0; 
+    font-family: Helvetica Neue, sans-serif
+}
+
+@keyframes titleSlide {
+    0%{margin-top: -200px; opacity: 0;}
+    90%{margin-top:30px; opacity: .9;}
+	100%{margin-top:20px; opacity: 1}
+}
+
+@keyframes weekCardAnimationIn {
+	0%{margin-top:1000px;opacity:0;}
+	100%{margin-top:10px; opacity: 1}
+}
+
+@keyframes weekCardAnimationOut {
+	0%{margin-top:10px; opacity: 100;}
+	100%{margin-top:1000px; opacity: 0;}
+}
+
+.title{
+    margin: 20px;
+    font-size: 2em;
+}
+
+.highlight-border {
+    border: solid 5px !important;
+}
+
+.disabled {
+    opacity: .6;
+}
+
+.circle-container {
+	height: 75px;
+	width: 75px;
+	border-radius: 50%;
+	text-align: center;
+	margin-top: -30px;
+	cursor: pointer;
+}
+
+.noSelect {
+    outline: none !important;
+}
+
+/*<-------COLORS-------->*/
+
+.primary {
+    color:  #3e5dce;
+}
+
+.secondary {
+    color: #455564 !important;
+}
+
+.tiertary {
+    color: rgb(235, 235, 235) !important;
+}
+
+.base {
+    color: white !important;
+}
+
+.primary-background {
+    background-color:  #3e5dce !important;
+}
+
+.secondary-background {
+    background-color: #455564 !important;
+}
+
+.tiertary-background {
+    background-color: rgb(235, 235, 235) !important;
+}
+
+.base-background {
+    background-color: white !important;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: rgb(228, 46, 46);
+}
+
+.warn {
+    color: #ca7220;
+}
+

@@ -1,9 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-html, body { height: 100%; }
-* { font-family: Helvetica Neue, sans-serif}
-body { margin: 0;}
+body { 
+    height: 100%; 
+    margin: 0; 
+    font-family: Helvetica Neue, sans-serif
+}
 
 @keyframes titleSlide {
     0%{margin-top: -200px; opacity: 0;}
@@ -47,40 +46,6 @@ body { margin: 0;}
     outline: none !important;
 }
 
-/*<-------COLORS-------->*/
-
-.primary {
-    color:  #3e5dce;
-}
-
-.secondary {
-    color: #455564;
-}
-
-.tiertary {
-    color: rgb(235, 235, 235);
-}
-
-.base {
-    color: white;
-}
-
-.primary-background {
-    background-color:  #3e5dce;
-}
-
-.secondary-background {
-    background-color: #455564;
-}
-
-.tiertary-background {
-    background-color: rgb(235, 235, 235);
-}
-
-.base-background {
-    background-color: white;
-}
-
 .success {
     color: green;
 }
@@ -94,35 +59,34 @@ body { margin: 0;}
 }
 
 /*<-------DARK COLORS?-------->*/
-/* .primary {
+.primary {
     color:  #3ece7a;
 }
 
 .secondary {
-    color: #adbbc9;
+    color: #adbbc9 !important;
 }
 
 .tiertary {
-    color: rgb(17, 16, 24);
+    color: rgb(17, 16, 24) !important;
 }
 
 .base {
-    color:rgb(27, 26, 37);
+    color:rgb(27, 26, 37) !important;
 }
 
 .primary-background {
-    background-color:  #3ece7a;
+    background-color:  #3ece7a !important;
 }
 
 .secondary-background {
-    background-color: #adbbc9;
+    background-color: #adbbc9 !important;
 }
 
 .tiertary-background {
-    background-color: rgb(17, 16, 24);
+    background-color: rgb(17, 16, 24) !important;
 }
 
 .base-background {
-    background-color: rgb(27, 26, 37);
-} */
-
+    background-color: rgb(27, 26, 37) !important;
+}
