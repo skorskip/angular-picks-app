@@ -3,6 +3,7 @@ import { User } from 'src/app/data-models/user/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.themeService.setTheme(this.themeService.getTheme());
   }
 
   forgotUsername() {

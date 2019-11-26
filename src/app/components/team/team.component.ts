@@ -34,9 +34,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   getBorderColor(team: Team) {
-    return {
-      'color' : team.primary_color,
-    }
+    return this.teamService.initialTeamSelect(team);
   }
 
   getTeamName() {

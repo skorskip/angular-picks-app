@@ -90,3 +90,13 @@
     padding: 10px;
     font-size: 1.5em;
 }
+
+.toggle-button {
+    border-radius: 8px;
+	cursor: pointer;
+    width: 100px;
+}
+
+.toggle-container {
+	border-radius: 8px;
+}

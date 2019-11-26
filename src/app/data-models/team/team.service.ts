@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +18,8 @@ export class TeamService {
 
   constructor(
     private http: HttpClient,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) { }
 
   getTeamByIds (teamIds:number[]): Observable<Team[]> {
     const url = `${this.teamUrl}`;
@@ -38,31 +40,47 @@ export class TeamService {
 
   unSelectTeam(selectedTeam:Team){
     var team = document.getElementById(selectedTeam.team_id + "-team-card");
-    team.style.backgroundColor = "";
-    team.style.color = selectedTeam.primary_color;
+
+    if(this.themeService.getTheme() == 'light') {
+      team.style.backgroundColor = "";
+      team.style.color = selectedTeam.primary_color;
+    } else {
+      team.classList.remove('secondary-background');
+      team.classList.remove('base');
+      team.classList.add('secondary');
+    }
+
     team.classList.add("base-background")
     team.classList.remove("selectedTeam");
-
-    // team.classList.remove('selectedTeam');
-    // team.classList.remove('secondary-background');
-    // team.classList.remove('base');
-    // team.classList.add('secondary');
-    // team.classList.add('base-background');
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
+    if(this.themeService.getTheme() == 'light') {
+      teamElement.style.background = team.primary_color;
+      teamElement.style.color = "white";
+    } else {
+      teamElement.classList.remove('secondary');
+      teamElement.classList.add('secondary-background');
+      teamElement.classList.add('base');
+    }
+  
     teamElement.classList.remove("base-background");
-    teamElement.style.background = team.primary_color;
-    teamElement.style.color = "white";
     teamElement.classList.add("selectedTeam"); 
-
-    // teamElement.classList.remove('secondary');
-    // teamElement.classList.remove('base-background');
-    // teamElement.classList.add('selectedTeam');
-    // teamElement.classList.add('secondary-background');
-    // teamElement.classList.add('base');
   }
+
+  initialTeamSelect(team: Team){
+    if(this.themeService.getTheme() == 'light') {
+      return {
+        'color' : team.primary_color
+      };
+    } else {
+      return {
+        'color' : ''
+      };
+    }
+  }
+   
 
   // /**
   //  * Handle Http operation that failed.
