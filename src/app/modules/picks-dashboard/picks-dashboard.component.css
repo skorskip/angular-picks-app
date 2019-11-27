@@ -1,9 +1,8 @@
 #submit-container {
     position: fixed;
 	bottom: 10%;
-	width: 200px;
-	right: -150px;
-    background-color: rgba(0, 0, 0, 0.64);
+	width: 195px;
+	right: -160px;
     border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
 	height: 60px;
@@ -20,7 +19,7 @@
 }
 
 #submit-icon {
-	padding-top:12px;
+	padding-top:14px;
 	margin-left:4%;
 	transform: scale(1.5);
 	cursor: pointer;

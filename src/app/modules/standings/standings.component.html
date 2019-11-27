@@ -29,7 +29,7 @@
       <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{ element.win_pct | number:'1.3-3'}} </td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="base-background"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
     [ngClass]="{'primary-background':row.user_id == currentUser.user_id}"></tr>
   </table>

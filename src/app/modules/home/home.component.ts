@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   openedSmall: boolean;
   opened:boolean;
   largeScreen = false as boolean;
-  selected = "weekly-games";
+  selected;
   sideMenuType;
 
   constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   highlightByRoute(route: string) {
+    console.log(route);
     if(route.indexOf("picks") != -1) {
       this.highlight("my-picks");
     } else if(route.indexOf("games") != -1) {
@@ -71,14 +72,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     var selected = document.getElementById(id);
     var prevSelected = document.getElementById(this.selected);
 
-    if(selected != null && prevSelected != null) {
+    if(selected != null) {
       selected.classList.add("primary-background");
       selected.classList.add("base");
       selected.classList.add("selected");
+      this.selected = id;
+    }
+    if(prevSelected != null){
       prevSelected.classList.remove("primary-background");
       prevSelected.classList.remove("base");
       prevSelected.classList.remove("selected");
-      this.selected = id;
     }    
   }
 

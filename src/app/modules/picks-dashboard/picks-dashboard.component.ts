@@ -96,12 +96,11 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showSubmit() {
+    this.submitOpened = !this.submitOpened;
     if(this.submitOpened){
       document.getElementById("submit-container").style.right = "0px";
-      this.submitOpened = false;
     }else{
-      document.getElementById("submit-container").style.right = "-150px";
-      this.submitOpened = true;
+      document.getElementById("submit-container").style.right = "-160px";
     }
   }
 
