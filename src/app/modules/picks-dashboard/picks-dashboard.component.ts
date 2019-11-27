@@ -91,7 +91,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   teamClicked(opened: boolean){
-    this.submitOpened = opened;
+    this.submitOpened = false;
     this.showSubmit();
   }
 
