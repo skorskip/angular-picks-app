@@ -1,14 +1,15 @@
-import { Component, OnInit,Inject, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import { WeekService } from '../../data-models/week/week.service';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   events: string[] = [];
   openedSmall: boolean;
@@ -16,16 +17,34 @@ export class HomeComponent implements OnInit, AfterViewInit {
   largeScreen = false as boolean;
   selected;
   sideMenuType;
+  mobileQuery: MediaQueryList;
+  
+  private _mobileQueryListener: () => void;
 
-  constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){
+  constructor(
+    @Inject(DOCUMENT) document, 
+    private router:Router, 
+    private weekService:WeekService,
+    changeDetectorRef: ChangeDetectorRef, 
+    media: MediaMatcher){
+
     this.router.events.subscribe((event) => {
         if(event instanceof NavigationStart) {
           this.highlightByRoute(event.url);
         }
     });
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {}
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
 
   highlightByRoute(route: string) {
     console.log(route);
