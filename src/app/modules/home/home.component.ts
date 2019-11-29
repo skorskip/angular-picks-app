@@ -45,9 +45,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-
   highlightByRoute(route: string) {
-    console.log(route);
     if(route.indexOf("picks") != -1) {
       this.highlight("my-picks");
     } else if(route.indexOf("games") != -1) {
