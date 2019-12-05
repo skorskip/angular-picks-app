@@ -1,12 +1,12 @@
 <div attr.id="{{team.team_id}}-team-card" class="team-card" 
     [ngStyle]="getBorderColor(team)">
     <div *ngIf="!gameLocked">
-      <p style="margin-left:5px">{{title}}</p>
+      <p class="location">{{title | titlecase}}</p>
       <div class="large-text-padding">{{score}}</div>
       <div class="small-text-middle">{{getTeamName()}}</div>
     </div>
     <div *ngIf="gameLocked">
-      <p style="margin-left:5px">{{title}}</p>
+      <p class="location">{{title | titlecase}}</p>
       <p class="large-text">{{getTeamName()}}</p>
     </div>
 </div>

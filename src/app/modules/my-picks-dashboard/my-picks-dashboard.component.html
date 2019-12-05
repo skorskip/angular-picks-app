@@ -3,7 +3,7 @@
   [number] = "week.number"
   [season]= "week.season"
   [view]="'picks'">
-  <button mat-button *ngIf="!edit && showEditButton" class="edit-button secondary" (click)="editPicks()">
+  <button mat-button *ngIf="!edit && showEditButton && myGames.length != 0" class="edit-button secondary" (click)="editPicks()">
       <mat-icon>
         mode_edit
       </mat-icon>

@@ -1,31 +1,49 @@
-import { Component, OnInit,Inject, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import { WeekService } from '../../data-models/week/week.service';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   events: string[] = [];
   openedSmall: boolean;
   opened:boolean;
   largeScreen = false as boolean;
-  selected = "weekly-games";
+  selected;
   sideMenuType;
+  mobileQuery: MediaQueryList;
+  
+  private _mobileQueryListener: () => void;
 
-  constructor(@Inject(DOCUMENT) document, private router:Router, private weekService:WeekService){
+  constructor(
+    @Inject(DOCUMENT) document, 
+    private router:Router, 
+    private weekService:WeekService,
+    changeDetectorRef: ChangeDetectorRef, 
+    media: MediaMatcher){
+
     this.router.events.subscribe((event) => {
         if(event instanceof NavigationStart) {
           this.highlightByRoute(event.url);
         }
     });
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {}
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
 
   highlightByRoute(route: string) {
     if(route.indexOf("picks") != -1) {
@@ -71,14 +89,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     var selected = document.getElementById(id);
     var prevSelected = document.getElementById(this.selected);
 
-    if(selected != null && prevSelected != null) {
+    if(selected != null) {
       selected.classList.add("primary-background");
       selected.classList.add("base");
       selected.classList.add("selected");
+      this.selected = id;
+    }
+    if(prevSelected != null){
       prevSelected.classList.remove("primary-background");
       prevSelected.classList.remove("base");
       prevSelected.classList.remove("selected");
-      this.selected = id;
     }    
   }
 

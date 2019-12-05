@@ -1,52 +1,65 @@
-<mat-sidenav-container  
-  id="side-nav" 
-  class="nav-container tiertary-background" 
-  (window:resize)="onResize($event)" 
+<div class="home-container" 
+  [class.mobile-view]="mobileQuery.matches"
   *ngIf="!getCurrentPageLogin()">
   
-  <mat-sidenav #sidenav mode="{{sideMenuType}}" [(opened)]="opened" class="sidenav base-background secondary" position="start">
-    <div class="nav-title">
-      <img class="icon" src="../../../assets/icons/pickem_logo_soft.svg">
-      <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
+  <mat-sidenav-container  
+    id="side-nav" 
+    class="nav-container tiertary-background" 
+    (window:resize)="onResize($event)">
+    
+    <mat-sidenav 
+      #sidenav 
+      [fixedInViewport]="mobileQuery.matches" 
+      mode="{{sideMenuType}}" 
+      [(opened)]="opened"
+      class="sidenav base-background secondary" 
+      position="start">
+      
+      <div class="nav-title">
+        <img class="icon" src="../../../assets/icons/pickem_logo_soft.svg">
+        <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
+      </div>
+      <div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
+      (mouseout)="mouseout($event)">
+        <nav>
+          <mat-icon class="sidenav-icon">touch_app</mat-icon>
+          <a (click)="toggle(); navigateToMyPicks()">Picks</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
+      (mouseout)="mouseout($event)" >
+        <nav>
+          <mat-icon class="sidenav-icon">sports_football</mat-icon>
+          <a (click)="toggle(); navigateToPage('games')">Games</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt" id="standings" (mouseover) = "mouseover($event)"
+      (mouseout)="mouseout($event)" >
+        <nav>
+          <mat-icon class="sidenav-icon">view_list</mat-icon>
+          <a (click)="toggle(); navigateToPage('standings')">Standings</a>
+        </nav>
+      </div>
+      <div class="sidenav-opt" id="my-profile" (mouseover) = "mouseover($event)"
+      (mouseout)="mouseout($event)" >
+        <nav>
+          <mat-icon class="sidenav-icon">person</mat-icon>
+          <a (click)="toggle(); navigateToPage('profile')">Profile</a>
+        </nav>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="sidenav-button-group primary">
+        <button *ngIf="largeScreen == false" mat-icon-button (click)="toggle()">
+          <mat-icon class="sidenav-button">menu</mat-icon>
+        </button>
     </div>
-    <div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
-    (mouseout)="mouseout($event)">
-      <nav>
-        <mat-icon class="sidenav-icon">bookmark</mat-icon>
-        <a (click)="toggle(); navigateToMyPicks()">Picks</a>
-      </nav>
-    </div>
-    <div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
-    (mouseout)="mouseout($event)" >
-      <nav>
-        <mat-icon class="sidenav-icon">view_list</mat-icon>
-        <a (click)="toggle(); navigateToPage('games')">Games</a>
-      </nav>
-    </div>
-    <div class="sidenav-opt" id="standings" (mouseover) = "mouseover($event)"
-    (mouseout)="mouseout($event)" >
-      <nav>
-        <mat-icon class="sidenav-icon">public</mat-icon>
-        <a (click)="toggle(); navigateToPage('standings')">Standings</a>
-      </nav>
-    </div>
-    <div class="sidenav-opt" id="my-profile" (mouseover) = "mouseover($event)"
-    (mouseout)="mouseout($event)" >
-      <nav>
-        <mat-icon class="sidenav-icon">person</mat-icon>
-        <a (click)="toggle(); navigateToPage('profile')">Profile</a>
-      </nav>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="sidenav-button-group primary">
-      <button *ngIf="largeScreen == false" mat-icon-button (click)="toggle()">
-        <mat-icon class="sidenav-button">menu</mat-icon>
-      </button>
-  </div>
-    <div>
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-<router-outlet *ngIf="getCurrentPageLogin()"></router-outlet>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<div class="home-container-login">
+  <router-outlet *ngIf="getCurrentPageLogin()"></router-outlet>
+</div>

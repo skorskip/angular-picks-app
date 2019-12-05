@@ -11,7 +11,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
   styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit {
-  displayedColumns: string[] = ['pos', 'user_inits', 'wins', 'picks', 'win_pct'];
+  displayedColumns: string[] = ['ranking', 'user_inits', 'wins', 'picks', 'win_pct'];
   dataSource = [] as UserStanding[];
   currentUser = new User();
   constructor(
