@@ -58,6 +58,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   initWeek(season, week) {
     this.myTeams = [];
+    this.myGames = [];
     this.week.number = week;
     this.week.season = season;
     this.getPicksByWeek(season, week);

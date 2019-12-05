@@ -14,8 +14,10 @@
         (stageSelectedPick) = "stageSelectedPick($event)"
         (teamLoaded) = "teamLoaded($event)">
     </game>
-    <div id="submit-container">
-        <mat-icon id="submit-icon" class="base" (click)="showSubmit()">call_made</mat-icon>
+    <div id="submit-container" class="secondary-background" (click)="showSubmit()">
+        <mat-icon id="submit-icon" class="base" *ngIf="!submitOpened">chevron_left</mat-icon>
+        <mat-icon id="submit-icon" class="base" *ngIf="submitOpened">chevron_right</mat-icon>
+
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
         submit
         </button>

@@ -1,4 +1,4 @@
-.nav-container {
+.home-container {
 	display: flex;
 	flex-direction: column;
 	position: absolute;
@@ -6,6 +6,24 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+.home-container-login {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 150px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.nav-container {
+	flex: 1;
+}
+
+.mobile-view .nav-container  {
+	flex: 1 0 auto;
 }
 
 .background-card{
