@@ -11,6 +11,9 @@
 	margin: 5px;
 	margin-top: 15px;
 	margin-bottom: 25px;
+	border-radius: 18px;
+	margin: 10px;
+	cursor: pointer;
 }
 
 .game-card-date {
@@ -79,3 +82,21 @@
 	margin-top:40px;
 }
 
+.picks-data-container {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 10px;
+	border-radius: 9px;
+}
+
+.pick-data {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: scale(1.1);
+}
+
+.pick-data-icon {
+	padding: 5px;
+}

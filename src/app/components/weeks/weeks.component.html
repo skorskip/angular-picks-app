@@ -8,8 +8,8 @@
             <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">picks</button>
         </div>
     </div>
-    <div id="week-card" class="week-card week-in-animation base-background secondary">
-        <div class="week-header" (click)="showWeeks()">
+    <div id="week-card">
+        <div class="week-header base-background secondary" (click)="showWeeks()">
             <div class=week-title>
                 Week {{number}}
             </div>

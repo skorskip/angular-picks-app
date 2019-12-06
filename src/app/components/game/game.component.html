@@ -1,8 +1,15 @@
-<div class="game-card secondary" attr.id={{game.game_id}}-game-card>
+<div style="width: 100%">
+  <div class="game-card-date">
+    <div class="date-text primary">
+      {{ timeStatus() }}
+    </div>
+  </div>
+</div> 
+<div class="game-card base-background secondary" attr.id={{game.game_id}}-game-card>
   <div style="width: 100%">
     <div class="game-card-date">
       <div class="date-text primary">
-        {{ timeStatus() }}
+        <!-- {{ timeStatus() }} -->
       </div>
     </div>
   </div> 
@@ -31,6 +38,24 @@
     </team>
     <div class="game-card-spread base-background">
       <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
+    </div>
+  </div>
+  <div class="picks-data-container primary">
+    <div class="pick-data">
+      <mat-icon class="pick-data-icon">
+        people_alt
+      </mat-icon>
+      <div class="pick-data-icon">
+        10
+      </div>
+    </div>
+    <div class="pick-data">
+      <mat-icon class="pick-data-icon">
+        people_alt
+      </mat-icon>
+      <div class="pick-data-icon">
+        6
+      </div>
     </div>
   </div>
 </div>
