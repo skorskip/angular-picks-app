@@ -158,7 +158,7 @@ export class PicksDashboardComponent implements OnInit {
 
   highlightStagedPick(game: Game){
     this.stagedPicks.forEach(pick =>{
-      if(pick.game_id == game.game_id){
+      if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
         this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
       }
     });
