@@ -28,7 +28,7 @@ export class WeeksComponent implements OnInit {
     var tempWeeks = [];
     this.weekService.getCurrentWeek().subscribe( currentWeek => {
       this.season = currentWeek.season;
-      for(var i = 1; i <= currentWeek.number; i++) {
+      for(var i = 1; i <= currentWeek.week; i++) {
         var week = {} as any;
         week.number = i;
         tempWeeks.push(week);

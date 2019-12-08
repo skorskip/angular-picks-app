@@ -1,7 +1,7 @@
-<div style="width: 100%">
+<div style="width: 100%" *ngIf="submitStatus()">
   <div class="game-card-date">
     <div class="date-text primary">
-      {{ timeStatus() }}
+      Submit by: {{ submitDate }}
     </div>
   </div>
 </div> 
@@ -9,7 +9,7 @@
   <div style="width: 100%">
     <div class="game-card-date">
       <div class="date-text primary">
-        <!-- {{ timeStatus() }} -->
+          {{ timeStatus() }}
       </div>
     </div>
   </div> 
@@ -40,22 +40,9 @@
       <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
     </div>
   </div>
-  <div class="picks-data-container primary">
-    <div class="pick-data">
-      <mat-icon class="pick-data-icon">
-        people_alt
-      </mat-icon>
-      <div class="pick-data-icon">
-        10
-      </div>
-    </div>
-    <div class="pick-data">
-      <mat-icon class="pick-data-icon">
-        people_alt
-      </mat-icon>
-      <div class="pick-data-icon">
-        6
-      </div>
-    </div>
+  <users-pick-data *ngIf="showPicksData()"
+    [game]="game">
+  </users-pick-data>
+  <div style="padding: 10px" *ngIf="!showPicksData()">
   </div>
 </div>

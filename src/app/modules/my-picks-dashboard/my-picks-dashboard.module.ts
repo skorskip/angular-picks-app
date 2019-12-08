@@ -13,6 +13,9 @@ import { MyPicksDashboardComponent } from '../my-picks-dashboard/my-picks-dashbo
   ],
   declarations: [
     MyPicksDashboardComponent
+  ],
+  exports: [
+    MyPicksDashboardComponent
   ]
 })
 export class MyPicksDashboardModule { }

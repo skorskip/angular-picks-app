@@ -1,7 +1,7 @@
 <div class="title primary">
   Standings
 </div>
-<div id="standings-card" class="standings-in-animation base-background secondary">
+<div id="standings-card" class="standings-in-animation base-background secondary" *ngIf="!showUserPicks">
   <table mat-table [dataSource]="dataSource" class="rank-table">
 
     <ng-container matColumnDef="ranking">
@@ -31,6 +31,9 @@
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="base-background"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-    [ngClass]="{'primary-background':row.user_id == currentUser.user_id}"></tr>
+    [ngClass]="{'primary-background':row.user_id == currentUser.user_id}" (click)="getUserPicks(row)"></tr>
   </table>
+</div>
+<div *ngIf="showUserPicks">
+  <app-my-picks-dashboard></app-my-picks-dashboard>
 </div>

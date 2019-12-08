@@ -1,0 +1,32 @@
+<div class="picks-data-container primary" (click)="picksDataClick()">
+    <div class="picks-data-overview" *ngIf="!showPickers">
+        <div class="pick-data" name="away">
+            <mat-icon class="pick-data-icon">
+                people_alt
+            </mat-icon>
+            <div class="pick-data-icon">
+                {{ awayPicks.length }}
+            </div>
+        </div>
+        <div class="pick-data" name="home">
+            <mat-icon class="pick-data-icon">
+                people_alt
+            </mat-icon>
+            <div class="pick-data-icon">
+                {{ homePicks.length }}
+            </div>
+        </div>
+    </div>
+    <div class="picks-data-users" *ngIf="showPickers">
+        <div class="users-column">
+            <div class="user-item" *ngFor="let pick of awayPicks">
+                {{ pick.user_inits }}
+            </div>
+        </div>
+        <div class="users-column">
+            <div class="user-item" *ngFor="let pick of homePicks">
+                {{ pick.user_inits }}
+            </div>
+        </div>
+    </div>
+</div>

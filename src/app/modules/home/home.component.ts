@@ -106,12 +106,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/'+link]);
   }
 
-  navigateToMyPicks() {
-    this.weekService.getCurrentWeek().subscribe( week => {
-      this.router.navigate(['/picks/' + week.season + '/' + week.number]);
-    });
-  }
-
   mouseover(event:any){
     var element  = document.getElementById(event.path[2].id);
     if(element != null){

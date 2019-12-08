@@ -49,7 +49,13 @@ export class PicksDashboardComponent implements OnInit {
     var season = +this.route.snapshot.paramMap.get('season') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
     if(season == 0 || week == 0) {
-      this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
+      this.weekService.getCurrentWeek().subscribe(currentWeek => {
+        season = currentWeek.season;
+        week = currentWeek.week;
+
+        this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
+
+      });
     } else {
       this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
     }

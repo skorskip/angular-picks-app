@@ -1,0 +1,37 @@
+.picks-data-container {
+	margin: 10px;
+	border-radius: 9px;
+}
+
+.pick-data {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: scale(1.1);
+}
+
+.pick-data-icon {
+	padding: 5px;
+}
+
+.picks-data-overview {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.picks-data-users {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row
+}
+
+.users-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.user-item {
+	padding: 5px;
+	font-size: 1.2em;
+}

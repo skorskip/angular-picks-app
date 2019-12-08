@@ -24,6 +24,7 @@ export class GameComponent implements OnInit {
   submitDate = "";
   home_team = new Team();
   away_team = new Team();
+  showPickers = false;
   
   constructor(
     private dateFormatter: DateFormatterService,
@@ -39,8 +40,7 @@ export class GameComponent implements OnInit {
   }
 
   selectTeam(selectedTeam:Team) {
-    if(this.notSelectablePicks){
-    } else if(new Date(this.game.pick_submit_by_date) > new Date()){
+    if(!this.notSelectablePicks && new Date(this.game.pick_submit_by_date) > new Date()){
 
       var otherTeam = this.game.home_team == selectedTeam.team_id ? this.away_team : this.home_team;
       
@@ -66,12 +66,18 @@ export class GameComponent implements OnInit {
     return stagedPick;
   }
 
+  submitStatus() {
+    return (this.game.game_status == "UNPLAYED" || this.game.game_status == null) && this.showSubmitTime;
+  }
+
+  showPicksData() {
+    return new Date(this.game.pick_submit_by_date) < new Date();
+  }
+
   timeStatus() {
     if(this.game.game_status == "UNPLAYED" || this.game.game_status == null) {
       if(new Date(this.game.pick_submit_by_date) < new Date()){
         return "Start time: " + this.dateFormatter.formatDate(new Date(this.game.start_time));
-      }else if(this.showSubmitTime) {
-        return "Submit by: " + this.submitDate;
       }
     } else {
       if(this.game.game_status == "COMPLETED") {
@@ -117,6 +123,10 @@ export class GameComponent implements OnInit {
         this.away_team = teams[i];
       } 
     }
+  }
+
+  picksDataClick(){
+    this.showPickers = !this.showPickers;
   }
 }
 

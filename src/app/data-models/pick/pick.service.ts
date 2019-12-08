@@ -6,6 +6,7 @@ import { Pick } from './pick';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StagedPicks } from './stagedPicks';
+import { PickData } from './pick-data';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -49,6 +50,14 @@ export class PickService {
                 return response == 'SUCCESS';
             }),
             catchError(this.handleError<boolean>(`updated picks`))
+        );
+    }
+
+    getPicksByGame(gameId:number): Observable<PickData[]> {
+        const url = `${this.picksUrl}/game/${gameId}`;
+        return this.http.get(url, httpOptions).pipe(
+            tap((picks: PickData[]) => console.log(`get picks by game`)),
+            catchError(this.handleError<PickData[]>(`get picks by game`))
         );
     }
 
