@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
 import { GameService } from '../../data-models/game/game.service';
 import { TeamService } from '../../data-models/team/team.service';
@@ -30,9 +30,11 @@ export class MyPicksDashboardComponent implements OnInit {
   weeksView = false;
   pickSuccess = null;
   subscription: Subscription;
-  user = new User();
+  userId = 0;
   stagedEdits = [] as Pick[];
   showEditButton = true;
+  toggleType = "picks"
+  @Input() otherUser = null;
 
   constructor(
     private pickService: PickService, 
@@ -45,14 +47,19 @@ export class MyPicksDashboardComponent implements OnInit {
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.router.navigate(['/picks/' + week.season + '/' + week.number]);
           this.initWeek(week.season, week.number)
         }
       )
     }
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
+    if(this.otherUser == null) {
+      this.userId = this.authService.currentUserValue.user_id;
+    } else {
+      this.userId = this.otherUser;
+      this.toggleType = "none";
+    }
+
     var season = +this.route.snapshot.paramMap.get('season') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
     if(season == 0 || week == 0) {
@@ -79,7 +86,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.pickService.getPicksByWeek(this.user.user_id, season, week).subscribe( picks => {
+    this.pickService.getPicksByWeek(this.userId, season, week).subscribe( picks => {
       this.picks = picks;
       if(this.picks.length != 0){
     
@@ -91,9 +98,13 @@ export class MyPicksDashboardComponent implements OnInit {
         });
         
         this.gameService.getGameByIds(gameIds).subscribe(games => {
-          this.myGames = games;
-          this.myGames.forEach(game => {
+          
+          games.forEach((game,index) => {
             if(new Date(game.pick_submit_by_date) > new Date()) {
+              if(this.otherUser != null){
+                games.slice(index, 1);
+              }
+
               this.showEditButton = true;
             } else {
               this.showEditButton = false;
@@ -104,6 +115,8 @@ export class MyPicksDashboardComponent implements OnInit {
           this.teamService.getTeamByIds(teamIds).subscribe(
             teams => this.myTeams = teams
           );
+
+          this.myGames = games;
         });
       }
     });
@@ -145,7 +158,6 @@ export class MyPicksDashboardComponent implements OnInit {
       });
     }
     this.editPicks();
-
   }
 
   highlightSelected(game: Game){

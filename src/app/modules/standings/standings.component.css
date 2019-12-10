@@ -85,3 +85,27 @@
 .selected {
 	opacity: 10%;
 }
+
+.pick-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 18px;
+	margin: 10px;
+	cursor: pointer;
+}
+
+.pick-title {
+	font-size:1.5em;
+    margin: 15px;
+}
+
+.week-arrow-icon {
+	transform: scale(2);
+	margin:20px;
+}
+
+.row-arrow-icon {
+	transform: scale(1);
+}

@@ -4,6 +4,8 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { WeeksService } from 'src/app/components/weeks/weeks.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-standings',
@@ -11,15 +13,16 @@ import { WeekService } from 'src/app/data-models/week/week.service';
   styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit {
-  displayedColumns: string[] = ['ranking', 'user_inits', 'wins', 'picks', 'win_pct'];
+  displayedColumns: string[] = ['ranking', 'user_inits', 'wins', 'picks', 'win_pct', 'arrow'];
   dataSource = [] as UserStanding[];
   currentUser = new User();
   showUserPicks = false;
+  otherUser = new UserStanding();
 
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
-    private weekService: WeekService
+    private weekService: WeekService,
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,10 @@ export class StandingsComponent implements OnInit {
 
   getUserPicks(row: UserStanding) {
     this.showUserPicks = true;
+    this.otherUser = row;
+  }
 
+  back() {
+    this.showUserPicks = false;
   }
 }

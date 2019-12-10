@@ -16,13 +16,20 @@ export class WeeksComponent implements OnInit {
   @Input() season =0;
   weeksView = false;
   weeks = [] as number[];
+  hideTitle = false;
+  hideToggle = false;
 
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
     private router:Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.view == "none") {
+      this.hideTitle = true;
+      this.hideToggle = true;
+    }
+  }
 
   showWeeks() {
     var tempWeeks = [];

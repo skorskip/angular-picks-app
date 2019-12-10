@@ -2,7 +2,7 @@
   [title]="'Picks'"
   [number] = "week.number"
   [season]= "week.season"
-  [view]="'picks'">
+  [view]="toggleType">
   <button mat-button *ngIf="!edit && showEditButton && myGames.length != 0" class="edit-button base-background secondary" (click)="editPicks()">
       <mat-icon>
         mode_edit

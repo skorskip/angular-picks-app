@@ -28,6 +28,15 @@
       <th mat-header-cell *matHeaderCellDef> Win % </th>
       <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{ element.win_pct | number:'1.3-3'}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="arrow">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> 
+          <mat-icon class="row-arrow-icon">
+            keyboard_arrow_right
+          </mat-icon> 
+        </td>
+      </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="base-background"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
@@ -35,5 +44,14 @@
   </table>
 </div>
 <div *ngIf="showUserPicks">
-  <app-my-picks-dashboard></app-my-picks-dashboard>
+  <div class="pick-header base-background secondary" (click)="back()">
+      <mat-icon class="week-arrow-icon">
+          keyboard_arrow_left
+      </mat-icon>
+      <div class=pick-title>
+          {{otherUser.first_name}} {{otherUser.last_name}}
+      </div>
+  </div>
+  <app-my-picks-dashboard
+  [otherUser]="otherUser.user_id"></app-my-picks-dashboard>
 </div>
