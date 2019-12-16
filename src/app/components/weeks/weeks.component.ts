@@ -41,12 +41,7 @@ export class WeeksComponent implements OnInit {
         tempWeeks.push(week);
       }
       this.weeks = tempWeeks.reverse();
-      var element = document.getElementById("week-card");
-      element.className = "week-out-animation";
-
-      setTimeout(()=>{
-        this.weeksView = true; 
-      },500);
+      this.weeksView = true;
     });
   }
 

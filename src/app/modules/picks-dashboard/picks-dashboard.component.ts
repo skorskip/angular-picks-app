@@ -83,7 +83,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   removePickedGames() {
-    this.pickService.getPicksByWeek(this.user.user_id, this.week.season, this.week.number).subscribe(
+    this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe(
       picks => {
         picks.forEach(pick => {
           this.games.forEach((game, i) => {

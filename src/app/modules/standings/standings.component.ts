@@ -4,8 +4,6 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
-import { WeeksService } from 'src/app/components/weeks/weeks.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-standings',

@@ -30,7 +30,7 @@ export class MyPicksDashboardComponent implements OnInit {
   weeksView = false;
   pickSuccess = null;
   subscription: Subscription;
-  userId = 0;
+  user = new User();
   stagedEdits = [] as Pick[];
   showEditButton = true;
   toggleType = "picks"
@@ -53,10 +53,10 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+
     if(this.otherUser == null) {
-      this.userId = this.authService.currentUserValue.user_id;
+      this.user= this.authService.currentUserValue;
     } else {
-      this.userId = this.otherUser;
       this.toggleType = "none";
     }
 
@@ -86,40 +86,47 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.pickService.getPicksByWeek(this.userId, season, week).subscribe( picks => {
-      this.picks = picks;
-      if(this.picks.length != 0){
-    
-        var gameIds: number[] = [];
-        var teamIds: number[] = [];
-        
-        this.picks.forEach(pick => {
-          gameIds.push(pick.game_id);
-        });
-        
-        this.gameService.getGameByIds(gameIds).subscribe(games => {
-          
-          games.forEach((game,index) => {
-            if(new Date(game.pick_submit_by_date) > new Date()) {
-              if(this.otherUser != null){
-                games.slice(index, 1);
-              }
+    if(this.otherUser != null) {
+      this.pickService.getUsersPicksByWeek(this.otherUser, season, week).subscribe( picks => {  
+        this.populateGamesTeams(picks);
+      });
+    } else {
+      this.pickService.getPicksByWeek(this.user, season, week).subscribe( picks => {  
+        this.populateGamesTeams(picks);
+      });
+    }
+  }
 
-              this.showEditButton = true;
-            } else {
-              this.showEditButton = false;
-            }
-            teamIds.push(game.home_team);
-            teamIds.push(game.away_team);
-          })
-          this.teamService.getTeamByIds(teamIds).subscribe(
-            teams => this.myTeams = teams
-          );
+  populateGamesTeams(picks: Pick[]){
+    this.picks = picks;
+    if(this.picks.length != 0){
+  
+      var gameIds: number[] = [];
+      var teamIds: number[] = [];
+      
+      this.picks.forEach(pick => {
+        gameIds.push(pick.game_id);
+      });
+      
+      this.gameService.getGameByIds(gameIds).subscribe(games => {
+        
+        games.forEach((game) => {
+          if(new Date(game.pick_submit_by_date) > new Date()) {
+            this.showEditButton = true;
+          } else {
+            this.showEditButton = false;
+          }
+          teamIds.push(game.home_team);
+          teamIds.push(game.away_team);
+        })
+        this.teamService.getTeamByIds(teamIds).subscribe(
+          teams => this.myTeams = teams
+        );
 
-          this.myGames = games;
-        });
-      }
-    });
+        this.myGames = games;
+      });
+    }
+
   }
 
   editPicks() {
