@@ -20,12 +20,12 @@
     <div class="picks-data-users" *ngIf="showPickers">
         <div class="users-column">
             <div class="user-item" *ngFor="let pick of awayPicks">
-                {{ pick.user_inits }}
+                {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
             </div>
         </div>
         <div class="users-column">
             <div class="user-item" *ngFor="let pick of homePicks">
-                {{ pick.user_inits }}
+                {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
             </div>
         </div>
     </div>
