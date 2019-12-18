@@ -11,9 +11,8 @@
 
 .edit-button {
     border-radius: 8px;
-    margin: 10px;
+    margin-left: 10px;
 	cursor: pointer;
-    border: solid 1px;
 }
 
 .game-item {

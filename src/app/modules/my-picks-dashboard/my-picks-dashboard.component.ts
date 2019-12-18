@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
 import { GameService } from '../../data-models/game/game.service';
 import { TeamService } from '../../data-models/team/team.service';
@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { WeekService } from 'src/app/data-models/week/week.service';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -32,28 +33,44 @@ export class MyPicksDashboardComponent implements OnInit {
   user = new User();
   stagedEdits = [] as Pick[];
   showEditButton = true;
+  toggleType = "picks"
+  @Input() otherUser = null;
 
   constructor(
     private pickService: PickService, 
     private gameService: GameService, 
     private teamService: TeamService, 
     private weeksService: WeeksService,
+    private weekService: WeekService,
     private route:ActivatedRoute,
     private router:Router,
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.router.navigate(['/myPicks/' + week.season + '/' + week.number]);
           this.initWeek(week.season, week.number)
         }
       )
     }
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
-    const season = +this.route.snapshot.paramMap.get('season') as number;
-    const week = +this.route.snapshot.paramMap.get('week') as number;
-    this.initWeek(season, week);
+
+    if(this.otherUser == null) {
+      this.user= this.authService.currentUserValue;
+    } else {
+      this.toggleType = "none";
+    }
+
+    var season = +this.route.snapshot.paramMap.get('season') as number;
+    var week = +this.route.snapshot.paramMap.get('week') as number;
+    if(season == 0 || week == 0) {
+      this.weekService.getCurrentWeek().subscribe(currentWeek => {
+        season = currentWeek.season;
+        week = currentWeek.week;
+        this.initWeek(season, week);
+      });
+    } else {
+      this.initWeek(season, week);
+    }
   }
 
   initWeek(season, week) {
@@ -69,34 +86,47 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getPicksByWeek(season: number, week: number) {
-    this.pickService.getPicksByWeek(this.user.user_id, season, week).subscribe( picks => {
-      this.picks = picks;
-      if(this.picks.length != 0){
-    
-        var gameIds: number[] = [];
-        var teamIds: number[] = [];
+    if(this.otherUser != null) {
+      this.pickService.getUsersPicksByWeek(this.otherUser, season, week).subscribe( picks => {  
+        this.populateGamesTeams(picks);
+      });
+    } else {
+      this.pickService.getPicksByWeek(this.user, season, week).subscribe( picks => {  
+        this.populateGamesTeams(picks);
+      });
+    }
+  }
+
+  populateGamesTeams(picks: Pick[]){
+    this.picks = picks;
+    if(this.picks.length != 0){
+  
+      var gameIds: number[] = [];
+      var teamIds: number[] = [];
+      
+      this.picks.forEach(pick => {
+        gameIds.push(pick.game_id);
+      });
+      
+      this.gameService.getGameByIds(gameIds).subscribe(games => {
         
-        this.picks.forEach(pick => {
-          gameIds.push(pick.game_id);
-        });
-        
-        this.gameService.getGameByIds(gameIds).subscribe(games => {
-          this.myGames = games;
-          this.myGames.forEach(game => {
-            if(new Date(game.pick_submit_by_date) > new Date()) {
-              this.showEditButton = true;
-            } else {
-              this.showEditButton = false;
-            }
-            teamIds.push(game.home_team);
-            teamIds.push(game.away_team);
-          })
-          this.teamService.getTeamByIds(teamIds).subscribe(
-            teams => this.myTeams = teams
-          );
-        });
-      }
-    });
+        games.forEach((game) => {
+          if(new Date(game.pick_submit_by_date) > new Date()) {
+            this.showEditButton = true;
+          } else {
+            this.showEditButton = false;
+          }
+          teamIds.push(game.home_team);
+          teamIds.push(game.away_team);
+        })
+        this.teamService.getTeamByIds(teamIds).subscribe(
+          teams => this.myTeams = teams
+        );
+
+        this.myGames = games;
+      });
+    }
+
   }
 
   editPicks() {
@@ -135,7 +165,6 @@ export class MyPicksDashboardComponent implements OnInit {
       });
     }
     this.editPicks();
-
   }
 
   highlightSelected(game: Game){

@@ -49,7 +49,13 @@ export class PicksDashboardComponent implements OnInit {
     var season = +this.route.snapshot.paramMap.get('season') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
     if(season == 0 || week == 0) {
-      this.weekService.getCurrentWeek().subscribe(currentWeek => this.initWeek(currentWeek));
+      this.weekService.getCurrentWeek().subscribe(currentWeek => {
+        season = currentWeek.season;
+        week = currentWeek.week;
+
+        this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
+
+      });
     } else {
       this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
     }
@@ -77,7 +83,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   removePickedGames() {
-    this.pickService.getPicksByWeek(this.user.user_id, this.week.season, this.week.number).subscribe(
+    this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe(
       picks => {
         picks.forEach(pick => {
           this.games.forEach((game, i) => {

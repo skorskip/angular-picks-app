@@ -16,30 +16,32 @@ export class WeeksComponent implements OnInit {
   @Input() season =0;
   weeksView = false;
   weeks = [] as number[];
+  hideTitle = false;
+  hideToggle = false;
 
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
     private router:Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.view == "none") {
+      this.hideTitle = true;
+      this.hideToggle = true;
+    }
+  }
 
   showWeeks() {
     var tempWeeks = [];
     this.weekService.getCurrentWeek().subscribe( currentWeek => {
       this.season = currentWeek.season;
-      for(var i = 1; i <= currentWeek.number; i++) {
+      for(var i = 1; i <= currentWeek.week; i++) {
         var week = {} as any;
         week.number = i;
         tempWeeks.push(week);
       }
       this.weeks = tempWeeks.reverse();
-      var element = document.getElementById("week-card");
-      element.className = "week-out-animation";
-
-      setTimeout(()=>{
-        this.weeksView = true; 
-      },500);
+      this.weeksView = true;
     });
   }
 

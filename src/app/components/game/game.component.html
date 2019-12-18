@@ -1,8 +1,15 @@
-<div class="game-card secondary" attr.id={{game.game_id}}-game-card>
+<div style="width: 100%" *ngIf="submitStatus()">
+  <div class="game-card-date">
+    <div class="date-text primary">
+      Submit by: {{ submitDate }}
+    </div>
+  </div>
+</div> 
+<div class="game-card base-background secondary" attr.id={{game.game_id}}-game-card>
   <div style="width: 100%">
     <div class="game-card-date">
       <div class="date-text primary">
-        {{ timeStatus() }}
+          {{ timeStatus() }}
       </div>
     </div>
   </div> 
@@ -32,5 +39,10 @@
     <div class="game-card-spread base-background">
       <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
     </div>
+  </div>
+  <users-pick-data *ngIf="showPicksData()"
+    [game]="game">
+  </users-pick-data>
+  <div style="padding: 10px" *ngIf="!showPicksData()">
   </div>
 </div>

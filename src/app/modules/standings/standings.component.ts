@@ -11,24 +11,34 @@ import { WeekService } from 'src/app/data-models/week/week.service';
   styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit {
-  displayedColumns: string[] = ['ranking', 'user_inits', 'wins', 'picks', 'win_pct'];
+  displayedColumns: string[] = ['ranking', 'user_inits', 'wins', 'picks', 'win_pct', 'arrow'];
   dataSource = [] as UserStanding[];
   currentUser = new User();
+  showUserPicks = false;
+  otherUser = new UserStanding();
+
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
-    private weekService: WeekService
+    private weekService: WeekService,
   ) { }
 
   ngOnInit() {
     this.weekService.getCurrentWeek().subscribe( week => {
-      this.userService.getStandings(week.season).subscribe((users) => {
+      this.userService.getStandings(week.season).subscribe((users: UserStanding[]) => {
         this.dataSource = users;
       });
     });
 
-
     this.currentUser = this.authService.currentUserValue;
+  }
 
+  getUserPicks(row: UserStanding) {
+    this.showUserPicks = true;
+    this.otherUser = row;
+  }
+
+  back() {
+    this.showUserPicks = false;
   }
 }
