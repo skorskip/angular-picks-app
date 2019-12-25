@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import { WeekService } from '../../data-models/week/week.service';
 import {MediaMatcher} from '@angular/cdk/layout';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(DOCUMENT) document, 
     private router:Router, 
     private weekService:WeekService,
+    private themeService:ThemeService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher){
 
@@ -134,6 +136,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCurrentPageLogin(): boolean {
     return (this.router.url.indexOf('login') > -1);
+  }
+
+  getLogo(): string {
+    var theme = this.themeService.getTheme();
+    if(theme == 'light'){
+      return "../../../assets/icons/pickem_logo_soft.svg";
+    } else {
+      return "../../../assets/icons/pickem_logo_dark.svg"
+    }
   }
 
 }

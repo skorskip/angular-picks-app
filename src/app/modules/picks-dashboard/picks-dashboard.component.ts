@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../../data-models/game/game';
 import { Week } from '../../data-models/week/week';
@@ -13,6 +13,10 @@ import { User } from 'src/app/data-models/user/user';
 import { Team } from 'src/app/data-models/team/team';
 import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserStanding } from 'src/app/data-models/user/user-standing';
+import { UserService } from 'src/app/data-models/user/user.service';
+import { LeagueService } from 'src/app/data-models/league/league.service';
+import { League } from 'src/app/data-models/league/league';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -30,6 +34,11 @@ export class PicksDashboardComponent implements OnInit {
   subscription: Subscription;
   user = new User();
   teams = [] as Team[];
+  loader = false;
+  userData = new UserStanding();
+  settings = new League();
+  picked = [] as Pick[];
+
 
   constructor(
     public dialog: MatDialog, 
@@ -40,24 +49,37 @@ export class PicksDashboardComponent implements OnInit {
     private weeksService:WeeksService,
     private authService:AuthenticationService,
     private teamService:TeamService,
-    private route:ActivatedRoute) { 
-      this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => this.initWeek(weekSeason));
+    private route:ActivatedRoute,
+    private userService: UserService,
+    private leagueService: LeagueService) { 
+      this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => {
+        this.loader = true;
+        this.initWeek(weekSeason)
+      });
+
+      this.leagueService.getLeagueSettings().subscribe(settings => this.settings = settings);
     }
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
     var season = +this.route.snapshot.paramMap.get('season') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
+    this.loader = true;
+
     if(season == 0 || week == 0) {
       this.weekService.getCurrentWeek().subscribe(currentWeek => {
         season = currentWeek.season;
         week = currentWeek.week;
 
-        this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
+        this.weekService.getWeek(season, week).subscribe(week => {
+          this.initWeek(week)
+        });
 
       });
     } else {
-      this.weekService.getWeek(season, week).subscribe(week => this.initWeek(week));
+      this.weekService.getWeek(season, week).subscribe(week => {
+        this.initWeek(week)
+      });
     }
   }
 
@@ -68,6 +90,9 @@ export class PicksDashboardComponent implements OnInit {
     this.games = week.games;
     this.initTeams(week.teams);
     this.removePickedGames();
+    this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
+      this.userData = result[0];
+    });
     this.stagedPicks = this.pickService.getStagedPicks().picks;
   }
 
@@ -77,14 +102,16 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   initTeams(teamIds: number[]) {
-    this.teamService.getTeamByIds(teamIds).subscribe(
-      teams => this.teams = teams
-    );
+    this.teamService.getTeamByIds(teamIds).subscribe(teams => {
+      this.teams = teams;
+      this.loader = false;
+    });
   }
 
   removePickedGames() {
     this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe(
       picks => {
+        this.picked = picks;
         picks.forEach(pick => {
           this.games.forEach((game, i) => {
             if(pick.game_id == game.game_id) {
@@ -134,7 +161,20 @@ export class PicksDashboardComponent implements OnInit {
   
   openDialog() {
     if(this.stagedPicks.length == 0){
-      const dialogRef = this.dialog.open(NoPicksDialog,{width: '500px'});
+      this.dialog.open(NoPicksDialog,{width: '500px'});
+
+    } else if((this.stagedPicks.length + this.userData.picks + this.picked.length) > this.settings.maxTotalPicks) {
+      let limit = (this.stagedPicks.length + this.userData.picks + this.picked.length) - this.settings.maxTotalPicks;
+      let needed = this.settings.maxTotalPicks - (this.userData.picks + this.picked.length);
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '500px';
+      dialogConfig.data = {
+        limit: limit,
+        needed: needed
+      }
+      this.dialog.open(PicksOverLimitDialog,dialogConfig);
+
     } else {
       const dialogRef = this.dialog.open(SubmitPicksDialog,{width: '500px'});
       dialogRef.afterClosed().subscribe(result => {
@@ -145,7 +185,7 @@ export class PicksDashboardComponent implements OnInit {
               this.snackBar.open("picks submitted",'', {duration:3000});
               this.router.navigate(['/picks/' + this.week.season + '/' + this.week.number]);
             } else {
-              const dialogRef = this.dialog.open(PicksErrorDialog,{width: '500px'});
+              this.dialog.open(PicksErrorDialog,{width: '500px'});
             }
           });
         }
@@ -196,6 +236,14 @@ export class PicksDashboardComponent implements OnInit {
     return game;
   }
 
+  getTitle(): string {
+    let title = "Games";
+    if(this.stagedPicks.length > 0){
+      title += " (" + this.stagedPicks.length + " picked)"
+    }
+    return title;
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -218,3 +266,19 @@ export class SubmitPicksDialog {}
   templateUrl: '../../components/dialog-content/picks-error-dialog.html'
 })
 export class PicksErrorDialog {}
+
+@Component({
+  selector: 'picks-over-limit-dialog',
+  templateUrl: '../../components/dialog-content/picks-over-limit-dialog.html'
+})
+export class PicksOverLimitDialog {
+  limit: number;
+  needed: number;
+  constructor(
+    public dialogRef: MatDialogRef<PicksOverLimitDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+      this.limit = data.limit;
+      this.needed = data.needed;
+    }
+}

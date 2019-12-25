@@ -32,6 +32,10 @@
     background-color: white !important;
 }
 
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #3e5dce !important;
+}
+
 .success {
     color: green;
 }

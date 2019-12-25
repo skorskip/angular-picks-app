@@ -62,6 +62,14 @@ export class UserService {
     );
   }
 
+  getStandingsByUser(season: number, user: User):Observable<UserStanding[]> {
+    let url = `${this.usersUrl}/standings/${season}`;
+    return this.http.post(url, user, httpOptions).pipe(
+      tap((userStaning: UserStanding[]) => console.log(`get user standings`)), 
+      catchError(this.handleError<UserStanding[]>(`get user standings`))
+    );
+  }
+
     // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.

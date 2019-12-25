@@ -31,3 +31,19 @@
 .base-background {
     background-color: rgb(27, 26, 37) !important;
 }
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke:  #3ece7a !important;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: rgb(228, 46, 46);
+}
+
+.warn {
+    color: #ca7220;
+}
