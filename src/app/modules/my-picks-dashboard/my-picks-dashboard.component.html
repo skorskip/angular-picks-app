@@ -1,9 +1,9 @@
 <weeks 
-  [title]="'Picks'"
+  [title]="getTitle()"
   [number] = "week.number"
   [season]= "week.season"
   [view]="toggleType">
-  <button mat-button *ngIf="!edit && showEditButton && myGames.length != 0" class="edit-button base-background secondary" (click)="editPicks()">
+  <button mat-button *ngIf="!edit && showEditButton && myTeams.length != 0" class="edit-button base-background secondary" (click)="editPicks()">
       <mat-icon>
         mode_edit
       </mat-icon>
@@ -12,7 +12,10 @@
   <button mat-button *ngIf="edit && showEditButton" class="edit-button base-background secondary" (click)="submitEdits()">
     done
   </button>
-  <div *ngIf = "myGames.length == 0" class="no-picks-view">
+  <div *ngIf = "myTeams.length == 0 && loader" class="no-picks-view">
+    <mat-spinner></mat-spinner >
+  </div>
+  <div *ngIf = "myTeams.length == 0 && !loader" class="no-picks-view secondary">
     No Picks Made
   </div>
   <ng-container *ngIf="myTeams.length > 0">

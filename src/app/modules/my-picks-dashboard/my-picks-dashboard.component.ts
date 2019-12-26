@@ -34,6 +34,7 @@ export class MyPicksDashboardComponent implements OnInit {
   stagedEdits = [] as Pick[];
   showEditButton = true;
   toggleType = "picks"
+  loader = false;
   @Input() otherUser = null;
 
   constructor(
@@ -53,7 +54,7 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
-
+  
     if(this.otherUser == null) {
       this.user= this.authService.currentUserValue;
     } else {
@@ -62,6 +63,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
     var season = +this.route.snapshot.paramMap.get('season') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
+
     if(season == 0 || week == 0) {
       this.weekService.getCurrentWeek().subscribe(currentWeek => {
         season = currentWeek.season;
@@ -74,6 +76,7 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   initWeek(season, week) {
+    this.loader = true;
     this.myTeams = [];
     this.myGames = [];
     this.week.number = week;
@@ -107,9 +110,9 @@ export class MyPicksDashboardComponent implements OnInit {
       this.picks.forEach(pick => {
         gameIds.push(pick.game_id);
       });
-      
+
       this.gameService.getGameByIds(gameIds).subscribe(games => {
-        
+
         games.forEach((game) => {
           if(new Date(game.pick_submit_by_date) > new Date()) {
             this.showEditButton = true;
@@ -118,15 +121,17 @@ export class MyPicksDashboardComponent implements OnInit {
           }
           teamIds.push(game.home_team);
           teamIds.push(game.away_team);
-        })
-        this.teamService.getTeamByIds(teamIds).subscribe(
-          teams => this.myTeams = teams
-        );
+        });
+
+        this.teamService.getTeamByIds(teamIds).subscribe(teams => { 
+          this.myTeams = teams;
+        });
 
         this.myGames = games;
       });
+    } else {
+      this.loader = false;
     }
-
   }
 
   editPicks() {
@@ -229,6 +234,14 @@ export class MyPicksDashboardComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  getTitle(): string {
+    let title = "Picks";
+    if(this.myGames.length > 0){
+      title += " (" + this.myGames.length + " submitted)"
+    }
+    return title;
   }
 
   ngOnDestroy() {

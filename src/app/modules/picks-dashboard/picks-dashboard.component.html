@@ -1,19 +1,26 @@
 <weeks 
-    *ngIf="(games.length > 0) && (teams.length > 0)"
-    [title] = "'Games'"
+    [title] = "getTitle()"
     [number] = "week.number"
     [season]= "week.season"
     [view]="'games'">
-    <game 
-        *ngFor="let game of games, let i = index"
-        [game] = "game"
-        [teams] = "teams"
-        [showSubmitTime] = "showSubmitTime(i)"
-        [submitOpened] = "submitOpened"
-        (openSubmit) = "teamClicked($event)"
-        (stageSelectedPick) = "stageSelectedPick($event)"
-        (teamLoaded) = "teamLoaded($event)">
-    </game>
+    <div *ngIf = "teams.length == 0 && loader" class="no-games-set">
+        <mat-spinner></mat-spinner >
+      </div>
+    <div *ngIf = "teams.length == 0 && !loader" class="no-games-set secondary">
+        No Games Set
+    </div>
+    <ng-container *ngIf="teams.length > 0">
+        <game 
+            *ngFor="let game of games, let i = index"
+            [game] = "game"
+            [teams] = "teams"
+            [showSubmitTime] = "showSubmitTime(i)"
+            [submitOpened] = "submitOpened"
+            (openSubmit) = "teamClicked($event)"
+            (stageSelectedPick) = "stageSelectedPick($event)"
+            (teamLoaded) = "teamLoaded($event)">
+        </game>
+    </ng-container>
     <div id="submit-container" class="secondary-background" (click)="showSubmit()">
         <mat-icon id="submit-icon" class="base" *ngIf="!submitOpened">chevron_left</mat-icon>
         <mat-icon id="submit-icon" class="base" *ngIf="submitOpened">chevron_right</mat-icon>

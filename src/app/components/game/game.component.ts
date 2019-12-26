@@ -67,7 +67,7 @@ export class GameComponent implements OnInit {
   }
 
   submitStatus() {
-    return (this.game.game_status == "UNPLAYED" || this.game.game_status == null) && this.showSubmitTime;
+    return new Date(this.game.pick_submit_by_date) > new Date() && this.showSubmitTime;
   }
 
   showPicksData() {
