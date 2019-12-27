@@ -10,13 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./weeks.component.css']
 })
 export class WeeksComponent implements OnInit {
-  @Input() title;
   @Input() number;
   @Input() view;
   @Input() season =0;
   weeksView = false;
   weeks = [] as number[];
-  hideTitle = false;
   hideToggle = false;
 
   constructor(
@@ -26,7 +24,6 @@ export class WeeksComponent implements OnInit {
 
   ngOnInit() {
     if(this.view == "none") {
-      this.hideTitle = true;
       this.hideToggle = true;
     }
   }

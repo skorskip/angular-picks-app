@@ -1,0 +1,29 @@
+.nav-container {
+    position: fixed;
+    z-index: 5;
+    top:0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
+    font-size: 1.3em;
+    margin: 10px;
+}
+
+.sidenav-button {
+	transform: scale(1.5);
+}
+
+.edit-button {
+    border:  1px solid;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 38px;
+}
+
+.title-group {
+    display: flex;
+    align-items: center;
+}

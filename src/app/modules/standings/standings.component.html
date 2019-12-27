@@ -1,6 +1,6 @@
-<div class="title primary">
-  Standings
-</div>
+<nav-bar
+    [title] ="'Standings'">
+</nav-bar>
 <div id="standings-card" class="standings-in-animation base-background secondary" *ngIf="!showUserPicks">
   <table mat-table [dataSource]="dataSource" class="rank-table">
 

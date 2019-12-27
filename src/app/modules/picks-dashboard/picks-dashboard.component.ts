@@ -88,11 +88,14 @@ export class PicksDashboardComponent implements OnInit {
     this.teams = [];
     this.week = week;
     this.games = week.games;
-    this.initTeams(week.teams);
+    this.teams = week.teams;
+    this.loader = false;
     this.removePickedGames();
+
     this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
       this.userData = result[0];
     });
+
     this.stagedPicks = this.pickService.getStagedPicks().picks;
   }
 
@@ -101,18 +104,11 @@ export class PicksDashboardComponent implements OnInit {
     this.highlightStagedPick(event);
   }
 
-  initTeams(teamIds: number[]) {
-    this.teamService.getTeamByIds(teamIds).subscribe(teams => {
-      this.teams = teams;
-      this.loader = false;
-    });
-  }
-
   removePickedGames() {
     this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe(
       picks => {
-        this.picked = picks;
-        picks.forEach(pick => {
+        this.picked = picks.picks;
+        this.picked.forEach(pick => {
           this.games.forEach((game, i) => {
             if(pick.game_id == game.game_id) {
               this.games.splice(i, 1);
@@ -237,9 +233,9 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   getTitle(): string {
-    let title = "Games";
+    let title = "";
     if(this.stagedPicks.length > 0){
-      title += " (" + this.stagedPicks.length + " picked)"
+      title += "(" + this.stagedPicks.length + " picked)"
     }
     return title;
   }

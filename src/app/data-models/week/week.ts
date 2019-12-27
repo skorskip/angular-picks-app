@@ -1,9 +1,10 @@
 import { Game } from '../game/game';
+import { Team } from '../team/team';
 
 export class Week {
     number: number;
     games: Game[];
-    teams: number[];
+    teams: Team[];
     season: number;
 
     constructor() {

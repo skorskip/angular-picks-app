@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -100,38 +101,19 @@ export class MyPicksDashboardComponent implements OnInit {
     }
   }
 
-  populateGamesTeams(picks: Pick[]){
-    this.picks = picks;
-    if(this.picks.length != 0){
-  
-      var gameIds: number[] = [];
-      var teamIds: number[] = [];
-      
-      this.picks.forEach(pick => {
-        gameIds.push(pick.game_id);
-      });
+  populateGamesTeams(picks: WeekPicks){
+    this.picks = picks.picks;
+    this.myGames = picks.games;
+    this.myTeams = picks.teams;
+    this.loader = false;
 
-      this.gameService.getGameByIds(gameIds).subscribe(games => {
-
-        games.forEach((game) => {
-          if(new Date(game.pick_submit_by_date) > new Date()) {
-            this.showEditButton = true;
-          } else {
-            this.showEditButton = false;
-          }
-          teamIds.push(game.home_team);
-          teamIds.push(game.away_team);
-        });
-
-        this.teamService.getTeamByIds(teamIds).subscribe(teams => { 
-          this.myTeams = teams;
-        });
-
-        this.myGames = games;
-      });
-    } else {
-      this.loader = false;
-    }
+    this.myGames.forEach((game) => {
+      if(new Date(game.pick_submit_by_date) > new Date()) {
+        this.showEditButton = true;
+      } else {
+        this.showEditButton = false;
+      }
+    });
   }
 
   editPicks() {
@@ -237,9 +219,9 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getTitle(): string {
-    let title = "Picks";
+    let title = "";
     if(this.myGames.length > 0){
-      title += " (" + this.myGames.length + " submitted)"
+      title += "(" + this.myGames.length + " submitted)"
     }
     return title;
   }

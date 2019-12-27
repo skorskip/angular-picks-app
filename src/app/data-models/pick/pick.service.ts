@@ -5,9 +5,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Pick } from './pick';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { StagedPicks } from './stagedPicks';
+import { StagedPicks } from './staged-picks';
 import { PickData } from './pick-data';
 import { User } from '../user/user';
+import { WeekPicks } from './week-picks';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -62,19 +63,19 @@ export class PickService {
         );
     }
 
-    getPicksByWeek(user: User, season:number, week:number): Observable<Pick[]> {
+    getPicksByWeek(user: User, season:number, week:number): Observable<WeekPicks> {
         const url = `${this.picksUrl}/season/${season}/week/${week}`;
         return this.http.post(url, user, httpOptions).pipe(
-            tap((picks: Pick[])  => console.log(`get picks`)),
-            catchError(this.handleError<Pick[]>(`get picks`))
+            tap((picks: WeekPicks)  => console.log(`get picks`)),
+            catchError(this.handleError<WeekPicks>(`get picks`))
         );
     }
 
-    getUsersPicksByWeek(userId:number, season:number, week:number): Observable<Pick[]> {
+    getUsersPicksByWeek(userId:number, season:number, week:number): Observable<WeekPicks> {
         const url = `${this.picksUrl}/user/${userId}/season/${season}/week/${week}`;
         return this.http.get(url, httpOptions).pipe(
-            tap((picks: Pick[])  => console.log(`get picks`)),
-            catchError(this.handleError<Pick[]>(`get picks`))
+            tap((picks: WeekPicks)  => console.log(`get picks`)),
+            catchError(this.handleError<WeekPicks>(`get picks`))
         );
     }
 

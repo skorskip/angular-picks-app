@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
-import { WeekService } from '../../data-models/week/week.service';
-import {MediaMatcher} from '@angular/cdk/layout';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 
 @Component({
   selector: 'app-home',
@@ -23,10 +22,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private _mobileQueryListener: () => void;
 
   constructor(
-    @Inject(DOCUMENT) document, 
     private router:Router, 
-    private weekService:WeekService,
     private themeService:ThemeService,
+    private sideNavService: SideNavService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher){
 
@@ -34,6 +32,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if(event instanceof NavigationStart) {
           this.highlightByRoute(event.url);
         }
+    });
+
+    this.sideNavService.sidebarVisibilityChange.subscribe(value => {
+      this.opened = value;
     });
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -144,6 +146,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       return "../../../assets/icons/pickem_logo_soft.svg";
     } else {
       return "../../../assets/icons/pickem_logo_dark.svg"
+    }
+  }
+
+  sideNavState(event) {
+    if(!event) {
+      this.sideNavService.toggleSidebarVisibility();
     }
   }
 
