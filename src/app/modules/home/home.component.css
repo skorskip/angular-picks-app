@@ -66,7 +66,7 @@ h1.title {
 }
 
 .sidenav {
-	border-radius: 0px 18px 18px 0px;
+	border-radius: 0px 8px 8px 0px;
 	width:300px;
 }
 
@@ -98,7 +98,7 @@ a {
 	cursor: pointer;
 	margin-left: 0px;
 	padding-left: 20px;
-	border-radius: 8px;
+	border-radius: 4px;
 }
 
 .sidenav-icon {

@@ -38,7 +38,7 @@
         </td>
       </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="base-background"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="base-background"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
     [ngClass]="{'primary-background':row.user_id == currentUser.user_id}" (click)="getUserPicks(row)"></tr>
   </table>

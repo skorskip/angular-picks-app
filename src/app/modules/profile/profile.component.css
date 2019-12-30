@@ -1,6 +1,6 @@
 .card {
 	padding: 2px;
-	border-radius: 18px;
+	border-radius: 8px;
 	margin: 10px;
 	cursor: pointer;
 }
@@ -9,21 +9,18 @@
 	display: flex;
 	flex-direction: row;
     justify-content: flex-start;
-    padding: 15px;
+    padding: 10px;
     align-items: center;
 }
 
 .card-header-text {
 	margin-top: 20px;
 	font-size:2em;
-    margin: 20px;
+    margin: 10px;
 }
 
 .card-section {
-    border-radius: 18px;
-    border: 1px solid;
     padding: 10px;
-    margin: 20px;
 }
 
 .info-header {
@@ -32,11 +29,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 10px;
 }
 
 .edit-button {
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     border: solid 1px;
 }
@@ -67,7 +63,7 @@
 
 .logout-button {
     color: rgb(228, 46, 46);
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     border: solid 1px;
     margin:20px;
@@ -92,11 +88,11 @@
 }
 
 .toggle-button {
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     width: 100px;
 }
 
 .toggle-container {
-	border-radius: 8px;
+	border-radius: 4px;
 }

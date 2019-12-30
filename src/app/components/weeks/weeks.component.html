@@ -1,11 +1,11 @@
-<div *ngIf="weeksView == false">
+<div >
     <div class="toggle-picks-container" *ngIf="!hideToggle">
         <div class="toggle-container base-background">
             <button mat-button (click)="toggleView('games')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'games'}">games</button>
             <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">picks</button>
         </div>
     </div>
-    <div id="week-card">
+    <div id="week-card" *ngIf="weeksView == false">
         <div class="week-header base-background secondary" (click)="showWeeks()">
             <div class=week-title>
                 Week {{number}}

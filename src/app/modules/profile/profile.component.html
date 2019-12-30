@@ -10,13 +10,13 @@
         {{user.first_name}} {{user.last_name}}
       </div>
     </div>
+</div>
+
+<div class="card base-background secondary" *ngIf=!editSelected>
     <div class="card-section">
       <div class="info-header">
         Info
         <button mat-button class="edit-button secondary" (click)="editUser()">
-          <mat-icon>
-            mode_edit
-          </mat-icon>
             edit
         </button>
       </div>
@@ -43,6 +43,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="card base-background secondary" *ngIf=!editSelected>
     <div class="card-section">
         <div class="info-header">
           Settings
@@ -61,12 +64,16 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="card base-background secondary" *ngIf=!editSelected>
     <div class="logout-container">
       <button mat-button class="logout-button" (click)="logout()">
         logout
       </button>
     </div>
-</div>
+  </div>
+
 <div class="card base-background secondary" *ngIf="editSelected">
   <app-register
     [editUser] = "editSelected"

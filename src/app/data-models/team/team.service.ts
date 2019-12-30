@@ -38,49 +38,25 @@ export class TeamService {
     );
   }
 
-  unSelectTeam(selectedTeam:Team){
-    var team = document.getElementById(selectedTeam.team_id + "-team-card");
+  unSelectTeam(team:Team){
+    var teamElement = document.getElementById(team.team_id + "-team-card");
 
-    if(this.themeService.getTheme() == 'light') {
-      team.style.backgroundColor = "";
-      team.style.color = selectedTeam.primary_color;
-    } else {
-      team.classList.remove('secondary-background');
-      team.classList.remove('base');
-      team.classList.add('secondary');
-    }
-
-    team.classList.add("base-background")
-    team.classList.remove("selectedTeam");
+    teamElement.classList.add("base-background");
+    teamElement.classList.remove("selectedTeam");
+    teamElement.classList.remove("base");
+    teamElement.classList.remove(team.display_color + "-background");
+    teamElement.style.border = "solid 1px";
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
-    if(this.themeService.getTheme() == 'light') {
-      teamElement.style.background = team.primary_color;
-      teamElement.style.color = "white";
-    } else {
-      teamElement.classList.remove('secondary');
-      teamElement.classList.add('secondary-background');
-      teamElement.classList.add('base');
-    }
-  
-    teamElement.classList.remove("base-background");
-    teamElement.classList.add("selectedTeam"); 
-  }
 
-  initialTeamSelect(team: Team){
-    if(this.themeService.getTheme() == 'light') {
-      return {
-        'color' : team.primary_color
-      };
-    } else {
-      return {
-        'color' : ''
-      };
-    }
-  }
-   
+    teamElement.classList.add(team.display_color + "-background");
+    teamElement.classList.add("base");
+    teamElement.classList.remove("base-background");
+    teamElement.classList.add("selectedTeam");
+    teamElement.style.border = "0px";
+  } 
 
   // /**
   //  * Handle Http operation that failed.

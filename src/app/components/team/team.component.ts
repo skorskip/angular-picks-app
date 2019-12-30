@@ -33,10 +33,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getBorderColor(team: Team) {
-    return this.teamService.initialTeamSelect(team);
-  }
-
   getTeamName() {
     if(document.getElementById("body").scrollWidth > 950){
       return this.team.abbreviation + " - " + this.team.team_name;

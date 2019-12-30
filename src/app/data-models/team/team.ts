@@ -2,8 +2,10 @@ export class Team {
 	team_id: number;
 	primary_color: string;
 	secondary_color: string;
+	display_color: string;
 	team_name: string;
 	abbreviation: string;
+
 
 	constructor() {
 		this.team_id = 0;
@@ -11,5 +13,6 @@ export class Team {
 		this.secondary_color = "";
 		this.team_name = "";
 		this.abbreviation = "";
+		this.display_color= "secondary";
 	}
 }

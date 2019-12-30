@@ -44,8 +44,109 @@ body,html {
     outline: none !important;
 }
 
+/*-----------TEAM COLORS----------*/
+
+.red {
+    color: #DB2828;
+}
+
+.blue {
+    color: #2185D0;
+}
+
+.teal {
+    color: #00B5AD;
+}
+
+.orange {
+    color: #F2711C;
+}
+
+.grey {
+    color: #767676;
+}
+
+.olive {
+    color: #B5CC18;
+}
+
+.green {
+    color: rgb(2, 114, 2);
+}
+
+.yellow {
+    color: #FBBD08;
+}
+
+.brown {
+    color: #A5673F;
+}
+
+.purple {
+    color: #A333C8;
+}
+
+.violet {
+    color: #6435C9;
+}
+
+.red-background {
+    background-color: #DB2828;
+    /* color: white; */
+}
+
+.blue-background {
+    background-color: #2185D0;
+    /* color: white; */
+}
+
+.teal-background {
+    background-color: #00B5AD;
+    /* color: white; */
+}
+
+.orange-background {
+    background-color: #F2711C;
+    /* color: white; */
+}
+
+.grey-background {
+    background-color: #767676;
+    /* color: white; */
+}
+
+.olive-background {
+    background-color: #B5CC18;
+    /* color: white; */
+}
+
+.green-background {
+    background-color: rgb(2, 114, 2);
+    /* color: white; */
+}
+
+.yellow-background {
+    background-color: #FBBD08;
+    /* color: white; */
+}
+
+.brown-background {
+    background-color: #A5673F;
+    /* color: white; */
+}
+
+.purple-background {
+    background-color: #A333C8;
+    /* color: white; */
+}
+
+.violet-background {
+    background-color: #6435C9;
+    /* color: white; */
+}
+
 .success {
-    color: green;
+    color: #21BA45;
 }
 
 .failure {
