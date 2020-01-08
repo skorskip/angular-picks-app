@@ -27,3 +27,12 @@
     display: flex;
     align-items: center;
 }
+
+.notification-icon {
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    height: 17px;
+    width: 17px;
+    border-radius: 16px;
+}

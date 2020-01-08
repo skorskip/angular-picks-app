@@ -3,6 +3,8 @@
         <button mat-icon-button (click)="toggleSideNav()">
             <mat-icon class="sidenav-button primary">menu</mat-icon>
         </button>
+        <div *ngIf="messages != 0" class="notification-icon failure-background">
+        </div>
         <div class="primary main">
             {{ title }}
         </div>

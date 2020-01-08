@@ -46,6 +46,58 @@ body,html {
 
 /*-----------TEAM COLORS----------*/
 
+.ruby {
+    color: #97233f;
+}
+
+.burgundy {
+    color: #a71931;
+}
+
+.teal {
+    color: #006678;
+}
+
+.carolina-blue {
+    color: #0087CA;
+}
+
+.star-command-blue {
+    color: #0076b6;
+}
+
+.air-force-blue {
+    color: #00348d;
+}
+
+.midnight-blue{
+    color:#1a195f;
+}
+
+.eerie-black {
+    color: #0b162a
+}
+
+.jungle-green {
+    color: #183028;
+}
+
+.orange {
+    color: #fb4f14;
+}
+
+.brown {
+    color: #A5673F;
+}
+
+.amaranth-red {
+    color: #cf2233;
+}
+
+.violet {
+    color: #4f2683;
+}
+
 .red {
     color: #DB2828;
 }
@@ -54,12 +106,24 @@ body,html {
     color: #2185D0;
 }
 
-.teal {
-    color: #00B5AD;
+.navy {
+    color: #124971;
 }
 
-.orange {
-    color: #F2711C;
+.tan {
+    color: #d3bc8d;
+}
+
+.midnigh-green {
+    color: #004c54;
+}
+
+.gold {
+    color: #ffb612;
+}
+
+.lime-green {
+    color: #69be28;
 }
 
 .grey {
@@ -78,72 +142,62 @@ body,html {
     color: #FBBD08;
 }
 
-.brown {
-    color: #A5673F;
-}
+
 
 .purple {
     color: #A333C8;
 }
 
-.violet {
-    color: #6435C9;
-}
+
 
 .red-background {
     background-color: #DB2828;
-    /* color: white; */
 }
 
 .blue-background {
     background-color: #2185D0;
-    /* color: white; */
 }
 
 .teal-background {
     background-color: #00B5AD;
-    /* color: white; */
 }
 
 .orange-background {
     background-color: #F2711C;
-    /* color: white; */
 }
 
 .grey-background {
     background-color: #767676;
-    /* color: white; */
 }
 
 .olive-background {
     background-color: #B5CC18;
-    /* color: white; */
 }
 
 .green-background {
     background-color: rgb(2, 114, 2);
-    /* color: white; */
 }
 
 .yellow-background {
     background-color: #FBBD08;
-    /* color: white; */
 }
 
 .brown-background {
     background-color: #A5673F;
-    /* color: white; */
 }
 
 .purple-background {
     background-color: #A333C8;
-    /* color: white; */
 }
 
 .violet-background {
     background-color: #6435C9;
-    /* color: white; */
 }
+
+.navy-background {
+    background-color: #124971;
+}
+
 
 .success {
     color: #21BA45;
@@ -155,4 +209,8 @@ body,html {
 
 .warn {
     color: #ca7220;
+}
+
+.failure-background {
+    background-color: rgb(228, 46, 46);
 }

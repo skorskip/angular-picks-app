@@ -135,6 +135,7 @@ export class PicksDashboardComponent implements OnInit {
 
   stageSelectedPick(selectedPick: Pick){
     var pickAdded = false;
+    selectedPick.user_id = this.user.user_id;
     
     for(var i = 0; i < this.stagedPicks.length; i++) {
       var stagedPick = this.stagedPicks[i];
@@ -142,13 +143,14 @@ export class PicksDashboardComponent implements OnInit {
       if(stagedPick.game_id == selectedPick.game_id) {
         if(stagedPick.team_id == selectedPick.team_id) {
           this.stagedPicks.splice(i, 1);
-        } else this.stagedPicks.splice(i, 1, selectedPick);
-        pickAdded = true;
+        } else {
+          this.stagedPicks.splice(i, 1, selectedPick);
+          pickAdded = true;
+        }
       }
     }
 
     if(!pickAdded){
-      selectedPick.user_id = this.user.user_id;
       this.stagedPicks.push(selectedPick);
     }
 

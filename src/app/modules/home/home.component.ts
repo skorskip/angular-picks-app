@@ -3,6 +3,8 @@ import { Router, NavigationStart } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
+import { LeagueService } from 'src/app/data-models/league/league.service';
+import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   selected;
   sideMenuType;
   mobileQuery: MediaQueryList;
+  messageCount = 0;
   
   private _mobileQueryListener: () => void;
 
@@ -25,6 +28,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private router:Router, 
     private themeService:ThemeService,
     private sideNavService: SideNavService,
+    private leagueService: LeagueService,
+    private announcementsService: AnnouncementsService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher){
 
@@ -43,7 +48,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.announcementsService.getAnnoucements().subscribe((messages) => {
+      this.messageCount = messages.announcements;
+    });
+  }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
@@ -138,6 +147,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCurrentPageLogin(): boolean {
     return (this.router.url.indexOf('login') > -1);
+  }
+
+  goToMessagePage() {
+    this.leagueService.getLeagueSettings().subscribe((settings) => {
+      window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+    });
+    var checked = new Date();
+    this.announcementsService.setAnnouncementCheck(checked.toUTCString());
+    this.messageCount = 0;
   }
 
   getLogo(): string {

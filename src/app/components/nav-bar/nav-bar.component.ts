@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
+import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 
 @Component({
   selector: 'nav-bar',
@@ -16,12 +17,24 @@ export class NavBarComponent implements OnInit {
   @Output() submitEditsSelected = new EventEmitter();
 
   edit = false;
+  messages = 0;
 
   constructor(
-    private sideNavService: SideNavService
-  ) { }
+    private sideNavService: SideNavService,
+    private announcementService: AnnouncementsService,
+  ) { 
+    this.announcementService.announcementChange.subscribe(value => {
+      if(value) {
+        this.messages = 0;
+      }
+    });
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.announcementService.getAnnoucements().subscribe(messages => {
+      this.messages = messages.announcements;
+    })
+  }
 
   toggleSideNav(){
     this.sideNavService.toggleSidebarVisibility();
