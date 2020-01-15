@@ -48,12 +48,12 @@
           <a (click)="toggle(); navigateToPage('profile')">Profile</a>
         </nav>
       </div>
-      <div class="sidenav-opt" id="announcements" (mouseover) = "mouseover($event)"
+      <div class="sidenav-opt" id="messages" (mouseover) = "mouseover($event)"
       (mouseout)="mouseout($event)" >
         <nav>
-          <mat-icon class="sidenav-icon">notification_important</mat-icon>
-          <a (click)="toggle(); goToMessagePage()">Message</a>
-          <div *ngIf="messageCount != 0"class="notification-chip failure-background base">{{ messageCount }}</div>
+          <mat-icon class="sidenav-icon">email</mat-icon>
+          <a (click)="toggle(); navigateToPage('messages'); goToMessagePage()">Messages</a>
+          <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
         </nav>
       </div>
     </mat-sidenav>

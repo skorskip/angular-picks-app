@@ -45,34 +45,34 @@
     </div>
   </div>
 
-  <div class="card base-background secondary" *ngIf=!editSelected>
-    <div class="card-section">
-        <div class="info-header">
-          Settings
-        </div>
-        <div class="info-content">
-          <div class="info-field">
-            <div class="icon-container primary">
-              <mat-icon class="primary">
-                brightness_4
-              </mat-icon>
-            </div>
-            <div class="toggle-container tiertary-background">
-                <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">light</button>
-                <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">dark</button>
-            </div>
+<div class="card base-background secondary" *ngIf=!editSelected>
+  <div class="card-section">
+      <div class="info-header">
+        Settings
+      </div>
+      <div class="info-content">
+        <div class="info-field">
+          <div class="icon-container primary">
+            <mat-icon class="primary">
+              brightness_4
+            </mat-icon>
+          </div>
+          <div class="toggle-container tiertary-background">
+              <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">light</button>
+              <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">dark</button>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="card base-background secondary" *ngIf=!editSelected>
-    <div class="logout-container">
-      <button mat-button class="logout-button" (click)="logout()">
-        logout
-      </button>
-    </div>
   </div>
+
+  <div class="card base-background secondary" *ngIf=!editSelected>
+  <div class="logout-container">
+    <button mat-button class="logout-button" (click)="logout()">
+      logout
+    </button>
+  </div>
+</div>
 
 <div class="card base-background secondary" *ngIf="editSelected">
   <app-register

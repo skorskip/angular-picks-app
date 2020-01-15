@@ -36,13 +36,15 @@ export class AnnouncementsService {
     request.lastCheckDate = this.getAnnouncementCheck();
 
     return this.http.post(url, request, httpOptions).pipe(
-      tap((announcements: Announcements) => console.log(`fetched announcements`)),
+      tap((announcements: Announcements) => {
+        console.log(`fetched announcements`);
+      }),
       catchError(this.handleError<Announcements>(`fetched announcements`))
     );
   }
 
   setAnnouncementCheck(dateChecked: string) {
-    this.announcementChange.next(true);
+    this.announcementChange.next(false);
     localStorage.setItem('annoucementCheck', dateChecked);
   }
 
@@ -53,9 +55,10 @@ export class AnnouncementsService {
   getAnnouncementCheck(): String {
       var annnouncementDate = localStorage.getItem('annoucementCheck');
       if(annnouncementDate == null) {
-        var curr = new Date();
-        var first = curr.getDate() - curr.getDay() +1
-        annnouncementDate = new Date(curr.setDate(first)).toUTCString();
+        var d = new Date();
+        var day = d.getDay()
+        var diff = d.getDate() - day + (day == 0 ? -6:1);
+        annnouncementDate = new Date(d.setDate(diff)).toUTCString();
       }
       return annnouncementDate;
   }

@@ -17,22 +17,23 @@ export class NavBarComponent implements OnInit {
   @Output() submitEditsSelected = new EventEmitter();
 
   edit = false;
-  messages = 0;
+  messages = false;
 
   constructor(
     private sideNavService: SideNavService,
     private announcementService: AnnouncementsService,
   ) { 
     this.announcementService.announcementChange.subscribe(value => {
-      if(value) {
-        this.messages = 0;
-      }
+      this.messages = value;
     });
   }
 
   ngOnInit() {
     this.announcementService.getAnnoucements().subscribe(messages => {
-      this.messages = messages.announcements;
+      this.messages = messages.announcements > 0;
+      if(this.messages) {
+        this.announcementService.announcementChange.next(this.messages);
+      }
     })
   }
 

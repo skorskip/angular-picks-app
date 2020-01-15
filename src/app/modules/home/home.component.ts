@@ -39,6 +39,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     });
 
+    this.announcementsService.announcementChange.subscribe(value => {
+      if(value) {
+        this.announcementsService.getAnnoucements().subscribe((messages) => {
+          this.messageCount = messages.announcements;
+        });
+      }
+    });
+
     this.sideNavService.sidebarVisibilityChange.subscribe(value => {
       this.opened = value;
     });
@@ -67,6 +75,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.highlight("standings");
     } else if(route.indexOf("profile") != -1) {
       this.highlight("my-profile");
+    } else if(route.indexOf("messages") != -1) {
+      this.highlight("messages");
     }
   }
 
@@ -150,9 +160,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToMessagePage() {
-    this.leagueService.getLeagueSettings().subscribe((settings) => {
-      window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
-    });
+    // this.leagueService.getLeagueSettings().subscribe((settings) => {
+    //   window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+    // });
     var checked = new Date();
     this.announcementsService.setAnnouncementCheck(checked.toUTCString());
     this.messageCount = 0;

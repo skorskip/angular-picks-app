@@ -43,7 +43,7 @@
 }
 
 .standing-card-header {
-	border-radius: 18px;
+	border-radius: 8px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -52,7 +52,7 @@
 }
 
 .standing-card {
-	border-radius: 18px;
+	border-radius: 8px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -91,7 +91,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	border-radius: 18px;
+	border-radius: 8px;
 	margin: 10px;
 	cursor: pointer;
 }

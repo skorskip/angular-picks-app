@@ -1,0 +1,18 @@
+.date-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 1.3em;
+    padding: 10px;
+    border-bottom: solid 1px;
+}
+
+.card {
+    padding: 2px;
+	border-radius: 8px;
+	margin: 10px;
+}
+
+p {
+    padding: 10px;
+}
