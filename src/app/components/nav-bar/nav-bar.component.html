@@ -1,4 +1,4 @@
-<mat-toolbar class="tiertary-background nav-container">
+<mat-toolbar class="base-background nav-container">
     <div class="title-group">
         <button mat-icon-button (click)="toggleSideNav()">
             <mat-icon class="sidenav-button primary">menu</mat-icon>
@@ -12,10 +12,10 @@
             {{ subtitle }}
         </div>
     </div>
-    <button mat-button *ngIf="!edit && showEditButton" class="edit-button tiertary-background secondary" (click)="editPicks()">
-        edit
+    <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background tiertary" (click)="editPicks()">
+        <span class="secondary">edit</span>
     </button>
-    <button mat-button *ngIf="edit && showEditButton" class="edit-button tiertary-background secondary" (click)="submitEdits()">
-        done
+    <button mat-button *ngIf="edit && showEditButton" class="edit-button base-background tiertary" (click)="submitEdits()">
+        <span class="secondary">done</span>
     </button>
 </mat-toolbar>

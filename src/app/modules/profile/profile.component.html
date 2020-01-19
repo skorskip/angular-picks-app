@@ -1,8 +1,8 @@
 <nav-bar
     [title] ="'Profile'">
 </nav-bar>
-<div class="card base-background secondary" *ngIf=!editSelected>
-    <div class="card-header">
+<div class="card-title base-background tiertary" *ngIf=!editSelected>
+    <div class="card-header secondary">
       <div class="init-icon primary">
         {{ user.user_inits }}
       </div>
@@ -12,12 +12,12 @@
     </div>
 </div>
 
-<div class="card base-background secondary" *ngIf=!editSelected>
-    <div class="card-section">
+<div class="card base-background tiertary" *ngIf=!editSelected>
+    <div class="card-section secondary">
       <div class="info-header">
         Info
-        <button mat-button class="edit-button secondary" (click)="editUser()">
-            edit
+        <button mat-button class="edit-button tiertary" (click)="editUser()">
+            <span class="secondary">edit</span>
         </button>
       </div>
       <div class="info-content">
@@ -45,8 +45,8 @@
     </div>
   </div>
 
-<div class="card base-background secondary" *ngIf=!editSelected>
-  <div class="card-section">
+<div class="card base-background tiertary" *ngIf=!editSelected>
+  <div class="card-section secondary">
       <div class="info-header">
         Settings
       </div>
@@ -66,7 +66,7 @@
     </div>
   </div>
 
-  <div class="card base-background secondary" *ngIf=!editSelected>
+  <div class="card-bottom base-background secondary" *ngIf=!editSelected>
   <div class="logout-container">
     <button mat-button class="logout-button" (click)="logout()">
       logout

@@ -1,16 +1,16 @@
 <div >
     <div class="toggle-picks-container" *ngIf="!hideToggle">
-        <div class="toggle-container base-background">
+        <div class="toggle-container tiertary-background">
             <button mat-button (click)="toggleView('games')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'games'}">games</button>
             <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">picks</button>
         </div>
     </div>
     <div id="week-card" *ngIf="weeksView == false">
-        <div class="week-header base-background secondary" (click)="showWeeks()">
-            <div class=week-title>
+        <div class="week-header base-background tiertary" (click)="showWeeks()">
+            <div class="week-title secondary">
                 Week {{number}}
             </div>
-            <mat-icon class="week-arrow-icon">
+            <mat-icon class="week-arrow-icon secondary">
                 keyboard_arrow_up
             </mat-icon>
         </div>
@@ -18,12 +18,11 @@
     </div>
 </div>
 <div id="weeks-container" *ngIf="weeksView == true">
-    <div *ngFor="let weekCard of weeks" class="week-card week-cards base-background secondary week-cards-animation" 
-    id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard.number)">
-        <div class="week-title">
+    <div *ngFor="let weekCard of weeks" class="week-card week-cards base-background tiertary week-cards-animation" id="{{weekCard.id}}-week-cards" (click) = "weekSelected(weekCard.number)">
+        <div class="week-title secondary">
             Week {{weekCard.number}}
         </div>
-        <mat-icon class="week-arrow-icon">
+        <mat-icon class="week-arrow-icon secondary">
             keyboard_arrow_down
         </mat-icon>
     </div>

@@ -5,7 +5,7 @@
     </div>
   </div>
 </div> 
-<div class="game-card base-background secondary" attr.id={{game.game_id}}-game-card>
+<div class="game-card base-background tiertary" attr.id={{game.game_id}}-game-card>
   <div style="width: 100%">
     <div class="game-card-date">
       <div class="date-text primary">
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div> 
-  <div class="team-group" *ngIf="teams.length > 0">
+  <div class="team-group secondary" *ngIf="teams.length > 0">
     <team
       *ngIf = "teams.length > 0"
       [team] = "away_team"

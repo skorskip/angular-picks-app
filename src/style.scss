@@ -1,0 +1,105 @@
+body,html,span,div {
+	font-family: 'Rubik', sans-serif;
+}
+
+.highlight-border {
+    border: solid 5px !important;
+}
+
+.circle-container {
+	height: 75px;
+	width: 75px;
+	border-radius: 50%;
+	text-align: center;
+	margin-top: -30px;
+	cursor: pointer;
+}
+
+.noSelect {
+    outline: none !important;
+}
+
+/*-----------TEAM COLORS----------*/
+$red:               #DB2828;
+$ruby:              #97233f;
+$burgundy:          #a71931;
+$amaranth-red:      #cf2233;
+$orange:            #fb4f14;
+$brown:             #A5673F;
+$teal:              #006678;
+$star-command-blue: #0076b6;
+$carolina-blue:     #0087CA;
+$blue:              #2185D0;
+$air-force-blue:    #00348d;
+$navy:              #1a2f5f;
+$midnight-blue:     #211e98;
+$violet:            #4f2683;
+$purple:            #A333C8;
+$eerie-black:       #0b162a;
+$tan:               #d3bc8d;
+$gold:              #ffb612;
+$yellow:            #FBBD08;
+$olive:             #B5CC18;
+$lime-green:        #69be28;
+$green:             rgb(2, 114, 2);
+$midnight-green:    #004c54;
+$jungle-green:      #2a5446;
+$grey:              #767676;
+
+.ruby               { color: $ruby; }
+.burgundy           { color: $burgundy; }
+.teal               { color: $teal; }
+.carolina-blue      { color: $carolina-blue; }
+.star-command-blue  { color: $star-command-blue; }
+.air-force-blue     { color: $air-force-blue; }
+.midnight-blue      { color: $midnight-blue; }
+.eerie-black        { color: $eerie-black; }
+.jungle-green       { color: $jungle-green; }
+.orange             { color: $orange; }
+.brown              { color: $brown; }
+.amaranth-red       { color: $amaranth-red; }
+.violet             { color: $violet; }
+.red                { color: $red; }
+.blue               { color: $blue; }
+.navy               { color: $navy; }
+.tan                { color: $tan; }
+.midnight-green     { color: $midnight-green; }
+.gold               { color: $gold; }
+.lime-green         { color: $lime-green; }
+.grey               { color: $grey; }
+.olive              { color: $olive; }
+.green              { color: $green; }
+.yellow             { color: $yellow; }
+.purple             { color: $purple; }
+
+.ruby-background                { background-color: $ruby; }
+.burgundy-background            { background-color: $burgundy; }
+.teal-background                { background-color: $teal; }
+.carolina-blue-background       { background-color: $carolina-blue; }
+.star-command-blue-background   { background-color: $star-command-blue; }
+.air-force-blue-background      { background-color: $air-force-blue; }
+.midnight-blue-background       { background-color: $midnight-blue; }
+.eerie-black-background         { background-color: $eerie-black; }
+.jungle-green-background        { background-color: $jungle-green; }
+.orange-background              { background-color: $orange; }
+.brown-background               { background-color: $brown; }
+.amaranth-red-background        { background-color: $amaranth-red; }
+.violet-background              { background-color: $violet; }
+.red-background                 { background-color: $red; }
+.blue-background                { background-color: $blue; }
+.navy-background                { background-color: $navy; }
+.tan-background                 { background-color: $tan; }
+.midnight-green-background      { background-color: $midnight-green; }
+.gold-background                { background-color: $gold; }
+.lime-green-background          { background-color: $lime-green; }
+.grey-background                { background-color: $grey; }
+.olive-background               { background-color: $olive; }
+.green-background               { background-color: $green; }
+.yellow-background              { background-color: $yellow; }
+.purple-background              { background-color: $purple; }
+
+.success    { color: #21BA45; }
+.failure    { color: rgb(228, 46, 46); }
+.warn       { color: #ca7220; }
+
+.failure-background { background-color: rgb(228, 46, 46); }

@@ -1,5 +1,20 @@
 .card {
 	padding: 2px;
+	margin: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid;
+}
+
+.card-title {
+	padding: 2px;
+	border-radius: 8px;
+	margin: 10px;
+    cursor: pointer;
+    border: 1px solid;
+}
+
+.card-bottom {
+	padding: 2px;
 	border-radius: 8px;
 	margin: 10px;
 	cursor: pointer;

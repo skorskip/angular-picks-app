@@ -2,8 +2,12 @@
     [title] ="'Messages'">
 </nav-bar>
 
-<div *ngFor="let message of messages" class="card base-background secondary">
-    <div class="date-title">{{ formatDate(message.date) }}</div>
-    <p>{{ message.message }}</p>
+<div *ngFor="let message of messages" class="card base-background tiertary">
+    <div class="date-title tiertary">
+        <span class="date-text primary">
+            {{ formatDate(message.date) }}
+        </span>
+    </div>
+    <p class="secondary">{{ message.message }}</p>
 </div>
 

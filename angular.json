@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/style.css"
+              "src/style.scss"
             ],
             "scripts": []
           },
@@ -143,5 +143,10 @@
       }
     }
   },
-  "defaultProject": "angular-picks-app"
+  "defaultProject": "angular-picks-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

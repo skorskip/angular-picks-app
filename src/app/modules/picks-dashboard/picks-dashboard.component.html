@@ -24,10 +24,10 @@
             (teamLoaded) = "teamLoaded($event)">
         </game>
     </ng-container>
-    <div id="submit-container" class="secondary-background" (click)="showSubmit()">
-        <mat-icon id="submit-icon" class="base" *ngIf="!submitOpened">chevron_left</mat-icon>
-        <mat-icon id="submit-icon" class="base" *ngIf="submitOpened">chevron_right</mat-icon>
+    <div style="height:65px">
 
+    </div>
+    <div id="submit-container" (click)="showSubmit()" *ngIf="!loader">
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
         submit
         </button>
