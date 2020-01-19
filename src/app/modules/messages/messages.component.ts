@@ -11,6 +11,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter/date-forma
 export class MessagesComponent implements OnInit {
 
   messages = [] as Message[];
+  loader = true;
 
   constructor(
     private announcementsService: AnnouncementsService,
@@ -19,6 +20,7 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.announcementsService.getAnnoucements().subscribe((messages) => {
+      this.loader = false;
       this.messages = messages.messages;
     });
   }

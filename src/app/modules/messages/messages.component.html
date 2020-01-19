@@ -1,7 +1,9 @@
 <nav-bar
     [title] ="'Messages'">
 </nav-bar>
-
+<div *ngIf = "messages.length == 0 && loader" class="no-messages-set">
+    <mat-spinner></mat-spinner >
+  </div>
 <div *ngFor="let message of messages" class="card base-background tiertary">
     <div class="date-title tiertary">
         <span class="date-text primary">

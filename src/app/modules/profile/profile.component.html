@@ -13,6 +13,35 @@
 </div>
 
 <div class="card base-background tiertary" *ngIf=!editSelected>
+  <div class="card-section secondary">
+      <div class="info-header">
+        Stats
+      </div>
+      <div class="info-content">
+        <div class="pick-progress-container">
+          <div class="pick-progress-group">
+            <div class="pick-progress-numbers">
+              <div>Pick Count</div>
+              <div class="medium-font">{{ userStandings.picks }} / {{ settings.maxTotalPicks }}</div>
+            </div>
+            <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
+          </div>
+          <div class="picks-stat-card-group">
+            <div class="pick-stat-card tiertary">
+              <div class="large-font secondary">{{ userStandings.wins }}</div>
+              <div class="secondary">wins</div>
+            </div>
+            <div class="pick-stat-card tiertary">
+              <div class="large-font secondary">{{ userStandings.win_pct * 100 }}</div>
+              <div class="secondary">win %</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card base-background tiertary" *ngIf=!editSelected>
     <div class="card-section secondary">
       <div class="info-header">
         Info
@@ -66,7 +95,7 @@
     </div>
   </div>
 
-  <div class="card-bottom base-background secondary" *ngIf=!editSelected>
+<div class="card-bottom base-background secondary" *ngIf=!editSelected>
   <div class="logout-container">
     <button mat-button class="logout-button" (click)="logout()">
       logout
