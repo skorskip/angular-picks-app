@@ -29,7 +29,6 @@ export class PicksDashboardComponent implements OnInit {
   games = [] as Game[];
   stagedPicks = [] as Pick[];
   week = new Week;
-  submitOpened = false;
   weeksView = false;
   subscription: Subscription;
   user = new User();
@@ -99,9 +98,11 @@ export class PicksDashboardComponent implements OnInit {
     });
 
     this.stagedPicks = this.pickService.getStagedPicks().picks;
+
   }
 
   teamLoaded(event) {
+    this.showSubmit();
     this.highlightGameResult(event);
     this.highlightStagedPick(event);
   }
@@ -123,22 +124,20 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   teamClicked(opened: boolean){
-    this.submitOpened = false;
     this.showSubmit();
   }
 
   showSubmit() {
-    this.submitOpened = this.stagedPicks.length > 0;
-    if(this.submitOpened){
+    let submitOpened = this.stagedPicks.length > 0;
+    if(submitOpened){
       if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "5px";
+        document.getElementById("submit-container").style.bottom = "10px";
       }
     }else{
       if(document.getElementById("submit-container") != null) {
         document.getElementById("submit-container").style.bottom = "-65px";
       }
     }
-    return true;
   }
 
   stageSelectedPick(selectedPick: Pick){

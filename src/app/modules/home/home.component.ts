@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(windowSize > 950){
       this.largeScreen = true;
       this.opened = true;
-      this.sideMenuType = "side";
+      this.sideMenuType = "push";
     } else {
       this.opened = false;
       this.largeScreen = false;

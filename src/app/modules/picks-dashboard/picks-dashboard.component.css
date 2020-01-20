@@ -37,3 +37,11 @@
 	height: 250px;
 	margin-top:20%;
 }
+
+.small-height {
+	height: 64px;
+}
+
+.large-height {
+	height: 500px;
+}

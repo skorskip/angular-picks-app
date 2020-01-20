@@ -24,9 +24,9 @@
             (teamLoaded) = "teamLoaded($event)">
         </game>
     </ng-container>
-    <div style="height:65px">
+    <div [ngClass]="{'large-height':games.length < 3, 'small-height':games.length != 0}">
     </div>
-    <div id="submit-container" *ngIf="!loader && showSubmit()">
+    <div id="submit-container" *ngIf="!loader">
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
         submit
         </button>
