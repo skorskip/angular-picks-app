@@ -87,10 +87,12 @@ export class PicksDashboardComponent implements OnInit {
     this.games = [];
     this.teams = [];
     this.week = week;
-    this.games = week.games;
     this.teams = week.teams;
-    this.loader = false;
-    this.removePickedGames();
+
+    this.removePickedGames(week.games).then((games: Game[])=>{
+      this.games = games;
+      this.loader = false;
+    });
 
     this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
       this.userData = result[0];
@@ -104,19 +106,20 @@ export class PicksDashboardComponent implements OnInit {
     this.highlightStagedPick(event);
   }
 
-  removePickedGames() {
-    this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe(
-      picks => {
+  removePickedGames(games: Game[]) {
+    return new Promise((resolve, reject)=>{
+      this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe((picks) => {
         this.picked = picks.picks;
         this.picked.forEach(pick => {
-          this.games.forEach((game, i) => {
+          games.forEach((game, i) => {
             if(pick.game_id == game.game_id) {
-              this.games.splice(i, 1);
+              games.splice(i, 1);
             }
           })
         });
-      }
-    );
+        resolve(games);
+      });
+    });
   }
 
   teamClicked(opened: boolean){
@@ -125,12 +128,17 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showSubmit() {
-    this.submitOpened = !this.submitOpened;
+    this.submitOpened = this.stagedPicks.length > 0;
     if(this.submitOpened){
-      document.getElementById("submit-container").style.bottom = "5px";
+      if(document.getElementById("submit-container") != null) {
+        document.getElementById("submit-container").style.bottom = "5px";
+      }
     }else{
-      document.getElementById("submit-container").style.bottom = "-65px";
+      if(document.getElementById("submit-container") != null) {
+        document.getElementById("submit-container").style.bottom = "-65px";
+      }
     }
+    return true;
   }
 
   stageSelectedPick(selectedPick: Pick){
@@ -141,11 +149,11 @@ export class PicksDashboardComponent implements OnInit {
       var stagedPick = this.stagedPicks[i];
 
       if(stagedPick.game_id == selectedPick.game_id) {
+        pickAdded = true;
         if(stagedPick.team_id == selectedPick.team_id) {
           this.stagedPicks.splice(i, 1);
         } else {
           this.stagedPicks.splice(i, 1, selectedPick);
-          pickAdded = true;
         }
       }
     }
@@ -153,7 +161,7 @@ export class PicksDashboardComponent implements OnInit {
     if(!pickAdded){
       this.stagedPicks.push(selectedPick);
     }
-
+    
     this.pickService.setStagedPicks(this.stagedPicks);
   }
   

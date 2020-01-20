@@ -165,30 +165,43 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   editPicksService(){
-    var updatePicks = new Promise((resolve, reject) => {
-      for(let i = 0; i < this.stagedEdits.length; i++) {
+    var updatePicks = this.updatePicks();
+    var deletePicks = this.deletePicks();
+
+    Promise.all([updatePicks, deletePicks]).then((results)=>{
+      this.editPicks();
+      this.initWeek(this.week.season, this.week.number);
+    });
+  }
+
+  updatePicks(): Promise<any> {
+    let promises_array:Array<any> = [];
+    for(let i = 0; i < this.stagedEdits.length; i++) {
+      promises_array.push(new Promise((resolve, reject)=>{
         this.pickService.updatePick(this.stagedEdits[i]).subscribe((success) => {
           if(!success){reject();}
+          if(i == this.stagedEdits.length - 1) {
+            resolve();
+          }
         });
-      }
-      resolve();
-    });
+      }));
+    }
+    return Promise.all(promises_array);
+  }
 
-    var deletePicks = new Promise((resolve, reject) => {
-      for(let i = 0; i < this.stagedDeletes.length; i++) {
+  deletePicks(): Promise<any>  {
+    let promises_array:Array<any> = [];
+    for(let i = 0; i < this.stagedDeletes.length; i++) {
+      promises_array.push(new Promise((resolve, reject) => {
         this.pickService.deletePick(this.stagedDeletes[i].pick_id).subscribe((success) => {
           if(!success){reject();}
+          if(i == this.stagedDeletes.length - 1) {
+            resolve();
+          }
         });
-      }
-      resolve();
-    });
-
-    updatePicks.then((resolve)=>{
-      deletePicks.then((resolve)=>{
-        this.editPicks();
-        this.initWeek(this.week.season, this.week.number);
-      });
-    });
+      }));
+    }
+    return Promise.all(promises_array);
   }
 
   highlightSelected(game: Game){

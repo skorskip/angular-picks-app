@@ -7,6 +7,8 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { WeekService } from 'src/app/data-models/week/week.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { League } from 'src/app/data-models/league/league';
+import { PickService } from 'src/app/data-models/pick/pick.service';
+import { Pick } from 'src/app/data-models/pick/pick';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +21,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   editSelected = false;
   userStandings = new UserStanding();
   settings = new League();
+  picks = [] as Pick[];
   pickProgress = 0;
   theme;
 
   constructor(
     private authService: AuthenticationService,
+    private picksService: PickService,
     private userService: UserService,
     private weekService: WeekService,
     private themeService: ThemeService,
@@ -42,10 +46,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.weekService.getCurrentWeek().subscribe((week) => {
       this.userService.getStandingsByUser(week.season, this.user).subscribe((results) => {
         this.userStandings = results[0];
-        this.setPickProgress(this.userStandings.picks);
+        this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
+      });
+
+      this.picksService.getPicksByWeek(this.user, week.season, week.week).subscribe((picks) => {
+        this.picks = picks.picks;
       });
     });
-
   }
 
   ngAfterViewInit() {
@@ -71,7 +78,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   setPickProgress(pickTotal){
-    this.pickProgress = pickTotal / this.settings.maxTotalPicks * 100;
+    this.pickProgress = (pickTotal + this.picks.length)/ this.settings.maxTotalPicks * 100;
   }
 
 }

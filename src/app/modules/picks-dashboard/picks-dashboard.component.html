@@ -26,7 +26,7 @@
     </ng-container>
     <div style="height:65px">
     </div>
-    <div id="submit-container" (click)="showSubmit()" *ngIf="!loader">
+    <div id="submit-container" *ngIf="!loader && showSubmit()">
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
         submit
         </button>
