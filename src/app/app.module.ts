@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { MaterialModule } from './material/material.module'; 
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ProfileModule } from './modules/profile/profile.module';
 import { StandingsModule} from './modules/standings/standings.module';
@@ -17,7 +17,6 @@ import { LoginModule } from './modules/login/login.module';
 import { MessagesModule } from './modules/messages/messages.module';
 
 import { WeekService } from './data-models/week/week.service';
-
 
 @NgModule({
   declarations: [
@@ -41,4 +40,5 @@ import { WeekService } from './data-models/week/week.service';
   providers: [WeekService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

@@ -12,18 +12,20 @@
     <div *ngIf = "teams.length == 0 && !loader" class="no-games-set secondary">
         No Games Set
     </div>
-    <ng-container *ngIf="teams.length > 0">
-        <game 
-            *ngFor="let game of games, let i = index"
-            [game] = "game"
-            [teams] = "teams"
-            [showSubmitTime] = "showSubmitTime(i)"
-            [submitOpened] = "submitOpened"
-            (openSubmit) = "teamClicked($event)"
-            (stageSelectedPick) = "stageSelectedPick($event)"
-            (teamLoaded) = "teamLoaded($event)">
-        </game>
-    </ng-container>
+    <div *ngIf="teams.length > 0" class="games-container">
+        <ng-container *ngFor="let game of games, let i = index">
+            <game 
+                class="game-container"
+                [game] = "game"
+                [teams] = "teams"
+                [showSubmitTime] = "showSubmitTime(i)"
+                [submitOpened] = "submitOpened"
+                (openSubmit) = "teamClicked($event)"
+                (stageSelectedPick) = "stageSelectedPick($event)"
+                (teamLoaded) = "teamLoaded($event)">
+            </game>
+        </ng-container>
+    </div>
     <div [ngClass]="{'large-height':games.length < 3, 'small-height':games.length != 0}">
     </div>
     <div id="submit-container" *ngIf="!loader">

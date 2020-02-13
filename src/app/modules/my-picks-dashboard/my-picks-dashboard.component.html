@@ -17,7 +17,7 @@
   <div *ngIf = "myTeams.length == 0 && !loader" class="no-picks-view secondary">
     No Picks Made
   </div>
-  <ng-container *ngIf="myTeams.length > 0">
+  <div *ngIf="myTeams.length > 0" class="games-container">
     <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
         <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
           <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
@@ -35,15 +35,15 @@
             </mat-icon>
           </div>
         </div>
-        <game 
+        <game
+          class="game-container"
           [game] = "myGame"
           [showSubmitTime] = "showSubmitTime(i)"
           [notSelectablePicks] = "notSelectablePicks" 
           [pickSuccess] = "pickResult(myGame)"
           [teams] = "myTeams"
-          (teamLoaded) = "teamLoaded($event)"
-          style="width:100%"> 
+          (teamLoaded) = "teamLoaded($event)"> 
         </game>
-    </div>
-  </ng-container>
+      </div>
+  </div>
 </weeks>

@@ -56,6 +56,13 @@
           <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
         </nav>
       </div>
+      <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"
+      (mouseout)="mouseout($event)" >
+        <nav>
+          <mat-icon class="sidenav-icon">forum</mat-icon>
+          <a (click)="toggle(); goToChatPage()">S*** Chat</a>
+        </nav>
+      </div>
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="container-content">

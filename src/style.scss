@@ -1,9 +1,11 @@
 body,html,span,div {
-	font-family: 'Rubik', sans-serif;
+	// font-family: 'Rubik', sans-serif;
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 
 .highlight-border {
-    border: solid 6px !important;
+	// border: solid 6px !important;
+	text-decoration: underline;
 }
 
 .circle-container {
@@ -45,6 +47,10 @@ $green:             rgb(2, 114, 2);
 $midnight-green:    #004c54;
 $jungle-green:      #2a5446;
 $grey:              #767676;
+
+$success: 			#21BA45;
+$failure:			rgb(218, 63, 63);
+$warn:				#ca7220;
 
 .ruby               { color: $ruby; }
 .burgundy           { color: $burgundy; }
@@ -98,8 +104,10 @@ $grey:              #767676;
 .yellow-background              { background-color: $yellow; }
 .purple-background              { background-color: $purple; }
 
-.success    { color: #21BA45; }
-.failure    { color: rgb(228, 46, 46); }
-.warn       { color: #ca7220; }
+.success    					{ color: $success; }
+.failure    					{ color: $failure; }
+.warn       					{ color: $warn; }
 
-.failure-background { background-color: rgb(228, 46, 46); }
+.success-background 			{ background-color: $success; }
+.failure-background  			{ background-color: $failure; }
+.warn-background  				{ background-color: $warn; }

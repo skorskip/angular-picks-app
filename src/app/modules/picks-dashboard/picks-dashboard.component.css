@@ -8,13 +8,6 @@
 	display:flex;
 }
 
-@media only screen and (min-width: 950px) {
-	#submit-container {
-		width: 50%;
-		left: calc(15% + 300px);
-	}
-}
-
 #submit-button {
     border-radius: 8px;
 	margin: 10px;
@@ -44,4 +37,31 @@
 
 .large-height {
 	height: 500px;
+}
+
+.games-container {
+	display: flex;
+	flex-direction: column;
+}
+
+@media only screen and (min-width: 665px) {
+	.games-container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+}
+
+@media only screen and (min-width: 950px) {
+	#submit-container {
+		width: 50%;
+		left: calc(15% + 300px);
+	}
+}
+
+@media only screen and (min-width: 665px) {
+	.game-container {
+		margin: 10px;
+	}
 }

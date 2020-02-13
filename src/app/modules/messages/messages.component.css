@@ -1,9 +1,9 @@
 .date-title{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    font-size: 1.3em;
-    padding: 10px;
+    justify-content: start-end;
+    font-size: .8em;
+    padding: 5px;
     border-bottom: solid 1px;
 }
 
@@ -18,8 +18,8 @@
     border: 1px solid;
 }
 
-p {
-    padding: 10px;
+.content {
+    padding: 15px;
 }
 
 .no-messages-set {

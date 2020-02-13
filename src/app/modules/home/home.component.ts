@@ -160,12 +160,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToMessagePage() {
-    // this.leagueService.getLeagueSettings().subscribe((settings) => {
-    //   window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
-    // });
     var checked = new Date();
     this.announcementsService.setAnnouncementCheck(checked.toUTCString());
     this.messageCount = 0;
+  }
+
+  goToChatPage() {
+    this.leagueService.getLeagueSettings().subscribe((settings) => {
+      window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+    });
   }
 
   getLogo(): string {

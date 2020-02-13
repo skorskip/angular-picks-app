@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { GameComponent } from '../components/game/game.component';
 import { WeeksComponent } from '../components/weeks/weeks.component';
@@ -12,7 +13,8 @@ import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   declarations: [
     UsersPickDataComponent,

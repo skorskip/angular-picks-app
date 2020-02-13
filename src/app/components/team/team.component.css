@@ -12,24 +12,6 @@
 	border: solid 1px;
 }
 
-@media only screen and (min-width: 950px) {
-	.team-card {
-		width: 300px;
-	}
-}
-
-@media only screen and (min-width: 1200px) {
-	.team-card {
-		width: 400px;
-	}
-}
-
-@media only screen and (min-width: 1500px) {
-	.team-card {
-		width: 550px;
-	}
-}
-
 .large-text{
 	font-size:2em; 
 	margin:0; 
@@ -50,4 +32,28 @@
 
 .location {
 	margin-left:10px;
+}
+
+@media only screen and (min-width: 1000px) {
+	.team-card {
+		width: 200px;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.team-card {
+		width: 250px;
+	}
+}
+
+@media only screen and (min-width: 1400px) {
+	.team-card {
+		width: 300px;
+	}
+}
+
+@media only screen and (min-width: 1600px) {
+	.team-card {
+		width: 350px;
+	}
 }

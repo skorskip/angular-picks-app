@@ -10,7 +10,6 @@ import { LoginComponent } from '../modules/login/login.component';
 import { MessagesComponent } from '../modules/messages/messages.component';
 
 import { AuthGuard } from '../services/guard/guard.service';
-import { AppComponent } from '../app.component';
 
 const routes: Routes = [
   { path: '', component: PicksDashboardComponent, canActivate: [AuthGuard] },
