@@ -65,3 +65,31 @@
 .toggle-container {
 	border-radius: 4px;
 }
+
+@media only screen and (min-width: 650px) {
+	.week-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@media only screen and (min-width: 650px) {
+	.week-header {
+        min-width: 650px;
+	}
+}
+
+@media only screen and (min-width: 650px) {
+	#weeks-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@media only screen and (min-width: 650px) {
+	.week-card {
+        min-width: 650px;
+	}
+}

@@ -18,7 +18,7 @@
     No Picks Made
   </div>
   <div *ngIf="myTeams.length > 0" class="games-container">
-    <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
+    <ng-container *ngFor="let myGame of myGames, let i = index">
         <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
           <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
               <mat-icon
@@ -44,6 +44,6 @@
           [teams] = "myTeams"
           (teamLoaded) = "teamLoaded($event)"> 
         </game>
-      </div>
+      </ng-container>
   </div>
 </weeks>

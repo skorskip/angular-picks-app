@@ -1,111 +1,115 @@
 <nav-bar
     [title] ="'Profile'">
 </nav-bar>
-<div class="card-title base-background tiertary" *ngIf=!editSelected>
-    <div class="card-header secondary">
-      <div class="init-icon primary">
-        {{ user.user_inits }}
-      </div>
-      <div class=card-header-text>
-        {{user.first_name}} {{user.last_name}}
+<div class="content">
+  <div class="profile-container">
+    <div class="card-title base-background tiertary" *ngIf=!editSelected>
+        <div class="card-header secondary">
+          <div class="init-icon primary">
+            {{ user.user_inits }}
+          </div>
+          <div class=card-header-text>
+            {{user.first_name}} {{user.last_name}}
+          </div>
+        </div>
+    </div>
+
+    <div class="card base-background tiertary" *ngIf=!editSelected>
+      <div class="card-section secondary">
+          <div class="info-header">
+            Stats
+          </div>
+          <div class="info-content">
+            <div class="pick-progress-container">
+              <div class="pick-progress-group">
+                <div class="pick-progress-numbers">
+                  <div>Pick Count</div>
+                  <div class="medium-font">{{ userStandings.picks + picks.length }} / {{ settings.maxTotalPicks }}</div>
+                </div>
+                <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
+              </div>
+              <div class="picks-stat-card-group">
+                <div class="pick-stat-card tiertary">
+                  <div class="large-font secondary">{{ userStandings.wins }}</div>
+                  <div class="secondary">wins</div>
+                </div>
+                <div class="pick-stat-card tiertary">
+                  <div class="large-font secondary">{{ userStandings.win_pct * 100 }}</div>
+                  <div class="secondary">win %</div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
-</div>
 
-<div class="card base-background tiertary" *ngIf=!editSelected>
-  <div class="card-section secondary">
-      <div class="info-header">
-        Stats
-      </div>
-      <div class="info-content">
-        <div class="pick-progress-container">
-          <div class="pick-progress-group">
-            <div class="pick-progress-numbers">
-              <div>Pick Count</div>
-              <div class="medium-font">{{ userStandings.picks + picks.length }} / {{ settings.maxTotalPicks }}</div>
-            </div>
-            <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
+    <div class="card base-background tiertary" *ngIf=!editSelected>
+        <div class="card-section secondary">
+          <div class="info-header">
+            Info
+            <button mat-button class="edit-button tiertary" (click)="editUser()">
+                <span class="secondary">edit</span>
+            </button>
           </div>
-          <div class="picks-stat-card-group">
-            <div class="pick-stat-card tiertary">
-              <div class="large-font secondary">{{ userStandings.wins }}</div>
-              <div class="secondary">wins</div>
+          <div class="info-content">
+            <div class="info-field">
+              <div class="icon-container primary">
+                <mat-icon class="primary">
+                  person
+                </mat-icon>
+              </div>
+              <div  class="field">
+                {{user.user_name}}
+              </div>
             </div>
-            <div class="pick-stat-card tiertary">
-              <div class="large-font secondary">{{ userStandings.win_pct * 100 }}</div>
-              <div class="secondary">win %</div>
+            <div class="info-field">
+              <div class="icon-container primary">
+                <mat-icon>
+                  mail
+                </mat-icon>
+              </div>
+              <div class="field">
+                {{user.email}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
-  </div>
 
-<div class="card base-background tiertary" *ngIf=!editSelected>
-    <div class="card-section secondary">
-      <div class="info-header">
-        Info
-        <button mat-button class="edit-button tiertary" (click)="editUser()">
-            <span class="secondary">edit</span>
+    <div class="card base-background tiertary" *ngIf=!editSelected>
+      <div class="card-section secondary">
+          <div class="info-header">
+            Settings
+          </div>
+          <div class="info-content">
+            <div class="info-field">
+              <div class="icon-container primary">
+                <mat-icon class="primary">
+                  brightness_4
+                </mat-icon>
+              </div>
+              <div class="toggle-container tiertary-background">
+                  <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">light</button>
+                  <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">dark</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="card-bottom base-background secondary" *ngIf=!editSelected>
+      <div class="logout-container">
+        <button mat-button class="logout-button" (click)="logout()">
+          logout
         </button>
       </div>
-      <div class="info-content">
-        <div class="info-field">
-          <div class="icon-container primary">
-            <mat-icon class="primary">
-              person
-            </mat-icon>
-          </div>
-          <div  class="field">
-            {{user.user_name}}
-          </div>
-        </div>
-        <div class="info-field">
-          <div class="icon-container primary">
-            <mat-icon>
-              mail
-            </mat-icon>
-          </div>
-          <div class="field">
-            {{user.email}}
-          </div>
-        </div>
-      </div>
+    </div>
+
+    <div class="card base-background secondary" *ngIf="editSelected">
+      <app-register
+        [editUser] = "editSelected"
+        (registered) = "updated($event)">
+      </app-register>
     </div>
   </div>
-
-<div class="card base-background tiertary" *ngIf=!editSelected>
-  <div class="card-section secondary">
-      <div class="info-header">
-        Settings
-      </div>
-      <div class="info-content">
-        <div class="info-field">
-          <div class="icon-container primary">
-            <mat-icon class="primary">
-              brightness_4
-            </mat-icon>
-          </div>
-          <div class="toggle-container tiertary-background">
-              <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">light</button>
-              <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">dark</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="card-bottom base-background secondary" *ngIf=!editSelected>
-  <div class="logout-container">
-    <button mat-button class="logout-button" (click)="logout()">
-      logout
-    </button>
-  </div>
-</div>
-
-<div class="card base-background secondary" *ngIf="editSelected">
-  <app-register
-    [editUser] = "editSelected"
-    (registered) = "updated($event)">
-  </app-register>
 </div>
