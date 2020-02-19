@@ -34,13 +34,13 @@ export class PickStatusComponent implements OnInit {
     } else {
       if(this.pickSuccess == "WIN") {
         this.correct = true;
-        return "base success-background";
+        return "base-background success";
       } else if (this.pickSuccess == "LOSE"){
         this.wrong = true;
-        return "base failure-background";
+        return "base-background failure";
       } else {
         this.push = true;
-        return "base secondary-background";
+        return "base-background secondary";
       }
     }
   }

@@ -4,8 +4,7 @@ body,html,span,div {
 }
 
 .highlight-border {
-	// border: solid 6px !important;
-	text-decoration: underline;
+	border: solid 6px !important;
 }
 
 .circle-container {
@@ -48,8 +47,8 @@ $midnight-green:    #004c54;
 $jungle-green:      #2a5446;
 $grey:              #767676;
 
-$success: 			#21BA45;
-$failure:			rgb(218, 63, 63);
+$success: 			rgb(27, 136, 52);
+$failure:			rgb(211, 71, 71);
 $warn:				#ca7220;
 
 .ruby               { color: $ruby; }
