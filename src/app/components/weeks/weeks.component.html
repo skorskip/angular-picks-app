@@ -6,13 +6,25 @@
         </div>
     </div>
     <div class="week-content" *ngIf="weeksView == false">
-        <div class="week-header base-background tiertary" (click)="showWeeks()">
-            <div class="week-title secondary">
-                Week {{number}}
+        <div class="week-header-container">
+            <div class="week-header-next base-background tiertary" (click)="weekPrev()" *ngIf="showWeekPrev()">
+                <mat-icon class="week-arrow-next-icon secondary">
+                    navigate_before
+                </mat-icon>
             </div>
-            <mat-icon class="week-arrow-icon secondary">
-                keyboard_arrow_up
-            </mat-icon>
+            <div class="week-header base-background tiertary" (click)="showWeeks()">
+                <div class="week-title secondary">
+                    Week {{number}}
+                </div>
+                <mat-icon class="week-arrow-icon secondary">
+                    keyboard_arrow_up
+                </mat-icon>
+            </div>
+            <div class="week-header-next base-background tiertary" (click)="weekNext()" *ngIf="showWeekNext()">
+                <mat-icon class="week-arrow-next-icon secondary">
+                    navigate_next
+                </mat-icon>
+            </div>
         </div>
         <ng-content></ng-content>
     </div>

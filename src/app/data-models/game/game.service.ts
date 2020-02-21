@@ -39,6 +39,16 @@ export class GameService {
     );
   }
 
+  getGameLocal(id: number, games: Game[]): Game {
+    var game
+    games.forEach((gameItem) => {
+      if(id == gameItem.game_id){
+        game = gameItem;
+      }
+    })
+    return game;
+  }
+
   // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.

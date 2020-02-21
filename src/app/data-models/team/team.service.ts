@@ -38,6 +38,16 @@ export class TeamService {
     );
   }
 
+  getTeamLocal (id: number, teams: Team[]): Team {
+    var team
+    teams.forEach((teamItem) => {
+      if(id == teamItem.team_id){
+        team = teamItem;
+      }
+    })
+    return team;
+  }
+
   unSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
 

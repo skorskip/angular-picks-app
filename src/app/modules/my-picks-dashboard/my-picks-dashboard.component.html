@@ -19,31 +19,33 @@
   </div>
   <div *ngIf="myTeams.length > 0" class="games-container">
     <ng-container *ngFor="let myGame of myGames, let i = index">
-        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
+        <div [ngClass]="{'pick-game':edit}">
+          <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
+            <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
+                <mat-icon
+                matTooltip="edit"
+                matTooltipPosition="right"
+                class="edit-icon-edit">mode_edit
+              </mat-icon>
+            </div>
+            <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
               <mat-icon
-              matTooltip="edit"
-              matTooltipPosition="right"
-              class="edit-icon-edit">mode_edit
-            </mat-icon>
+                matTooltip="delete"
+                matTooltipPosition="right"
+                class="failure">clear
+              </mat-icon>
+            </div>
           </div>
-          <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
-            <mat-icon
-              matTooltip="delete"
-              matTooltipPosition="right"
-              class="failure">clear
-            </mat-icon>
-          </div>
-        </div>
-        <game
-          class="game-container"
-          [game] = "myGame"
-          [showSubmitTime] = "showSubmitTime(i)"
-          [notSelectablePicks] = "notSelectablePicks" 
-          [pickSuccess] = "pickResult(myGame)"
-          [teams] = "myTeams"
-          (teamLoaded) = "teamLoaded($event)"> 
-        </game>
+          <game
+            class="game-container"
+            [game] = "myGame"
+            [showSubmitTime] = "showSubmitTime(i)"
+            [notSelectablePicks] = "notSelectablePicks" 
+            [pickSuccess] = "pickResult(myGame)"
+            [teams] = "myTeams"
+            (teamLoaded) = "teamLoaded($event)"> 
+          </game>
+      </div>
       </ng-container>
   </div>
 </weeks>

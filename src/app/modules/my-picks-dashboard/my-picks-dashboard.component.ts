@@ -138,11 +138,11 @@ export class MyPicksDashboardComponent implements OnInit {
   changeTeam(game: Game) {
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
-        this.teamService.unSelectTeam(this.getTeam(pick.team_id));
+        this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
         var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
         var newPick = pick;
         newPick.team_id = newTeam;
-        this.teamService.highlightSelectTeam(this.getTeam(newTeam));
+        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
         this.stagedEdits.push(newPick);
       }
     });
@@ -180,9 +180,7 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject)=>{
         this.pickService.updatePick(this.stagedEdits[i]).subscribe((success) => {
           if(!success){reject();}
-          if(i == this.stagedEdits.length - 1) {
-            resolve();
-          }
+          resolve();
         });
       }));
     }
@@ -195,9 +193,7 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject) => {
         this.pickService.deletePick(this.stagedDeletes[i].pick_id).subscribe((success) => {
           if(!success){reject();}
-          if(i == this.stagedDeletes.length - 1) {
-            resolve();
-          }
+          resolve();
         });
       }));
     }
@@ -207,7 +203,7 @@ export class MyPicksDashboardComponent implements OnInit {
   highlightSelected(game: Game){
     this.picks.forEach(pick =>{
       if(pick.game_id == game.game_id){
-        this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
+        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
       }
     });
   }
@@ -231,26 +227,6 @@ export class MyPicksDashboardComponent implements OnInit {
     else {
       return null;
     }
-  }
-
-  getTeam(id: number): Team {
-    var team
-    this.myTeams.forEach((teamItem) => {
-      if(id == teamItem.team_id){
-        team = teamItem;
-      }
-    })
-    return team;
-  }
-
-  getGame(id: number): Game {
-    var game
-    this.myGames.forEach((gameItem) => {
-      if(id == gameItem.game_id){
-        game = gameItem;
-      }
-    })
-    return game;
   }
 
   showSubmitTime(index: number): boolean {

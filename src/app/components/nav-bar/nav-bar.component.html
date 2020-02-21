@@ -15,7 +15,7 @@
     <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background tiertary" (click)="editPicks()">
         <span class="secondary">edit</span>
     </button>
-    <button mat-button *ngIf="edit && showEditButton" class="edit-button base-background tiertary" (click)="submitEdits()">
-        <span class="secondary">done</span>
+    <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
+        <span class="base">done</span>
     </button>
 </mat-toolbar>

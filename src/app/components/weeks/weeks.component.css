@@ -29,13 +29,31 @@
 	border: 1px solid;
 }
 
+.week-header-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 10px;
+}
+
 .week-header {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 8px;
-	margin: 10px;
+	margin: 3px;
+	cursor: pointer;
+	border: 1px solid;
+	width: 100%;
+}
+
+.week-header-next {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 8px;
+	margin: 3px;
 	cursor: pointer;
 	border: 1px solid;
 }
@@ -46,8 +64,13 @@
 }
 
 .week-arrow-icon {
-	transform: scale(2);
-	margin:20px;
+	transform: scale(1.5);
+	margin:15px;
+}
+
+.week-arrow-next-icon {
+	transform: scale(1);
+	margin:10px;
 }
 
 .toggle-picks-container {

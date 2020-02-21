@@ -35,9 +35,8 @@ export class PicksDashboardComponent implements OnInit {
   teams = [] as Team[];
   loader = false;
   userData = new UserStanding();
-  settings = new League();
   picked = [] as Pick[];
-
+  maxTotalPicks = 0;
 
   constructor(
     public dialog: MatDialog, 
@@ -56,7 +55,9 @@ export class PicksDashboardComponent implements OnInit {
         this.initWeek(weekSeason)
       });
 
-      this.leagueService.getLeagueSettings().subscribe(settings => this.settings = settings);
+      this.leagueService.getLeagueSettings().subscribe(settings => {
+        this.maxTotalPicks = settings.maxTotalPicks;
+      });
     }
 
   ngOnInit() {
@@ -168,9 +169,9 @@ export class PicksDashboardComponent implements OnInit {
     if(this.stagedPicks.length == 0){
       this.dialog.open(NoPicksDialog,{width: '500px'});
 
-    } else if((this.stagedPicks.length + this.userData.picks + this.picked.length) > this.settings.maxTotalPicks) {
-      let limit = (this.stagedPicks.length + this.userData.picks + this.picked.length) - this.settings.maxTotalPicks;
-      let needed = this.settings.maxTotalPicks - (this.userData.picks + this.picked.length);
+    } else if((this.stagedPicks.length + this.userData.picks + this.picked.length) > this.maxTotalPicks) {
+      let limit = (this.stagedPicks.length + this.userData.picks + this.picked.length) - this.maxTotalPicks;
+      let needed = this.maxTotalPicks - (this.userData.picks + this.picked.length);
 
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '500px';
@@ -210,7 +211,7 @@ export class PicksDashboardComponent implements OnInit {
   highlightStagedPick(game: Game){
     this.stagedPicks.forEach(pick =>{
       if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
-        this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
+        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.teams));
       }
     });
   }
@@ -219,26 +220,6 @@ export class PicksDashboardComponent implements OnInit {
     if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
       return true;
     } else return false;
-  }
-
-  getTeam(id: number): Team {
-    var team
-    this.teams.forEach((teamItem) => {
-      if(id == teamItem.team_id){
-        team = teamItem;
-      }
-    })
-    return team;
-  }
-
-  getGame(id: number): Game {
-    var game
-    this.games.forEach((gameItem) => {
-      if(id == gameItem.game_id){
-        game = gameItem;
-      }
-    })
-    return game;
   }
 
   getTitle(): string {
