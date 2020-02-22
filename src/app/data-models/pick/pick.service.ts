@@ -108,6 +108,7 @@ export class PickService {
         if(picks.value == null) {
             return new StagedPicks();
         }
+        
         return picks.value;
     }
 

@@ -17,6 +17,7 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { League } from 'src/app/data-models/league/league';
+import { CurrentWeek } from 'src/app/data-models/week/current-week';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -37,6 +38,7 @@ export class PicksDashboardComponent implements OnInit {
   userData = new UserStanding();
   picked = [] as Pick[];
   maxTotalPicks = 0;
+  currentWeek = new CurrentWeek();
 
   constructor(
     public dialog: MatDialog, 
@@ -66,21 +68,18 @@ export class PicksDashboardComponent implements OnInit {
     var week = +this.route.snapshot.paramMap.get('week') as number;
     this.loader = true;
 
-    if(season == 0 || week == 0) {
-      this.weekService.getCurrentWeek().subscribe(currentWeek => {
-        season = currentWeek.season;
-        week = currentWeek.week;
+    this.weekService.getCurrentWeek().subscribe(currentWeek => {
+      this.currentWeek = currentWeek;
 
-        this.weekService.getWeek(season, week).subscribe(week => {
-          this.initWeek(week)
-        });
+      if(season == 0 || week == 0) {
+        season = this.currentWeek.season;
+        week = this.currentWeek.week;
+      }
 
-      });
-    } else {
       this.weekService.getWeek(season, week).subscribe(week => {
         this.initWeek(week)
       });
-    }
+    });
   }
 
   initWeek(week: Week) {
@@ -105,7 +104,9 @@ export class PicksDashboardComponent implements OnInit {
   teamLoaded(event) {
     this.showSubmit();
     this.highlightGameResult(event);
-    this.highlightStagedPick(event);
+    if(this.week.number == this.currentWeek.week) {
+      this.highlightStagedPick(event);
+    }
   }
 
   removePickedGames(games: Game[]) {
@@ -129,7 +130,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showSubmit() {
-    let submitOpened = this.stagedPicks.length > 0;
+    let submitOpened = (this.stagedPicks.length > 0) && (this.week.number == this.currentWeek.week);
     if(submitOpened){
       if(document.getElementById("submit-container") != null) {
         document.getElementById("submit-container").style.bottom = "10px";
@@ -209,11 +210,17 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   highlightStagedPick(game: Game){
-    this.stagedPicks.forEach(pick =>{
+    for(let i = 0; i < this.stagedPicks.length; i++) {
+      let pick = this.stagedPicks[i];
       if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
         this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.teams));
+      } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
+        this.stagedPicks.splice(i,1); 
       }
-    });
+    }
+
+    this.pickService.setStagedPicks(this.stagedPicks);
+
   }
 
   showSubmitTime(index: number): boolean {
@@ -224,7 +231,7 @@ export class PicksDashboardComponent implements OnInit {
 
   getTitle(): string {
     let title = "";
-    if(this.stagedPicks.length > 0){
+    if(this.stagedPicks.length > 0 && (this.week.number == this.currentWeek.week)){
       title += "(" + this.stagedPicks.length + " picked)"
     }
     return title;
