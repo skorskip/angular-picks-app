@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../user/user';
 
 
 const httpOptions = {
@@ -16,15 +17,16 @@ const httpOptions = {
 export class WeekService {
     currentWeek = null;
     private weekUrl = environment.serviceURL + 'weeks';
+    
     constructor(
       private http: HttpClient,
       private snackBar: MatSnackBar) { }
 
     /** GET game by id. Will 404 if id not found */
-    getWeek(season: number, week: number): Observable<Week> {
+    getWeek(season: number, week: number, user: User): Observable<Week> {
       const url = `${this.weekUrl}/season/${season}/week/${week}`;
-      return this.http.get<Week>(url).pipe(
-          tap(_ => console.log(`fetched week week=${week} season=${season}`)),
+      return this.http.post(url, user, httpOptions).pipe(
+          tap((weekResponse: Week) => console.log(`fetched week week=${week} season=${season}`)),
           catchError(this.handleError<Week>(`fetched week week=${week} season=${season}`))
       );
     }

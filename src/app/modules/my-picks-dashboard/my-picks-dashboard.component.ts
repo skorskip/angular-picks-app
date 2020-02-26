@@ -13,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
+import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -36,6 +37,7 @@ export class MyPicksDashboardComponent implements OnInit {
   showEditButton = true;
   toggleType = "picks"
   loader = false;
+  weekUserPicks = [] as any[];
   @Input() otherUser = null;
 
   constructor(
@@ -45,10 +47,11 @@ export class MyPicksDashboardComponent implements OnInit {
     private weeksService: WeeksService,
     private weekService: WeekService,
     private route:ActivatedRoute,
+    private dateFormatter: DateFormatterService,
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.initWeek(week.season, week.number)
+          this.initWeek(week.season, week.week)
         }
       )
     }
@@ -83,7 +86,11 @@ export class MyPicksDashboardComponent implements OnInit {
     this.stagedDeletes = [] as Pick[];
     this.week.number = week;
     this.week.season = season;
-    this.getPicksByWeek(season, week);
+
+    this.pickService.getWeekPicksByGame(season, week).subscribe(result => {
+      this.weekUserPicks = result;
+      this.getPicksByWeek(season, week);
+    });
   }
 
   teamLoaded(event) {
@@ -231,9 +238,12 @@ export class MyPicksDashboardComponent implements OnInit {
 
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.myGames[index - 1].pick_submit_by_date != this.myGames[index].pick_submit_by_date){
-      return true;
-    }
-    else return false;
+      return new Date(this.myGames[index].pick_submit_by_date) > new Date()
+    } else return false;
+  }
+
+  submitDate(game: Game):string {
+    return this.dateFormatter.formatDate(new Date(game.pick_submit_by_date));
   }
 
   showEdit(game: Game): boolean {

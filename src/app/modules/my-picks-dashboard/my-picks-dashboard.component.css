@@ -1,7 +1,7 @@
 .pick-game {
     flex-direction: row;
     display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 }
 
@@ -26,6 +26,7 @@
 	align-items: center;
 	margin: 5px;
 }
+
 .edit-opt {
     border: solid 2px;
     border-radius: 50%;
@@ -69,18 +70,32 @@
 	flex-direction: column;
 }
 
+.date-text {
+	font-size: 1em;
+	padding: 10px;
+}
+
+.game-card-date {
+	text-align:right;
+}
+
+.full-row {
+	width: 100%;
+}
+
 @media only screen and (min-width: 665px) {
 	.games-container {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
+		align-items: center;
 	}
 }
 
 @media only screen and (min-width: 665px) {
 	.game-container {
-		margin: 30px;
+		margin-right: 60px;
 	}
 }
 

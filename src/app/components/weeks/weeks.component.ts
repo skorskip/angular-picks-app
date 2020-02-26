@@ -62,14 +62,12 @@ export class WeeksComponent implements OnInit {
   }
 
   weekSelected(weekSelected:number) {
-    this.weekService.getWeek(this.season, weekSelected).subscribe( week => {
-      this.weeksService.weekSelected(week);
-      var element = document.getElementById("weeks-container");
-      if(element != null) {
-        element.className = "week-out-animation";
-        this.weeksView = false;
-      }
-    });
+    this.weeksService.weekSelected(this.currentWeek.season, weekSelected);
+    var element = document.getElementById("weeks-container");
+    if(element != null) {
+      element.className = "week-out-animation";
+      this.weeksView = false;
+    }
   }
 
   toggleView(view) {

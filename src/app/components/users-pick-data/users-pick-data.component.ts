@@ -11,6 +11,7 @@ import { PickData } from 'src/app/data-models/pick/pick-data';
 })
 export class UsersPickDataComponent implements OnInit {
 
+  @Input() picks = [] as PickData[];
   @Input() game = new Game();
   showPickers = false;
   awayPicks = [] as PickData[];
@@ -21,9 +22,7 @@ export class UsersPickDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pickService.getPicksByGame(this.game.game_id).subscribe((picks: PickData[]) => {
-      this.setPickArrays(picks);
-    });
+      this.setPickArrays(this.picks);
   }
 
   picksDataClick(){

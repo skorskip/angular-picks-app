@@ -55,11 +55,11 @@ export class PickService {
         );
     }
 
-    getPicksByGame(gameId:number): Observable<PickData[]> {
-        const url = `${this.picksUrl}/game/${gameId}`;
+    getWeekPicksByGame(season:number, week:number): Observable<any> {
+        const url = `${this.picksUrl}/games/season/${season}/week/${week}`;
         return this.http.get(url, httpOptions).pipe(
-            tap((picks: PickData[]) => console.log(`get picks by game`)),
-            catchError(this.handleError<PickData[]>(`get picks by game`))
+            tap((picks: any) => console.log(`get picks by game`)),
+            catchError(this.handleError<any>(`get picks by game`))
         );
     }
 

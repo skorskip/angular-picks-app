@@ -18,6 +18,7 @@ import { UserService } from 'src/app/data-models/user/user.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { League } from 'src/app/data-models/league/league';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
+import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -39,6 +40,7 @@ export class PicksDashboardComponent implements OnInit {
   picked = [] as Pick[];
   maxTotalPicks = 0;
   currentWeek = new CurrentWeek();
+  weekUserPicks = [] as any[];
 
   constructor(
     public dialog: MatDialog, 
@@ -51,10 +53,11 @@ export class PicksDashboardComponent implements OnInit {
     private teamService:TeamService,
     private route:ActivatedRoute,
     private userService: UserService,
+    private dateFormatter: DateFormatterService,
     private leagueService: LeagueService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => {
         this.loader = true;
-        this.initWeek(weekSeason)
+        this.initWeek(weekSeason.season,weekSeason.week)
       });
 
       this.leagueService.getLeagueSettings().subscribe(settings => {
@@ -76,28 +79,31 @@ export class PicksDashboardComponent implements OnInit {
         week = this.currentWeek.week;
       }
 
-      this.weekService.getWeek(season, week).subscribe(week => {
-        this.initWeek(week)
-      });
+      this.initWeek(season, week);
     });
   }
 
-  initWeek(week: Week) {
+  initWeek(season: number, week: number) {
     this.games = [];
     this.teams = [];
-    this.week = week;
-    this.teams = week.teams;
 
-    this.removePickedGames(week.games).then((games: Game[])=>{
-      this.games = games;
-      this.loader = false;
+    this.pickService.getWeekPicksByGame(season, week).subscribe((result:any) => {
+      this.weekUserPicks = result;
+
+      this.weekService.getWeek(season, week, this.user).subscribe(week => {
+        this.week = week;
+        this.teams = week.teams;
+        this.games = week.games;
+    
+        this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
+          this.userData = result[0];
+        });
+    
+        this.stagedPicks = this.pickService.getStagedPicks().picks;
+        this.loader = false;
+      });
     });
 
-    this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
-      this.userData = result[0];
-    });
-
-    this.stagedPicks = this.pickService.getStagedPicks().picks;
 
   }
 
@@ -107,22 +113,6 @@ export class PicksDashboardComponent implements OnInit {
     if(this.week.number == this.currentWeek.week) {
       this.highlightStagedPick(event);
     }
-  }
-
-  removePickedGames(games: Game[]) {
-    return new Promise((resolve, reject)=>{
-      this.pickService.getPicksByWeek(this.user, this.week.season, this.week.number).subscribe((picks) => {
-        this.picked = picks.picks;
-        this.picked.forEach(pick => {
-          games.forEach((game, i) => {
-            if(pick.game_id == game.game_id) {
-              games.splice(i, 1);
-            }
-          })
-        });
-        resolve(games);
-      });
-    });
   }
 
   teamClicked(opened: boolean){
@@ -225,8 +215,12 @@ export class PicksDashboardComponent implements OnInit {
 
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
-      return true;
+      return new Date(this.games[index].pick_submit_by_date) > new Date()
     } else return false;
+  }
+
+  submitDate(game: Game):string {
+    return this.dateFormatter.formatDate(new Date(game.pick_submit_by_date));
   }
 
   getTitle(): string {

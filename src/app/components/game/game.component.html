@@ -1,13 +1,6 @@
 <div>
-  <div *ngIf="submitStatus()">
-    <div class="game-card-date">
-      <div class="date-text primary">
-        Submit by: {{ submitDate }}
-      </div>
-    </div>
-  </div> 
   <div class="game-card base-background tiertary" attr.id={{game.game_id}}-game-card>
-    <div>
+    <div *ngIf="submitStatus()">
       <div class="game-card-date">
         <div class="date-text primary">
             {{ timeStatus() }}
@@ -42,7 +35,8 @@
       </div>
     </div>
     <users-pick-data *ngIf="showPicksData()"
-      [game]="game">
+      [game]="game"
+      [picks]="userGamePicks">
     </users-pick-data>
     <div style="padding: 10px" *ngIf="!showPicksData()">
     </div>

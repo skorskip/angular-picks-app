@@ -4,6 +4,7 @@ import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
 import { DateFormatterService } from '../../services/date-formatter/date-formatter.service';
 import { TeamService } from 'src/app/data-models/team/team.service';
+import { PickData } from 'src/app/data-models/pick/pick-data';
 @Component({
   selector: 'game',
   templateUrl: './game.component.html',
@@ -13,10 +14,10 @@ export class GameComponent implements OnInit {
 	
   @Input() game: Game;
   @Input('submitOpened') submitOpened: boolean;
-  @Input() showSubmitTime: boolean;
   @Input() notSelectablePicks = false;
   @Input() pickSuccess = null;
   @Input() teams: Team[] = [];
+  @Input() userGamePicks: PickData[] = [];
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
   @Output() teamLoaded = new EventEmitter();
@@ -67,11 +68,11 @@ export class GameComponent implements OnInit {
   }
 
   submitStatus() {
-    return new Date(this.game.pick_submit_by_date) > new Date() && this.showSubmitTime;
+    return new Date(this.game.pick_submit_by_date) <= new Date();
   }
 
   showPicksData() {
-    return new Date(this.game.pick_submit_by_date) < new Date();
+    return new Date(this.game.pick_submit_by_date) <= new Date();
   }
 
   timeStatus() {
