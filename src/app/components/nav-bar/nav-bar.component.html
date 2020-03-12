@@ -12,8 +12,8 @@
             {{ subtitle }}
         </div>
     </div>
-    <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background tiertary" (click)="editPicks()">
-        <span class="secondary">edit</span>
+    <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background primary" (click)="editPicks()">
+        <span class="primary">edit</span>
     </button>
     <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
         <span class="base">done</span>
