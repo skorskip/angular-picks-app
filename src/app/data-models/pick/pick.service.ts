@@ -6,7 +6,6 @@ import { Pick } from './pick';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StagedPicks } from './staged-picks';
-import { PickData } from './pick-data';
 import { User } from '../user/user';
 import { WeekPicks } from './week-picks';
 
@@ -76,14 +75,6 @@ export class PickService {
         return this.http.get(url, httpOptions).pipe(
             tap((picks: WeekPicks)  => console.log(`get picks`)),
             catchError(this.handleError<WeekPicks>(`get picks`))
-        );
-    }
-
-    getPicks(userId: number): Observable<Pick[]> {
-        const url = `${this.picksUrl}/user/${userId}`;
-        return this.http.get(url, httpOptions).pipe(
-            tap((picks: Pick[])  => console.log(`get user picks`)),
-            catchError(this.handleError<Pick[]>(`get user picks`))
         );
     }
 

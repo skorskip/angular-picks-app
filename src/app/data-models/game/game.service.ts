@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Game } from './game';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
-
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -21,14 +15,6 @@ export class GameService {
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar) { }
-
-  getGameByIds (gameIds:number[]): Observable<Game[]> {
-    const url = `${this.gamesUrl}`;
-    return this.http.post(url, gameIds, httpOptions).pipe(
-      tap((newGames: Game[]) => console.log(`fetched games`)),
-      catchError(this.handleError<Game[]>(`fetchec games`))
-    );
-  }
 
   // /** GET game by id. Will 404 if id not found */
   getGame(id: number): Observable<Game> {

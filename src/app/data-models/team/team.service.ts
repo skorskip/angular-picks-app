@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Team } from './team';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ThemeService } from 'src/app/services/theme/theme.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({ providedIn: 'root' })
 export class TeamService {
@@ -17,26 +10,7 @@ export class TeamService {
   private teamUrl = environment.serviceURL +'teams';  // URL to web api
 
   constructor(
-    private http: HttpClient,
-    private snackBar: MatSnackBar,
-    private themeService: ThemeService) { }
-
-  getTeamByIds (teamIds:number[]): Observable<Team[]> {
-    const url = `${this.teamUrl}`;
-    return this.http.post(url, teamIds, httpOptions).pipe(
-      tap((newTeams: Team[]) => console.log(`fetched teams`)),
-      catchError(this.handleError<Team[]>(`fetched teams`))
-    );
-  }
-
-  /** GET game by id. Will 404 if id not found */
-  getTeam (id: number): Observable<Team> {
-    const url = `${this.teamUrl}/${id}`;
-    return this.http.get<Team>(url).pipe(
-        tap(_ => console.log(`fetched team team=${id}`)),
-        catchError(this.handleError<Team>(`fetched team team=${id}`))
-    );
-  }
+    private snackBar: MatSnackBar) { }
 
   getTeamLocal (id: number, teams: Team[]): Team {
     var team
