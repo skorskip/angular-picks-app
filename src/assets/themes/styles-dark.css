@@ -9,11 +9,13 @@
 }
 
 .tiertary {
-    color: rgb(49, 46, 70) !important;
+    /* color: rgb(49, 46, 70) !important; */
+    color: rgb(53, 53, 53) !important;
 }
 
 .base {
-    color:rgb(27, 26, 37) !important;
+    color: black !important
+    /* color:rgb(27, 26, 37) !important; */
 }
 
 .primary-background {
@@ -25,11 +27,13 @@
 }
 
 .tiertary-background {
-    background-color: rgb(49, 46, 70) !important;
+    /* background-color: rgb(49, 46, 70) !important; */
+    background-color: rgb(53, 53, 53) !important;
 }
 
 .base-background {
-    background-color: rgb(27, 26, 37) !important;
+    background-color: black !important;
+    /* background-color: rgb(27, 26, 37) !important; */
 }
 
 .mat-progress-spinner circle, .mat-spinner circle {
