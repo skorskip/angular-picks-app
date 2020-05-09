@@ -17,7 +17,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AnnouncementsService {
-  private announcementsUrl = environment.serviceURL + 'message';  // URL to web api
+  private announcementsUrl = environment.messageServiceURL + 'message';  // URL to web api
   announcementChange: Subject<boolean> = new Subject<boolean>();
   announcementSelected =false;
 

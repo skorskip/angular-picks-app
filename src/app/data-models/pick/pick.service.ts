@@ -15,7 +15,7 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class PickService {
-    private picksUrl = environment.serviceURL + 'picks';  // URL to web api
+    private picksUrl = environment.picksServiceURL + 'picks';  // URL to web api
 
     constructor(
       private http: HttpClient,

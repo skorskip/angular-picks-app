@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LeagueService {
-  private leagueUrl = environment.serviceURL + 'league';  // URL to web api
+  private leagueUrl = environment.leagueServiceURL + 'league';  // URL to web api
 
   constructor(
     private http: HttpClient,

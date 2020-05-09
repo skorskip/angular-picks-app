@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class WeekService {
     currentWeek = null;
-    private weekUrl = environment.serviceURL + 'weeks';
+    private weekUrl = environment.weekServiceURL + 'week';
     
     constructor(
       private http: HttpClient,

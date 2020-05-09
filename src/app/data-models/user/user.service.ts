@@ -16,7 +16,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = environment.serviceURL + 'users';
+  private usersUrl = environment.userServiceURL + 'users';
 
   constructor(
     private http: HttpClient,

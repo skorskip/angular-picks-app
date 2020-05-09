@@ -16,7 +16,7 @@ const httpOptions = {
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    private usersUrl = environment.serviceURL + 'users';
+    private usersUrl = environment.userServiceURL + 'users';
 
     constructor(
         private http: HttpClient, 
