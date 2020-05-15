@@ -7,11 +7,11 @@ import { LeagueService } from 'src/app/data-models/league/league.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NavigationComponent implements OnInit {
 
   events: string[] = [];
   openedSmall: boolean;

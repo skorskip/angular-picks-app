@@ -1,23 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavigationComponent } from './navigation.component';
+import { AppRoutingModule } from '../../app-routing/app-routing.module';
 import { MaterialModule } from '../../material/material.module';
-import { RegisterModule } from '../../modules/register/register.module';
 import { SharedModule } from '../../shared/shared.module';
 
-import { ProfileComponent } from './profile.component';
-
 @NgModule({
+  declarations: [NavigationComponent],
   imports: [
     CommonModule,
+    AppRoutingModule,
     MaterialModule,
-    RegisterModule,
     SharedModule
   ],
-  declarations: [
-    ProfileComponent
-  ],
   exports: [
-    ProfileComponent
+    NavigationComponent
   ]
 })
-export class ProfileModule { }
+export class NavigationModule { }

@@ -15,6 +15,7 @@ import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { NavigationModule } from './modules/navigation/navigation.module';
 
 import { WeekService } from './data-models/week/week.service';
 
@@ -35,7 +36,8 @@ import { WeekService } from './data-models/week/week.service';
     StandingsModule,
     ProfileModule,
     LoginModule,
-    MessagesModule
+    MessagesModule,
+    NavigationModule
   ],
   providers: [WeekService],
   bootstrap: [AppComponent]

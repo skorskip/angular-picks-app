@@ -12,10 +12,14 @@
             {{ subtitle }}
         </div>
     </div>
+    <button mat-icon-button (click)="toggleSideNav()">
+        <mat-icon class="sidenav-button primary">more_vert</mat-icon>
+    </button>
     <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background primary" (click)="editPicks()">
         <span class="primary">edit</span>
     </button>
     <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
         <span class="base">done</span>
     </button>
+
 </mat-toolbar>
