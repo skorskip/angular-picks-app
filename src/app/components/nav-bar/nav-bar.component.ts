@@ -41,6 +41,10 @@ export class NavBarComponent implements OnInit {
     this.sideNavService.toggleSidebarVisibility();
   }
 
+  toggleProfile(){
+    this.sideNavService.toggleProfileVisibility();
+  }
+
   editPicks(){
     this.edit = true;
     this.editPickSelected.emit(true);

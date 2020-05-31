@@ -4,4 +4,5 @@ export class Announcements {
     announcements: number;
     announcement_date: string;
     messages: Message[];
+    date: Date;
 }

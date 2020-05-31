@@ -14,24 +14,16 @@ import { AnnouncementsService } from 'src/app/data-models/announcements/announce
 export class NavigationComponent implements OnInit {
 
   events: string[] = [];
-  openedSmall: boolean;
-  opened:boolean;
-  largeScreen = false as boolean;
   selected;
-  sideMenuType;
-  mobileQuery: MediaQueryList;
   messageCount = 0;
   
-  private _mobileQueryListener: () => void;
-
   constructor(
     private router:Router, 
     private themeService:ThemeService,
     private sideNavService: SideNavService,
     private leagueService: LeagueService,
     private announcementsService: AnnouncementsService,
-    changeDetectorRef: ChangeDetectorRef, 
-    media: MediaMatcher){
+    ){
 
     this.router.events.subscribe((event) => {
         if(event instanceof NavigationStart) {
@@ -46,25 +38,9 @@ export class NavigationComponent implements OnInit {
         });
       }
     });
-
-    this.sideNavService.sidebarVisibilityChange.subscribe(value => {
-      this.opened = value;
-    });
-
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  ngOnInit() {
-    this.announcementsService.getAnnoucements().subscribe((messages) => {
-      this.messageCount = messages.announcements;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
+  ngOnInit() {}
 
   highlightByRoute(route: string) {
     if(route.indexOf("picks") != -1) {
@@ -82,29 +58,12 @@ export class NavigationComponent implements OnInit {
 
   ngAfterViewInit() {
     this.highlightByRoute(this.router.url);
-    this.resize(document.getElementById("side-nav").scrollWidth);
     var element = document.getElementById(this.selected);
 
     if(element != null){
       element.classList.add("primary-background");
       element.classList.add("base");
       element.classList.add("selected");
-    }
-  }
-
-  onResize(event) {
-    this.resize(event.target.innerWidth);
-  }
-
-  resize(windowSize: number) {
-    if(windowSize > 950){
-      this.largeScreen = true;
-      this.opened = true;
-      this.sideMenuType = "side";
-    } else {
-      this.opened = false;
-      this.largeScreen = false;
-      this.sideMenuType = "push";
     }
   }
 
@@ -148,11 +107,7 @@ export class NavigationComponent implements OnInit {
   }
 
   toggle(){
-    if(this.opened && this.largeScreen == false) {
-      this.opened = false;
-    } else {
-      this.opened = true;
-    }
+    this.sideNavService.toggleSidebarVisibility();
   }
 
   getCurrentPageLogin(): boolean {

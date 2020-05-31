@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Announcements } from './announcements';
+import { StarGateService } from '../../services/star-gate/star-gate.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,27 +19,38 @@ export class AnnouncementsService {
   private announcementsUrl = environment.messageServiceURL + 'message';  // URL to web api
   announcementChange: Subject<boolean> = new Subject<boolean>();
   announcementSelected =false;
+  private announcements: BehaviorSubject<Announcements>;
 
   constructor(
     private http: HttpClient,
-    private snackBar: MatSnackBar) { 
+    private snackBar: MatSnackBar,
+    private stargate: StarGateService) { 
       this.announcementChange.subscribe((value) => {
         this.announcementSelected = value
       });
+
+      this.announcements = new BehaviorSubject<Announcements>(JSON.parse(localStorage.getItem("announcements")));
     }
 
   getAnnoucements(): Observable<Announcements> {
     const url = `${this.announcementsUrl}/announcements`;
-
-    var request = {} as any;
-    request.lastCheckDate = this.getAnnouncementCheck();
-
-    return this.http.post(url, request, httpOptions).pipe(
-      tap((announcements: Announcements) => {
-        console.log(`fetched announcements`);
-      }),
-      catchError(this.handleError<Announcements>(`fetched announcements`))
-    );
+    
+    if(this.stargate.allow('announcements')){
+      var request = {} as any;
+      request.lastCheckDate = this.getAnnouncementCheck();
+  
+      return this.http.post(url, request, httpOptions).pipe(
+        tap((announcements: Announcements) => {
+          console.log(`fetched announcements`);
+          announcements.date = new Date();
+          localStorage.setItem("announcements", JSON.stringify(announcements));
+          this.announcements.next(announcements);
+        }),
+        catchError(this.handleError<Announcements>(`fetched announcements`))
+      );
+    } else {
+      return this.announcements.asObservable();
+    }
   }
 
   setAnnouncementCheck(dateChecked: string) {

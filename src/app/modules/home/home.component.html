@@ -19,13 +19,13 @@
     </mat-sidenav>
    
     <mat-sidenav 
-    #sidenav 
-    [fixedInViewport]="mobileQuery.matches" 
-    mode="{{sideMenuType}}"
-    [(opened)]="opened"
-    (openedChange)="sideNavState($event)"
-    class="sidenav base-background secondary"
-    position="end">
+      #sidenav 
+      [fixedInViewport]="mobileQuery.matches" 
+      mode="{{profileMenuType}}"
+      [(opened)]="profileOpened"
+      (openedChange)="sideProfileState($event)"
+      class="sidenav base-background secondary"
+      position="end">
       <app-profile></app-profile>
     </mat-sidenav>
 

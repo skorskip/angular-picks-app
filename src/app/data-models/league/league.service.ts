@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { League } from './league';
 
 const httpOptions = {
@@ -15,21 +16,36 @@ const httpOptions = {
 })
 export class LeagueService {
   private leagueUrl = environment.leagueServiceURL + 'league';  // URL to web api
+  private settings: BehaviorSubject<League>;
 
   constructor(
     private http: HttpClient,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private starGate: StarGateService
+    ) { 
+      this.settings = new BehaviorSubject<League>(JSON.parse(localStorage.getItem("settings")));
+    }
 
-    getLeagueSettings(): Observable<League>{
+    getLeagueSettings(): Observable<League> {
       const url = `${this.leagueUrl}/settings`;
-      return this.http.get(url, httpOptions).pipe(
-          tap((league: League) => console.log(`get settings`)),
-          catchError(this.handleError<League>(`get settings`))
-      );
+      if(this.starGate.allow('settings')) {
+        return this.http.get(url, httpOptions).pipe(
+            tap((league: League) => {
+              console.log(`get settings`);
+              league.date = new Date();
+              localStorage.setItem("settings", JSON.stringify(league));
+              this.settings.next(league);
+            }),
+            catchError(this.handleError<League>(`get settings`))
+        );
+      }
+      else {
+        return this.settings.asObservable();
+      }
     }
 
 
-      // /**
+  // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.
   //  * @param operation - name of the operation that failed

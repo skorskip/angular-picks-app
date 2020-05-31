@@ -4,10 +4,10 @@ import { CurrentWeek } from './current-week';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../user/user';
-
+import { StarGateService } from '../../services/star-gate/star-gate.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,12 +15,15 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class WeekService {
-    currentWeek = null;
     private weekUrl = environment.weekServiceURL + 'week';
+    private currentWeek: BehaviorSubject<CurrentWeek>;
     
     constructor(
       private http: HttpClient,
-      private snackBar: MatSnackBar) { }
+      private snackBar: MatSnackBar,
+      private starGate: StarGateService) { 
+        this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
+      }
 
     /** GET game by id. Will 404 if id not found */
     getWeek(season: number, week: number, user: User): Observable<Week> {
@@ -33,14 +36,20 @@ export class WeekService {
 
     getCurrentWeek(): Observable<CurrentWeek> {
       const url = `${this.weekUrl}/current`;
-      if(this.currentWeek == null) {
-        this.currentWeek = this.http.get<CurrentWeek>(url).pipe(
-          tap(_ => console.log(`fetched current week`)),
-          catchError(this.handleError<Week>(`fetched current week`))
+      if(this.starGate.allow("currentWeek")) {
+        return this.http.get<CurrentWeek>(url).pipe(
+          tap((currentWeek: CurrentWeek) => {
+            console.log(`fetched current week`);
+            currentWeek.date = new Date();
+            localStorage.setItem("currentWeek", JSON.stringify(currentWeek));
+            this.currentWeek.next(currentWeek);
+          }),
+          catchError(this.handleError<CurrentWeek>(`fetched current week`))
         );
-      } 
+      } else {
+        return this.currentWeek.asObservable();
+      }
 
-      return this.currentWeek;
     }
 
   // /**
