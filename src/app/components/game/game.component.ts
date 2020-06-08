@@ -23,8 +23,8 @@ export class GameComponent implements OnInit {
   @Output() teamLoaded = new EventEmitter();
   
   submitDate = "";
-  home_team = new Team();
-  away_team = new Team();
+  home_team_id = new Team();
+  away_team_id = new Team();
   showPickers = false;
   
   constructor(
@@ -43,7 +43,7 @@ export class GameComponent implements OnInit {
   selectTeam(selectedTeam:Team) {
     if(!this.notSelectablePicks && new Date(this.game.pick_submit_by_date) > new Date()){
 
-      var otherTeam = this.game.home_team == selectedTeam.team_id ? this.away_team : this.home_team;
+      var otherTeam = this.game.home_team_id == selectedTeam.team_id ? this.away_team_id : this.home_team_id;
       
       this.stageSelectedPick.emit(this.stagePick(selectedTeam.team_id, this.game.game_id));
       this.openSubmit.emit(true);
@@ -114,14 +114,14 @@ export class GameComponent implements OnInit {
 
   setTeams(game: Game, teams: Team[]) {
     for(var i = 0; i < teams.length; i++) {
-      if(this.home_team.team_id != 0 && this.away_team.team_id != 0) {
+      if(this.home_team_id.team_id != 0 && this.away_team_id.team_id != 0) {
         return;
       }
-      if(game.home_team == teams[i].team_id){
-        this.home_team = teams[i];
+      if(game.home_team_id == teams[i].team_id){
+        this.home_team_id = teams[i];
 
-      } else if(game.away_team == teams[i].team_id) {
-        this.away_team = teams[i];
+      } else if(game.away_team_id == teams[i].team_id) {
+        this.away_team_id = teams[i];
       } 
     }
   }

@@ -4,9 +4,11 @@ import { User } from './user';
 import { UserStanding } from './user-standing';
 import { environment } from '../../../environments/environment';
 import { catchError,map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { StarGateService } from '../../services/star-gate/star-gate.service';
+import { Standings } from './standings';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,11 +19,17 @@ const httpOptions = {
 })
 export class UserService {
   private usersUrl = environment.userServiceURL + 'users';
+  private standings: BehaviorSubject<UserStanding[]>;
+  private userStandings: BehaviorSubject<UserStanding[]>;
 
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private starGate: StarGateService) { 
+      this.standings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('standings')).standings);
+      this.userStandings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('userStandings')).standings);
+    }
 
   register(user: User): Observable<boolean> {
     let url = `${this.usersUrl}/register`;
@@ -56,18 +64,38 @@ export class UserService {
 
   getStandings(season: number):Observable<UserStanding[]> {
     let url = `${this.usersUrl}/standings/${season}`;
-    return this.http.get<UserStanding[]>(url).pipe(
-      tap(_ => console.log(`get user standings`)), 
-      catchError(this.handleError<UserStanding[]>(`get user standings`))
-    );
+    if(this.starGate.allow('standings')) {
+      return this.http.get<UserStanding[]>(url).pipe(
+        tap((standings: UserStanding[]) => {
+          console.log(`get user standings`);
+          var object = new Standings();
+          object.standings = standings
+          localStorage.setItem('standings', JSON.stringify(object));
+          this.standings.next(standings);
+        }), 
+        catchError(this.handleError<UserStanding[]>(`get user standings`))
+      );
+    } else {
+      return this.standings.asObservable();
+    }
   }
 
   getStandingsByUser(season: number, user: User):Observable<UserStanding[]> {
     let url = `${this.usersUrl}/standings/${season}`;
-    return this.http.post(url, user, httpOptions).pipe(
-      tap((userStaning: UserStanding[]) => console.log(`get user standings`)), 
-      catchError(this.handleError<UserStanding[]>(`get user standings`))
-    );
+    if(this.starGate.allow('userStandings')){
+      return this.http.post(url, user, httpOptions).pipe(
+        tap((userStanding: UserStanding[])=> {
+          console.log(`get user standings`);
+          var object = new Standings();
+          object.standings = userStanding;
+          localStorage.setItem('userStandings', JSON.stringify(object));
+          this.userStandings.next(userStanding);
+        }), 
+        catchError(this.handleError<UserStanding[]>(`get user standings`))
+      );
+    } else {
+      return this.userStandings.asObservable();
+    }
   }
 
     // /**

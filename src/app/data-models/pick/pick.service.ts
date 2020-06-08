@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { StagedPicks } from './staged-picks';
 import { User } from '../user/user';
 import { WeekPicks } from './week-picks';
+import { StarGateService } from '../../services/star-gate/star-gate.service';
+import { WeekService } from '../../data-models/week/week.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,16 +18,24 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PickService {
     private picksUrl = environment.picksServiceURL + 'picks';  // URL to web api
+    private picks: BehaviorSubject<WeekPicks>;
+    private picksByGame: BehaviorSubject<any>;
 
     constructor(
       private http: HttpClient,
-      private snackBar: MatSnackBar) { }
+      private snackBar: MatSnackBar,
+      private starGate: StarGateService,
+      private weekService: WeekService) { 
+          this.picks = new BehaviorSubject<WeekPicks>(JSON.parse(localStorage.getItem('picks')));
+          this.picksByGame = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('picksByGame')));
+      }
 
     addPicks(picks: Pick[]): Observable<boolean> {
         const url = `${this.picksUrl}/create`;
         return this.http.post(url, picks, httpOptions).pipe(
             map((response) => {
                 console.log(`added picks`);
+                localStorage.setItem('picksUpdatedDate', new Date().toString());
                 return response == 'SUCCESS';
             }),
             catchError(this.handleError<boolean>(`addded picks`))
@@ -37,6 +47,7 @@ export class PickService {
         return this.http.delete(url, httpOptions).pipe(
             map((response) => {
                 console.log(`delete pick`);
+                localStorage.setItem('picksUpdatedDate', new Date().toString());
                 return response == 'SUCCESS';
             }),
             catchError(this.handleError<boolean>('added picks'))
@@ -48,6 +59,7 @@ export class PickService {
         return this.http.put(url, pickUpdate, httpOptions).pipe(
             map((response) => {
                 console.log(`updated picks`);
+                localStorage.setItem('picksUpdatedDate', new Date().toString());
                 return response == 'SUCCESS';
             }),
             catchError(this.handleError<boolean>(`updated picks`))
@@ -56,18 +68,53 @@ export class PickService {
 
     getWeekPicksByGame(season:number, week:number): Observable<any> {
         const url = `${this.picksUrl}/games/season/${season}/week/${week}`;
-        return this.http.get(url, httpOptions).pipe(
-            tap((picks: any) => console.log(`get picks by game`)),
-            catchError(this.handleError<any>(`get picks by game`))
-        );
+        if(this.starGate.allowWeek('picksByGame', season, week)) {
+            return this.http.get(url, httpOptions).pipe(
+                tap((picks: any) => {
+                    console.log(`get picks by game`);
+                    this.setPicksByGame(season, week, picks);
+                }),
+                catchError(this.handleError<any>(`get picks by game`))
+            );
+        } else {
+            return this.picksByGame.asObservable();
+        }
     }
 
     getPicksByWeek(user: User, season:number, week:number): Observable<WeekPicks> {
         const url = `${this.picksUrl}/season/${season}/week/${week}`;
-        return this.http.post(url, user, httpOptions).pipe(
-            tap((picks: WeekPicks)  => console.log(`get picks`)),
-            catchError(this.handleError<WeekPicks>(`get picks`))
-        );
+        if(this.starGate.allowWeek('picks', season, week)) {
+            return this.http.post(url, user, httpOptions).pipe(
+                tap((picks: WeekPicks)  => {
+                    console.log(`get picks`);
+                    this.setPicks(season, week, picks);
+                }),
+                catchError(this.handleError<WeekPicks>(`get picks`))
+            );
+        } else {
+            return this.picks.asObservable();
+        }
+
+    }
+
+    setPicks(season: number, week: number, picks: any) {
+        this.weekService.getCurrentWeek().subscribe(curr => {
+            if(curr.week == week && curr.season == season) {
+                picks.date = new Date();
+                localStorage.setItem('picks', JSON.stringify(picks));
+                this.picks.next(picks);
+            }
+        });
+    }
+
+    setPicksByGame(season: number, week: number, picks: any) {
+        this.weekService.getCurrentWeek().subscribe(curr => {
+            if(curr.week == week && curr.season == season) {
+                picks.date = new Date();
+                localStorage.setItem('picksByGame', JSON.stringify(picks));
+                this.picksByGame.next(picks);
+            }
+        });
     }
 
     getUsersPicksByWeek(userId:number, season:number, week:number): Observable<WeekPicks> {

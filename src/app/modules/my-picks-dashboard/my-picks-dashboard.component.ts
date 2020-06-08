@@ -146,7 +146,7 @@ export class MyPicksDashboardComponent implements OnInit {
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
         this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
-        var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
+        var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
         var newPick = pick;
         newPick.team_id = newTeam;
         this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));

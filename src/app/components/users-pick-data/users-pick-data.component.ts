@@ -31,7 +31,7 @@ export class UsersPickDataComponent implements OnInit {
 
   setPickArrays(picks: PickData[]) {
     for(var i = 0; i < picks.length; i++){
-      if(picks[i].team_id == this.game.away_team) {
+      if(picks[i].team_id == this.game.away_team_id) {
         this.awayPicks.push(picks[i]);
       } else {
         this.homePicks.push(picks[i]);

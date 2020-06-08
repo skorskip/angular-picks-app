@@ -4,8 +4,8 @@ export class Game {
 	season: number;
 	start_time: string;
 	pick_submit_by_date: string;
-	home_team: number;
-	away_team: number;
+	home_team_id: number;
+	away_team_id: number;
 	home_team_score: number;
 	away_team_score: number;
 	home_spread: number;

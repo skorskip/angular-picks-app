@@ -8,4 +8,5 @@ export class UserStanding {
     wins: number;
     picks: number;
     win_pct: number;
+    date: Date;
 }
