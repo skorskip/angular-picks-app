@@ -44,12 +44,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     });
 
     this.weekService.getCurrentWeek().subscribe((week) => {
-      this.userService.getStandingsByUser(week.season, this.user).subscribe((results) => {
+      this.userService.getStandingsByUser(week.season, week.season, this.user).subscribe((results) => {
         this.userStandings = results[0];
         this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
       });
 
-      this.picksService.getPicksByWeek(this.user, week.season, week.week).subscribe((picks) => {
+      this.picksService.getPicksByWeek(this.user, week.season, week.seasonType, week.week).subscribe((picks) => {
         this.picks = picks.picks;
       });
     });

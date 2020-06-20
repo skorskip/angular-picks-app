@@ -12,9 +12,10 @@ export class WeeksService {
   
    weekSelected$ = this.weekSource.asObservable();
   
-   weekSelected(season: number, week: number) {
+   weekSelected(season: number, seasonType: number, week: number) {
      let weekSeason = new CurrentWeek();
      weekSeason.season = season;
+     weekSeason.seasonType = seasonType;
      weekSeason.week = week;
      this.weekSource.next(weekSeason);
    }

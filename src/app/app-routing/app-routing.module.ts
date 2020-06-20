@@ -13,9 +13,9 @@ import { AuthGuard } from '../services/guard/guard.service';
 
 const routes: Routes = [
   { path: '', component: PicksDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'picks/:season/:week', component: MyPicksDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'picks/:season/:seasonType/:week', component: MyPicksDashboardComponent, canActivate: [AuthGuard] },
   { path: 'picks', component: MyPicksDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'games/:season/:week', component: PicksDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'games/:season/:seasonType:/:week', component: PicksDashboardComponent, canActivate: [AuthGuard] },
   { path: 'games', component: PicksDashboardComponent, canActivate: [AuthGuard] },
   { path: 'standings', component: StandingsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

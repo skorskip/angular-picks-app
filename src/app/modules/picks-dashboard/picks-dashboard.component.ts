@@ -57,7 +57,7 @@ export class PicksDashboardComponent implements OnInit {
     private leagueService: LeagueService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => {
         this.loader = true;
-        this.initWeek(weekSeason.season,weekSeason.week)
+        this.initWeek(weekSeason.season,weekSeason.seasonType, weekSeason.week)
       });
 
       this.leagueService.getLeagueSettings().subscribe(settings => {
@@ -68,34 +68,37 @@ export class PicksDashboardComponent implements OnInit {
   ngOnInit() {
     this.user = this.authService.currentUserValue;
     var season = +this.route.snapshot.paramMap.get('season') as number;
+    var seasonType = +this.route.snapshot.paramMap.get('seasonType') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
+    
     this.loader = true;
 
     this.weekService.getCurrentWeek().subscribe(currentWeek => {
       this.currentWeek = currentWeek;
 
-      if(season == 0 || week == 0) {
+      if(season == 0 || week == 0 || seasonType == 0) {
         season = this.currentWeek.season;
+        seasonType = this.currentWeek.seasonType;
         week = this.currentWeek.week;
       }
 
-      this.initWeek(season, week);
+      this.initWeek(season, seasonType, week);
     });
   }
 
-  initWeek(season: number, week: number) {
+  initWeek(season: number, seasonType: number, week: number) {
     this.games = [];
     this.teams = [];
 
-    this.pickService.getWeekPicksByGame(season, week).subscribe((result:any) => {
+    this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;
 
-      this.weekService.getWeek(season, week, this.user).subscribe(week => {
+      this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
         this.week = week;
         this.teams = week.teams;
         this.games = week.games;
     
-        this.userService.getStandingsByUser(week.season, this.user).subscribe((result:UserStanding[]) => {
+        this.userService.getStandingsByUser(week.season, week.seasonType, this.user).subscribe((result:UserStanding[]) => {
           this.userData = result[0];
         });
     
@@ -180,7 +183,7 @@ export class PicksDashboardComponent implements OnInit {
             if(status) {
               this.pickService.clearStagedPicks();
               this.snackBar.open("picks submitted",'', {duration:3000});
-              this.router.navigate(['/picks/' + this.week.season + '/' + this.week.number]);
+              this.router.navigate(['/picks/' + this.week.season + '/' + this.week.seasonType + '/' + this.week.number]);
             } else {
               this.dialog.open(PicksErrorDialog,{width: '500px'});
             }

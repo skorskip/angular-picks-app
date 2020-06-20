@@ -13,7 +13,8 @@ import { CurrentWeek } from 'src/app/data-models/week/current-week';
 export class WeeksComponent implements OnInit {
   @Input() number;
   @Input() view;
-  @Input() season =0;
+  @Input() season = 0;
+  @Input() seasonType = 0;
   weeksView = false;
   weeks = [] as number[];
   hideToggle = false;
@@ -35,6 +36,7 @@ export class WeeksComponent implements OnInit {
 
   showWeeks() {
     var tempWeeks = [];
+    this.seasonType = this.currentWeek.seasonType;
     this.season = this.currentWeek.season;
     for(var i = 1; i <= this.currentWeek.week; i++) {
       var week = {} as any;
@@ -62,7 +64,7 @@ export class WeeksComponent implements OnInit {
   }
 
   weekSelected(weekSelected:number) {
-    this.weeksService.weekSelected(this.currentWeek.season, weekSelected);
+    this.weeksService.weekSelected(this.currentWeek.season, this.currentWeek.seasonType, weekSelected);
     var element = document.getElementById("weeks-container");
     if(element != null) {
       element.className = "week-out-animation";
@@ -72,9 +74,9 @@ export class WeeksComponent implements OnInit {
 
   toggleView(view) {
     if(view == "picks") {
-      this.router.navigate(['/picks/' + this.season + '/' + this.number]);
+      this.router.navigate(['/picks/' + this.season + '/' + this.seasonType + '/' + this.number]);
     } else {
-      this.router.navigate(['/games/' + this.season + '/' + this.number]);
+      this.router.navigate(['/games/' + this.season + '/' + this.seasonType + '/' + this.number]);
     }
   }
 }

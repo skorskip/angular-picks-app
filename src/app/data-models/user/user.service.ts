@@ -27,8 +27,13 @@ export class UserService {
     private snackBar: MatSnackBar,
     private authService: AuthenticationService,
     private starGate: StarGateService) { 
-      this.standings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('standings')).standings);
-      this.userStandings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('userStandings')).standings);
+      if(localStorage.getItem('standings') != null) {
+        this.standings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('standings')).standings);
+      }
+
+      if(localStorage.getItem('userStandings') != null) {
+        this.userStandings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('userStandings')).standings);
+      }
     }
 
   register(user: User): Observable<boolean> {
@@ -62,8 +67,8 @@ export class UserService {
     return currentUser;
   }
 
-  getStandings(season: number):Observable<UserStanding[]> {
-    let url = `${this.usersUrl}/standings/${season}`;
+  getStandings(season: number, seasonType: number):Observable<UserStanding[]> {
+    let url = `${this.usersUrl}/standings/season/${season}/seasonType/${seasonType}`;
     if(this.starGate.allow('standings')) {
       return this.http.get<UserStanding[]>(url).pipe(
         tap((standings: UserStanding[]) => {
@@ -80,8 +85,8 @@ export class UserService {
     }
   }
 
-  getStandingsByUser(season: number, user: User):Observable<UserStanding[]> {
-    let url = `${this.usersUrl}/standings/${season}`;
+  getStandingsByUser(season: number, seasonType: number, user: User):Observable<UserStanding[]> {
+    let url = `${this.usersUrl}/standings/season/${season}/seasonType/${seasonType}`;
     if(this.starGate.allow('userStandings')){
       return this.http.post(url, user, httpOptions).pipe(
         tap((userStanding: UserStanding[])=> {
@@ -106,7 +111,7 @@ export class UserService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
+      this.snackBar.open(error,'', {duration:3000});
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 

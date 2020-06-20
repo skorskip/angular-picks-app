@@ -4,6 +4,7 @@
 </nav-bar>
 <weeks 
     [number] = "week.number"
+    [seasonType] = "week.seasonType"
     [season]= "week.season"
     [view]="'games'">
     <div *ngIf = "teams.length == 0 && loader" class="no-games-set">

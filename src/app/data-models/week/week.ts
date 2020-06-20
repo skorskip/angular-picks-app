@@ -6,11 +6,13 @@ export class Week {
     games: Game[];
     teams: Team[];
     season: number;
+    seasonType: number;
 
     constructor() {
         this.number = 0;
         this.games = [];
         this.teams = [];
         this.season = 0;
+        this.seasonType = 0;
     }
 }

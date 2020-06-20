@@ -51,7 +51,7 @@ export class MyPicksDashboardComponent implements OnInit {
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.initWeek(week.season, week.week)
+          this.initWeek(week.season, week.seasonType, week.week)
         }
       )
     }
@@ -65,20 +65,22 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
     var season = +this.route.snapshot.paramMap.get('season') as number;
+    var seasonType = +this.route.snapshot.paramMap.get('seasonType') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
 
-    if(season == 0 || week == 0) {
+    if(season == 0 || week == 0 || seasonType == 0) {
       this.weekService.getCurrentWeek().subscribe(currentWeek => {
         season = currentWeek.season;
+        seasonType = currentWeek.seasonType;
         week = currentWeek.week;
-        this.initWeek(season, week);
+        this.initWeek(season, seasonType, week);
       });
     } else {
-      this.initWeek(season, week);
+      this.initWeek(season, seasonType, week);
     }
   }
 
-  initWeek(season, week) {
+  initWeek(season, seasonType, week) {
     this.loader = true;
     this.myTeams = [] as Team[];
     this.myGames = [] as Game[];
@@ -86,10 +88,11 @@ export class MyPicksDashboardComponent implements OnInit {
     this.stagedDeletes = [] as Pick[];
     this.week.number = week;
     this.week.season = season;
+    this.week.seasonType = seasonType;
 
-    this.pickService.getWeekPicksByGame(season, week).subscribe(result => {
+    this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe(result => {
       this.weekUserPicks = result;
-      this.getPicksByWeek(season, week);
+      this.getPicksByWeek(season, seasonType, week);
     });
   }
 
@@ -97,13 +100,13 @@ export class MyPicksDashboardComponent implements OnInit {
     this.highlightSelected(event);
   }
 
-  getPicksByWeek(season: number, week: number) {
+  getPicksByWeek(season: number, seasonType: number, week: number) {
     if(this.otherUser != null) {
-      this.pickService.getUsersPicksByWeek(this.otherUser, season, week).subscribe( picks => {  
+      this.pickService.getUsersPicksByWeek(this.otherUser, season, seasonType, week).subscribe( picks => {  
         this.populateGamesTeams(picks);
       });
     } else {
-      this.pickService.getPicksByWeek(this.user, season, week).subscribe( picks => {  
+      this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
         this.populateGamesTeams(picks);
       });
     }
@@ -165,7 +168,7 @@ export class MyPicksDashboardComponent implements OnInit {
           this.editPicksService();
         } else {
           this.editPicks();
-          this.initWeek(this.week.season, this.week.number);
+          this.initWeek(this.week.season, this.week.seasonType, this.week.number);
         }
       });
     }
@@ -177,7 +180,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
     Promise.all([updatePicks, deletePicks]).then((results)=>{
       this.editPicks();
-      this.initWeek(this.week.season, this.week.number);
+      this.initWeek(this.week.season, this.week.seasonType, this.week.number);
     });
   }
 
