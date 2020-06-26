@@ -9,4 +9,17 @@ export class UserStanding {
     picks: number;
     win_pct: number;
     date: Date;
+
+    constructor() {
+        this.user_id = 0;
+        this.ranking = 0;
+        this.user_inits = '';
+        this.user_name = '';
+        this.first_name = '';
+        this.last_name = '';
+        this.wins = 0;
+        this.picks = 0;
+        this.win_pct = 0;
+        this.date = new Date();
+    }
 }

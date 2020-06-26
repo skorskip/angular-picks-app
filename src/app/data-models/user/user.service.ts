@@ -92,7 +92,14 @@ export class UserService {
         tap((userStanding: UserStanding[])=> {
           console.log(`get user standings`);
           var object = new Standings();
-          object.standings = userStanding;
+          
+          if(userStanding.length === 0) {
+            object.standings[0] = new UserStanding();
+            userStanding[0] = new UserStanding();
+          } else {
+            object.standings = userStanding;
+          }
+
           localStorage.setItem('userStandings', JSON.stringify(object));
           this.userStandings.next(userStanding);
         }), 

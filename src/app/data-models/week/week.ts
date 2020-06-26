@@ -7,6 +7,7 @@ export class Week {
     teams: Team[];
     season: number;
     seasonType: number;
+    date: Date;
 
     constructor() {
         this.number = 0;
@@ -14,5 +15,6 @@ export class Week {
         this.teams = [];
         this.season = 0;
         this.seasonType = 0;
+        this.date = new Date();
     }
 }

@@ -17,21 +17,31 @@ const httpOptions = {
 export class WeekService {
     private weekUrl = environment.weekServiceURL + 'week';
     private currentWeek: BehaviorSubject<CurrentWeek>;
+    private week: BehaviorSubject<Week>;
     
     constructor(
       private http: HttpClient,
       private snackBar: MatSnackBar,
       private starGate: StarGateService) { 
         this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
+        this.week = new BehaviorSubject<Week>(JSON.parse(localStorage.getItem("week")));
       }
 
     /** GET game by id. Will 404 if id not found */
     getWeek(season: number, seasonType: number, week: number, user: User): Observable<Week> {
       const url = `${this.weekUrl}/season/${season}/seasonType/${seasonType}/week/${week}`;
-      return this.http.post(url, user, httpOptions).pipe(
-          tap((weekResponse: Week) => console.log(`fetched week week=${week} season=${season}`)),
+      if (this.starGate.allowWeek("week", season, week)) {
+        return this.http.post(url, user, httpOptions).pipe(
+          tap((weekResponse: Week) => {
+            console.log(`fetched week week=${week} season=${season}`);
+            this.setWeek(season, week, weekResponse);
+          }),
           catchError(this.handleError<Week>(`fetched week week=${week} season=${season}`))
-      );
+        );
+      } else {
+        return this.week.asObservable();
+      }
+
     }
 
     getCurrentWeek(): Observable<CurrentWeek> {
@@ -49,8 +59,17 @@ export class WeekService {
       } else {
         return this.currentWeek.asObservable();
       }
-
     }
+
+  setWeek(season: number, week: number, weekObject: Week) {
+    this.getCurrentWeek().subscribe(curr => {
+        if(curr.week == week && curr.season == season) {
+            weekObject.date = new Date();
+            localStorage.setItem('week', JSON.stringify(weekObject));
+            this.week.next(weekObject);
+        }
+    });
+  }
 
   // /**
   //  * Handle Http operation that failed.
