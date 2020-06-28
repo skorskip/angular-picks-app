@@ -72,20 +72,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.profileMenuType = "over";
     }
   }
-
-  toggle(){
-    if(this.opened && this.largeScreen == false) {
-      this.opened = false;
-    } else {
-      this.opened = true;
-    }
-  }
-
-  sideNavState(event) {
-    if(!event) {
-      this.sideNavService.toggleSidebarVisibility();
-    }
-  }
   
   sideProfileState(event) {
     if(!event) {

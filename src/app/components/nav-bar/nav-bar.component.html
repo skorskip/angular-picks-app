@@ -20,7 +20,9 @@
             <span class="base">done</span>
         </button>
         <button mat-icon-button (click)="toggleProfile()">
-            <mat-icon class="sidenav-button primary">account_circle</mat-icon>
+            <div class="init-icon primary-background base">
+                {{ user.user_inits }}
+              </div>
         </button>
     </div>
 </mat-toolbar>

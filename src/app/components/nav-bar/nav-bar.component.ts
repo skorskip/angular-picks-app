@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
+import { User } from 'src/app/data-models/user/user';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'nav-bar',
@@ -15,6 +17,8 @@ export class NavBarComponent implements OnInit {
 
   @Output() editPickSelected = new EventEmitter();
   @Output() submitEditsSelected = new EventEmitter();
+  user = new User();
+
 
   edit = false;
   messages = false;
@@ -22,6 +26,7 @@ export class NavBarComponent implements OnInit {
   constructor(
     private sideNavService: SideNavService,
     private announcementService: AnnouncementsService,
+    private authService: AuthenticationService,
   ) { 
     this.announcementService.announcementChange.subscribe(value => {
       this.messages = value;
@@ -29,6 +34,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.authService.currentUserValue;
     this.announcementService.getAnnoucements().subscribe(messages => {
       this.messages = messages.announcements > 0;
       if(this.messages) {

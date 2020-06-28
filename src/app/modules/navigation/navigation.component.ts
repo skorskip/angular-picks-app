@@ -134,11 +134,4 @@ export class NavigationComponent implements OnInit {
       return "../../../assets/icons/pickem_logo_dark.svg"
     }
   }
-
-  sideNavState(event) {
-    if(!event) {
-      this.sideNavService.toggleSidebarVisibility();
-    }
-  }
-
 }
