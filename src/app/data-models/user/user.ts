@@ -1,6 +1,6 @@
 export class User {
     user_id: number;
-    user_init: string;
+    user_inits: string;
     first_name: string;
     last_name: string;
     user_name: string;
