@@ -195,9 +195,9 @@ export class PicksDashboardComponent implements OnInit {
 
   highlightGameResult(game: Game){
     if(game.game_status == 'COMPLETED'){
-      if(game.winning_team != null){
-        document.getElementById(game.winning_team + "-team-card").classList.remove("base-background");
-        document.getElementById(game.winning_team + "-team-card").classList.add("highlight-border");
+      if(game.winning_team_id != null){
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove("base-background");
+        document.getElementById(game.winning_team_id + "-team-card").classList.add("highlight-border");
       }
     }
   }
@@ -229,7 +229,7 @@ export class PicksDashboardComponent implements OnInit {
   getTitle(): string {
     let title = "";
     if(this.stagedPicks.length > 0 && (this.week.number == this.currentWeek.week)){
-      title += "(" + this.stagedPicks.length + " picked)"
+      title += this.stagedPicks.length + " Selected"
     }
     return title;
   }

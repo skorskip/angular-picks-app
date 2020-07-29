@@ -32,13 +32,14 @@
                 (stageSelectedPick) = "stageSelectedPick($event)"
                 (teamLoaded) = "teamLoaded($event)">
             </game>
+            <div class="separator tiertary"></div>
         </ng-container>
     </div>
     <div [ngClass]="{'large-height':games.length < 3, 'small-height':games.length != 0}">
     </div>
     <div id="submit-container" *ngIf="!loader">
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
-        submit
+        Submit
         </button>
     </div>
 </weeks>

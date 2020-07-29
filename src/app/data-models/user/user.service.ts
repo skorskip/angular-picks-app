@@ -29,10 +29,13 @@ export class UserService {
     private starGate: StarGateService) { 
       if(localStorage.getItem('standings') != null) {
         this.standings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('standings')).standings);
+      } else {
+        this.standings = new BehaviorSubject<UserStanding[]>(null);
       }
-
       if(localStorage.getItem('userStandings') != null) {
         this.userStandings = new BehaviorSubject<UserStanding[]>(JSON.parse(localStorage.getItem('userStandings')).standings);
+      } else {
+        this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
     }
 

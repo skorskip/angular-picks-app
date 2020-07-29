@@ -1,44 +1,42 @@
-<div>
-  <div class="game-card base-background tiertary" attr.id={{game.game_id}}-game-card>
-    <div *ngIf="submitStatus()">
-      <div class="game-card-date">
-        <div class="date-text primary">
-            {{ timeStatus() }}
-        </div>
-      </div>
-    </div> 
-    <div class="team-group secondary" *ngIf="teams.length > 0">
-      <team
-        *ngIf = "teams.length > 0"
-        [team] = "away_team_id"
-        [score] = "game.away_team_score"
-        [title] = "'AWAY'"
-        [gameLocked] = "gameLocked()"
-        (click)="selectTeam(away_team_id)">
-      </team>
-      <pick-status
-        class="pick-status base-background"
-        [pickSuccess]="pickSuccess"
-        [game]="game">
-      </pick-status>
-      <team 
-        *ngIf = "teams.length > 0"
-        [team] = "home_team_id"
-        [score] = "game.home_team_score"
-        [title] = "'HOME'"
-        [gameLocked] = "gameLocked()"
-        (click)="selectTeam(home_team_id)"
-        (teamLoaded)="teamLoadedEvent($event)">
-      </team>
-      <div class="game-card-spread base-background">
-        <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
+<div class="game-card base-background tiertary" attr.id={{game.game_id}}-game-card>
+  <div *ngIf="submitStatus()">
+    <div class="game-card-date">
+      <div class="date-text primary">
+          {{ timeStatus() }}
       </div>
     </div>
-    <users-pick-data *ngIf="showPicksData()"
-      [game]="game"
-      [picks]="userGamePicks">
-    </users-pick-data>
-    <div style="padding: 10px" *ngIf="!showPicksData()">
+  </div> 
+  <div class="team-group secondary" *ngIf="teams.length > 0">
+    <team
+      *ngIf = "teams.length > 0"
+      [team] = "away_team_id"
+      [score] = "game.away_team_score"
+      [title] = "'AWAY'"
+      [gameLocked] = "gameLocked()"
+      (click)="selectTeam(away_team_id)">
+    </team>
+    <pick-status
+      class="pick-status base-background"
+      [pickSuccess]="pickSuccess"
+      [game]="game">
+    </pick-status>
+    <team 
+      *ngIf = "teams.length > 0"
+      [team] = "home_team_id"
+      [score] = "game.home_team_score"
+      [title] = "'HOME'"
+      [gameLocked] = "gameLocked()"
+      (click)="selectTeam(home_team_id)"
+      (teamLoaded)="teamLoadedEvent($event)">
+    </team>
+    <div class="game-card-spread base-background">
+      <div class="game-card-spread-icon primary">{{getGameSpread(game.home_spread)}}</div>
     </div>
+  </div>
+  <users-pick-data *ngIf="showPicksData()"
+    [game]="game"
+    [picks]="userGamePicks">
+  </users-pick-data>
+  <div style="padding: 10px" *ngIf="!showPicksData()">
   </div>
 </div>

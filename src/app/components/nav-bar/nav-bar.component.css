@@ -7,8 +7,12 @@
 }
 
 .main {
-    font-size: 1.3em;
-    margin: 10px;
+    font-size: 1.2em;
+    margin: 5px;
+}
+
+.subtitle {
+    font-size: 1em;
 }
 
 .sidenav-button {
@@ -18,9 +22,8 @@
 .edit-button {
     border:  1px solid;
     border-radius: 4px;
-    margin-left: 10px;
+    margin: 5px;
     cursor: pointer;
-    width: 38px;
 }
 
 .title-group {

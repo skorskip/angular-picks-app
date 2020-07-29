@@ -146,16 +146,18 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   changeTeam(game: Game) {
-    this.picks.forEach(pick => {
-      if(pick.game_id == game.game_id){
-        this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
-        var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
-        var newPick = pick;
-        newPick.team_id = newTeam;
-        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
-        this.stagedEdits.push(newPick);
-      }
-    });
+    if(this.edit && this.showEdit(game)) {
+      this.picks.forEach(pick => {
+        if(pick.game_id == game.game_id){
+          this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
+          var newPick = pick;
+          newPick.team_id = newTeam;
+          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          this.stagedEdits.push(newPick);
+        }
+      });
+    }
   }
 
   submitEdits() {
@@ -223,9 +225,9 @@ export class MyPicksDashboardComponent implements OnInit {
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
         if(pick.game_id == game.game_id) {
-          if(pick.team_id == game.winning_team) {
+          if(pick.team_id == game.winning_team_id) {
             return "WIN";
-          } else if(game.winning_team == null) {
+          } else if(game.winning_team_id == null) {
             return "PUSH";
           } else {
             return "LOSE";
@@ -260,7 +262,7 @@ export class MyPicksDashboardComponent implements OnInit {
   getTitle(): string {
     let title = "";
     if(this.myGames.length > 0){
-      title += "(" + this.myGames.length + " submitted)"
+      title += this.myGames.length + " Picked"
     }
     return title;
   }

@@ -1,8 +1,8 @@
 <div class="content">
     <div class="toggle-picks-container" *ngIf="!hideToggle">
         <div class="toggle-container tiertary-background">
-            <button mat-button (click)="toggleView('games')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'games'}">games</button>
-            <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">picks</button>
+            <button mat-button (click)="toggleView('games')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'games'}">Games</button>
+            <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">Picks</button>
         </div>
     </div>
     <div class="week-content" *ngIf="weeksView == false">

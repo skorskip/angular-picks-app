@@ -48,7 +48,7 @@
           <div class="info-header">
             Info
             <button mat-button class="edit-button tiertary" (click)="editUser()">
-                <span class="secondary">edit</span>
+                <span class="secondary">Edit</span>
             </button>
           </div>
           <div class="info-content">
@@ -89,8 +89,8 @@
                 </mat-icon>
               </div>
               <div class="toggle-container tiertary-background">
-                  <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">light</button>
-                  <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">dark</button>
+                  <button mat-button (click)="toggleTheme('light')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'light'}">Light</button>
+                  <button mat-button (click)="toggleTheme('dark')" class="toggle-button secondary" [ngClass]="{'primary-background base':theme == 'dark'}">Dark</button>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@
     <div class="card-bottom base-background secondary" *ngIf=!editSelected>
       <div class="logout-container">
         <button mat-button class="logout-button" (click)="logout()">
-          logout
+          Logout
         </button>
       </div>
     </div>

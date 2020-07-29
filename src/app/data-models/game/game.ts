@@ -11,7 +11,7 @@ export class Game {
 	home_spread: number;
 	//COMPLETED, LIVE, UNPLAYED
 	game_status: string;
-	winning_team: number;
+	winning_team_id: number;
 	current_quarter: number;
 	seconds_left_in_quarter: number;
 }

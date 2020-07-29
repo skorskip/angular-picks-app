@@ -88,6 +88,12 @@ export class StarGateService {
         return true;
       } else {
         var updated = new Date(localStorage.getItem('picksUpdatedDate'));
+        var currentDate = new Date();
+        
+        if(updated.getDate() != currentDate.getDate()) {
+          localStorage.setItem('picksUpdatedDate', currentDate.toString());
+        }
+
         var picks = JSON.parse(localStorage.getItem(key));
         var setDate = new Date(picks.date);
         return updated > setDate;
@@ -101,7 +107,7 @@ export class StarGateService {
     } else {
       var curr = JSON.parse(localStorage.getItem("currentWeek"));
       var picks = JSON.parse(localStorage.getItem(key));
-      if(curr.season != season && curr.week != week) {
+      if(curr.season != season || curr.week != week) {
         return true;
       }
       return this.checkFifteenthMin(new Date(picks.date), new Date());
@@ -112,17 +118,17 @@ export class StarGateService {
     if(localStorage.getItem(key) == null) {
       return true;
     } else {
-      var curr = JSON.parse(localStorage.getItem(key));
-      if(curr.season != season && curr.number != week) {
+      var curr = JSON.parse(localStorage.getItem("currentWeek"));
+      if(curr.season != season || curr.week != week) {
         return true;
       } else {
         var updated = new Date(localStorage.getItem('picksUpdatedDate'));
-        var picks = JSON.parse(localStorage.getItem(key));
-        var setDate = new Date(picks.date);
+        var currWeek = JSON.parse(localStorage.getItem(key));
+        var setDate = new Date(currWeek.date);
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkFifteenthMin(new Date(curr.date), new Date());
+          return this.checkFifteenthMin(new Date(currWeek.date), new Date());
         }
       }
     }

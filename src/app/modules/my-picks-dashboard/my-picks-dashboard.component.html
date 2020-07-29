@@ -27,31 +27,27 @@
           </div>
         </div>
       </div> 
-      <div [ngClass]="{'pick-game':edit}" class="game-container">
-        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
-              <mat-icon
-              matTooltip="edit"
-              matTooltipPosition="right"
-              class="edit-icon-edit">mode_edit
-            </mat-icon>
-          </div>
-          <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
-            <mat-icon
-              matTooltip="delete"
-              matTooltipPosition="right"
-              class="failure">delete
-            </mat-icon>
-          </div>
-        </div>
+      <div class="game-container">
         <game
           [game] = "myGame"
           [notSelectablePicks] = "notSelectablePicks" 
           [pickSuccess] = "pickResult(myGame)"
           [userGamePicks] = "weekUserPicks[myGame.game_id]"
           [teams] = "myTeams"
-          (teamLoaded) = "teamLoaded($event)"> 
+          (teamLoaded) = "teamLoaded($event)"
+          (click) = "changeTeam(myGame)">
         </game>
+        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
+          <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
+            <mat-icon
+              matTooltip="delete"
+              matTooltipPosition="bottom"
+              class="failure">delete
+            </mat-icon>
+            Delete
+          </div>
+        </div>
+        <div class="separator tiertary"></div>
       </div>
     </ng-container>
   </div>
