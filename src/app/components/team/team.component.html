@@ -1,9 +1,9 @@
-<div attr.id="{{team.team_id}}-team-card" class="team-card {{team.display_color}}">
-    <div *ngIf="!gameLocked">
+<div attr.id="{{team.team_id}}-team-card" class="team-card {{team.display_color}} tiertary-light-background">
+    <div *ngIf="!gameLocked" attr.id="{{team.team_id}}-team-info" class="team-info">
       <div class="large-text-padding">{{score}}</div>
       <div class="small-text-middle">{{getTeamName()}}</div>
     </div>
-    <div *ngIf="gameLocked">
+    <div *ngIf="gameLocked" attr.id="{{team.team_id}}-team-info" class="team-info">
       <p class="large-text">{{getTeamName()}}</p>
     </div>
 </div>

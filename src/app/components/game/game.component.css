@@ -8,11 +8,8 @@
 .game-card {
 	display: flex;
 	flex-direction: column;
-	margin: 5px;
-	margin-top: 15px;
-	margin-bottom: 25px;
-	margin: 10px;
 	cursor: pointer;
+	margin: 5px;
 }
 
 .game-card-date {
@@ -61,7 +58,6 @@
 	padding: 10px;
 	height: 25px;
 	width:25px;
-	border: solid 2px;
 	border-radius: 50%;
 }
 

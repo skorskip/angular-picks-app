@@ -1,6 +1,6 @@
 .pick-icon {
-    border: solid 5px;
     border-radius: 50%;
     height: 25px;
     padding: 10px;
+    transform: scale(1.5);
 }

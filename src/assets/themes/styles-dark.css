@@ -4,6 +4,10 @@
     color:  #3ece7a !important;
 }
 
+.primary-light {
+    color: #3ece7a29 !important;
+}
+
 .secondary {
     color: #adbbc9 !important;
 }
@@ -11,6 +15,10 @@
 .tiertary {
     /* color: rgb(49, 46, 70) !important; */
     color: rgb(53, 53, 53) !important;
+}
+
+.tiertary-light {
+    color: #151515 !important;
 }
 
 .base {
@@ -22,6 +30,10 @@
     background-color:  #3ece7a !important;
 }
 
+.primary-light-background {
+    background-color: #3ece7a29 !important;
+}
+
 .secondary-background {
     background-color: #adbbc9 !important;
 }
@@ -29,6 +41,10 @@
 .tiertary-background {
     /* background-color: rgb(49, 46, 70) !important; */
     background-color: rgb(53, 53, 53) !important;
+}
+
+.tiertary-light-background {
+    background-color: #151515 !important;
 }
 
 .base-background {

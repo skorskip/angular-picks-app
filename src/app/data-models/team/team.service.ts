@@ -24,22 +24,17 @@ export class TeamService {
 
   unSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
-
-    teamElement.classList.add("base-background");
     teamElement.classList.remove("selectedTeam");
-    teamElement.classList.remove("base");
-    teamElement.classList.remove(team.display_color + "-background");
-    teamElement.style.border = "solid 1px";
+    var teamInfo = document.getElementById(team.team_id + "-team-info");
+    teamInfo.style.border = "0px";
   }
 
   highlightSelectTeam(team:Team){
     var teamElement = document.getElementById(team.team_id + "-team-card");
-
-    teamElement.classList.add(team.display_color + "-background");
-    teamElement.classList.add("base");
-    teamElement.classList.remove("base-background");
     teamElement.classList.add("selectedTeam");
-    teamElement.style.border = "0px";
+    var teamInfo = document.getElementById(team.team_id + "-team-info");
+    teamInfo.style.border = "solid 2.5px";
+
   } 
 
   // /**

@@ -98,6 +98,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   teamLoaded(event) {
     this.highlightSelected(event);
+    this.highlightGameResult(event);
   }
 
   getPicksByWeek(season: number, seasonType: number, week: number) {
@@ -218,6 +219,18 @@ export class MyPicksDashboardComponent implements OnInit {
         this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
       }
     });
+  }
+
+  highlightGameResult(game: Game){
+    if(game.game_status == 'COMPLETED'){
+      if(game.winning_team_id != null){
+        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.myTeams);
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove("tiertary-light-background");
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove(win_team.display_color);
+        document.getElementById(game.winning_team_id + "-team-card").classList.add("base");
+        document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
+      }
+    }
   }
 
   pickResult(game: Game):string {

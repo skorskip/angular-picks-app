@@ -5,11 +5,13 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
+import { slideInAnimation } from 'src/app/app-routing/app-routing-animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [ slideInAnimation ]
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 

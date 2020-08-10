@@ -84,7 +84,7 @@ export class StarGateService {
       return true;
     } else {
       var curr = JSON.parse(localStorage.getItem("currentWeek"));
-      if(curr.season != season && curr.week != week) {
+      if(curr.season != season || curr.week != week) {
         return true;
       } else {
         var updated = new Date(localStorage.getItem('picksUpdatedDate'));

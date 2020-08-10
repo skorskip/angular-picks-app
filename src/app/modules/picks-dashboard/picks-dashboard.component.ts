@@ -196,8 +196,11 @@ export class PicksDashboardComponent implements OnInit {
   highlightGameResult(game: Game){
     if(game.game_status == 'COMPLETED'){
       if(game.winning_team_id != null){
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("base-background");
-        document.getElementById(game.winning_team_id + "-team-card").classList.add("highlight-border");
+        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.teams);
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove("tiertary-light-background");
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove(win_team.display_color);
+        document.getElementById(game.winning_team_id + "-team-card").classList.add("base");
+        document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
       }
     }
   }

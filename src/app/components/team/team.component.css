@@ -1,17 +1,22 @@
 .team-card{
-
 	display: flex;
     justify-content: center;
     align-items: center;
-
 	border-radius: 18px;
 	width: 150px;
 	height: 110px;
 	float: left;
 	margin-right: 5%;
-	border: solid 1px;
-	box-shadow: 2px 2px 5px -4px;
+}
 
+.team-info {
+	border-radius: 18px;
+	width: 140px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .large-text{
