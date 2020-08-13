@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { Router, NavigationStart, RouterOutlet } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
@@ -33,7 +33,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     media: MediaMatcher){
 
     this.sideNavService.sidebarVisibilityChange.subscribe(value => {
-      this.opened = value;
+      if(!this.largeScreen) {
+        this.opened = value;
+      }
     });
 
     this.sideNavService.profileVisibilityChange.subscribe(value => {
@@ -83,6 +85,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCurrentPageLogin(): boolean {
     return (this.router.url.indexOf('login') > -1);
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
 }

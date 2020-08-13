@@ -20,27 +20,24 @@ export class PickStatusComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) document) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPickStatus();
+  }
 
   getPickStatus() {
     if(this.pickSuccess == null || this.pickSuccess == undefined){
       if(new Date(this.game.pick_submit_by_date) > new Date()) {
         this.open = true;
-        return "base-background primary";
       } else {
         this.closed = true;
-        return "base-background warn";
       }
     } else {
       if(this.pickSuccess == "WIN") {
         this.correct = true;
-        return "base-background success";
       } else if (this.pickSuccess == "LOSE"){
         this.wrong = true;
-        return "base-background failure";
       } else {
         this.push = true;
-        return "base-background secondary";
       }
     }
   }

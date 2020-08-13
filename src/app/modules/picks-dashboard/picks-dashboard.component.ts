@@ -197,9 +197,9 @@ export class PicksDashboardComponent implements OnInit {
     if(game.game_status == 'COMPLETED'){
       if(game.winning_team_id != null){
         var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.teams);
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("tiertary-light-background");
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove(win_team.display_color);
-        document.getElementById(game.winning_team_id + "-team-card").classList.add("base");
+        document.getElementById(game.winning_team_id + "-team-info").classList.remove(win_team.display_color);
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove("quaternary-background");
+        document.getElementById(game.winning_team_id + "-team-info").classList.add("base");
         document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
       }
     }

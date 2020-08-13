@@ -1,6 +1,6 @@
-<mat-toolbar class="base-background nav-container">
+<mat-toolbar class="base-background nav-container" (window:resize)="onResize($event)">
     <div class="title-group">
-        <button mat-icon-button (click)="toggleSideNav()">
+        <button *ngIf="!largeScreen" mat-icon-button (click)="toggleSideNav()">
             <mat-icon class="sidenav-button primary">menu</mat-icon>
         </button>
         <div *ngIf="messages" class="notification-icon failure-background">

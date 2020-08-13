@@ -68,6 +68,11 @@
 	flex-direction: column;
 }
 
+.game-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .date-text {
 	font-size: 1em;
 	padding: 10px;

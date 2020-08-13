@@ -38,6 +38,7 @@ export class MyPicksDashboardComponent implements OnInit {
   toggleType = "picks"
   loader = false;
   weekUserPicks = [] as any[];
+  snapshot = new WeekPicks;
   @Input() otherUser = null;
 
   constructor(
@@ -51,7 +52,7 @@ export class MyPicksDashboardComponent implements OnInit {
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.initWeek(week.season, week.seasonType, week.week)
+          this.initWeek(week.season, week.seasonType, week.week, false)
         }
       )
     }
@@ -73,14 +74,14 @@ export class MyPicksDashboardComponent implements OnInit {
         season = currentWeek.season;
         seasonType = currentWeek.seasonType;
         week = currentWeek.week;
-        this.initWeek(season, seasonType, week);
+        this.initWeek(season, seasonType, week, false);
       });
     } else {
-      this.initWeek(season, seasonType, week);
+      this.initWeek(season, seasonType, week, false);
     }
   }
 
-  initWeek(season, seasonType, week) {
+  initWeek(season: number, seasonType: number, week: number, reset: boolean) {
     this.loader = true;
     this.myTeams = [] as Team[];
     this.myGames = [] as Game[];
@@ -89,10 +90,10 @@ export class MyPicksDashboardComponent implements OnInit {
     this.week.number = week;
     this.week.season = season;
     this.week.seasonType = seasonType;
-
+    
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe(result => {
       this.weekUserPicks = result;
-      this.getPicksByWeek(season, seasonType, week);
+      this.getPicksByWeek(season, seasonType, week, reset);
     });
   }
 
@@ -101,15 +102,24 @@ export class MyPicksDashboardComponent implements OnInit {
     this.highlightGameResult(event);
   }
 
-  getPicksByWeek(season: number, seasonType: number, week: number) {
+  getPicksByWeek(season: number, seasonType: number, week: number, reset: boolean) {
     if(this.otherUser != null) {
-      this.pickService.getUsersPicksByWeek(this.otherUser, season, seasonType, week).subscribe( picks => {  
-        this.populateGamesTeams(picks);
-      });
+      if(reset) {
+        this.populateGamesTeams(this.snapshot);
+      } else {
+        this.pickService.getUsersPicksByWeek(this.otherUser, season, seasonType, week).subscribe( picks => {  
+          this.populateGamesTeams(picks);
+        });
+      }
     } else {
-      this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
-        this.populateGamesTeams(picks);
-      });
+      if(reset) {
+        console.log("RESET::", this.snapshot);
+        this.populateGamesTeams(this.snapshot);
+      } else {
+        this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
+          this.populateGamesTeams(picks);
+        });
+      }
     }
   }
 
@@ -130,6 +140,11 @@ export class MyPicksDashboardComponent implements OnInit {
 
   editPicks() {
     this.edit = !this.edit;
+    if(this.edit) {
+      this.snapshot.picks = JSON.parse(JSON.stringify(this.picks));
+      this.snapshot.games = JSON.parse(JSON.stringify(this.myGames));
+      this.snapshot.teams = JSON.parse(JSON.stringify(this.myTeams));
+    }
   }
 
   deletePick(game:Game) {
@@ -171,7 +186,7 @@ export class MyPicksDashboardComponent implements OnInit {
           this.editPicksService();
         } else {
           this.editPicks();
-          this.initWeek(this.week.season, this.week.seasonType, this.week.number);
+          this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
         }
       });
     }
@@ -183,7 +198,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
     Promise.all([updatePicks, deletePicks]).then((results)=>{
       this.editPicks();
-      this.initWeek(this.week.season, this.week.seasonType, this.week.number);
+      this.initWeek(this.week.season, this.week.seasonType, this.week.number, false);
     });
   }
 
@@ -225,9 +240,9 @@ export class MyPicksDashboardComponent implements OnInit {
     if(game.game_status == 'COMPLETED'){
       if(game.winning_team_id != null){
         var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.myTeams);
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("tiertary-light-background");
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove(win_team.display_color);
-        document.getElementById(game.winning_team_id + "-team-card").classList.add("base");
+        document.getElementById(game.winning_team_id + "-team-info").classList.remove(win_team.display_color);
+        document.getElementById(game.winning_team_id + "-team-card").classList.remove("quaternary-background");
+        document.getElementById(game.winning_team_id + "-team-info").classList.add("base");
         document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
       }
     }
