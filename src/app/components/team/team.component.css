@@ -20,6 +20,16 @@
 	flex-direction: column;
 }
 
+.team-info-result {
+	border-radius: 18px;
+	width: 140px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
 .large-text{
 	font-size:2em; 
 	margin:0; 

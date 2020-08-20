@@ -14,6 +14,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { Interpolation } from '@angular/compiler';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -130,6 +131,7 @@ export class MyPicksDashboardComponent implements OnInit {
     this.loader = false;
 
     this.myGames.forEach((game) => {
+      this.highlightSelected(game);
       if(new Date(game.pick_submit_by_date) > new Date()) {
         this.showEditButton = true;
       } else {
@@ -240,10 +242,13 @@ export class MyPicksDashboardComponent implements OnInit {
     if(game.game_status == 'COMPLETED'){
       if(game.winning_team_id != null){
         var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.myTeams);
-        document.getElementById(game.winning_team_id + "-team-info").classList.remove(win_team.display_color);
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("quaternary-background");
-        document.getElementById(game.winning_team_id + "-team-info").classList.add("base");
-        document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
+        var info = document.getElementById(game.winning_team_id + "-team-info");
+        var team = document.getElementById(game.winning_team_id + "-team-card");
+        info.classList.remove(win_team.display_color);
+        info.classList.add("base");
+        info.classList.add("team-info-result");
+        team.classList.remove("quaternary-background");
+        team.classList.add(win_team.display_color + "-background");
       }
     }
   }
