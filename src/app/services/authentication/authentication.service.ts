@@ -35,9 +35,14 @@ export class AuthenticationService {
             .pipe(map(users => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 if(users.length > 0){
-                    localStorage.setItem('currentUser', JSON.stringify(users[0]));
-                    this.currentUserSubject.next(users[0]);
-                    return users;
+                    if(users[0].status === "active") {
+                        localStorage.setItem('currentUser', JSON.stringify(users[0]));
+                        this.currentUserSubject.next(users[0]);
+                        return users;
+                      } else {
+                        this.snackBar.open('Your account has been de-activated :(','', {duration:3000});
+                        return users;
+                      }
                 } else {
                     this.snackBar.open('Wrong username or password','', {duration:3000});
                 }

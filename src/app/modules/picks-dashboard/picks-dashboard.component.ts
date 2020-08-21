@@ -237,6 +237,10 @@ export class PicksDashboardComponent implements OnInit {
     return title;
   }
 
+  userCanSelect(): boolean {
+    return this.user.type !== 'participant';
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
