@@ -96,7 +96,11 @@ export class StarGateService {
 
         var picks = JSON.parse(localStorage.getItem(key));
         var setDate = new Date(picks.date);
-        return updated > setDate;
+        if(updated > setDate) {
+          return true;
+        } else {
+          return this.checkFifteenthMin(setDate, new Date());
+        }
       }
     }
   }
@@ -128,7 +132,7 @@ export class StarGateService {
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkFifteenthMin(new Date(currWeek.date), new Date());
+          return this.checkFifteenthMin(setDate, new Date());
         }
       }
     }

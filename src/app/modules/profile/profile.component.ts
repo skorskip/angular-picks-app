@@ -37,7 +37,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
+    this.setUserData(this.authService.currentUserValue);
+  }
+
+  ngAfterViewInit() {
+    this.toggleTheme(this.theme);
+  }
+
+  setUserData(user: User) {
+    this.user = user;
 
     this.leagueService.getLeagueSettings().subscribe((settings)=>{
       this.settings = settings;
@@ -53,10 +61,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         });
       });
     });
-  }
-
-  ngAfterViewInit() {
-    this.toggleTheme(this.theme);
   }
 
   editUser() {

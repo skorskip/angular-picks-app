@@ -88,6 +88,7 @@ export class MyPicksDashboardComponent implements OnInit {
     this.myGames = [] as Game[];
     this.stagedEdits = [] as Pick[];
     this.stagedDeletes = [] as Pick[];
+    this.picks = [] as Pick[];
     this.week.number = week;
     this.week.season = season;
     this.week.seasonType = seasonType;
@@ -114,7 +115,6 @@ export class MyPicksDashboardComponent implements OnInit {
       }
     } else {
       if(reset) {
-        console.log("RESET::", this.snapshot);
         this.populateGamesTeams(this.snapshot);
       } else {
         this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
@@ -125,13 +125,12 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   populateGamesTeams(picks: WeekPicks){
-    this.picks = picks.picks;
     this.myGames = picks.games;
     this.myTeams = picks.teams;
+    this.picks = picks.picks;
     this.loader = false;
 
     this.myGames.forEach((game) => {
-      this.highlightSelected(game);
       if(new Date(game.pick_submit_by_date) > new Date()) {
         this.showEditButton = true;
       } else {
@@ -232,7 +231,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   highlightSelected(game: Game){
     this.picks.forEach(pick =>{
-      if(pick.game_id == game.game_id){
+      if(pick.game_id === game.game_id){
         this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
       }
     });
