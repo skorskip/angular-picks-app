@@ -5,6 +5,7 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
+import { Announcements } from 'src/app/data-models/announcements/announcements';
 
 @Component({
   selector: 'app-navigation',
@@ -16,6 +17,7 @@ export class NavigationComponent implements OnInit {
   events: string[] = [];
   selected;
   messageCount = 0;
+  announcements = new Announcements();
   
   constructor(
     private router:Router, 
@@ -34,6 +36,7 @@ export class NavigationComponent implements OnInit {
     this.announcementsService.announcementChange.subscribe(value => {
       if(value) {
         this.announcementsService.getAnnoucements().subscribe((messages) => {
+          this.announcements = messages;
           this.messageCount = messages.announcements;
         });
       }
@@ -118,6 +121,8 @@ export class NavigationComponent implements OnInit {
     var checked = new Date();
     this.announcementsService.setAnnouncementCheck(checked.toUTCString());
     this.messageCount = 0;
+    this.announcements.announcements = 0
+    this.announcementsService.setAnnouncements(this.announcements);
   }
 
   goToChatPage() {

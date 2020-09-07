@@ -73,6 +73,10 @@ export class AnnouncementsService {
       return annnouncementDate;
   }
 
+  setAnnouncements(data: Announcements) {
+    this.announcements.next(data);
+  }
+
   // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.

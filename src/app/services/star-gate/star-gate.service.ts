@@ -6,6 +6,8 @@ import { StringDecoder } from 'string_decoder';
 })
 export class StarGateService {
 
+  private increment = 15;
+
   constructor(
   ) { }
 
@@ -99,7 +101,7 @@ export class StarGateService {
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkFifteenthMin(setDate, new Date());
+          return this.checkAfterIncrement(setDate, new Date());
         }
       }
     }
@@ -114,7 +116,7 @@ export class StarGateService {
       if(curr.season != season || curr.week != week) {
         return true;
       }
-      return this.checkFifteenthMin(new Date(picks.date), new Date());
+      return this.checkAfterIncrement(new Date(picks.date), new Date());
     }
   }
 
@@ -132,22 +134,22 @@ export class StarGateService {
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkFifteenthMin(setDate, new Date());
+          return this.checkAfterIncrement(setDate, new Date());
         }
       }
     }
   }
 
-  checkFifteenthMin(date1: Date, date2: Date) {
+  checkAfterIncrement(date1: Date, date2: Date) {
     if(date1.getDate() < date2.getDate()) {
       return true;
     } else if(date1.getHours() < date2.getHours()) {
       return true;
     } else {
-      var minutesFromLast = date1.getMinutes() % 15;
+      var minutesFromLast = date1.getMinutes() % this.increment;
       var lastFifteenth = new Date();
       lastFifteenth.setMinutes(date1.getMinutes() - minutesFromLast);
-      return (Math.ceil((+date2 - +lastFifteenth) / 60000 ) > 15);
+      return (Math.ceil((+date2 - +lastFifteenth) / 60000 ) > this.increment);
     }
   }
 

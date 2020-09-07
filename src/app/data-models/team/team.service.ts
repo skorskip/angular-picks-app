@@ -36,7 +36,7 @@ export class TeamService {
     }
     var teamInfo = document.getElementById(team.team_id + "-team-info");
     if(teamInfo) {
-      teamInfo.style.border = "solid 2.5px";
+      teamInfo.style.border = "solid 3px";
     }
 
   } 

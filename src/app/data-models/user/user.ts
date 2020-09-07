@@ -8,6 +8,7 @@ export class User {
     email: string;
     status: string;
     type: string;
+    last_login_date: Date;
 
     constructor() {
         this.user_id = 0;
@@ -18,5 +19,6 @@ export class User {
         this.last_name = "";
         this.status = "";
         this.type = "";
+        this.last_login_date = new Date();
     }
 }
