@@ -78,14 +78,32 @@
 }
 
 @media only screen and (min-width: 665px) {
-	.game-card-spread {
-		margin-left: 19%;
-	}
-}
-
-@media only screen and (min-width: 665px) {
 	.game-card  {
 		width: 100%;
 		margin: 10px;
+	}
+}
+
+@media only screen and (min-width: 950px) {
+	.game-card  {
+		width: 100%;
+		margin: 10px;
+	}
+	
+	.game-card-spread {
+		margin-left: 60%;
+		margin-top: -60px;
+	}
+}
+
+@media only screen and (min-width: 1300px) {
+	.game-card  {
+		width: 100%;
+		margin: 10px;
+	}
+
+	.game-card-spread {
+		margin-left: 35%;
+		margin-top: -60px;
 	}
 }

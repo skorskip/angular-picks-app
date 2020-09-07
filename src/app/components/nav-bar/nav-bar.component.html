@@ -3,7 +3,7 @@
         <button *ngIf="!largeScreen" mat-icon-button (click)="toggleSideNav()">
             <mat-icon class="sidenav-button primary">menu</mat-icon>
         </button>
-        <div *ngIf="messages" class="notification-icon failure-background">
+        <div *ngIf="messages && !largeScreen" class="notification-icon failure-background">
         </div>
         <div class="primary main">
             {{ title }}
