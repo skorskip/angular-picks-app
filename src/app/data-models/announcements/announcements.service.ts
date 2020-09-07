@@ -74,7 +74,7 @@ export class AnnouncementsService {
   }
 
   setAnnouncements(data: Announcements) {
-    this.announcements.next(data);
+    localStorage.setItem("announcements", JSON.stringify(data));
   }
 
   // /**
