@@ -13,12 +13,8 @@ export class SideNavService {
   profileVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
   constructor()  {
-      this.sidebarVisibilityChange.subscribe((value) => {
-          this.isSidebarVisible = value
-      });
-
-      this.profileVisibilityChange.subscribe((value) => {
-        this.isProfileVisible = value
+    this.sidebarVisibilityChange.subscribe((value) => {
+        this.isSidebarVisible = value
     });
   }
 
@@ -26,8 +22,8 @@ export class SideNavService {
     
       this.sidebarVisibilityChange.next(!this.isSidebarVisible);
   }
-
-  toggleProfileVisibility() {
-    this.profileVisibilityChange.next(!this.isProfileVisible);
+  
+  setSidebarVisibility(visibility) {
+    this.sidebarVisibilityChange.next(visibility);
   }
 }

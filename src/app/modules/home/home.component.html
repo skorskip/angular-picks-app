@@ -13,21 +13,11 @@
       mode="{{sideMenuType}}"
       [(opened)]="opened"
       class="sidenav base-background secondary"
-      position="start">
+      position="start"
+      (openedChange)="sideNavChange($event)">
       <app-navigation></app-navigation>
     </mat-sidenav>
-   
-    <mat-sidenav 
-      #sidenav 
-      [fixedInViewport]="mobileQuery.matches" 
-      mode="{{profileMenuType}}"
-      [(opened)]="profileOpened"
-      (openedChange)="sideProfileState($event)"
-      class="sidenav base-background secondary"
-      position="end">
-      <app-profile></app-profile>
-    </mat-sidenav>
-
+    
     <mat-sidenav-content>
       <div class="container-content" [@routeAnimations]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet"></router-outlet>

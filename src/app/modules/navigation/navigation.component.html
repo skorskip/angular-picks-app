@@ -1,41 +1,82 @@
 <div class="nav-title">
     <img class="icon" [src]="getLogo()">
+</div>
+<div class="card-title base-background tiertary" (click)="toggle(); navigateToPage('profile')">
+  <div class="card-header secondary">
+    <div class="card-subheader">
+      <div class="init-icon primary">
+        {{ user.user_inits }}
+      </div>
+      <div class=card-header-text>
+        {{user.first_name}} {{user.last_name}}
+      </div>
+    </div>
+    <mat-icon class="row-arrow-icon">
+      keyboard_arrow_right
+    </mat-icon> 
   </div>
-  
-  <div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
-  (mouseout)="mouseout($event)">
-    <nav>
-      <mat-icon class="sidenav-icon">touch_app</mat-icon>
-      <a (click)="toggle(); navigateToPage('picks')">Picks</a>
-    </nav>
+</div>
+
+<div class="card base-background tiertary" *ngIf=!editSelected>
+  <div class="card-section secondary">
+      <div class="info-content">
+        <div class="pick-progress-container">
+          <div class="pick-progress-group">
+            <div class="pick-progress-numbers">
+              <div>Pick Count</div>
+              <div class="medium-font">{{ userStandings.picks + picks.length }} / {{ settings.maxTotalPicks }}</div>
+            </div>
+            <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
+          </div>
+          <div class="picks-stat-card-group">
+            <div class="pick-stat-card tiertary">
+              <div class="large-font secondary">{{ userStandings.wins }}</div>
+              <div class="secondary">wins</div>
+            </div>
+            <div class="pick-stat-card tiertary">
+              <div class="large-font secondary">{{ userStandings.win_pct * 100 | number:'1.1-1'}}</div>
+              <div class="secondary">win %</div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-  <div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
-  (mouseout)="mouseout($event)" >
-    <nav>
-      <mat-icon class="sidenav-icon">sports_football</mat-icon>
-      <a (click)="toggle(); navigateToPage('games')">Games</a>
-    </nav>
-  </div>
-  <div class="sidenav-opt" id="standings" (mouseover) = "mouseover($event)"
-  (mouseout)="mouseout($event)" >
-    <nav>
-      <mat-icon class="sidenav-icon">view_list</mat-icon>
-      <a (click)="toggle(); navigateToPage('standings')">Standings</a>
-    </nav>
-  </div>
-  <div class="sidenav-opt" id="messages" (mouseover) = "mouseover($event)"
-  (mouseout)="mouseout($event)" >
-    <nav>
-      <mat-icon class="sidenav-icon">email</mat-icon>
-      <a (click)="toggle(); navigateToPage('messages'); goToMessagePage()">Messages</a>
-      <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
-    </nav>
-  </div>
-  <!-- Uncomment when new workspace ready -->
-  <!-- <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"
-  (mouseout)="mouseout($event)" >
-    <nav>
-      <mat-icon class="sidenav-icon">sports_kabaddi</mat-icon>
-      <a (click)="toggle(); goToChatPage()">S*** Chat</a>
-    </nav>
-  </div> -->
+</div>
+
+<div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)">
+  <nav>
+    <mat-icon class="sidenav-icon">touch_app</mat-icon>
+    <a (click)="toggle(); navigateToPage('picks')">Picks</a>
+  </nav>
+</div>
+<div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)" >
+  <nav>
+    <mat-icon class="sidenav-icon">sports_football</mat-icon>
+    <a (click)="toggle(); navigateToPage('games')">Games</a>
+  </nav>
+</div>
+<div class="sidenav-opt" id="standings" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)" >
+  <nav>
+    <mat-icon class="sidenav-icon">view_list</mat-icon>
+    <a (click)="toggle(); navigateToPage('standings')">Standings</a>
+  </nav>
+</div>
+<div class="sidenav-opt" id="messages" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)" >
+  <nav>
+    <mat-icon class="sidenav-icon">email</mat-icon>
+    <a (click)="toggle(); navigateToPage('messages'); goToMessagePage()">Messages</a>
+    <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
+  </nav>
+</div>
+<!-- Uncomment when new workspace ready -->
+<!-- <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)" >
+  <nav>
+    <mat-icon class="sidenav-icon">sports_kabaddi</mat-icon>
+    <a (click)="toggle(); goToChatPage()">S*** Chat</a>
+  </nav>
+</div> -->

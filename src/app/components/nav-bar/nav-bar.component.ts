@@ -51,12 +51,6 @@ export class NavBarComponent implements OnInit, AfterViewInit {
     this.sideNavService.toggleSidebarVisibility();
   }
 
-  toggleProfile(){
-    if(!this.largeScreen) {
-      this.sideNavService.toggleProfileVisibility();
-    }
-  }
-
   editPicks(){
     this.edit = true;
     this.editPickSelected.emit(true);

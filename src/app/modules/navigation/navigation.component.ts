@@ -1,11 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 import { Announcements } from 'src/app/data-models/announcements/announcements';
+import { User } from 'src/app/data-models/user/user';
+import { League } from 'src/app/data-models/league/league';
+import { PickService } from 'src/app/data-models/pick/pick.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/data-models/user/user.service';
+import { WeekService } from 'src/app/data-models/week/week.service';
+import { Pick } from 'src/app/data-models/pick/pick';
+import { UserStanding } from 'src/app/data-models/user/user-standing';
 
 @Component({
   selector: 'app-navigation',
@@ -18,13 +25,22 @@ export class NavigationComponent implements OnInit {
   selected;
   messageCount = 0;
   announcements = new Announcements();
-  
+  user = new User();
+  settings = new League();
+  picks = [] as Pick[];
+  userStandings = new UserStanding();
+  pickProgress = 0;
+
   constructor(
     private router:Router, 
     private themeService:ThemeService,
     private sideNavService: SideNavService,
     private leagueService: LeagueService,
     private announcementsService: AnnouncementsService,
+    private authService: AuthenticationService,
+    private picksService: PickService,
+    private userService: UserService,
+    private weekService: WeekService,
     ){
 
     this.router.events.subscribe((event) => {
@@ -50,6 +66,7 @@ export class NavigationComponent implements OnInit {
       this.messageCount = messages.announcements;
     });
 
+    this.setUserData(this.authService.currentUserValue);
   }
 
   highlightByRoute(route: string) {
@@ -130,6 +147,25 @@ export class NavigationComponent implements OnInit {
     this.messageCount = 0;
     this.announcements.announcements = 0
     this.announcementsService.setAnnouncements(this.announcements);
+  }
+
+  setUserData(user: User) {
+    this.user = user;
+
+    this.leagueService.getLeagueSettings().subscribe((settings)=>{
+      this.settings = settings;
+    });
+
+    this.weekService.getCurrentWeek().subscribe((week) => {
+      this.picksService.getPicksByWeek(this.user, week.season, week.seasonType, week.week).subscribe((picks) => {
+        this.picks = picks.picks;
+
+        this.userService.getStandingsByUser(week.season, week.seasonType, this.user).subscribe((results) => {
+          this.userStandings = results[0];
+          this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
+        });
+      });
+    });
   }
 
   // Add to with new workspace

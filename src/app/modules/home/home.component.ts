@@ -18,10 +18,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   events: string[] = [];
   openedSmall: boolean;
   opened:boolean;
-  profileOpened:boolean;
   largeScreen = false as boolean;
   sideMenuType;
-  profileMenuType;
   mobileQuery: MediaQueryList;
   
   private _mobileQueryListener: () => void;
@@ -36,10 +34,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(!this.largeScreen) {
         this.opened = value;
       }
-    });
-
-    this.sideNavService.profileVisibilityChange.subscribe(value => {
-      this.profileOpened = value;
     });
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -65,26 +59,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(windowSize > 950){
       this.largeScreen = true;
       this.opened = true;
-      this.profileOpened = true;
       this.sideMenuType = "side";
-      this.profileMenuType = "side";
     } else {
       this.opened = false;
-      this.profileOpened = false;
       this.largeScreen = false;
       this.sideMenuType = "push";
-      this.profileMenuType = "over";
-    }
-  }
-  
-  sideProfileState(event) {
-    if(!event) {
-      this.sideNavService.toggleProfileVisibility();
     }
   }
 
   getCurrentPageLogin(): boolean {
     return (this.router.url.indexOf('login') > -1);
+  }
+
+  sideNavChange(event: boolean) {
+    if(!event) {
+      this.sideNavService.setSidebarVisibility(event);
+    }
   }
 
   prepareRoute(outlet: RouterOutlet) {

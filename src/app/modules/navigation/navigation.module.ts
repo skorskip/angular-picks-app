@@ -4,6 +4,7 @@ import { NavigationComponent } from './navigation.component';
 import { AppRoutingModule } from '../../app-routing/app-routing.module';
 import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ProfileModule } from '../../modules/profile/profile.module';
 
 @NgModule({
   declarations: [NavigationComponent],
@@ -11,7 +12,8 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     AppRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    ProfileModule
   ],
   exports: [
     NavigationComponent
