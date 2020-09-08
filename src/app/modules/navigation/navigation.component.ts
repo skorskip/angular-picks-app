@@ -36,6 +36,7 @@ export class NavigationComponent implements OnInit {
     this.announcementsService.announcementChange.subscribe(value => {
       if(value) {
         this.announcementsService.getAnnoucements().subscribe((messages) => {
+          console.log("GET MESSAGES::", messages);
           this.announcements = messages;
           this.messageCount = messages.announcements;
         });
@@ -43,7 +44,13 @@ export class NavigationComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.announcementsService.getAnnoucements().subscribe((messages) => {
+      this.announcements = messages;
+      this.messageCount = messages.announcements;
+    });
+
+  }
 
   highlightByRoute(route: string) {
     if(route.indexOf("picks") != -1) {
@@ -125,11 +132,12 @@ export class NavigationComponent implements OnInit {
     this.announcementsService.setAnnouncements(this.announcements);
   }
 
-  goToChatPage() {
-    this.leagueService.getLeagueSettings().subscribe((settings) => {
-      window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
-    });
-  }
+  // Add to with new workspace
+  // goToChatPage() {
+  //   this.leagueService.getLeagueSettings().subscribe((settings) => {
+  //     window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+  //   });
+  // }
 
   getLogo(): string {
     var theme = this.themeService.getTheme();

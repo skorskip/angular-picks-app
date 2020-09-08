@@ -1,7 +1,7 @@
 <div class="nav-title">
     <img class="icon" [src]="getLogo()">
-    <div class="nav-text-title" (click)="toggle(); navigateToPage('weeklyGames')">pickem</div>
   </div>
+  
   <div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
   (mouseout)="mouseout($event)">
     <nav>
@@ -31,10 +31,11 @@
       <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
     </nav>
   </div>
-  <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"
+  <!-- Uncomment when new workspace ready -->
+  <!-- <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"
   (mouseout)="mouseout($event)" >
     <nav>
       <mat-icon class="sidenav-icon">sports_kabaddi</mat-icon>
       <a (click)="toggle(); goToChatPage()">S*** Chat</a>
     </nav>
-  </div>
+  </div> -->

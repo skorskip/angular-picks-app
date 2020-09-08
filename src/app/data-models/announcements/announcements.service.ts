@@ -65,10 +65,7 @@ export class AnnouncementsService {
   getAnnouncementCheck(): String {
       var annnouncementDate = localStorage.getItem('annoucementCheck');
       if(annnouncementDate == null) {
-        var d = new Date();
-        var day = d.getDay()
-        var diff = d.getDate() - day + (day == 0 ? -6:1);
-        annnouncementDate = new Date(d.setDate(diff)).toUTCString();
+        return null;
       }
       return annnouncementDate;
   }
