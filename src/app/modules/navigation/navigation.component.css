@@ -1,11 +1,23 @@
 .nav-title {
 	display:flex;
-	flex-direction: column;
+	flex-direction: row;
 	flex-wrap: nowrap;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	cursor: pointer;
-	padding: 10px;
+    padding: 10px;
+    width: 55%;
+}
+
+.user-header {
+    display: flex;
+    font-size: 1.3em;
+    padding: 10px;
+    justify-content: center;
+}
+
+.close-menu-icon {
+    transform: scale(1.2);
 }
 
 .nav-text-title {
@@ -32,6 +44,8 @@ a {
 }
 
 .sidenav-opt{
+    display: flex;
+    align-items: center;
 	margin-left: 40px;
 	margin-top:20px;
 	cursor: pointer;
@@ -96,10 +110,6 @@ a {
 	margin-top: 20px;
 	font-size:1.5em;
     margin: 10px;
-}
-
-.card-section {
-    padding: 10px;
 }
 
 .info-header {
@@ -199,8 +209,8 @@ a {
 .pick-stat-card {
     border: 1px solid;
     border-radius: 8px;
-    margin: 10px;
-    padding: 5px;
+    margin: 5px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

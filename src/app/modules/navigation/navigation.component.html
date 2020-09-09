@@ -1,23 +1,11 @@
 <div class="nav-title">
+    <mat-icon class="close-menu-icon" (click)="toggle()">clear</mat-icon>
     <img class="icon" [src]="getLogo()">
 </div>
-<div class="card-title base-background tiertary" (click)="toggle(); navigateToPage('profile')">
-  <div class="card-header secondary">
-    <div class="card-subheader">
-      <div class="init-icon primary">
-        {{ user.user_inits }}
-      </div>
-      <div class=card-header-text>
-        {{user.first_name}} {{user.last_name}}
-      </div>
-    </div>
-    <mat-icon class="row-arrow-icon">
-      keyboard_arrow_right
-    </mat-icon> 
-  </div>
+<div class="user-header">
+  Welcome,<b> &nbsp; {{user.first_name}} {{user.last_name}}</b>
 </div>
-
-<div class="card base-background tiertary" *ngIf=!editSelected>
+<div class="card base-background tiertary">
   <div class="card-section secondary">
       <div class="info-content">
         <div class="pick-progress-container">
@@ -29,6 +17,10 @@
             <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
           </div>
           <div class="picks-stat-card-group">
+            <div class="pick-stat-card tiertary">
+              <div class="large-font secondary">{{ userStandings.ranking }}</div>
+              <div class="secondary">rank</div>
+            </div>
             <div class="pick-stat-card tiertary">
               <div class="large-font secondary">{{ userStandings.wins }}</div>
               <div class="secondary">wins</div>
@@ -70,6 +62,13 @@
     <mat-icon class="sidenav-icon">email</mat-icon>
     <a (click)="toggle(); navigateToPage('messages'); goToMessagePage()">Messages</a>
     <div *ngIf="messageCount != 0" class="notification-chip failure-background base">{{ messageCount }}</div>
+  </nav>
+</div>
+<div class="sidenav-opt" id="profile" (mouseover) = "mouseover($event)"
+(mouseout)="mouseout($event)" >
+  <nav>
+    <mat-icon class="sidenav-icon">person</mat-icon>
+    <a (click)="toggle(); navigateToPage('profile'); goToMessagePage()">Profile</a>
   </nav>
 </div>
 <!-- Uncomment when new workspace ready -->

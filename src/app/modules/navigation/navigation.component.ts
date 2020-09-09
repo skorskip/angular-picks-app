@@ -52,7 +52,6 @@ export class NavigationComponent implements OnInit {
     this.announcementsService.announcementChange.subscribe(value => {
       if(value) {
         this.announcementsService.getAnnoucements().subscribe((messages) => {
-          console.log("GET MESSAGES::", messages);
           this.announcements = messages;
           this.messageCount = messages.announcements;
         });
@@ -77,7 +76,7 @@ export class NavigationComponent implements OnInit {
     } else if(route.indexOf("standings") != -1) {
       this.highlight("standings");
     } else if(route.indexOf("profile") != -1) {
-      this.highlight("my-profile");
+      this.highlight("profile");
     } else if(route.indexOf("messages") != -1) {
       this.highlight("messages");
     }
