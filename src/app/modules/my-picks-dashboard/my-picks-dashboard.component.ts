@@ -14,14 +14,13 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
-import { Interpolation } from '@angular/compiler';
 
 @Component({
   selector: 'app-my-picks-dashboard',
   templateUrl: './my-picks-dashboard.component.html',
   styleUrls: ['./my-picks-dashboard.component.css']
 })
-export class MyPicksDashboardComponent implements OnInit, AfterViewInit {
+export class MyPicksDashboardComponent implements OnInit {
   myGames = [] as Game[];
   myTeams = [] as Team[];
   picks = [] as Pick[];
@@ -82,12 +81,6 @@ export class MyPicksDashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.myGames.forEach((game) => {
-      this.highlightSelected(game);
-    });
-  }
-
   initWeek(season: number, seasonType: number, week: number, reset: boolean) {
     this.loader = true;
     this.myTeams = [] as Team[];
@@ -131,9 +124,9 @@ export class MyPicksDashboardComponent implements OnInit, AfterViewInit {
   }
 
   populateGamesTeams(picks: WeekPicks){
-    this.myGames = picks.games;
-    this.myTeams = picks.teams;
-    this.picks = picks.picks;
+    this.myGames = JSON.parse(JSON.stringify(picks.games));
+    this.myTeams = JSON.parse(JSON.stringify(picks.teams));
+    this.picks = JSON.parse(JSON.stringify(picks.picks));
     this.loader = false;
 
     this.myGames.forEach((game) => {
