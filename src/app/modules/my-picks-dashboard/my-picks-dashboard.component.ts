@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
 import { TeamService } from '../../data-models/team/team.service';
 import { Week } from '../../data-models/week/week';
@@ -21,7 +21,7 @@ import { Interpolation } from '@angular/compiler';
   templateUrl: './my-picks-dashboard.component.html',
   styleUrls: ['./my-picks-dashboard.component.css']
 })
-export class MyPicksDashboardComponent implements OnInit {
+export class MyPicksDashboardComponent implements OnInit, AfterViewInit {
   myGames = [] as Game[];
   myTeams = [] as Team[];
   picks = [] as Pick[];
@@ -80,6 +80,12 @@ export class MyPicksDashboardComponent implements OnInit {
     } else {
       this.initWeek(season, seasonType, week, false);
     }
+  }
+
+  ngAfterViewInit() {
+    this.myGames.forEach((game) => {
+      this.highlightSelected(game);
+    });
   }
 
   initWeek(season: number, seasonType: number, week: number, reset: boolean) {
@@ -168,9 +174,9 @@ export class MyPicksDashboardComponent implements OnInit {
         if(pick.game_id == game.game_id){
           this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
           var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
-          var newPick = pick;
+          var newPick = JSON.parse(JSON.stringify(pick));
           newPick.team_id = newTeam;
-          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
           this.stagedEdits.push(newPick);
         }
       });
