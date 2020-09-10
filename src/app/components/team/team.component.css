@@ -7,9 +7,20 @@
 	height: 110px;
 	float: left;
 	margin-right: 5%;
+	box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
 .team-info {
+	border-radius: 18px;
+	width: 150px;
+	height: 110px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.team-info-result {
 	border-radius: 18px;
 	width: 140px;
 	height: 100px;

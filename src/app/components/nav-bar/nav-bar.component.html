@@ -1,9 +1,9 @@
-<mat-toolbar class="base-background nav-container">
+<mat-toolbar class="base-background nav-container" (window:resize)="onResize($event)">
     <div class="title-group">
-        <button mat-icon-button (click)="toggleSideNav()">
+        <button *ngIf="!largeScreen" mat-icon-button (click)="toggleSideNav()">
             <mat-icon class="sidenav-button primary">menu</mat-icon>
         </button>
-        <div *ngIf="messages" class="notification-icon failure-background">
+        <div *ngIf="messages && !largeScreen" class="notification-icon failure-background">
         </div>
         <div class="primary main">
             {{ title }}
@@ -20,11 +20,6 @@
         </button>
         <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
             <span class="base">Done</span>
-        </button>
-        <button mat-icon-button (click)="toggleProfile()">
-            <div class="init-icon primary-background base">
-                {{ user.user_inits }}
-              </div>
         </button>
     </div>
 </mat-toolbar>

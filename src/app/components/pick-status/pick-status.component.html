@@ -1,22 +1,22 @@
-<div attr.id="{{game.game_id}}-pick-status" class="pick-icon" [ngClass]="getPickStatus()">
+<div attr.id="{{game.game_id}}-pick-status" class="pick-icon base-background tiertary">
   <mat-icon 
     *ngIf="open" 
-    class="pick-status-icon">lock_open
+    class="pick-status-icon tiertary">alternate_email
   </mat-icon>
   <mat-icon 
     *ngIf="closed" 
-    class="pick-status-icon">lock_outline
+    class="pick-status-icon warn">lock_outline
   </mat-icon>
   <mat-icon 
     *ngIf="correct" 
-    class="pick-status-icon">done
+    class="pick-status-icon success">done
   </mat-icon>
   <mat-icon 
     *ngIf="wrong" 
-    class="pick-status-icon">clear
+    class="pick-status-icon failure">clear
   </mat-icon>
   <mat-icon 
   *ngIf="push" 
-  class="pick-status-icon">swap_horiz
+  class="pick-status-icon secondary">swap_horiz
   </mat-icon>
 </div>

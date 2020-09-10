@@ -5,4 +5,11 @@ export class Announcements {
     announcement_date: string;
     messages: Message[];
     date: Date;
+
+    constructor() {
+		  this.announcements = 0;
+		  this.announcement_date = "";
+      this.messages = [];
+      this.date = new Date();
+	}
 }

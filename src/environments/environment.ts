@@ -6,11 +6,11 @@ export const environment = {
   production: false,
   serviceURL: "http://10.0.0.142:3100/",
   
-  weekServiceURL: "https://nl40hl7db1.execute-api.us-east-2.amazonaws.com/",
-  picksServiceURL: "https://vh4o039qgh.execute-api.us-east-2.amazonaws.com/",
-  userServiceURL: "https://rd5xpmf3z5.execute-api.us-east-2.amazonaws.com/",
-  leagueServiceURL: "https://ot8u65d5oc.execute-api.us-east-2.amazonaws.com/",
-  messageServiceURL: "https://4xfq7nljg8.execute-api.us-east-2.amazonaws.com/"
+  weekServiceURL: "https://bwwb90qbp1.execute-api.us-east-2.amazonaws.com/",
+  picksServiceURL: "https://eprpzyjbu5.execute-api.us-east-2.amazonaws.com/",
+  userServiceURL: "https://i9o2gqkux4.execute-api.us-east-2.amazonaws.com/",
+  leagueServiceURL: "https://1cotpo9e3c.execute-api.us-east-2.amazonaws.com/",
+  messageServiceURL: "https://rk69u80z38.execute-api.us-east-2.amazonaws.com/"
 };
 
 /*

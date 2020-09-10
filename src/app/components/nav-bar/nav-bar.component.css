@@ -6,6 +6,13 @@
     justify-content: space-between;
 }
 
+@media only screen and (min-width: 900px) {
+	.nav-container {
+        position: relative;
+        margin-top: -65px;
+	}
+}
+
 .main {
     font-size: 1.2em;
     margin: 5px;

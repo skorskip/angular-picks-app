@@ -29,8 +29,12 @@
       (click)="selectTeam(home_team_id)"
       (teamLoaded)="teamLoadedEvent($event)">
     </team>
-    <div class="game-card-spread base-background">
-      <div class="game-card-spread-icon primary primary-light-background">{{getGameSpread(game.home_spread)}}</div>
+    <div class="game-card-spread tiertary base-background">
+      <div class="game-card-spread-icon primary base-background">
+        <b>
+          {{getGameSpread(game.home_spread)}}
+        </b>
+      </div>
     </div>
   </div>
   <users-pick-data *ngIf="showPicksData()"

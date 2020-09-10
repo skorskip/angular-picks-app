@@ -21,6 +21,10 @@
     color: #151515 !important;
 }
 
+.quaternary {
+    color: #151515 !important;
+}
+
 .base {
     color: black !important
     /* color:rgb(27, 26, 37) !important; */
@@ -44,6 +48,10 @@
 }
 
 .tiertary-light-background {
+    background-color: #151515 !important;
+}
+
+.quaternary-background {
     background-color: #151515 !important;
 }
 

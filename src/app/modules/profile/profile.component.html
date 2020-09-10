@@ -1,3 +1,6 @@
+<nav-bar
+    [title] ="'Profile'">
+</nav-bar>
 <div class="content">
   <div class="profile-container">
     <div class="card-title base-background tiertary" *ngIf=!editSelected>
@@ -26,6 +29,10 @@
                 <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
               </div>
               <div class="picks-stat-card-group">
+                <div class="pick-stat-card tiertary">
+                  <div class="large-font secondary">{{ userStandings.ranking }}</div>
+                  <div class="secondary">rank</div>
+                </div>
                 <div class="pick-stat-card tiertary">
                   <div class="large-font secondary">{{ userStandings.wins }}</div>
                   <div class="secondary">wins</div>

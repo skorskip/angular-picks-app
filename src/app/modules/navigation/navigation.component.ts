@@ -1,10 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
+import { Announcements } from 'src/app/data-models/announcements/announcements';
+import { User } from 'src/app/data-models/user/user';
+import { League } from 'src/app/data-models/league/league';
+import { PickService } from 'src/app/data-models/pick/pick.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/data-models/user/user.service';
+import { WeekService } from 'src/app/data-models/week/week.service';
+import { Pick } from 'src/app/data-models/pick/pick';
+import { UserStanding } from 'src/app/data-models/user/user-standing';
 
 @Component({
   selector: 'app-navigation',
@@ -16,13 +24,23 @@ export class NavigationComponent implements OnInit {
   events: string[] = [];
   selected;
   messageCount = 0;
-  
+  announcements = new Announcements();
+  user = new User();
+  settings = new League();
+  picks = [] as Pick[];
+  userStandings = new UserStanding();
+  pickProgress = 0;
+
   constructor(
     private router:Router, 
     private themeService:ThemeService,
     private sideNavService: SideNavService,
     private leagueService: LeagueService,
     private announcementsService: AnnouncementsService,
+    private authService: AuthenticationService,
+    private picksService: PickService,
+    private userService: UserService,
+    private weekService: WeekService,
     ){
 
     this.router.events.subscribe((event) => {
@@ -34,13 +52,21 @@ export class NavigationComponent implements OnInit {
     this.announcementsService.announcementChange.subscribe(value => {
       if(value) {
         this.announcementsService.getAnnoucements().subscribe((messages) => {
+          this.announcements = messages;
           this.messageCount = messages.announcements;
         });
       }
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.announcementsService.getAnnoucements().subscribe((messages) => {
+      this.announcements = messages;
+      this.messageCount = messages.announcements;
+    });
+
+    this.setUserData(this.authService.currentUserValue);
+  }
 
   highlightByRoute(route: string) {
     if(route.indexOf("picks") != -1) {
@@ -50,7 +76,7 @@ export class NavigationComponent implements OnInit {
     } else if(route.indexOf("standings") != -1) {
       this.highlight("standings");
     } else if(route.indexOf("profile") != -1) {
-      this.highlight("my-profile");
+      this.highlight("profile");
     } else if(route.indexOf("messages") != -1) {
       this.highlight("messages");
     }
@@ -118,13 +144,35 @@ export class NavigationComponent implements OnInit {
     var checked = new Date();
     this.announcementsService.setAnnouncementCheck(checked.toUTCString());
     this.messageCount = 0;
+    this.announcements.announcements = 0
+    this.announcementsService.setAnnouncements(this.announcements);
   }
 
-  goToChatPage() {
-    this.leagueService.getLeagueSettings().subscribe((settings) => {
-      window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+  setUserData(user: User) {
+    this.user = user;
+
+    this.leagueService.getLeagueSettings().subscribe((settings)=>{
+      this.settings = settings;
+    });
+
+    this.weekService.getCurrentWeek().subscribe((week) => {
+      this.picksService.getPicksByWeek(this.user, week.season, week.seasonType, week.week).subscribe((picks) => {
+        this.picks = picks.picks;
+
+        this.userService.getStandingsByUser(week.season, week.seasonType, this.user).subscribe((results) => {
+          this.userStandings = results[0];
+          this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
+        });
+      });
     });
   }
+
+  // Add to with new workspace
+  // goToChatPage() {
+  //   this.leagueService.getLeagueSettings().subscribe((settings) => {
+  //     window.open("https://slack.com/app_redirect?channel=" + settings.messageSource.channel, '_blank');
+  //   });
+  // }
 
   getLogo(): string {
     var theme = this.themeService.getTheme();

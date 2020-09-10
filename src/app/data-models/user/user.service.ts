@@ -90,10 +90,10 @@ export class UserService {
 
   getStandingsByUser(season: number, seasonType: number, user: User):Observable<UserStanding[]> {
     let url = `${this.usersUrl}/standings/season/${season}/seasonType/${seasonType}`;
-    if(this.starGate.allow('userStandings')){
+    if(this.starGate.allow('userStandings') && user != null){
       return this.http.post(url, user, httpOptions).pipe(
         tap((userStanding: UserStanding[])=> {
-          console.log(`get user standings`);
+          console.log(`get individual user standings`);
           var object = new Standings();
           
           if(userStanding.length === 0) {

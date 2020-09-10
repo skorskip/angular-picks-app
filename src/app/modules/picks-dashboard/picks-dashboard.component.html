@@ -22,16 +22,18 @@
                   </div>
                 </div>
             </div> 
-            <game 
-                class="game-container"
-                [game] = "game"
-                [teams] = "teams"
-                [submitOpened] = "submitOpened"
-                [userGamePicks] = "weekUserPicks[game.game_id]"
-                (openSubmit) = "teamClicked($event)"
-                (stageSelectedPick) = "stageSelectedPick($event)"
-                (teamLoaded) = "teamLoaded($event)">
-            </game>
+            <div class="game-container">
+                <game 
+                    [game] = "game"
+                    [teams] = "teams"
+                    [submitOpened] = "submitOpened"
+                    [userGamePicks] = "weekUserPicks[game.game_id]"
+                    [notSelectablePicks] = "userCanSelect()"
+                    (openSubmit) = "teamClicked($event)"
+                    (stageSelectedPick) = "stageSelectedPick($event)"
+                    (teamLoaded) = "teamLoaded($event)">
+                </game>
+            </div>
             <div class="separator tiertary"></div>
         </ng-container>
     </div>

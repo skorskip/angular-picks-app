@@ -32,9 +32,4 @@ export class TeamComponent implements OnInit, AfterViewInit {
       this.teamLoaded.emit(true);
     });
   }
-
-  getTeamName() {
-    return this.team.abbreviation;
-  }
-
 }

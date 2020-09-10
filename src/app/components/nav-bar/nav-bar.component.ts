@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 import { User } from 'src/app/data-models/user/user';
@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent implements OnInit, AfterViewInit {
 
   @Input() title = "";
   @Input() subtitle = "";
@@ -19,9 +19,9 @@ export class NavBarComponent implements OnInit {
   @Output() submitEditsSelected = new EventEmitter();
   user = new User();
 
-
   edit = false;
   messages = false;
+  largeScreen = false;
 
   constructor(
     private sideNavService: SideNavService,
@@ -43,12 +43,12 @@ export class NavBarComponent implements OnInit {
     })
   }
 
-  toggleSideNav(){
-    this.sideNavService.toggleSidebarVisibility();
+  ngAfterViewInit() {
+    this.resize(document.getElementById("side-nav").scrollWidth);
   }
 
-  toggleProfile(){
-    this.sideNavService.toggleProfileVisibility();
+  toggleSideNav(){
+    this.sideNavService.toggleSidebarVisibility();
   }
 
   editPicks(){
@@ -59,6 +59,18 @@ export class NavBarComponent implements OnInit {
   submitEdits() {
     this.edit = false;
     this.submitEditsSelected.emit(true);
+  }
+
+  resize(size: number) {
+    if(size > 950) {
+      this.largeScreen = true;
+    } else {
+      this.largeScreen = false;
+    }
+  }
+
+  onResize(event){
+    this.resize(event.target.innerWidth);
   }
 
 }
