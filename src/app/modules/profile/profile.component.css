@@ -1,6 +1,25 @@
+.profile-container {
+    width: 100%;
+}
+
 .card {
 	padding: 2px;
-	border-radius: 18px;
+	margin: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid;
+}
+
+.card-title {
+	padding: 2px;
+	border-radius: 8px;
+	margin: 10px;
+    cursor: pointer;
+    border: 1px solid;
+}
+
+.card-bottom {
+	padding: 2px;
+	border-radius: 8px;
 	margin: 10px;
 	cursor: pointer;
 }
@@ -9,21 +28,18 @@
 	display: flex;
 	flex-direction: row;
     justify-content: flex-start;
-    padding: 15px;
+    padding: 10px;
     align-items: center;
 }
 
 .card-header-text {
 	margin-top: 20px;
 	font-size:2em;
-    margin: 20px;
+    margin: 10px;
 }
 
 .card-section {
-    border-radius: 18px;
-    border: 1px solid;
     padding: 10px;
-    margin: 20px;
 }
 
 .info-header {
@@ -32,11 +48,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 10px;
 }
 
 .edit-button {
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     border: solid 1px;
 }
@@ -67,7 +82,7 @@
 
 .logout-button {
     color: rgb(228, 46, 46);
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     border: solid 1px;
     margin:20px;
@@ -92,11 +107,60 @@
 }
 
 .toggle-button {
-    border-radius: 8px;
+    border-radius: 4px;
 	cursor: pointer;
     width: 100px;
 }
 
 .toggle-container {
-	border-radius: 8px;
+	border-radius: 4px;
+}
+
+.pick-progress-numbers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.pick-progress-container {
+    padding: 5px;
+}
+
+.large-font {
+    font-size: 2em;
+}
+
+.medium-font {
+    font-size: 1.3em;
+}
+
+.pick-stat-card {
+    border: 1px solid;
+    border-radius: 8px;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.picks-stat-card-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pick-progress-group {
+    margin: 10px;
+}
+
+@media only screen and (min-width: 650px) {
+	.content {
+        display: flex;
+        justify-content: center;
+	}
 }

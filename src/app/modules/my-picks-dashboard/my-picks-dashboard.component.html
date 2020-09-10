@@ -1,50 +1,53 @@
-<weeks 
-  [title]="getTitle()"
+<nav-bar
+  *ngIf="toggleType != 'none'"
+  [title] ="'Picks'"
+  [subtitle] = "getTitle()"
+  [showEditButton] = "showEditButton"
+  (editPickSelected) = editPicks()
+  (submitEditsSelected) = submitEdits()>
+</nav-bar>
+<weeks
   [number] = "week.number"
+  [seasonType] = "week.seasonType"
   [season]= "week.season"
   [view]="toggleType">
-  <button mat-button *ngIf="!edit && showEditButton && myTeams.length != 0" class="edit-button base-background secondary" (click)="editPicks()">
-      <mat-icon>
-        mode_edit
-      </mat-icon>
-      edit
-  </button>
-  <button mat-button *ngIf="edit && showEditButton" class="edit-button base-background secondary" (click)="submitEdits()">
-    done
-  </button>
-  <div *ngIf = "myTeams.length == 0 && loader" class="no-picks-view">
+  
+  <div *ngIf = "picks.length == 0 && loader" class="no-picks-view">
     <mat-spinner></mat-spinner >
   </div>
-  <div *ngIf = "myTeams.length == 0 && !loader" class="no-picks-view secondary">
+  <div *ngIf = "picks.length == 0 && !loader" class="no-picks-view secondary">
     No Picks Made
   </div>
-  <ng-container *ngIf="myTeams.length > 0">
-    <div *ngFor="let myGame of myGames, let i = index" [ngClass]="{'pick-game':edit}">
-        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div class="edit-opt secondary bottom-margin base-background" (click) = "changeTeam(myGame)">
-              <mat-icon
-              matTooltip="edit"
-              matTooltipPosition="right"
-              class="edit-icon-edit">mode_edit
-            </mat-icon>
+  <div *ngIf="picks.length > 0" class="games-container">
+    <ng-container *ngFor="let myGame of myGames, let i = index">
+      <div *ngIf="showSubmitTime(i)" class="full-row">
+        <div class="game-card-date">
+          <div class="date-text primary">
+            Submit by: {{ submitDate(myGame) }}
           </div>
+        </div>
+      </div> 
+      <div class="game-container">
+        <game
+          [game] = "myGame"
+          [notSelectablePicks] = "notSelectablePicks" 
+          [pickSuccess] = "pickResult(myGame)"
+          [userGamePicks] = "weekUserPicks[myGame.game_id]"
+          [teams] = "myTeams"
+          (teamLoaded) = "teamLoaded($event)"
+          (click) = "changeTeam(myGame)">
+        </game>
+        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
           <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
             <mat-icon
               matTooltip="delete"
-              matTooltipPosition="right"
-              class="failure">clear
+              matTooltipPosition="bottom"
+              class="failure">delete
             </mat-icon>
           </div>
         </div>
-        <game 
-          [game] = "myGame"
-          [showSubmitTime] = "showSubmitTime(i)"
-          [notSelectablePicks] = "notSelectablePicks" 
-          [pickSuccess] = "pickResult(myGame)"
-          [teams] = "myTeams"
-          (teamLoaded) = "teamLoaded($event)"
-          style="width:100%"> 
-        </game>
-    </div>
-  </ng-container>
+      </div>
+      <div class="separator tiertary"></div>
+    </ng-container>
+  </div>
 </weeks>

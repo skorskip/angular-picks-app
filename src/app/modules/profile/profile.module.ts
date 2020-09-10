@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
 import { RegisterModule } from '../../modules/register/register.module';
+import { SharedModule } from '../../shared/shared.module';
 
 import { ProfileComponent } from './profile.component';
 
@@ -9,9 +10,13 @@ import { ProfileComponent } from './profile.component';
   imports: [
     CommonModule,
     MaterialModule,
-    RegisterModule
+    RegisterModule,
+    SharedModule
   ],
   declarations: [
+    ProfileComponent
+  ],
+  exports: [
     ProfileComponent
   ]
 })

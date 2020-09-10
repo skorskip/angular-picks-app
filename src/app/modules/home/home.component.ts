@@ -1,14 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router, NavigationStart } from '@angular/router';
-import { WeekService } from '../../data-models/week/week.service';
-import {MediaMatcher} from '@angular/cdk/layout';
+import { Router, NavigationStart, RouterOutlet } from '@angular/router';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
+import { LeagueService } from 'src/app/data-models/league/league.service';
+import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
+import { slideInAnimation } from 'src/app/app-routing/app-routing-animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [ slideInAnimation ]
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -16,24 +19,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   openedSmall: boolean;
   opened:boolean;
   largeScreen = false as boolean;
-  selected;
   sideMenuType;
   mobileQuery: MediaQueryList;
   
   private _mobileQueryListener: () => void;
 
   constructor(
-    @Inject(DOCUMENT) document, 
     private router:Router, 
-    private weekService:WeekService,
-    private themeService:ThemeService,
+    private sideNavService: SideNavService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher){
 
-    this.router.events.subscribe((event) => {
-        if(event instanceof NavigationStart) {
-          this.highlightByRoute(event.url);
-        }
+    this.sideNavService.sidebarVisibilityChange.subscribe(value => {
+      if(!this.largeScreen) {
+        this.opened = value;
+      }
     });
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -47,28 +47,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  highlightByRoute(route: string) {
-    if(route.indexOf("picks") != -1) {
-      this.highlight("my-picks");
-    } else if(route.indexOf("games") != -1) {
-      this.highlight("weekly-games");
-    } else if(route.indexOf("standings") != -1) {
-      this.highlight("standings");
-    } else if(route.indexOf("profile") != -1) {
-      this.highlight("my-profile");
-    }
-  }
-
   ngAfterViewInit() {
-    this.highlightByRoute(this.router.url);
     this.resize(document.getElementById("side-nav").scrollWidth);
-    var element = document.getElementById(this.selected);
-
-    if(element != null){
-      element.classList.add("primary-background");
-      element.classList.add("base");
-      element.classList.add("selected");
-    }
   }
 
   onResize(event) {
@@ -87,64 +67,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  highlight(id:string) {
-    var selected = document.getElementById(id);
-    var prevSelected = document.getElementById(this.selected);
-
-    if(selected != null) {
-      selected.classList.add("primary-background");
-      selected.classList.add("base");
-      selected.classList.add("selected");
-      this.selected = id;
-    }
-    if(prevSelected != null){
-      prevSelected.classList.remove("primary-background");
-      prevSelected.classList.remove("base");
-      prevSelected.classList.remove("selected");
-    }    
-  }
-
-  navigateToPage(link:string){
-    this.router.navigate(['/'+link]);
-  }
-
-  mouseover(event:any){
-    var element  = document.getElementById(event.path[2].id);
-    if(element != null){
-      element.classList.add("primary-background");
-      element.classList.add("base");
-    }
-  }
-
-  mouseout(event:any){
-    var element  = document.getElementById(event.path[2].id);
-    if(element != null){
-      if(!element.classList.contains("selected")){ 
-        element.classList.remove("primary-background");
-        element.classList.remove("base");
-      };
-    }
-  }
-
-  toggle(){
-    if(this.opened && this.largeScreen == false) {
-      this.opened = false;
-    } else {
-      this.opened = true;
-    }
-  }
-
   getCurrentPageLogin(): boolean {
     return (this.router.url.indexOf('login') > -1);
   }
 
-  getLogo(): string {
-    var theme = this.themeService.getTheme();
-    if(theme == 'light'){
-      return "../../../assets/icons/pickem_logo_soft.svg";
-    } else {
-      return "../../../assets/icons/pickem_logo_dark.svg"
+  sideNavChange(event: boolean) {
+    if(!event) {
+      this.sideNavService.setSidebarVisibility(event);
     }
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    //TODO:: Add animations only when on one page
+    // return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
 }

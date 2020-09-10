@@ -1,7 +1,11 @@
 
-/*<-------DARK COLORS?-------->*/
+/*<-------DARK COLORS-------->*/
 .primary {
-    color:  #3ece7a;
+    color:  #3ece7a !important;
+}
+
+.primary-light {
+    color: #3ece7a29 !important;
 }
 
 .secondary {
@@ -9,15 +13,29 @@
 }
 
 .tiertary {
-    color: rgb(17, 16, 24) !important;
+    /* color: rgb(49, 46, 70) !important; */
+    color: rgb(53, 53, 53) !important;
+}
+
+.tiertary-light {
+    color: #151515 !important;
+}
+
+.quaternary {
+    color: #151515 !important;
 }
 
 .base {
-    color:rgb(27, 26, 37) !important;
+    color: black !important
+    /* color:rgb(27, 26, 37) !important; */
 }
 
 .primary-background {
     background-color:  #3ece7a !important;
+}
+
+.primary-light-background {
+    background-color: #3ece7a29 !important;
 }
 
 .secondary-background {
@@ -25,25 +43,31 @@
 }
 
 .tiertary-background {
-    background-color: rgb(17, 16, 24) !important;
+    /* background-color: rgb(49, 46, 70) !important; */
+    background-color: rgb(53, 53, 53) !important;
+}
+
+.tiertary-light-background {
+    background-color: #151515 !important;
+}
+
+.quaternary-background {
+    background-color: #151515 !important;
 }
 
 .base-background {
-    background-color: rgb(27, 26, 37) !important;
+    background-color: black !important;
+    /* background-color: rgb(27, 26, 37) !important; */
 }
 
 .mat-progress-spinner circle, .mat-spinner circle {
     stroke:  #3ece7a !important;
 }
 
-.success {
-    color: green;
+.mat-progress-bar-fill::after {
+    background-color: #3ece7a !important;
 }
 
-.failure {
-    color: rgb(228, 46, 46);
-}
-
-.warn {
-    color: #ca7220;
+.mat-progress-bar-buffer {
+    background-color: rgb(49, 46, 70) !important;
 }

@@ -1,7 +1,6 @@
 .register-container {
     display: flex;
     flex-direction: column;
-    padding:20px;
 }
 
 .input-form {
@@ -34,12 +33,9 @@
 
 .register-title {
     font-size: 2em;
-    padding-left: 20px;
-
 }
 
 .title-container {
-    padding: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -1,0 +1,25 @@
+<mat-toolbar class="base-background nav-container" (window:resize)="onResize($event)">
+    <div class="title-group">
+        <button *ngIf="!largeScreen" mat-icon-button (click)="toggleSideNav()">
+            <mat-icon class="sidenav-button primary">menu</mat-icon>
+        </button>
+        <div *ngIf="messages && !largeScreen" class="notification-icon failure-background">
+        </div>
+        <div class="primary main">
+            {{ title }}
+        </div>
+    </div>
+    <div class="subtitle-group">
+        <div class="secondary subtitle">
+            {{ subtitle }}
+        </div>
+    </div>
+    <div class="button-group">
+        <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background primary" (click)="editPicks()">
+            <span class="primary">Edit</span>
+        </button>
+        <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
+            <span class="base">Done</span>
+        </button>
+    </div>
+</mat-toolbar>

@@ -1,23 +1,18 @@
 .team-group {
-	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	align-items: center;
 }
 
 .game-card {
 	display: flex;
 	flex-direction: column;
-	margin: 5px;
-	margin-top: 15px;
-	margin-bottom: 25px;
-	border-radius: 18px;
-	margin: 10px;
 	cursor: pointer;
+	margin: 10px;
 }
 
 .game-card-date {
-	width: 100%;
 	text-align:right;
 }
 
@@ -47,10 +42,11 @@
 	position: absolute;
 	float: left;
 	margin-left: 38%;
-	margin-top: -5px;
+	margin-top: -35px;
     text-align: center;
 	border-radius: 50%;
 	padding: 5px;
+	border: solid 1px;
 }
 
 .game-card-spread-icon {
@@ -63,8 +59,8 @@
 	padding: 10px;
 	height: 25px;
 	width:25px;
-	border: solid 2px;
 	border-radius: 50%;
+
 }
 
 .status-icon {
@@ -79,5 +75,35 @@
     text-align: center;
 	border-radius: 50%;
 	padding: 5px;
-	margin-top:40px;
+}
+
+@media only screen and (min-width: 665px) {
+	.game-card  {
+		width: 100%;
+		margin: 10px;
+	}
+}
+
+@media only screen and (min-width: 950px) {
+	.game-card  {
+		width: 100%;
+		margin: 10px;
+	}
+	
+	.game-card-spread {
+		margin-left:300px;
+		margin-top: -60px;
+	}
+}
+
+@media only screen and (min-width: 1300px) {
+	.game-card  {
+		width: 100%;
+		margin: 10px;
+	}
+
+	.game-card-spread {
+		margin-left:300px;
+		margin-top: -60px;
+	}
 }

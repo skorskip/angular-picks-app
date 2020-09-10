@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
-import { GameService } from '../../data-models/game/game.service';
 import { TeamService } from '../../data-models/team/team.service';
 import { Week } from '../../data-models/week/week';
 import { Game } from '../../data-models/game/game';
@@ -9,10 +8,12 @@ import { Pick } from '../../data-models/pick/pick';
 import { WeeksService } from '../../components/weeks/weeks.service';
 import { Subscription }   from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { WeekPicks } from 'src/app/data-models/pick/week-picks';
+import { MatDialog } from '@angular/material/dialog';
+import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -32,23 +33,26 @@ export class MyPicksDashboardComponent implements OnInit {
   subscription: Subscription;
   user = new User();
   stagedEdits = [] as Pick[];
+  stagedDeletes = [] as Pick[];
   showEditButton = true;
   toggleType = "picks"
   loader = false;
+  weekUserPicks = [] as any[];
+  snapshot = new WeekPicks;
   @Input() otherUser = null;
 
   constructor(
-    private pickService: PickService, 
-    private gameService: GameService, 
+    public dialog: MatDialog,
+    private pickService: PickService,
     private teamService: TeamService, 
     private weeksService: WeeksService,
     private weekService: WeekService,
     private route:ActivatedRoute,
-    private router:Router,
+    private dateFormatter: DateFormatterService,
     private authService:AuthenticationService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(
         week => {
-          this.initWeek(week.season, week.number)
+          this.initWeek(week.season, week.seasonType, week.week, false)
         }
       )
     }
@@ -62,122 +66,189 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
     var season = +this.route.snapshot.paramMap.get('season') as number;
+    var seasonType = +this.route.snapshot.paramMap.get('seasonType') as number;
     var week = +this.route.snapshot.paramMap.get('week') as number;
 
-    if(season == 0 || week == 0) {
+    if(season == 0 || week == 0 || seasonType == 0) {
       this.weekService.getCurrentWeek().subscribe(currentWeek => {
         season = currentWeek.season;
+        seasonType = currentWeek.seasonType;
         week = currentWeek.week;
-        this.initWeek(season, week);
+        this.initWeek(season, seasonType, week, false);
       });
     } else {
-      this.initWeek(season, week);
+      this.initWeek(season, seasonType, week, false);
     }
   }
 
-  initWeek(season, week) {
+  initWeek(season: number, seasonType: number, week: number, reset: boolean) {
     this.loader = true;
-    this.myTeams = [];
-    this.myGames = [];
+    this.myTeams = [] as Team[];
+    this.myGames = [] as Game[];
+    this.stagedEdits = [] as Pick[];
+    this.stagedDeletes = [] as Pick[];
+    this.picks = [] as Pick[];
     this.week.number = week;
     this.week.season = season;
-    this.getPicksByWeek(season, week);
+    this.week.seasonType = seasonType;
+    
+    this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe(result => {
+      this.weekUserPicks = result;
+      this.getPicksByWeek(season, seasonType, week, reset);
+    });
   }
 
   teamLoaded(event) {
     this.highlightSelected(event);
+    this.highlightGameResult(event);
   }
 
-  getPicksByWeek(season: number, week: number) {
+  getPicksByWeek(season: number, seasonType: number, week: number, reset: boolean) {
     if(this.otherUser != null) {
-      this.pickService.getUsersPicksByWeek(this.otherUser, season, week).subscribe( picks => {  
-        this.populateGamesTeams(picks);
-      });
+      if(reset) {
+        this.populateGamesTeams(this.snapshot);
+      } else {
+        this.pickService.getUsersPicksByWeek(this.otherUser, season, seasonType, week).subscribe( picks => {  
+          this.populateGamesTeams(picks);
+        });
+      }
     } else {
-      this.pickService.getPicksByWeek(this.user, season, week).subscribe( picks => {  
-        this.populateGamesTeams(picks);
-      });
+      if(reset) {
+        this.populateGamesTeams(this.snapshot);
+      } else {
+        this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
+          this.populateGamesTeams(picks);
+        });
+      }
     }
   }
 
-  populateGamesTeams(picks: Pick[]){
-    this.picks = picks;
-    if(this.picks.length != 0){
-  
-      var gameIds: number[] = [];
-      var teamIds: number[] = [];
-      
-      this.picks.forEach(pick => {
-        gameIds.push(pick.game_id);
-      });
+  populateGamesTeams(picks: WeekPicks){
+    this.myGames = JSON.parse(JSON.stringify(picks.games));
+    this.myTeams = JSON.parse(JSON.stringify(picks.teams));
+    this.picks = JSON.parse(JSON.stringify(picks.picks));
+    this.loader = false;
 
-      this.gameService.getGameByIds(gameIds).subscribe(games => {
-
-        games.forEach((game) => {
-          if(new Date(game.pick_submit_by_date) > new Date()) {
-            this.showEditButton = true;
-          } else {
-            this.showEditButton = false;
-          }
-          teamIds.push(game.home_team);
-          teamIds.push(game.away_team);
-        });
-
-        this.teamService.getTeamByIds(teamIds).subscribe(teams => { 
-          this.myTeams = teams;
-        });
-
-        this.myGames = games;
-      });
-    } else {
-      this.loader = false;
-    }
+    this.myGames.forEach((game) => {
+      if(new Date(game.pick_submit_by_date) > new Date()) {
+        this.showEditButton = true;
+      } else {
+        this.showEditButton = false;
+      }
+    });
   }
 
   editPicks() {
     this.edit = !this.edit;
+    if(this.edit) {
+      this.snapshot.picks = JSON.parse(JSON.stringify(this.picks));
+      this.snapshot.games = JSON.parse(JSON.stringify(this.myGames));
+      this.snapshot.teams = JSON.parse(JSON.stringify(this.myTeams));
+    }
   }
 
   deletePick(game:Game) {
+    for(let i = 0; i < this.myGames.length; i++) {
+      if(this.myGames[i].game_id == game.game_id) {
+        this.myGames.splice(i,1);
+      }
+    }
+
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
-        this.pickService.deletePick(pick.pick_id).subscribe(() => {
-          this.initWeek(this.week.season, this.week.number);
-          return;
-        });   
+        this.stagedDeletes.push(pick);
       }
     }); 
   }
 
   changeTeam(game: Game) {
-    this.picks.forEach(pick => {
-      if(pick.game_id == game.game_id){
-        this.teamService.unSelectTeam(this.getTeam(pick.team_id));
-        var newTeam = pick.team_id == game.home_team ? game.away_team : game.home_team;
-        var newPick = pick;
-        newPick.team_id = newTeam;
-        this.teamService.highlightSelectTeam(this.getTeam(newTeam));
-        this.stagedEdits.push(newPick);
-      }
-    });
+    if(this.edit && this.showEdit(game)) {
+      this.picks.forEach(pick => {
+        if(pick.game_id == game.game_id){
+          this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
+          var newPick = JSON.parse(JSON.stringify(pick));
+          newPick.team_id = newTeam;
+          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
+          this.stagedEdits.push(newPick);
+        }
+      });
+    }
   }
 
   submitEdits() {
-    for(let i = 0; i < this.stagedEdits.length; i++) {
-      let newPick = this.stagedEdits[i];
-      this.pickService.updatePick(newPick).subscribe(() => {
-        this.initWeek(this.week.season, this.week.number);
+    if(this.stagedDeletes.length == 0 && this.stagedEdits.length == 0){
+      this.editPicks();
+    } else {
+      const dialogRef = this.dialog.open(EditPicksDialog,{width: '500px'});
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.editPicksService();
+        } else {
+          this.editPicks();
+          this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
+        }
       });
     }
-    this.editPicks();
+  }
+
+  editPicksService(){
+    var updatePicks = this.updatePicks();
+    var deletePicks = this.deletePicks();
+
+    Promise.all([updatePicks, deletePicks]).then((results)=>{
+      this.editPicks();
+      this.initWeek(this.week.season, this.week.seasonType, this.week.number, false);
+    });
+  }
+
+  updatePicks(): Promise<any> {
+    let promises_array:Array<any> = [];
+    for(let i = 0; i < this.stagedEdits.length; i++) {
+      promises_array.push(new Promise((resolve, reject)=>{
+        this.pickService.updatePick(this.stagedEdits[i]).subscribe((success) => {
+          if(!success){reject();}
+          resolve();
+        });
+      }));
+    }
+    return Promise.all(promises_array);
+  }
+
+  deletePicks(): Promise<any>  {
+    let promises_array:Array<any> = [];
+    for(let i = 0; i < this.stagedDeletes.length; i++) {
+      promises_array.push(new Promise((resolve, reject) => {
+        this.pickService.deletePick(this.stagedDeletes[i].pick_id).subscribe((success) => {
+          if(!success){reject();}
+          resolve();
+        });
+      }));
+    }
+    return Promise.all(promises_array);
   }
 
   highlightSelected(game: Game){
     this.picks.forEach(pick =>{
-      if(pick.game_id == game.game_id){
-        this.teamService.highlightSelectTeam(this.getTeam(pick.team_id));
+      if(pick.game_id === game.game_id){
+        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
       }
     });
+  }
+
+  highlightGameResult(game: Game){
+    if(game.game_status == 'COMPLETED'){
+      if(game.winning_team_id != null){
+        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.myTeams);
+        var info = document.getElementById(game.winning_team_id + "-team-info");
+        var team = document.getElementById(game.winning_team_id + "-team-card");
+        info.classList.remove(win_team.display_color);
+        info.classList.add("base");
+        info.classList.add("team-info-result");
+        team.classList.remove("quaternary-background");
+        team.classList.add(win_team.display_color + "-background");
+      }
+    }
   }
 
   pickResult(game: Game):string {
@@ -185,9 +256,9 @@ export class MyPicksDashboardComponent implements OnInit {
       for(var i = 0; i < this.picks.length; i ++) {
         var pick = this.picks[i];
         if(pick.game_id == game.game_id) {
-          if(pick.team_id == game.winning_team) {
+          if(pick.team_id == game.winning_team_id) {
             return "WIN";
-          } else if(game.winning_team == null) {
+          } else if(game.winning_team_id == null) {
             return "PUSH";
           } else {
             return "LOSE";
@@ -201,31 +272,14 @@ export class MyPicksDashboardComponent implements OnInit {
     }
   }
 
-  getTeam(id: number): Team {
-    var team
-    this.myTeams.forEach((teamItem) => {
-      if(id == teamItem.team_id){
-        team = teamItem;
-      }
-    })
-    return team;
-  }
-
-  getGame(id: number): Game {
-    var game
-    this.myGames.forEach((gameItem) => {
-      if(id == gameItem.game_id){
-        game = gameItem;
-      }
-    })
-    return game;
-  }
-
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.myGames[index - 1].pick_submit_by_date != this.myGames[index].pick_submit_by_date){
-      return true;
-    }
-    else return false;
+      return new Date(this.myGames[index].pick_submit_by_date) > new Date()
+    } else return false;
+  }
+
+  submitDate(game: Game):string {
+    return this.dateFormatter.formatDate(new Date(game.pick_submit_by_date));
   }
 
   showEdit(game: Game): boolean {
@@ -237,9 +291,9 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   getTitle(): string {
-    let title = "Picks";
+    let title = "";
     if(this.myGames.length > 0){
-      title += " (" + this.myGames.length + " submitted)"
+      title += this.myGames.length + " Picked"
     }
     return title;
   }
@@ -249,3 +303,9 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'edit-picks-dialog',
+  templateUrl: '../../components/dialog-content/edit-picks-dialog.html'
+})
+export class EditPicksDialog {}

@@ -1,6 +1,10 @@
+<nav-bar
+    [title] ="'Games'"
+    [subtitle] = "getTitle()">
+</nav-bar>
 <weeks 
-    [title] = "getTitle()"
     [number] = "week.number"
+    [seasonType] = "week.seasonType"
     [season]= "week.season"
     [view]="'games'">
     <div *ngIf = "teams.length == 0 && loader" class="no-games-set">
@@ -9,24 +13,35 @@
     <div *ngIf = "teams.length == 0 && !loader" class="no-games-set secondary">
         No Games Set
     </div>
-    <ng-container *ngIf="teams.length > 0">
-        <game 
-            *ngFor="let game of games, let i = index"
-            [game] = "game"
-            [teams] = "teams"
-            [showSubmitTime] = "showSubmitTime(i)"
-            [submitOpened] = "submitOpened"
-            (openSubmit) = "teamClicked($event)"
-            (stageSelectedPick) = "stageSelectedPick($event)"
-            (teamLoaded) = "teamLoaded($event)">
-        </game>
-    </ng-container>
-    <div id="submit-container" class="secondary-background" (click)="showSubmit()">
-        <mat-icon id="submit-icon" class="base" *ngIf="!submitOpened">chevron_left</mat-icon>
-        <mat-icon id="submit-icon" class="base" *ngIf="submitOpened">chevron_right</mat-icon>
-
+    <div *ngIf="teams.length > 0" class="games-container">
+        <ng-container *ngFor="let game of games, let i = index">
+            <div *ngIf="showSubmitTime(i)" class="full-row">
+                <div class="game-card-date">
+                  <div class="date-text primary">
+                    Submit by: {{ submitDate(game) }}
+                  </div>
+                </div>
+            </div> 
+            <div class="game-container">
+                <game 
+                    [game] = "game"
+                    [teams] = "teams"
+                    [submitOpened] = "submitOpened"
+                    [userGamePicks] = "weekUserPicks[game.game_id]"
+                    [notSelectablePicks] = "userCanSelect()"
+                    (openSubmit) = "teamClicked($event)"
+                    (stageSelectedPick) = "stageSelectedPick($event)"
+                    (teamLoaded) = "teamLoaded($event)">
+                </game>
+            </div>
+            <div class="separator tiertary"></div>
+        </ng-container>
+    </div>
+    <div [ngClass]="{'large-height':games.length < 3, 'small-height':games.length != 0}">
+    </div>
+    <div id="submit-container" *ngIf="!loader">
         <button mat-button id="submit-button" class="primary-background base" (click)="openDialog()">
-        submit
+        Submit
         </button>
     </div>
 </weeks>

@@ -1,0 +1,60 @@
+.nav-container {
+    position: fixed;
+    z-index: 5;
+    top:0;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (min-width: 900px) {
+	.nav-container {
+        position: relative;
+        margin-top: -65px;
+	}
+}
+
+.main {
+    font-size: 1.2em;
+    margin: 5px;
+}
+
+.subtitle {
+    font-size: 1em;
+}
+
+.sidenav-button {
+	transform: scale(1.5);
+}
+
+.edit-button {
+    border:  1px solid;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.title-group {
+    display: flex;
+    align-items: center;
+}
+
+.notification-icon {
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    height: 17px;
+    width: 17px;
+    border-radius: 16px;
+}
+
+.init-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    padding: 10px;
+    font-size: 1.2em;
+}

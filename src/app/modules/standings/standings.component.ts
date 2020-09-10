@@ -25,7 +25,7 @@ export class StandingsComponent implements OnInit {
 
   ngOnInit() {
     this.weekService.getCurrentWeek().subscribe( week => {
-      this.userService.getStandings(week.season).subscribe((users: UserStanding[]) => {
+      this.userService.getStandings(week.season, week.seasonType).subscribe((users: UserStanding[]) => {
         this.dataSource = users;
       });
     });

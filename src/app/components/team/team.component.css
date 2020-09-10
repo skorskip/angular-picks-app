@@ -1,28 +1,33 @@
 .team-card{
+	display: flex;
+    justify-content: center;
+    align-items: center;
 	border-radius: 18px;
 	width: 150px;
-	height: 130px;
+	height: 110px;
 	float: left;
 	margin-right: 5%;
-	border: solid 1px;
+	box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
-@media only screen and (min-width: 950px) {
-	.team-card {
-		width: 300px;
-	}
+.team-info {
+	border-radius: 18px;
+	width: 150px;
+	height: 110px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
-@media only screen and (min-width: 1200px) {
-	.team-card {
-		width: 400px;
-	}
-}
-
-@media only screen and (min-width: 1500px) {
-	.team-card {
-		width: 550px;
-	}
+.team-info-result {
+	border-radius: 18px;
+	width: 140px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .large-text{

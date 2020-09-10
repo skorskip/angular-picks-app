@@ -4,9 +4,10 @@ import { CurrentWeek } from './current-week';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { User } from '../user/user';
+import { StarGateService } from '../../services/star-gate/star-gate.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,32 +15,61 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class WeekService {
-    currentWeek = null;
-    private weekUrl = environment.serviceURL + 'weeks';
+    private weekUrl = environment.weekServiceURL + 'week';
+    private currentWeek: BehaviorSubject<CurrentWeek>;
+    private week: BehaviorSubject<Week>;
+    
     constructor(
       private http: HttpClient,
-      private snackBar: MatSnackBar) { }
+      private snackBar: MatSnackBar,
+      private starGate: StarGateService) { 
+        this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
+        this.week = new BehaviorSubject<Week>(JSON.parse(localStorage.getItem("week")));
+      }
 
     /** GET game by id. Will 404 if id not found */
-    getWeek(season: number, week: number): Observable<Week> {
-      const url = `${this.weekUrl}/season/${season}/week/${week}`;
-      return this.http.get<Week>(url).pipe(
-          tap(_ => console.log(`fetched week week=${week} season=${season}`)),
+    getWeek(season: number, seasonType: number, week: number, user: User): Observable<Week> {
+      const url = `${this.weekUrl}/season/${season}/seasonType/${seasonType}/week/${week}`;
+      if (this.starGate.allowWeek("week", season, week)) {
+        return this.http.post(url, user, httpOptions).pipe(
+          tap((weekResponse: Week) => {
+            console.log(`fetched week week=${week} season=${season}`);
+            this.setWeek(season, week, weekResponse);
+          }),
           catchError(this.handleError<Week>(`fetched week week=${week} season=${season}`))
-      );
+        );
+      } else {
+        return this.week.asObservable();
+      }
+
     }
 
     getCurrentWeek(): Observable<CurrentWeek> {
       const url = `${this.weekUrl}/current`;
-      if(this.currentWeek == null) {
-        this.currentWeek = this.http.get<CurrentWeek>(url).pipe(
-          tap(_ => console.log(`fetched current week`)),
-          catchError(this.handleError<Week>(`fetched current week`))
+      if(this.starGate.allow("currentWeek")) {
+        return this.http.get<CurrentWeek>(url).pipe(
+          tap((currentWeek: CurrentWeek) => {
+            console.log(`fetched current week`);
+            currentWeek.date = new Date();
+            localStorage.setItem("currentWeek", JSON.stringify(currentWeek));
+            this.currentWeek.next(currentWeek);
+          }),
+          catchError(this.handleError<CurrentWeek>(`fetched current week`))
         );
-      } 
-
-      return this.currentWeek;
+      } else {
+        return this.currentWeek.asObservable();
+      }
     }
+
+  setWeek(season: number, week: number, weekObject: Week) {
+    this.getCurrentWeek().subscribe(curr => {
+        if(curr.week == week && curr.season == season) {
+            weekObject.date = new Date();
+            localStorage.setItem('week', JSON.stringify(weekObject));
+            this.week.next(weekObject);
+        }
+    });
+  }
 
   // /**
   //  * Handle Http operation that failed.

@@ -4,7 +4,13 @@
 
 export const environment = {
   production: false,
-  serviceURL: "http://192.168.1.155:3000/"
+  serviceURL: "http://10.0.0.142:3100/",
+  
+  weekServiceURL: "https://bwwb90qbp1.execute-api.us-east-2.amazonaws.com/",
+  picksServiceURL: "https://eprpzyjbu5.execute-api.us-east-2.amazonaws.com/",
+  userServiceURL: "https://i9o2gqkux4.execute-api.us-east-2.amazonaws.com/",
+  leagueServiceURL: "https://1cotpo9e3c.execute-api.us-east-2.amazonaws.com/",
+  messageServiceURL: "https://rk69u80z38.execute-api.us-east-2.amazonaws.com/"
 };
 
 /*

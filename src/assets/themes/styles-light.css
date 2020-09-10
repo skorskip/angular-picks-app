@@ -1,7 +1,11 @@
 /*<-------COLORS-------->*/
 
 .primary {
-    color:  #3e5dce;
+    color:  #3e5dce !important;
+}
+
+.primary-light {
+    color: #3e5dce29 !important;
 }
 
 .secondary {
@@ -9,7 +13,11 @@
 }
 
 .tiertary {
-    color: rgb(235, 235, 235) !important;
+    color: rgb(214, 214, 214) !important;
+}
+
+.tiertary-light {
+    color: #f5f3f3 !important;
 }
 
 .base {
@@ -20,12 +28,20 @@
     background-color:  #3e5dce !important;
 }
 
+.primary-light-background {
+    background-color: #3e5dce29 !important;
+}
+
 .secondary-background {
     background-color: #455564 !important;
 }
 
 .tiertary-background {
-    background-color: rgb(235, 235, 235) !important;
+    background-color: rgb(214, 214, 214) !important;
+}
+
+.tiertary-light-background {
+    background-color: #f5f3f3 !important;
 }
 
 .base-background {
@@ -36,15 +52,11 @@
     stroke: #3e5dce !important;
 }
 
-.success {
-    color: green;
+.mat-progress-bar-fill::after {
+    background-color: #3e5dce !important;
 }
 
-.failure {
-    color: rgb(228, 46, 46);
-}
-
-.warn {
-    color: #ca7220;
+.mat-progress-bar-buffer {
+    background-color: rgb(214, 214, 214) !important;
 }
 
