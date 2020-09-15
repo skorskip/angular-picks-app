@@ -19,6 +19,7 @@ import { LeagueService } from 'src/app/data-models/league/league.service';
 import { League } from 'src/app/data-models/league/league';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -102,7 +103,7 @@ export class PicksDashboardComponent implements OnInit {
           this.userData = result[0];
         });
     
-        this.stagedPicks = this.pickService.getStagedPicks().picks;
+        this.stagedPicks = this.pickService.getStagedPicks();
         this.loader = false;
       });
     });
@@ -136,31 +137,23 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   stageSelectedPick(selectedPick: Pick){
-    var pickAdded = false;
-    selectedPick.user_id = this.user.user_id;
-    
-    for(var i = 0; i < this.stagedPicks.length; i++) {
-      var stagedPick = this.stagedPicks[i];
-
-      if(stagedPick.game_id == selectedPick.game_id) {
-        pickAdded = true;
-        if(stagedPick.team_id == selectedPick.team_id) {
-          this.stagedPicks.splice(i, 1);
-        } else {
-          this.stagedPicks.splice(i, 1, selectedPick);
-        }
-      }
-    }
-
-    if(!pickAdded){
-      this.stagedPicks.push(selectedPick);
-    }
-    
-    this.pickService.setStagedPicks(this.stagedPicks);
+    selectedPick.user_id = this.user.user_id
+    this.stagedPicks = this.pickService.addStagedPick(selectedPick);
   }
   
   openDialog() {
-    if(this.stagedPicks.length == 0){
+
+    var unsubmitableGame = false;
+
+    for(var i = 0; i < this.games.length; i++) {
+      let pickable = this.pickService.removeStagedPickPastSumbit(this.games[i]);
+      this.stagedPicks = this.pickService.getStagedPicks();
+      if(pickable == null) {
+        unsubmitableGame = true;
+      }
+    }
+
+    if(this.stagedPicks.length == 0 && unsubmitableGame != true){
       this.dialog.open(NoPicksDialog,{width: '500px'});
 
     } else if((this.stagedPicks.length + this.userData.picks + this.picked.length) > this.maxTotalPicks) {
@@ -175,6 +168,8 @@ export class PicksDashboardComponent implements OnInit {
       }
       this.dialog.open(PicksOverLimitDialog,dialogConfig);
 
+    } else if (unsubmitableGame) { 
+      this.dialog.open(PicksErrorDialog,{width: '500px'});
     } else {
       const dialogRef = this.dialog.open(SubmitPicksDialog,{width: '500px'});
       dialogRef.afterClosed().subscribe(result => {
@@ -206,17 +201,11 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   highlightStagedPick(game: Game){
-    for(let i = 0; i < this.stagedPicks.length; i++) {
-      let pick = this.stagedPicks[i];
-      if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
-        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.teams));
-      } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
-        this.stagedPicks.splice(i,1); 
-      }
+    var pick = this.pickService.removeStagedPickPastSumbit(game);
+    this.stagedPicks = this.pickService.getStagedPicks();
+    if(pick != null) {
+      this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick, this.teams));
     }
-
-    this.pickService.setStagedPicks(this.stagedPicks);
-
   }
 
   showSubmitTime(index: number): boolean {

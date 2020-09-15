@@ -10,6 +10,7 @@ import { User } from '../user/user';
 import { WeekPicks } from './week-picks';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { WeekService } from '../../data-models/week/week.service';
+import { Game } from '../game/game';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,6 +21,7 @@ export class PickService {
     private picksUrl = environment.picksServiceURL + 'picks';  // URL to web api
     private picks: BehaviorSubject<WeekPicks>;
     private picksByGame: BehaviorSubject<any>;
+    private stagedPicks: BehaviorSubject<any>;
 
     constructor(
       private http: HttpClient,
@@ -28,6 +30,7 @@ export class PickService {
       private weekService: WeekService) { 
           this.picks = new BehaviorSubject<WeekPicks>(JSON.parse(localStorage.getItem('picks')));
           this.picksByGame = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('picksByGame')));
+          this.stagedPicks = new BehaviorSubject<StagedPicks>(JSON.parse(localStorage.getItem('stagedPicks')));
       }
 
     addPicks(picks: Pick[]): Observable<boolean> {
@@ -126,28 +129,67 @@ export class PickService {
     }
 
     setStagedPicks(picks: Pick[]) {
-        var stagedPicks = this.getStagedPicks();
+        var stagedPicks = this.stagedPicks.value;
 
         if( stagedPicks == null) {
             stagedPicks = new StagedPicks();
         }
 
         stagedPicks.picks = picks;
-
+        this.stagedPicks.next(stagedPicks);
         localStorage.setItem('stagedPicks', JSON.stringify(stagedPicks));
+    }
+
+    addStagedPick(selectedPick: Pick) {
+        var pickAdded = false;
+        var staged = this.getStagedPicks();
+
+        for(var i = 0; i < staged.length; i++) {
+          var stagedPick = staged[i];
+    
+          if(stagedPick.game_id == selectedPick.game_id) {
+            pickAdded = true;
+            if(stagedPick.team_id == selectedPick.team_id) {
+              staged.splice(i, 1);
+            } else {
+              staged.splice(i, 1, selectedPick);
+            }
+          }
+        }
+    
+        if(!pickAdded){
+            staged.push(selectedPick);
+        }
+
+        this.setStagedPicks(staged);
+        return staged;
+    }
+
+    removeStagedPickPastSumbit(game: Game): number {
+        var staged = this.getStagedPicks();
+
+        for(let i = 0; i < staged.length; i++) {
+            let pick = staged[i];
+            if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
+                return pick.team_id;
+            } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
+              staged.splice(i,1);
+              this.setStagedPicks(staged);
+              return null;
+            }
+        }
     }
 
     clearStagedPicks() {
         localStorage.setItem('stagedPicks', null);
     }
     
-    getStagedPicks(): StagedPicks {
-        var picks = new BehaviorSubject<StagedPicks>(JSON.parse(localStorage.getItem('stagedPicks')));
+    getStagedPicks(): Pick[] {
+        var picks = this.stagedPicks;
         if(picks.value == null) {
-            return new StagedPicks();
+            return [] as Pick[];
         }
-        
-        return picks.value;
+        return picks.value.picks;
     }
 
       // /**
