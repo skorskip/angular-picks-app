@@ -21,6 +21,10 @@
 	align-items: center;
 }
 
+.disable {
+	pointer-events: none;
+}
+
 .edit-opt {
 	display: flex;
 	align-items: center;

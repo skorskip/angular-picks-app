@@ -148,11 +148,15 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   deletePick(game:Game) {
-    for(let i = 0; i < this.myGames.length; i++) {
-      if(this.myGames[i].game_id == game.game_id) {
-        this.myGames.splice(i,1);
-      }
-    }
+
+    var deleteButton = document.getElementById("delete-" + game.game_id)
+    deleteButton.remove();
+
+    var gameElement = document.getElementById("game-" + game.game_id);
+    gameElement.classList.add("disable");
+
+    var gameContainerElement = document.getElementById("game-container-" + game.game_id);
+    gameContainerElement.classList.add("disable");
 
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
@@ -163,16 +167,29 @@ export class MyPicksDashboardComponent implements OnInit {
 
   changeTeam(game: Game) {
     if(this.edit && this.showEdit(game)) {
-      this.picks.forEach(pick => {
+      var editAdded = false;
+      this.stagedEdits.forEach(pick => {
         if(pick.game_id == game.game_id){
           this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
           var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
-          var newPick = JSON.parse(JSON.stringify(pick));
-          newPick.team_id = newTeam;
-          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
-          this.stagedEdits.push(newPick);
+          pick.team_id = newTeam;
+          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          editAdded = true;
         }
       });
+      if(!editAdded) {
+        this.picks.forEach(pick => {
+          if(pick.game_id == game.game_id){
+            this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+            var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
+            var newPick = JSON.parse(JSON.stringify(pick));
+            newPick.team_id = newTeam;
+            this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
+            this.stagedEdits.push(newPick);
+            
+          }
+        });
+      }
     }
   }
 

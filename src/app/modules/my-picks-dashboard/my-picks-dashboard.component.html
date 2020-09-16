@@ -27,7 +27,7 @@
           </div>
         </div>
       </div> 
-      <div class="game-container">
+      <div attr.id="game-container-{{myGame.game_id}}" class="game-container">
         <game
           [game] = "myGame"
           [notSelectablePicks] = "notSelectablePicks" 
@@ -38,7 +38,7 @@
           (click) = "changeTeam(myGame)">
         </game>
         <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
+          <div attr.id="delete-{{myGame.game_id}}" class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
             <mat-icon
               matTooltip="delete"
               matTooltipPosition="bottom"

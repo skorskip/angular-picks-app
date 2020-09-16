@@ -192,7 +192,7 @@ export class PickService {
         }
 
         for(let i = 0; i < deletePicks.length; i++) {
-            let pick = editPicks[i];
+            let pick = deletePicks[i];
             if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
                 return false;
             } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){

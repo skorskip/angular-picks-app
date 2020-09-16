@@ -1,6 +1,5 @@
 .login-container {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
@@ -30,7 +29,7 @@
 }
 
 .padding-bottom {
-    padding-bottom: 50px;
+    padding-bottom:20px;
 }
 
 .hr-sect {
