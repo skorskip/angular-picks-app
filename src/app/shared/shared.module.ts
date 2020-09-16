@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { UserStatsComponent } from '../components/user-stats/user-stats.component';
 import { GameComponent } from '../components/game/game.component';
 import { WeeksComponent } from '../components/weeks/weeks.component';
 import { TeamComponent } from '../components/team/team.component';
@@ -22,7 +22,8 @@ import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
     WeeksComponent,
     TeamComponent,
     PickStatusComponent,
-    NavBarComponent
+    NavBarComponent,
+    UserStatsComponent
   ],
   exports: [
     UsersPickDataComponent,
@@ -31,7 +32,8 @@ import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
     TeamComponent,
     PickStatusComponent,
     MaterialModule,
-    NavBarComponent
+    NavBarComponent,
+    UserStatsComponent
   ]
 })
 export class SharedModule { }

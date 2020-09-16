@@ -177,8 +177,25 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   submitEdits() {
+    var editPastSubmit = false;
+
+    for(var i = 0; i < this.myGames.length; i++) {
+      let editable = this.pickService.checkEditPicksPastSubmit(this.myGames[i], this.stagedEdits, this.stagedDeletes)
+      if(editable) {
+        editPastSubmit = true;
+      }
+    }
+
     if(this.stagedDeletes.length == 0 && this.stagedEdits.length == 0){
       this.editPicks();
+    } else if(editPastSubmit) { 
+      const dialogError = this.dialog.open(PicksEditErrorDialog,{width: '500px'});
+      dialogError.afterClosed().subscribe(result => {
+        if(result) {
+          this.editPicks();
+          this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
+        }
+      })
     } else {
       const dialogRef = this.dialog.open(EditPicksDialog,{width: '500px'});
       dialogRef.afterClosed().subscribe(result => {
@@ -303,6 +320,12 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'picks-edit-error-dialog',
+  templateUrl: '../../components/dialog-content/picks-edit-error-dialog.html'
+})
+export class PicksEditErrorDialog {}
 
 @Component({
   selector: 'edit-picks-dialog',

@@ -175,7 +175,28 @@ export class PickService {
             } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
               staged.splice(i,1);
               this.setStagedPicks(staged);
-              return null;
+              return -1;
+            }
+        }
+        return null;
+    }
+
+    checkEditPicksPastSubmit(game: Game, editPicks: Pick[], deletePicks: Pick[]): boolean {
+        for(let i = 0; i < editPicks.length; i++) {
+            let pick = editPicks[i];
+            if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
+                return false;
+            } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
+              return true;
+            }
+        }
+
+        for(let i = 0; i < deletePicks.length; i++) {
+            let pick = editPicks[i];
+            if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
+                return false;
+            } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
+              return true;
             }
         }
     }

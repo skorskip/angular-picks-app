@@ -148,7 +148,7 @@ export class PicksDashboardComponent implements OnInit {
     for(var i = 0; i < this.games.length; i++) {
       let pickable = this.pickService.removeStagedPickPastSumbit(this.games[i]);
       this.stagedPicks = this.pickService.getStagedPicks();
-      if(pickable == null) {
+      if(pickable === -1) {
         unsubmitableGame = true;
       }
     }
