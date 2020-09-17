@@ -38,7 +38,6 @@ export class PicksDashboardComponent implements OnInit {
   teams = [] as Team[];
   loader = false;
   userData = new UserStanding();
-  picked = [] as Pick[];
   maxTotalPicks = 0;
   currentWeek = new CurrentWeek();
   weekUserPicks = [] as any[];
@@ -156,9 +155,9 @@ export class PicksDashboardComponent implements OnInit {
     if(this.stagedPicks.length == 0 && unsubmitableGame != true){
       this.dialog.open(NoPicksDialog,{width: '500px'});
 
-    } else if((this.stagedPicks.length + this.userData.picks + this.picked.length) > this.maxTotalPicks) {
-      let limit = (this.stagedPicks.length + this.userData.picks + this.picked.length) - this.maxTotalPicks;
-      let needed = this.maxTotalPicks - (this.userData.picks + this.picked.length);
+    } else if((this.stagedPicks.length + this.userData.picks + this.userData.pending_picks) > this.maxTotalPicks) {
+      let limit = (this.stagedPicks.length + this.userData.picks + this.userData.pending_picks) - this.maxTotalPicks;
+      let needed = this.maxTotalPicks - (this.userData.picks + this.userData.pending_picks);
 
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '500px';

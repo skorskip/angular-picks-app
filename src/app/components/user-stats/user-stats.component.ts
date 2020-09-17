@@ -47,7 +47,7 @@ export class UserStatsComponent implements OnInit {
 
         this.userService.getStandingsByUser(week.season, week.seasonType, this.user).subscribe((results) => {
           this.userStandings = results[0];
-          this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
+          this.pickProgress = ((this.userStandings.picks + this.userStandings.pending_picks)/ this.settings.maxTotalPicks) * 100;
         });
       });
     });

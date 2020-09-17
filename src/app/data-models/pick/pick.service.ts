@@ -202,6 +202,7 @@ export class PickService {
     }
 
     clearStagedPicks() {
+        this.stagedPicks.next(null);
         localStorage.setItem('stagedPicks', null);
     }
     
