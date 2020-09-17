@@ -3,8 +3,8 @@
 </nav-bar>
 <div class="content">
     <div class="message-container">
-        <div *ngIf = "messages.length == 0 && loader" class="no-messages-set">
-            <mat-spinner></mat-spinner >
+        <div *ngIf = "messages.length == 0 && loader">
+            <picks-loader></picks-loader>
         </div>
         <div *ngFor="let message of messages" class="card base-background tiertary">
             <div class="date-title tiertary">

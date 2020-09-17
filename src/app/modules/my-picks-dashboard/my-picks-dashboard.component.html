@@ -12,8 +12,8 @@
   [season]= "week.season"
   [view]="toggleType">
   
-  <div *ngIf = "picks.length == 0 && loader" class="no-picks-view">
-    <mat-spinner></mat-spinner >
+  <div *ngIf = "picks.length == 0 && loader">
+    <picks-loader></picks-loader>
   </div>
   <div *ngIf = "picks.length == 0 && !loader" class="no-picks-view secondary">
     No Picks Made

@@ -17,7 +17,8 @@ import { LoginModule } from './modules/login/login.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { NavigationModule } from './modules/navigation/navigation.module';
 
-import { WeekService } from './data-models/week/week.service'
+import { WeekService } from './data-models/week/week.service';
+
 @NgModule({
   declarations: [
     AppComponent
