@@ -14,6 +14,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -43,6 +44,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    public snackBar: MatSnackBar, 
     private pickService: PickService,
     private teamService: TeamService, 
     private weeksService: WeeksService,
@@ -214,15 +216,8 @@ export class MyPicksDashboardComponent implements OnInit {
         }
       })
     } else {
-      const dialogRef = this.dialog.open(EditPicksDialog,{width: '500px'});
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.editPicksService();
-        } else {
-          this.editPicks();
-          this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
-        }
-      });
+      this.editPicksService();
+      this.snackBar.open("edits submitted",'', {duration:3000});
     }
   }
 

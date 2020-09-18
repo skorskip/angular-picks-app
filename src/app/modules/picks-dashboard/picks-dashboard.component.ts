@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ComponentFactoryResolver } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,10 +16,8 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
-import { League } from 'src/app/data-models/league/league';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -98,7 +96,7 @@ export class PicksDashboardComponent implements OnInit {
         this.teams = week.teams;
         this.games = week.games;
     
-        this.userService.getStandingsByUser(week.season, week.seasonType, this.user).subscribe((result:UserStanding[]) => {
+        this.userService.getStandingsByUser(week.season, week.seasonType, week.number, this.user).subscribe((result:UserStanding[]) => {
           this.userData = result[0];
         });
     
@@ -106,8 +104,6 @@ export class PicksDashboardComponent implements OnInit {
         this.loader = false;
       });
     });
-
-
   }
 
   teamLoaded(event) {
@@ -152,13 +148,13 @@ export class PicksDashboardComponent implements OnInit {
       }
     }
 
+    var userTotalPicks = this.stagedPicks.length + this.userData.picks + this.userData.pending_picks;
+
     if(this.stagedPicks.length == 0 && unsubmitableGame != true){
       this.dialog.open(NoPicksDialog,{width: '500px'});
-
-    } else if((this.stagedPicks.length + this.userData.picks + this.userData.pending_picks) > this.maxTotalPicks) {
-      let limit = (this.stagedPicks.length + this.userData.picks + this.userData.pending_picks) - this.maxTotalPicks;
+    } else if(userTotalPicks > this.maxTotalPicks) {
+      let limit = userTotalPicks - this.maxTotalPicks;
       let needed = this.maxTotalPicks - (this.userData.picks + this.userData.pending_picks);
-
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '500px';
       dialogConfig.data = {
@@ -166,22 +162,16 @@ export class PicksDashboardComponent implements OnInit {
         needed: needed
       }
       this.dialog.open(PicksOverLimitDialog,dialogConfig);
-
     } else if (unsubmitableGame) { 
       this.dialog.open(PicksErrorDialog,{width: '500px'});
     } else {
-      const dialogRef = this.dialog.open(SubmitPicksDialog,{width: '500px'});
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.pickService.addPicks(this.stagedPicks).subscribe(status => {
-            if(status) {
-              this.pickService.clearStagedPicks();
-              this.snackBar.open("picks submitted",'', {duration:3000});
-              this.router.navigate(['/picks/' + this.week.season + '/' + this.week.seasonType + '/' + this.week.number]);
-            } else {
-              this.dialog.open(PicksErrorDialog,{width: '500px'});
-            }
-          });
+      this.pickService.addPicks(this.stagedPicks).subscribe(status => {
+        if(status) {
+          this.pickService.clearStagedPicks();
+          this.snackBar.open("picks submitted",'', {duration:3000});
+          this.router.navigate(['/picks/' + this.week.season + '/' + this.week.seasonType + '/' + this.week.number]);
+        } else {
+          this.dialog.open(PicksErrorDialog,{width: '500px'});
         }
       });
     }
