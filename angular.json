@@ -121,6 +121,9 @@
           "configurations": {
             "production": {
               "browserTarget": "angular-picks-app:build:production"
+            },
+            "pskorski": {
+              "browserTarget": "angular-picks-app:build:pskorski"
             }
           }
         },

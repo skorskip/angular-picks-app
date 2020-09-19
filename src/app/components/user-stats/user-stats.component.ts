@@ -1,47 +1,37 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { User } from 'src/app/data-models/user/user';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { ThemeService } from 'src/app/services/theme/theme.service';
+import { PickService } from 'src/app/data-models/pick/pick.service';
 import { UserService } from 'src/app/data-models/user/user.service';
-import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { WeekService } from 'src/app/data-models/week/week.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
+import { User } from 'src/app/data-models/user/user';
 import { League } from 'src/app/data-models/league/league';
-import { PickService } from 'src/app/data-models/pick/pick.service';
+import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { Pick } from 'src/app/data-models/pick/pick';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-user-stats',
+  templateUrl: './user-stats.component.html',
+  styleUrls: ['./user-stats.component.scss']
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
+export class UserStatsComponent implements OnInit {
 
   user = new User();
-  editSelected = false;
-  userStandings = new UserStanding();
   settings = new League();
   picks = [] as Pick[];
+  userStandings = new UserStanding();
   pickProgress = 0;
-  theme;
 
   constructor(
     private authService: AuthenticationService,
     private picksService: PickService,
     private userService: UserService,
     private weekService: WeekService,
-    private themeService: ThemeService,
     private leagueService: LeagueService
-  ) { 
-    this.theme = this.themeService.getTheme();
-  }
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setUserData(this.authService.currentUserValue);
-  }
-
-  ngAfterViewInit() {
-    this.toggleTheme(this.theme);
   }
 
   setUserData(user: User) {
@@ -57,32 +47,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
         this.userService.getStandingsByUser(week.season, week.seasonType, week.week, this.user).subscribe((results) => {
           this.userStandings = results[0];
-          this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
+          this.pickProgress = ((this.userStandings.picks + this.userStandings.pending_picks)/ this.settings.maxTotalPicks) * 100;
         });
       });
     });
   }
-
-  editUser() {
-    this.editSelected = true;
-  }
-
-  updated() {
-    this.editSelected = false;
-  }
-
-  logout() {
-    this.authService.logout();
-    window.location.reload();
-  }
-
-  toggleTheme(theme: string) {
-    this.theme = theme;
-    this.themeService.setTheme(theme);
-  }
-
-  setPickProgress(pickTotal){
-    this.pickProgress = (pickTotal + this.picks.length)/ this.settings.maxTotalPicks * 100;
-  }
-
 }

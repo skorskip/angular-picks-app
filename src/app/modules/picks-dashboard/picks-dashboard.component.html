@@ -7,9 +7,9 @@
     [seasonType] = "week.seasonType"
     [season]= "week.season"
     [view]="'games'">
-    <div *ngIf = "teams.length == 0 && loader" class="no-games-set">
-        <mat-spinner></mat-spinner >
-      </div>
+    <div *ngIf = "teams.length == 0 && loader">
+        <picks-loader></picks-loader>
+    </div>
     <div *ngIf = "teams.length == 0 && !loader" class="no-games-set secondary">
         No Games Set
     </div>

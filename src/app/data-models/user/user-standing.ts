@@ -8,6 +8,7 @@ export class UserStanding {
     wins: number;
     picks: number;
     win_pct: number;
+    pending_picks: number;
     date: Date;
 
     constructor() {
@@ -20,6 +21,7 @@ export class UserStanding {
         this.wins = 0;
         this.picks = 0;
         this.win_pct = 0;
+        this.pending_picks = 0;
         this.date = new Date();
     }
 }

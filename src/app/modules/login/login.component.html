@@ -12,7 +12,7 @@
     <mat-hint *ngIf="forgotten" (click)="forgotUsername()" class="error pointer">Forgot username?</mat-hint>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="login-input padding-bottom">
+  <mat-form-field appearance="outline" class="login-input padding-bottom" (keyup.enter)="attemptLogin(username.value, password.value)">
     <mat-label>password</mat-label>
     <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password>
     <div matSuffix (click)="hide = !hide">

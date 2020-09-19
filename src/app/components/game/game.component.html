@@ -6,7 +6,7 @@
       </div>
     </div>
   </div> 
-  <div class="team-group secondary" *ngIf="teams.length > 0">
+  <div attr.id="game-{{game.game_id}}" class="team-group secondary" *ngIf="teams.length > 0">
     <team
       *ngIf = "teams.length > 0"
       [team] = "away_team_id"

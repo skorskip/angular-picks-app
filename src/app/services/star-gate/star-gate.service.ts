@@ -77,7 +77,13 @@ export class StarGateService {
     } else {
       var standing = JSON.parse(localStorage.getItem(key));
       var setDate = new Date(standing.date);
-      return this.isItNewWeek(setDate, new Date());
+      var updated = new Date(localStorage.getItem('picksUpdatedDate'));
+      var setDate = new Date(standing.date);
+      if(updated > setDate) {
+        return true;
+      } else {
+        return this.checkAfterIncrement(setDate, new Date());
+      }
     }
   }
 

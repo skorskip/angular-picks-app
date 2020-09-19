@@ -14,6 +14,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -43,6 +44,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    public snackBar: MatSnackBar, 
     private pickService: PickService,
     private teamService: TeamService, 
     private weeksService: WeeksService,
@@ -148,11 +150,15 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
   deletePick(game:Game) {
-    for(let i = 0; i < this.myGames.length; i++) {
-      if(this.myGames[i].game_id == game.game_id) {
-        this.myGames.splice(i,1);
-      }
-    }
+
+    var deleteButton = document.getElementById("delete-" + game.game_id)
+    deleteButton.remove();
+
+    var gameElement = document.getElementById("game-" + game.game_id);
+    gameElement.classList.add("disable");
+
+    var gameContainerElement = document.getElementById("game-container-" + game.game_id);
+    gameContainerElement.classList.add("disable");
 
     this.picks.forEach(pick => {
       if(pick.game_id == game.game_id){
@@ -163,32 +169,54 @@ export class MyPicksDashboardComponent implements OnInit {
 
   changeTeam(game: Game) {
     if(this.edit && this.showEdit(game)) {
-      this.picks.forEach(pick => {
+      var editAdded = false;
+      this.stagedEdits.forEach(pick => {
         if(pick.game_id == game.game_id){
           this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
           var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
-          var newPick = JSON.parse(JSON.stringify(pick));
-          newPick.team_id = newTeam;
-          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
-          this.stagedEdits.push(newPick);
+          pick.team_id = newTeam;
+          this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+          editAdded = true;
         }
       });
+      if(!editAdded) {
+        this.picks.forEach(pick => {
+          if(pick.game_id == game.game_id){
+            this.teamService.unSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
+            var newTeam = pick.team_id == game.home_team_id ? game.away_team_id : game.home_team_id;
+            var newPick = JSON.parse(JSON.stringify(pick));
+            newPick.team_id = newTeam;
+            this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(newPick.team_id, this.myTeams));
+            this.stagedEdits.push(newPick);
+            
+          }
+        });
+      }
     }
   }
 
   submitEdits() {
+    var editPastSubmit = false;
+
+    for(var i = 0; i < this.myGames.length; i++) {
+      let editable = this.pickService.checkEditPicksPastSubmit(this.myGames[i], this.stagedEdits, this.stagedDeletes)
+      if(editable) {
+        editPastSubmit = true;
+      }
+    }
+
     if(this.stagedDeletes.length == 0 && this.stagedEdits.length == 0){
       this.editPicks();
-    } else {
-      const dialogRef = this.dialog.open(EditPicksDialog,{width: '500px'});
-      dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          this.editPicksService();
-        } else {
+    } else if(editPastSubmit) { 
+      const dialogError = this.dialog.open(PicksEditErrorDialog,{width: '500px'});
+      dialogError.afterClosed().subscribe(result => {
+        if(result) {
           this.editPicks();
           this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
         }
-      });
+      })
+    } else {
+      this.editPicksService();
     }
   }
 
@@ -197,6 +225,7 @@ export class MyPicksDashboardComponent implements OnInit {
     var deletePicks = this.deletePicks();
 
     Promise.all([updatePicks, deletePicks]).then((results)=>{
+      this.snackBar.open("edits submitted",'', {duration:3000, panelClass:"success-background"});
       this.editPicks();
       this.initWeek(this.week.season, this.week.seasonType, this.week.number, false);
     });
@@ -303,6 +332,12 @@ export class MyPicksDashboardComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'picks-edit-error-dialog',
+  templateUrl: '../../components/dialog-content/picks-edit-error-dialog.html'
+})
+export class PicksEditErrorDialog {}
 
 @Component({
   selector: 'edit-picks-dialog',
