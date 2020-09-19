@@ -168,7 +168,7 @@ export class PicksDashboardComponent implements OnInit {
       this.pickService.addPicks(this.stagedPicks).subscribe(status => {
         if(status) {
           this.pickService.clearStagedPicks();
-          this.snackBar.open("picks submitted",'', {duration:3000});
+          this.snackBar.open("picks submitted",'', {duration:3000, panelClass:"success-background"});
           this.router.navigate(['/picks/' + this.week.season + '/' + this.week.seasonType + '/' + this.week.number]);
         } else {
           this.dialog.open(PicksErrorDialog,{width: '500px'});

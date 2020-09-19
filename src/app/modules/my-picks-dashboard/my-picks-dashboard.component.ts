@@ -217,7 +217,6 @@ export class MyPicksDashboardComponent implements OnInit {
       })
     } else {
       this.editPicksService();
-      this.snackBar.open("edits submitted",'', {duration:3000});
     }
   }
 
@@ -226,6 +225,7 @@ export class MyPicksDashboardComponent implements OnInit {
     var deletePicks = this.deletePicks();
 
     Promise.all([updatePicks, deletePicks]).then((results)=>{
+      this.snackBar.open("edits submitted",'', {duration:3000, panelClass:"success-background"});
       this.editPicks();
       this.initWeek(this.week.season, this.week.seasonType, this.week.number, false);
     });
