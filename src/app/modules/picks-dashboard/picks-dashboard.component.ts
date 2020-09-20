@@ -30,7 +30,7 @@ export class PicksDashboardComponent implements OnInit {
 
   games = [] as Game[];
   stagedPicks = [] as Pick[];
-  week = new Week;
+  week = new Week();
   weeksView = false;
   subscription: Subscription;
   user = new User();
@@ -94,6 +94,7 @@ export class PicksDashboardComponent implements OnInit {
       this.weekUserPicks = result;
 
       this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
+        console.log("GETTING HERE::", week);
         this.week = week;
         this.teams = week.teams;
         this.games = week.games;
@@ -104,10 +105,12 @@ export class PicksDashboardComponent implements OnInit {
     
         this.stagedPicks = this.pickService.getStagedPicks().picks;
         this.loader = false;
+      }, Error => {
+        console.log("GETTING ERROR HERE::", Error);
       });
+    }, Error => {
+      console.log("GETTING ERROR PICKS HERE::", Error);
     });
-
-
   }
 
   teamLoaded(event) {

@@ -67,7 +67,7 @@ export class PickService {
     }
 
     getWeekPicksByGame(season:number, seasonType: number, week:number): Observable<any> {
-        const url = `${this.picksUrl}/games/season/${season}/seasonType/${seasonType}/week/${week}`;
+        const url = `${this.picksUrl}/games?season=${season}&seasonType=${seasonType}&week=${week}`;
         if(this.starGate.allowWeek('picksByGame', season, week)) {
             return this.http.get(url, httpOptions).pipe(
                 tap((picks: any) => {
@@ -82,7 +82,7 @@ export class PickService {
     }
 
     getPicksByWeek(user: User, season:number, seasonType: number, week:number): Observable<WeekPicks> {
-        const url = `${this.picksUrl}/season/${season}/seasonType/${seasonType}/week/${week}`;
+        const url = `${this.picksUrl}/week?season=${season}&seasonType=${seasonType}&week=${week}`;
         if(this.starGate.allowWeek('picks', season, week)) {
             return this.http.post(url, user, httpOptions).pipe(
                 tap((picks: WeekPicks)  => {
@@ -118,7 +118,7 @@ export class PickService {
     }
 
     getUsersPicksByWeek(userId:number, season:number, seasonType: number, week:number): Observable<WeekPicks> {
-        const url = `${this.picksUrl}/user/${userId}/season/${season}/seasonType/${seasonType}/week/${week}`;
+        const url = `${this.picksUrl}/others?user=${userId}&season=${season}&seasonType=${seasonType}&week=${week}`;
         return this.http.get(url, httpOptions).pipe(
             tap((picks: WeekPicks)  => console.log(`get picks`)),
             catchError(this.handleError<WeekPicks>(`get picks`))
@@ -159,7 +159,7 @@ export class PickService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-        this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
+        this.snackBar.open(error.message,'', {duration:3000, panelClass: "failure-background"});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

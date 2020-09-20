@@ -71,7 +71,7 @@ export class UserService {
   }
 
   getStandings(season: number, seasonType: number):Observable<UserStanding[]> {
-    let url = `${this.usersUrl}/standings/season/${season}/seasonType/${seasonType}`;
+    let url = `${this.usersUrl}/standings?season=${season}&seasonType=${seasonType}`;
     if(this.starGate.allow('standings')) {
       return this.http.get<UserStanding[]>(url).pipe(
         tap((standings: UserStanding[]) => {
@@ -89,7 +89,7 @@ export class UserService {
   }
 
   getStandingsByUser(season: number, seasonType: number, user: User):Observable<UserStanding[]> {
-    let url = `${this.usersUrl}/standings/season/${season}/seasonType/${seasonType}`;
+    let url = `${this.usersUrl}/standings?season=${season}&seasonType=${seasonType}`;
     if(this.starGate.allow('userStandings') && user != null){
       return this.http.post(url, user, httpOptions).pipe(
         tap((userStanding: UserStanding[])=> {
@@ -121,7 +121,7 @@ export class UserService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error,'', {duration:3000});
+      this.snackBar.open(error.message,'', {duration:3000, panelClass:"failure-background"});
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 

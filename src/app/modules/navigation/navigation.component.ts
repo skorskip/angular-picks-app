@@ -163,6 +163,8 @@ export class NavigationComponent implements OnInit {
           this.userStandings = results[0];
           this.pickProgress = ((this.userStandings.picks + this.picks.length)/ this.settings.maxTotalPicks) * 100;
         });
+      }, Error => {
+        this.picks = [];
       });
     });
   }
