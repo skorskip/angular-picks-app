@@ -92,22 +92,23 @@ export class PicksDashboardComponent implements OnInit {
       this.weekUserPicks = result;
 
       this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
-        console.log("GETTING HERE::", week);
-        this.week = week;
-        this.teams = week.teams;
-        this.games = week.games;
-    
-        this.userService.getStandingsByUser(week.season, week.seasonType, week.number, this.user).subscribe((result:UserStanding[]) => {
-          this.userData = result[0];
-        });
-    
-        this.stagedPicks = this.pickService.getStagedPicks();
-        this.loader = false;
-      }, Error => {
-        console.log("GETTING ERROR HERE::", Error);
+        if(week != null) {
+          this.week = week;
+          this.teams = week.teams;
+          this.games = week.games;
+      
+          this.userService.getStandingsByUser(week.season, week.seasonType, week.number, this.user).subscribe((result:UserStanding[]) => {
+            if(result != null) {
+              this.userData = result[0];
+            }
+          });
+      
+          this.stagedPicks = this.pickService.getStagedPicks();
+          this.loader = false;
+        } else {
+          this.loader = false;
+        }
       });
-    }, Error => {
-      console.log("GETTING ERROR PICKS HERE::", Error);
     });
   }
 
