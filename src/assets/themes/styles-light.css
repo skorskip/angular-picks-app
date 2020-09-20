@@ -48,7 +48,7 @@
     background-color: white !important;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
+.mat-progress-spinner circle, .picks-loader circle {
     stroke: #3e5dce !important;
 }
 

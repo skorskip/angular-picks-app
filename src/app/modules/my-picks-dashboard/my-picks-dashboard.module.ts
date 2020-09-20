@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module'; 
 import { SharedModule } from '../../shared/shared.module';
 
-import { MyPicksDashboardComponent, EditPicksDialog } from './my-picks-dashboard.component';
+import { MyPicksDashboardComponent, EditPicksDialog, PicksEditErrorDialog } from './my-picks-dashboard.component';
 
 @NgModule({
   imports: [
@@ -13,10 +13,12 @@ import { MyPicksDashboardComponent, EditPicksDialog } from './my-picks-dashboard
   ],
   declarations: [
     MyPicksDashboardComponent,
-    EditPicksDialog
+    EditPicksDialog,
+    PicksEditErrorDialog
   ],
   entryComponents: [
-    EditPicksDialog
+    EditPicksDialog,
+    PicksEditErrorDialog
   ],
   exports: [
     MyPicksDashboardComponent
