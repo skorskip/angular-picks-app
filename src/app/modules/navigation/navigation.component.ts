@@ -53,9 +53,7 @@ export class NavigationComponent implements OnInit {
   }
 
   highlightByRoute(route: string) {
-    if(route.indexOf("picks") != -1) {
-      this.highlight("my-picks");
-    } else if(route.indexOf("games") != -1) {
+    if(route.indexOf("games") != -1) {
       this.highlight("weekly-games");
     } else if(route.indexOf("standings") != -1) {
       this.highlight("standings");

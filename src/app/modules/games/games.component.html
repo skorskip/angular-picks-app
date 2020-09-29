@@ -1,0 +1,37 @@
+<nav-bar
+  *ngIf="toggleType != 'none'"
+  [title] ="title"
+  [subtitle] = "subtitle"
+  [showEditButton] = "showEditButton()"
+  (editPickSelected) = "setEditPicks($event)"
+  (submitEditsSelected) = "setSubmitEdits($event)">
+</nav-bar>
+<weeks
+  [number] = "week"
+  [seasonType] = "seasonType"
+  [season]= "season"
+  [view]="toggleType"
+  (viewType)="setView($event)">
+  <div>
+    <section>
+      <app-my-picks-dashboard
+          [week] = "week"
+          [seasonType] = "seasonType"
+          [season]= "season"
+          [otherUser]="otherUsers"
+          [editEvent]="editPicks"
+          [submitEditEvent]="submitEdits"
+          (displayEditButton)="displayEditButton"
+          (title)="setSubtitle($event)">
+      </app-my-picks-dashboard>
+    </section>
+    <section>
+      <app-picks-dashboard
+        [week] = "week"
+        [seasonType] = "seasonType"
+        [season]= "season"
+        (title)="setSubtitle($event)">
+      </app-picks-dashboard>
+    </section>
+  </div>
+</weeks>

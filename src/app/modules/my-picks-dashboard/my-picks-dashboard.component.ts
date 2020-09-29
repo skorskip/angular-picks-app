@@ -1,16 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { PickService } from '../../data-models/pick/pick.service';
 import { TeamService } from '../../data-models/team/team.service';
 import { Week } from '../../data-models/week/week';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
-import { WeeksService } from '../../components/weeks/weeks.service';
-import { Subscription }   from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { WeekService } from 'src/app/data-models/week/week.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
@@ -26,12 +22,11 @@ export class MyPicksDashboardComponent implements OnInit {
   myTeams = [] as Team[];
   picks = [] as Pick[];
   weeks = [] as Week[];
-  week = new Week();
+  weekObject = new Week();
   edit = false;
   notSelectablePicks = true;
   weeksView = false;
   pickSuccess = null;
-  subscription: Subscription;
   user = new User();
   stagedEdits = [] as Pick[];
   stagedDeletes = [] as Pick[];
@@ -41,45 +36,43 @@ export class MyPicksDashboardComponent implements OnInit {
   weekUserPicks = [] as any[];
   snapshot = new WeekPicks;
   @Input() otherUser = null;
+  @Input() week = 0;
+  @Input() seasonType = 0;
+  @Input() season = 0;
+  @Input() editEvent = false;
+  @Input() submitEditEvent = false;
+  @Output() title = new EventEmitter();
+  @Output() displayEditButton = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
     public snackBar: MatSnackBar, 
     private pickService: PickService,
     private teamService: TeamService, 
-    private weeksService: WeeksService,
-    private weekService: WeekService,
-    private route:ActivatedRoute,
     private dateFormatter: DateFormatterService,
-    private authService:AuthenticationService) { 
-      this.subscription = this.weeksService.weekSelected$.subscribe(
-        week => {
-          this.initWeek(week.season, week.seasonType, week.week, false)
-        }
-      )
-    }
+    private authService:AuthenticationService) {}
 
   ngOnInit() {
-  
     if(this.otherUser == null) {
       this.user= this.authService.currentUserValue;
     } else {
       this.toggleType = "none";
     }
+  }
 
-    var season = +this.route.snapshot.paramMap.get('season') as number;
-    var seasonType = +this.route.snapshot.paramMap.get('seasonType') as number;
-    var week = +this.route.snapshot.paramMap.get('week') as number;
+  ngOnChanges(changes: SimpleChange) {
 
-    if(season == 0 || week == 0 || seasonType == 0) {
-      this.weekService.getCurrentWeek().subscribe(currentWeek => {
-        season = currentWeek.season;
-        seasonType = currentWeek.seasonType;
-        week = currentWeek.week;
-        this.initWeek(season, seasonType, week, false);
-      });
-    } else {
-      this.initWeek(season, seasonType, week, false);
+    if(changes["editEvent"]?.currentValue) {
+      this.editPicks();
+    }
+
+    if(changes["submitEditEvent"]?.currentValue) {
+      this.submitEdits();
+    }
+
+    if(changes["week"].currentValue != changes["week"].previousValue) {
+      this.loader = true;
+      this.initWeek(this.season, this.seasonType, this.week, false);
     }
   }
 
@@ -90,9 +83,9 @@ export class MyPicksDashboardComponent implements OnInit {
     this.stagedEdits = [] as Pick[];
     this.stagedDeletes = [] as Pick[];
     this.picks = [] as Pick[];
-    this.week.number = week;
-    this.week.season = season;
-    this.week.seasonType = seasonType;
+    this.weekObject.number = week;
+    this.weekObject.season = season;
+    this.weekObject.seasonType = seasonType;
     
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe(result => {
       this.weekUserPicks = result;
@@ -137,12 +130,15 @@ export class MyPicksDashboardComponent implements OnInit {
     this.myGames = JSON.parse(JSON.stringify(picks.games));
     this.myTeams = JSON.parse(JSON.stringify(picks.teams));
     this.picks = JSON.parse(JSON.stringify(picks.picks));
+    this.getTitle();
     this.loader = false;
 
     this.myGames.forEach((game) => {
       if(new Date(game.pick_submit_by_date) > new Date()) {
+        this.displayEditButton.emit(true);
         this.showEditButton = true;
       } else {
+        this.displayEditButton.emit(false);
         this.showEditButton = false;
       }
     });
@@ -220,7 +216,7 @@ export class MyPicksDashboardComponent implements OnInit {
       dialogError.afterClosed().subscribe(result => {
         if(result) {
           this.editPicks();
-          this.initWeek(this.week.season, this.week.seasonType, this.week.number, true);
+          this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, true);
         }
       })
     } else {
@@ -235,7 +231,7 @@ export class MyPicksDashboardComponent implements OnInit {
     Promise.all([updatePicks, deletePicks]).then((results)=>{
       this.snackBar.open("edits submitted",'', {duration:3000, panelClass:"success-background"});
       this.editPicks();
-      this.initWeek(this.week.season, this.week.seasonType, this.week.number, false);
+      this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, false);
     });
   }
 
@@ -327,18 +323,13 @@ export class MyPicksDashboardComponent implements OnInit {
     }
   }
 
-  getTitle(): string {
+  getTitle() {
     let title = "";
     if(this.myGames.length > 0){
       title += this.myGames.length + " Picked"
     }
-    return title;
+    this.title.emit(title);
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
 }
 
 @Component({

@@ -5,8 +5,31 @@ import {
     style,
     animate,
     group,
-    animateChild
+    animateChild,
+    state
  } from '@angular/animations';
+
+ export const slideLeftAnimation = trigger('slideLeftAnimation', [
+     transition(':enter', [
+          style({ transform: 'translateX(-100%)' }),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translate3d(0%, 0%, 5px)' })),
+     ]),
+     transition(':leave', [
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateX(-100%)'}))
+     ])
+ ]);
+
+ export const slideRightAnimation = trigger('slideRightAnimation', [
+     transition(':enter', [
+          style({ transform: 'translateX(100%)' }),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translate3d(0%, 0%, 5px)' })),
+     ]),
+     transition(':leave', [
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateX(100%)'}))
+     ])
+ ]);
+
+
  export const slideInAnimation =
     trigger('routeAnimations', [
          transition('Picks => *', [

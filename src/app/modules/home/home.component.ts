@@ -1,11 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router, NavigationStart, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
-import { LeagueService } from 'src/app/data-models/league/league.service';
-import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
-import { slideInAnimation } from 'src/app/app-routing/app-routing-animation';
+import { slideInAnimation } from 'src/app/animations/app-routing-animation';
 
 @Component({
   selector: 'app-home',

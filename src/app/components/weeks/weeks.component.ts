@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WeekService } from '../../data-models/week/week.service';
 import { WeeksService } from './weeks.service';
 import { Week } from '../../data-models/week/week';
@@ -15,6 +15,7 @@ export class WeeksComponent implements OnInit {
   @Input() view;
   @Input() season = 0;
   @Input() seasonType = 0;
+  @Output() viewType = new EventEmitter();
   weeksView = false;
   weeks = [] as number[];
   hideToggle = false;
@@ -73,10 +74,12 @@ export class WeeksComponent implements OnInit {
   }
 
   toggleView(view) {
+    this.router.navigate(['/games/' + this.season + '/' + this.seasonType + '/' + this.number]);
+
     if(view == "picks") {
-      this.router.navigate(['/picks/' + this.season + '/' + this.seasonType + '/' + this.number]);
+      this.viewType.emit("picks");
     } else {
-      this.router.navigate(['/games/' + this.season + '/' + this.seasonType + '/' + this.number]);
+      this.viewType.emit("games");
     }
   }
 }

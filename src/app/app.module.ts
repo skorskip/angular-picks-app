@@ -10,12 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ProfileModule } from './modules/profile/profile.module';
 import { StandingsModule} from './modules/standings/standings.module';
-import { MyPicksDashboardModule } from './modules/my-picks-dashboard/my-picks-dashboard.module';
-import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.module';
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { NavigationModule } from './modules/navigation/navigation.module';
+import { GamesModule } from './modules/games/games.module';
 
 import { WeekService } from './data-models/week/week.service';
 
@@ -31,13 +30,12 @@ import { WeekService } from './data-models/week/week.service';
     MaterialModule,
     HttpClientModule,
     HomeModule,
-    MyPicksDashboardModule,
-    PicksDashboardModule,
     StandingsModule,
     ProfileModule,
     LoginModule,
     MessagesModule,
-    NavigationModule
+    NavigationModule,
+    GamesModule
   ],
   providers: [WeekService],
   bootstrap: [AppComponent]
