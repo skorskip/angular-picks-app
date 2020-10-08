@@ -11,7 +11,7 @@
         <picks-loader></picks-loader>
     </div>
     <div *ngIf = "teams.length == 0 && !loader" class="no-games-set secondary">
-        No Games Set
+        Whoops, there was an error getting games
     </div>
     <div *ngIf="teams.length > 0" class="games-container">
         <ng-container *ngFor="let game of games, let i = index">
