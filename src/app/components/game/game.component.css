@@ -62,27 +62,3 @@
 		margin: 10px;
 	}
 }
-
-@media only screen and (min-width: 950px) {
-	.game-card  {
-		width: 100%;
-		margin: 10px;
-	}
-	
-	.game-card-spread {
-		margin-left:300px;
-		margin-top: -60px;
-	}
-}
-
-@media only screen and (min-width: 1300px) {
-	.game-card  {
-		width: 100%;
-		margin: 10px;
-	}
-
-	.game-card-spread {
-		margin-left:300px;
-		margin-top: -60px;
-	}
-}
