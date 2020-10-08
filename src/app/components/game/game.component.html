@@ -24,18 +24,12 @@
       *ngIf = "teams.length > 0"
       [team] = "home_team_id"
       [score] = "game.home_team_score"
+      [spread] = "game.home_spread"
       [title] = "'HOME'"
       [gameLocked] = "gameLocked()"
       (click)="selectTeam(home_team_id)"
       (teamLoaded)="teamLoadedEvent($event)">
     </team>
-    <div class="game-card-spread tiertary base-background">
-      <div class="game-card-spread-icon primary base-background">
-        <b>
-          {{getGameSpread(game.home_spread)}}
-        </b>
-      </div>
-    </div>
   </div>
   <users-pick-data *ngIf="showPicksData()"
     [game]="game"

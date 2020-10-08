@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter, AfterViewChecked } from '@angular/core';
 import { Team } from '../../data-models/team/team';
 import { DOCUMENT } from '@angular/common';
-import { timeout } from 'rxjs/operators';
 import { TeamService } from 'src/app/data-models/team/team.service';
+import { Game } from 'src/app/data-models/game/game';
 
 @Component({
   selector: 'team',
@@ -15,6 +15,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() score = 0;
   @Input() title: string;
   @Input() gameLocked: boolean;
+  @Input() spread = null;
   @Output() teamLoaded = new EventEmitter();
 
   constructor(
@@ -31,5 +32,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.teamLoaded.emit(true);
     });
+  }
+
+  getGameSpread(number) {
+    if(number){
+      if(number > 0) {
+        return '+' + number;
+      } else {
+        return number;
+      }
+    } 
   }
 }
