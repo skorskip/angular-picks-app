@@ -1,0 +1,13 @@
+.slider {
+    font-family: sans-serif;
+    scroll-snap-type: x mandatory;  
+    display: flex;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+}
+section {
+    min-width: 100vw;
+    scroll-snap-align: start;
+    text-align: center;
+    position: relative;
+}

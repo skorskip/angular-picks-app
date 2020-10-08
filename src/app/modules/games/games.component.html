@@ -12,8 +12,16 @@
   [season]= "season"
   [view]="toggleType"
   (viewType)="setView($event)">
-  <div>
-    <section>
+  <div class="slider" id="sliderView">
+    <section id="games">
+      <app-picks-dashboard
+        [week] = "week"
+        [seasonType] = "seasonType"
+        [season]= "season"
+        (title)="setSubtitle($event)">
+      </app-picks-dashboard>
+    </section>
+    <section id="picks">
       <app-my-picks-dashboard
           [week] = "week"
           [seasonType] = "seasonType"
@@ -24,14 +32,6 @@
           (displayEditButton)="displayEditButton"
           (title)="setSubtitle($event)">
       </app-my-picks-dashboard>
-    </section>
-    <section>
-      <app-picks-dashboard
-        [week] = "week"
-        [seasonType] = "seasonType"
-        [season]= "season"
-        (title)="setSubtitle($event)">
-      </app-picks-dashboard>
     </section>
   </div>
 </weeks>

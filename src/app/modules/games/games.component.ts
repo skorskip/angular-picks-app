@@ -74,15 +74,18 @@ export class GamesComponent implements OnInit {
   setView(event: string) {
     this.view = event;
     this.toggleType = event;
+    var viewElm = document.getElementById("sliderView");
+    var itemSize = document.getElementById("games").clientWidth;
     if(this.view == "picks") {
+      viewElm.scrollBy(itemSize, 0);
       this.title = "Picks";
     } else {
+      viewElm.scrollBy(-itemSize, 0)
       this.title = "Games";
     }
   }
 
-  setEditPicks(event: boolean) {
-    console.log("SET EDIT PICKS::", event);
+  setEditPicks(event: boolean) {    
     this.editPicks = event;
     if(event) {
       this.submitEdits = false;
