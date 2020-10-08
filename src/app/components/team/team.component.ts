@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter, 
 import { Team } from '../../data-models/team/team';
 import { DOCUMENT } from '@angular/common';
 import { TeamService } from 'src/app/data-models/team/team.service';
-import { Game } from 'src/app/data-models/game/game';
 
 @Component({
   selector: 'team',
