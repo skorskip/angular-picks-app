@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { WeekService } from '../../data-models/week/week.service';
 import { WeeksService } from './weeks.service';
-import { Week } from '../../data-models/week/week';
 import { Router } from '@angular/router';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 
@@ -33,6 +32,12 @@ export class WeeksComponent implements OnInit {
     this.weekService.getCurrentWeek().subscribe( currentWeek => {
       this.currentWeek = currentWeek;
     });
+  }
+
+  ngOnChange(changes: SimpleChange) {
+    if(changes["view"].currentValue) {
+      this.toggleView(this.view);
+    }
   }
 
   showWeeks() {

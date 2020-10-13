@@ -41,6 +41,7 @@ export class MyPicksDashboardComponent implements OnInit {
   @Input() season = 0;
   @Input() editEvent = false;
   @Input() submitEditEvent = false;
+  @Input() picksSubmitted = false;
   @Output() title = new EventEmitter();
   @Output() displayEditButton = new EventEmitter();
 
@@ -70,8 +71,12 @@ export class MyPicksDashboardComponent implements OnInit {
       this.submitEdits();
     }
 
-    if(changes["week"].currentValue != changes["week"].previousValue) {
+    if(changes["week"]?.currentValue != changes["week"]?.previousValue) {
       this.loader = true;
+      this.initWeek(this.season, this.seasonType, this.week, false);
+    }
+
+    if(changes["picksSubmitted"]?.currentValue) {
       this.initWeek(this.season, this.seasonType, this.week, false);
     }
   }

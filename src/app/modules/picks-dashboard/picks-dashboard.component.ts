@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../../data-models/game/game';
@@ -34,19 +33,21 @@ export class PicksDashboardComponent implements OnInit {
   loader = false;
   userData = new UserStanding();
   maxTotalPicks = 0;
-  currentWeek = new CurrentWeek();
   weekUserPicks = [] as any[];
+  @Input() currentWeek = new CurrentWeek();
   @Input() week = 0;
   @Input() seasonType = 0;
   @Input() season = 0;
+  @Input() submitPicks = false;
   @Output() title = new EventEmitter();
+  @Output() showSubmitEvent = new EventEmitter();
+  @Output() picksSubmitted = new EventEmitter();
 
   constructor(
     public dialog: MatDialog, 
     private weekService: WeekService, 
     private pickService: PickService, 
-    public snackBar: MatSnackBar, 
-    private router:Router,
+    public snackBar: MatSnackBar,
     private authService:AuthenticationService,
     private teamService:TeamService,
     private userService: UserService,
@@ -59,14 +60,17 @@ export class PicksDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
-    //this.loader = true;
-    //this.initWeek(this.season, this.seasonType, this.week);
+    // this.loader = true;
   }
 
   ngOnChanges(changes: SimpleChange) {
     if(changes["week"].currentValue != changes["week"].previousValue) {
       this.loader = true;
       this.initWeek(this.season, this.seasonType, this.week);
+    }
+
+    if(changes["submitPicsks"]?.currentValue) {
+      this.openDialog();
     }
   }
 
@@ -113,15 +117,7 @@ export class PicksDashboardComponent implements OnInit {
 
   showSubmit() {
     let submitOpened = (this.stagedPicks.length > 0) && (this.weekObject.number == this.currentWeek.week);
-    if(submitOpened){
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "10px";
-      }
-    }else{
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "-65px";
-      }
-    }
+    this.showSubmitEvent.emit(submitOpened);
   }
 
   stageSelectedPick(selectedPick: Pick){
@@ -162,11 +158,12 @@ export class PicksDashboardComponent implements OnInit {
     } else {
       this.pickService.addPicks(this.stagedPicks).subscribe(status => {
         if(status) {
+          this.picksSubmitted.emit(true);
           this.pickService.clearStagedPicks();
           this.stagedPicks = this.pickService.getStagedPicks();
           this.getTitle();
           this.snackBar.open("picks submitted",'', {duration:3000, panelClass:"success-background"});
-          this.router.navigate(['/picks/' + this.weekObject.season + '/' + this.weekObject.seasonType + '/' + this.weekObject.number]);
+          this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number);
         } else {
           this.dialog.open(PicksErrorDialog,{width: '500px'});
         }

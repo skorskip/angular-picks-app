@@ -24,8 +24,10 @@ export class GamesComponent implements OnInit {
   editPicks = false;
   submitEdits = false;
   view = "games";
-  title = "Games";
   subscription: Subscription;
+  picksSubmit = false;
+  toggleButton = 'games';
+  submitPicks = false;
 
   @Input() otherUsers = null;
 
@@ -74,14 +76,18 @@ export class GamesComponent implements OnInit {
   setView(event: string) {
     this.view = event;
     this.toggleType = event;
-    var viewElm = document.getElementById("sliderView");
-    var itemSize = document.getElementById("games").clientWidth;
+    var gameElm = document.getElementById("games");
+    var pickElm = document.getElementById("picks")
     if(this.view == "picks") {
-      viewElm.scrollBy(itemSize, 0);
-      this.title = "Picks";
+      pickElm.classList.remove("swipe-right", "right", "hidden");
+      gameElm.classList.remove("swipe-right", "right");
+      pickElm.classList.add("swipe-left", "left");
+      gameElm.classList.add("swipe-left", "left", "hidden");
     } else {
-      viewElm.scrollBy(-itemSize, 0)
-      this.title = "Games";
+      pickElm.classList.remove("swipe-left", "left");
+      gameElm.classList.remove("swipe-left", "left", "hidden");
+      pickElm.classList.add("swipe-right", "right", "hidden");
+      gameElm.classList.add("swipe-right", "right");
     }
   }
 
@@ -99,6 +105,10 @@ export class GamesComponent implements OnInit {
     }
   }
 
+  setDisplayEdit(event: boolean) {
+    this.displayEditButton = event;
+  }
+
   isPicks(): boolean {
     return this.view === 'picks';
   }
@@ -109,6 +119,28 @@ export class GamesComponent implements OnInit {
 
   showEditButton(): boolean {
     return this.view == 'picks' && this.displayEditButton;
+  }
+
+  showSubmit(event: boolean) {
+    if(event){
+      if(document.getElementById("submit-container") != null) {
+        document.getElementById("submit-container").style.bottom = "10px";
+      }
+    }else{
+      if(document.getElementById("submit-container") != null) {
+        document.getElementById("submit-container").style.bottom = "-65px";
+      }
+    }
+  }
+
+  submitPicksClick() {
+    this.submitPicks = true;
+
+  }
+
+  picksSubmitted(event: boolean) {
+    this.picksSubmit = event;
+    this.toggleType = 'picks';
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 <nav-bar
   *ngIf="toggleType != 'none'"
-  [title] ="title"
+  [title] ="'Games'"
   [subtitle] = "subtitle"
   [showEditButton] = "showEditButton()"
   (editPickSelected) = "setEditPicks($event)"
@@ -12,13 +12,16 @@
   [season]= "season"
   [view]="toggleType"
   (viewType)="setView($event)">
-  <div class="slider" id="sliderView">
+  <div class="slider">
     <section id="games">
       <app-picks-dashboard
         [week] = "week"
         [seasonType] = "seasonType"
         [season]= "season"
-        (title)="setSubtitle($event)">
+        [currentWeek]="currentWeek"
+        (title)="setSubtitle($event)"
+        (showSubmitEvent)="showSubmit($event)"
+        (picksSubmitted)="picksSubmitted($event)">
       </app-picks-dashboard>
     </section>
     <section id="picks">
@@ -29,9 +32,15 @@
           [otherUser]="otherUsers"
           [editEvent]="editPicks"
           [submitEditEvent]="submitEdits"
-          (displayEditButton)="displayEditButton"
+          [picksSubmitted]="picksSubmit"
+          (displayEditButton)="setDisplayEdit($event)"
           (title)="setSubtitle($event)">
       </app-my-picks-dashboard>
     </section>
+  </div>
+  <div id="submit-container">
+    <button mat-button id="submit-button" class="primary-background base" (click)="submitPicksClick()">
+      Submit
+    </button>
   </div>
 </weeks>
