@@ -11,11 +11,13 @@ import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { slideDownAnimation } from 'src/app/animations/app-routing-animation';
 
 @Component({
   selector: 'app-my-picks-dashboard',
   templateUrl: './my-picks-dashboard.component.html',
-  styleUrls: ['./my-picks-dashboard.component.css']
+  styleUrls: ['./my-picks-dashboard.component.css'],
+  animations: [slideDownAnimation]
 })
 export class MyPicksDashboardComponent implements OnInit {
   myGames = [] as Game[];

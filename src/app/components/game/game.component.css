@@ -53,6 +53,8 @@
 }
 .disable {
 	opacity: .3;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
 	pointer-events: none;
 }
 

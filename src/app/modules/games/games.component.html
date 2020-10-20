@@ -19,7 +19,8 @@
         [seasonType] = "seasonType"
         [season]= "season"
         [currentWeek]="currentWeek"
-        (title)="setSubtitle($event)"
+        [submitPicks]="submitPicks"
+        (title)="setSubtitleGames($event)"
         (showSubmitEvent)="showSubmit($event)"
         (picksSubmitted)="picksSubmitted($event)">
       </app-picks-dashboard>
@@ -34,7 +35,7 @@
           [submitEditEvent]="submitEdits"
           [picksSubmitted]="picksSubmit"
           (displayEditButton)="setDisplayEdit($event)"
-          (title)="setSubtitle($event)">
+          (title)="setSubtitlePicks($event)">
       </app-my-picks-dashboard>
     </section>
   </div>

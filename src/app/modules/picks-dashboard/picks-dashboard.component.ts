@@ -64,12 +64,12 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChange) {
-    if(changes["week"].currentValue != changes["week"].previousValue) {
+    if(changes["week"]?.currentValue != changes["week"]?.previousValue) {
       this.loader = true;
       this.initWeek(this.season, this.seasonType, this.week);
     }
 
-    if(changes["submitPicsks"]?.currentValue) {
+    if(changes["submitPicks"]?.currentValue) {
       this.openDialog();
     }
   }

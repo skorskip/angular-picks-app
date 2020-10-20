@@ -9,23 +9,13 @@ import {
     state
  } from '@angular/animations';
 
- export const slideLeftAnimation = trigger('slideLeftAnimation', [
+ export const slideDownAnimation = trigger('slideDownAnimation', [
      transition(':enter', [
-          style({ transform: 'translateX(-100%)' }),
-          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translate3d(0%, 0%, 5px)' })),
+          style({ transform: 'translateY(-50px)', opacity: '0%' }),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(0px)', opacity: '100%' })),
      ]),
      transition(':leave', [
-          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateX(-100%)'}))
-     ])
- ]);
-
- export const slideRightAnimation = trigger('slideRightAnimation', [
-     transition(':enter', [
-          style({ transform: 'translateX(100%)' }),
-          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translate3d(0%, 0%, 5px)' })),
-     ]),
-     transition(':leave', [
-          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateX(100%)'}))
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(-50px)', opacity: '0%'}))
      ])
  ]);
 

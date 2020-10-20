@@ -11,7 +11,7 @@ import { CurrentWeek } from 'src/app/data-models/week/current-week';
 })
 export class WeeksComponent implements OnInit {
   @Input() number;
-  @Input() view;
+  @Input() view = "";
   @Input() season = 0;
   @Input() seasonType = 0;
   @Output() viewType = new EventEmitter();
@@ -34,8 +34,8 @@ export class WeeksComponent implements OnInit {
     });
   }
 
-  ngOnChange(changes: SimpleChange) {
-    if(changes["view"].currentValue) {
+  ngOnChanges(changes: SimpleChange) {
+    if(changes["view"]?.currentValue != changes["view"]?.previousValue) {
       this.toggleView(this.view);
     }
   }

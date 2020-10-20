@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { slideLeftAnimation, slideRightAnimation } from 'src/app/animations/app-routing-animation';
 import { WeeksService } from 'src/app/components/weeks/weeks.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { WeekService } from 'src/app/data-models/week/week.service';
@@ -9,8 +8,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 @Component({
   selector: 'app-games',
   templateUrl: './games.component.html',
-  styleUrls: ['./games.component.scss'],
-  animations: [slideRightAnimation, slideLeftAnimation]
+  styleUrls: ['./games.component.scss']
 })
 export class GamesComponent implements OnInit {
 
@@ -28,6 +26,8 @@ export class GamesComponent implements OnInit {
   picksSubmit = false;
   toggleButton = 'games';
   submitPicks = false;
+  pickSubtitle = "";
+  gamesSubtitle = "";
 
   @Input() otherUsers = null;
 
@@ -69,8 +69,12 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  setSubtitle(event: string) {
-    this.subtitle = event;
+  setSubtitlePicks(event: string) {
+    this.pickSubtitle = event;
+  }
+
+  setSubtitleGames(event: string) {
+    this.gamesSubtitle = event;
   }
 
   setView(event: string) {
@@ -79,15 +83,17 @@ export class GamesComponent implements OnInit {
     var gameElm = document.getElementById("games");
     var pickElm = document.getElementById("picks")
     if(this.view == "picks") {
-      pickElm.classList.remove("swipe-right", "right", "hidden");
-      gameElm.classList.remove("swipe-right", "right");
-      pickElm.classList.add("swipe-left", "left");
-      gameElm.classList.add("swipe-left", "left", "hidden");
+      pickElm?.classList.remove("swipe-right", "right", "hidden");
+      gameElm?.classList.remove("swipe-right", "right");
+      pickElm?.classList.add("swipe-left", "left");
+      gameElm?.classList.add("swipe-left", "left", "hidden");
+      this.subtitle = this.pickSubtitle;
     } else {
-      pickElm.classList.remove("swipe-left", "left");
-      gameElm.classList.remove("swipe-left", "left", "hidden");
-      pickElm.classList.add("swipe-right", "right", "hidden");
-      gameElm.classList.add("swipe-right", "right");
+      pickElm?.classList.remove("swipe-left", "left");
+      gameElm?.classList.remove("swipe-left", "left", "hidden");
+      pickElm?.classList.add("swipe-right", "right", "hidden");
+      gameElm?.classList.add("swipe-right", "right");
+      this.subtitle = this.gamesSubtitle;
     }
   }
 
@@ -135,7 +141,6 @@ export class GamesComponent implements OnInit {
 
   submitPicksClick() {
     this.submitPicks = true;
-
   }
 
   picksSubmitted(event: boolean) {
