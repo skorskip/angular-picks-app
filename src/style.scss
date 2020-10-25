@@ -110,3 +110,14 @@ $warn:				#ca7220;
 .success-background 			{ background-color: $success; }
 .failure-background  			{ background-color: $failure; }
 .warn-background  				{ background-color: $warn; }
+
+
+.failure-snack {
+	border-left: 3px solid $failure;
+	box-shadow: 0 0 8px rgba(0,0,0,.2);
+}
+
+.success-snack {
+	border-left: 3px solid $success;
+	box-shadow: 0 0 8px rgba(0,0,0,.2);
+}

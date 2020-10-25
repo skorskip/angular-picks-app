@@ -19,15 +19,18 @@ export class GamesComponent implements OnInit {
   toggleType = "games";
   subtitle = "";
   displayEditButton = false;
-  editPicks = false;
-  submitEdits = false;
+  navEditClicked = false;
+  navSubmitEdit = false;
   view = "games";
   subscription: Subscription;
-  picksSubmit = false;
+  picksSubmitted = false;
   toggleButton = 'games';
   submitPicks = false;
   pickSubtitle = "";
   gamesSubtitle = "";
+  picksUpdated = false;
+  displaySubmitButton = false;
+
 
   @Input() otherUsers = null;
 
@@ -69,49 +72,43 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  setSubtitlePicks(event: string) {
+  subSubtitlePicks(event: string) {
     this.pickSubtitle = event;
+    if(this.isPicks()) this.subtitle = this.pickSubtitle;
   }
 
-  setSubtitleGames(event: string) {
+  subSubtitleGames(event: string) {
     this.gamesSubtitle = event;
+    if(this.isGames()) this.subtitle = this.gamesSubtitle;
   }
 
   setView(event: string) {
     this.view = event;
     this.toggleType = event;
-    var gameElm = document.getElementById("games");
-    var pickElm = document.getElementById("picks")
     if(this.view == "picks") {
-      pickElm?.classList.remove("swipe-right", "right", "hidden");
-      gameElm?.classList.remove("swipe-right", "right");
-      pickElm?.classList.add("swipe-left", "left");
-      gameElm?.classList.add("swipe-left", "left", "hidden");
       this.subtitle = this.pickSubtitle;
+      this.picksUpdated = false;
     } else {
-      pickElm?.classList.remove("swipe-left", "left");
-      gameElm?.classList.remove("swipe-left", "left", "hidden");
-      pickElm?.classList.add("swipe-right", "right", "hidden");
-      gameElm?.classList.add("swipe-right", "right");
       this.subtitle = this.gamesSubtitle;
+      this.picksSubmitted = false;
     }
   }
 
-  setEditPicks(event: boolean) {    
-    this.editPicks = event;
+  subNavEditClicked(event: boolean) {    
+    this.navEditClicked = event;
     if(event) {
-      this.submitEdits = false;
+      this.navSubmitEdit = false;
     }
   }
 
-  setSubmitEdits(event: boolean) {
-    this.submitEdits = event;
+  subNavSubmitEdit(event: boolean) {
+    this.navSubmitEdit = event;
     if(event) {
-      this.editPicks = false;
+      this.navEditClicked = false;
     }
   }
 
-  setDisplayEdit(event: boolean) {
+  subDisplayEditButton(event: boolean) {
     this.displayEditButton = event;
   }
 
@@ -123,29 +120,31 @@ export class GamesComponent implements OnInit {
     return this.view === 'games';
   }
 
-  showEditButton(): boolean {
+  displayEditButtonOnView(): boolean {
     return this.view == 'picks' && this.displayEditButton;
   }
 
-  showSubmit(event: boolean) {
-    if(event){
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "10px";
-      }
-    }else{
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "-65px";
-      }
-    }
+  subDisplaySubmitButton(event: boolean) {
+    this.displaySubmitButton = event;
   }
 
   submitPicksClick() {
     this.submitPicks = true;
   }
 
-  picksSubmitted(event: boolean) {
-    this.picksSubmit = event;
+  subPicksSubmitted(event: boolean) {
+    this.subDisplaySubmitButton(false);
+    this.submitPicks = false;
+    this.picksSubmitted = event;
     this.toggleType = 'picks';
+  }
+
+  subPicksUpdated(event: boolean) {
+    this.picksUpdated = event;
+  }
+
+  subNavPicksUpdated(event: boolean) {
+    this.picksUpdated = false;
   }
 
   ngOnDestroy() {

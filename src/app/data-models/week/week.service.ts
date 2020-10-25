@@ -79,7 +79,7 @@ export class WeekService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.message,'', {duration:3000,panelClass:"failure-background"});
+      this.snackBar.open(error.message,'', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

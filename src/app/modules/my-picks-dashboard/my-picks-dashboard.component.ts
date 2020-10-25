@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { slideDownAnimation } from 'src/app/animations/app-routing-animation';
+import { EventManager } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -37,15 +38,19 @@ export class MyPicksDashboardComponent implements OnInit {
   loader = false;
   weekUserPicks = [] as any[];
   snapshot = new WeekPicks;
+
   @Input() otherUser = null;
   @Input() week = 0;
   @Input() seasonType = 0;
   @Input() season = 0;
-  @Input() editEvent = false;
-  @Input() submitEditEvent = false;
-  @Input() picksSubmitted = false;
+
+  @Input() subNavEditClicked = false;
+  @Input() subNavSubmitEdit = false;
+  @Input() subPicksSubmit = false;
+
   @Output() title = new EventEmitter();
   @Output() displayEditButton = new EventEmitter();
+  @Output() picksUpdated = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
@@ -65,11 +70,11 @@ export class MyPicksDashboardComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChange) {
 
-    if(changes["editEvent"]?.currentValue) {
+    if(changes["subNavEditClicked"]?.currentValue) {
       this.editPicks();
     }
 
-    if(changes["submitEditEvent"]?.currentValue) {
+    if(changes["subNavSubmitEdit"]?.currentValue) {
       this.submitEdits();
     }
 
@@ -78,7 +83,7 @@ export class MyPicksDashboardComponent implements OnInit {
       this.initWeek(this.season, this.seasonType, this.week, false);
     }
 
-    if(changes["picksSubmitted"]?.currentValue) {
+    if(changes["subPicksSubmit"]?.currentValue) {
       this.initWeek(this.season, this.seasonType, this.week, false);
     }
   }
@@ -217,8 +222,10 @@ export class MyPicksDashboardComponent implements OnInit {
     }
 
     if(this.stagedDeletes.length == 0 && this.stagedEdits.length == 0){
+      this.picksUpdated.emit(true);
       this.editPicks();
     } else if(editPastSubmit) { 
+      this.picksUpdated.emit(true);
       const dialogError = this.dialog.open(PicksEditErrorDialog,{width: '500px'});
       dialogError.afterClosed().subscribe(result => {
         if(result) {
@@ -236,7 +243,8 @@ export class MyPicksDashboardComponent implements OnInit {
     var deletePicks = this.deletePicks();
 
     Promise.all([updatePicks, deletePicks]).then((results)=>{
-      this.snackBar.open("edits submitted",'', {duration:3000, panelClass:"success-background"});
+      this.snackBar.open("edits submitted",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
+      this.picksUpdated.emit(true);
       this.editPicks();
       this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, false);
     });

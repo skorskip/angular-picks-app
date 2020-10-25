@@ -34,13 +34,17 @@ export class PicksDashboardComponent implements OnInit {
   userData = new UserStanding();
   maxTotalPicks = 0;
   weekUserPicks = [] as any[];
+  
   @Input() currentWeek = new CurrentWeek();
   @Input() week = 0;
   @Input() seasonType = 0;
   @Input() season = 0;
-  @Input() submitPicks = false;
+
+  @Input() subSubmitPicks = false;
+  @Input() subPicksUpdated = false;
+
   @Output() title = new EventEmitter();
-  @Output() showSubmitEvent = new EventEmitter();
+  @Output() displaySubmitButton = new EventEmitter();
   @Output() picksSubmitted = new EventEmitter();
 
   constructor(
@@ -60,7 +64,6 @@ export class PicksDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
-    // this.loader = true;
   }
 
   ngOnChanges(changes: SimpleChange) {
@@ -69,14 +72,24 @@ export class PicksDashboardComponent implements OnInit {
       this.initWeek(this.season, this.seasonType, this.week);
     }
 
-    if(changes["submitPicks"]?.currentValue) {
+    if((changes["subSubmitPicks"]?.currentValue != changes["subSubmitPicks"]?.previousValue) && changes["subSubmitPicks"]?.currentValue){
       this.openDialog();
+    }
+
+    if(changes["subPicksUpdated"]?.currentValue) {
+      this.initWeek(this.season, this.seasonType, this.week);
     }
   }
 
   initWeek(season: number, seasonType: number, week: number) {
     this.games = [];
     this.teams = [];
+
+    this.userService.getStandingsByUser(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, this.user).subscribe((result:UserStanding[]) => {
+      if(result != null) {
+        this.userData = result[0];
+      }
+    });
 
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;
@@ -86,13 +99,6 @@ export class PicksDashboardComponent implements OnInit {
           this.weekObject = week;
           this.teams = week.teams;
           this.games = week.games;
-      
-          this.userService.getStandingsByUser(week.season, week.seasonType, week.number, this.user).subscribe((result:UserStanding[]) => {
-            if(result != null) {
-              this.userData = result[0];
-            }
-          });
-      
           this.stagedPicks = this.pickService.getStagedPicks();
           this.getTitle();
           this.loader = false;
@@ -117,7 +123,7 @@ export class PicksDashboardComponent implements OnInit {
 
   showSubmit() {
     let submitOpened = (this.stagedPicks.length > 0) && (this.weekObject.number == this.currentWeek.week);
-    this.showSubmitEvent.emit(submitOpened);
+    this.displaySubmitButton.emit(submitOpened);
   }
 
   stageSelectedPick(selectedPick: Pick){
@@ -127,7 +133,6 @@ export class PicksDashboardComponent implements OnInit {
   }
   
   openDialog() {
-
     var unsubmitableGame = false;
 
     for(var i = 0; i < this.games.length; i++) {
@@ -162,7 +167,7 @@ export class PicksDashboardComponent implements OnInit {
           this.pickService.clearStagedPicks();
           this.stagedPicks = this.pickService.getStagedPicks();
           this.getTitle();
-          this.snackBar.open("picks submitted",'', {duration:3000, panelClass:"success-background"});
+          this.snackBar.open("picks submitted",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
           this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number);
         } else {
           this.dialog.open(PicksErrorDialog,{width: '500px'});

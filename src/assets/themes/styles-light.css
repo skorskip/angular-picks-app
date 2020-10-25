@@ -44,12 +44,16 @@
     background-color: #f5f3f3 !important;
 }
 
+.quaternary-background {
+    background-color: white !important;
+}
+
 .base-background {
     background-color: white !important;
 }
 
 .mat-progress-spinner circle, .picks-loader circle {
-    stroke: #3e5dce !important;
+    stroke: white !important;
 }
 
 .mat-progress-bar-fill::after {
