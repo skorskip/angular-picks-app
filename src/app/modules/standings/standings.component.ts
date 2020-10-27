@@ -4,6 +4,7 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { CurrentWeek } from 'src/app/data-models/week/current-week';
 
 @Component({
   selector: 'app-standings',
@@ -16,6 +17,7 @@ export class StandingsComponent implements OnInit {
   currentUser = new User();
   showUserPicks = false;
   otherUser = new UserStanding();
+  week = new CurrentWeek();
 
   constructor(
     private userService: UserService,
@@ -25,6 +27,7 @@ export class StandingsComponent implements OnInit {
 
   ngOnInit() {
     this.weekService.getCurrentWeek().subscribe( week => {
+      this.week = week;
       this.userService.getStandings(week.season, week.seasonType).subscribe((users: UserStanding[]) => {
         this.dataSource = users;
       });
@@ -34,6 +37,7 @@ export class StandingsComponent implements OnInit {
   }
 
   getUserPicks(row: UserStanding) {
+    console.log("USER PICKED::", row);
     this.showUserPicks = true;
     this.otherUser = row;
   }

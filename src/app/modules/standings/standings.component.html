@@ -43,7 +43,7 @@
     [ngClass]="{'primary-background':row.user_id == currentUser.user_id}" (click)="getUserPicks(row)"></tr>
   </table>
 </div>
-<div *ngIf="showUserPicks">
+<div *ngIf="showUserPicks" (swiperight)="back()">
   <div class="pick-header base-background tiertary" (click)="back()">
       <mat-icon class="week-arrow-icon secondary">
           keyboard_arrow_left
@@ -52,7 +52,10 @@
         {{otherUser.first_name}} {{otherUser.last_name}}
       </div>
   </div>
-  <app-games
-    [otherUser]="otherUser.user_id">
-  </app-games>
+  <app-my-picks-dashboard
+    [otherUser]="otherUser.user_id"
+    [week]="week.week"
+    [seasonType]="week.seasonType"
+    [season]="week.season">
+  </app-my-picks-dashboard>
 </div>

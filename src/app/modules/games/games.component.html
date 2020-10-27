@@ -14,7 +14,9 @@
   [season]= "season"
   [view]="toggleType"
   (viewType)="setView($event)">
-  <div class="slider">
+  <div class="slider" 
+    (swipeleft)="setView('picks')" 
+    (swiperight)="setView('games')">
     <section 
       id="games" 
       [ngClass]="{
@@ -43,7 +45,6 @@
           [week] = "week"
           [seasonType] = "seasonType"
           [season]= "season"
-          [otherUser]="otherUsers"
           [subNavEditClicked]="navEditClicked"
           [subNavSubmitEdit]="navSubmitEdit"
           [subPicksSubmit]="picksSubmitted"

@@ -74,6 +74,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  openMenu() {
+    this.sideNavService.setSidebarVisibility(true);
+  }
+
   prepareRoute(outlet: RouterOutlet) {
     //TODO:: Add animations only when on one page
     // return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;

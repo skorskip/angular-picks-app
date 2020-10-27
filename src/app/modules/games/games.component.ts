@@ -31,9 +31,6 @@ export class GamesComponent implements OnInit {
   picksUpdated = false;
   displaySubmitButton = false;
 
-
-  @Input() otherUsers = null;
-
   constructor(
     private route:ActivatedRoute,
     private weekService: WeekService,
@@ -66,10 +63,6 @@ export class GamesComponent implements OnInit {
         this.week = weekParam;
       }
     });
-
-    if(this.otherUsers != null) {
-      this.toggleType = 'none';
-    }
   }
 
   subSubtitlePicks(event: string) {

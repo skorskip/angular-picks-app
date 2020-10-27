@@ -12,7 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { slideDownAnimation } from 'src/app/animations/app-routing-animation';
-import { EventManager } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-my-picks-dashboard',
@@ -340,9 +339,7 @@ export class MyPicksDashboardComponent implements OnInit {
 
   getTitle() {
     let title = "";
-    if(this.myGames.length > 0){
-      title += this.myGames.length + " Picked"
-    }
+    title += this.myGames.length + " Picked"
     this.title.emit(title);
   }
 }
