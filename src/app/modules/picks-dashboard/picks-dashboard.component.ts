@@ -157,8 +157,10 @@ export class PicksDashboardComponent implements OnInit {
         limit: limit,
         needed: needed
       }
+      this.picksSubmitted.emit(true);
       this.dialog.open(PicksOverLimitDialog,dialogConfig);
     } else if (unsubmitableGame) { 
+      this.picksSubmitted.emit(true);
       this.dialog.open(PicksErrorDialog,{width: '500px'});
     } else {
       this.pickService.addPicks(this.stagedPicks).subscribe(status => {
@@ -170,6 +172,7 @@ export class PicksDashboardComponent implements OnInit {
           this.snackBar.open("picks submitted",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
           this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number);
         } else {
+          this.picksSubmitted.emit(true);
           this.dialog.open(PicksErrorDialog,{width: '500px'});
         }
       });

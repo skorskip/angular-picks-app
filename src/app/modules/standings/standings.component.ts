@@ -37,7 +37,6 @@ export class StandingsComponent implements OnInit {
   }
 
   getUserPicks(row: UserStanding) {
-    console.log("USER PICKED::", row);
     this.showUserPicks = true;
     this.otherUser = row;
   }
