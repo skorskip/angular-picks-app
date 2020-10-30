@@ -64,5 +64,22 @@ h1.title {
 .container-content {
 	margin-top: 65px;
 	touch-action: pan-y !important;
+	height: 100%;
+}
 
+.floating-touch-menu {
+	position: absolute;
+	height: 100%;
+	top:180px;
+	left: 0;
+	width: 50px;
+	z-index: 10;
+}
+
+.mat-drawer-content {
+	position: relative;
+	z-index: 1;
+	display: block;
+	height: 100%;
+	overflow: unset;
 }

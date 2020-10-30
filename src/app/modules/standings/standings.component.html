@@ -52,10 +52,16 @@
         {{otherUser.first_name}} {{otherUser.last_name}}
       </div>
   </div>
-  <app-my-picks-dashboard
-    [otherUser]="otherUser.user_id"
-    [week]="week.week"
-    [seasonType]="week.seasonType"
-    [season]="week.season">
-  </app-my-picks-dashboard>
+  <weeks
+  [number] = "week.week"
+  [seasonType] = "week.seasonType"
+  [season]= "week.season"
+  [view]="'none'">
+    <app-my-picks-dashboard
+      [otherUser]="otherUser.user_id"
+      [week]="week.week"
+      [seasonType]="week.seasonType"
+      [season]="week.season">
+    </app-my-picks-dashboard>
+  </weeks>
 </div>

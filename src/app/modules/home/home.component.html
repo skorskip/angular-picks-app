@@ -19,7 +19,9 @@
     </mat-sidenav>
     
     <mat-sidenav-content>
-      <div class="container-content" [@routeAnimations]="prepareRoute(outlet)" (panright)="openMenu()">
+      <div class="container-content" [@routeAnimations]="prepareRoute(outlet)">
+        <div class="floating-touch-menu" (panright)="openMenu()">
+        </div>
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </mat-sidenav-content>

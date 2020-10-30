@@ -79,8 +79,6 @@ export class WeeksComponent implements OnInit {
   }
 
   toggleView(view) {
-    this.router.navigate(['/games/' + this.season + '/' + this.seasonType + '/' + this.number]);
-
     if(view == "picks") {
       this.viewType.emit("picks");
     } else {

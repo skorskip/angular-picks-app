@@ -5,6 +5,8 @@ import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
+import { Subscription } from 'rxjs';
+import { WeeksService } from 'src/app/components/weeks/weeks.service';
 
 @Component({
   selector: 'app-standings',
@@ -18,12 +20,20 @@ export class StandingsComponent implements OnInit {
   showUserPicks = false;
   otherUser = new UserStanding();
   week = new CurrentWeek();
+  subscription: Subscription;
 
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
     private weekService: WeekService,
-  ) { }
+    private weeksService: WeeksService
+  ) { 
+    this.subscription = this.weeksService.weekSelected$.subscribe(
+      week => {
+        this.week = week;
+      }
+    );
+  }
 
   ngOnInit() {
     this.weekService.getCurrentWeek().subscribe( week => {
@@ -43,5 +53,9 @@ export class StandingsComponent implements OnInit {
 
   back() {
     this.showUserPicks = false;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
