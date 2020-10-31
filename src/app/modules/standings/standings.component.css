@@ -1,85 +1,13 @@
-@keyframes standingsCardAnimationIn {
-	0%{margin-top:1000px;opacity:0;}
-	100%{margin-top:30px; opacity: 1}
-}
-
-@keyframes standingCardAnimation {
-	0%{margin-top:100px;opacity:0;}
-	70%{margin-top:20px; opacity: 0;}
-	100%{margin-top:2px; opacity: 1}
-}
-
-@keyframes standingCardHeaderAnimation {
-	0%{margin-top:100px;opacity:0;}
-	70%{margin-top:0px; opacity: 0;}
-	100%{margin-top:-25px; opacity: 1}
-}
-
-#standings-card {
-	padding: 10px;
-	border-radius: 8px;
-    margin: 10px;
-    margin-top: 30px;
-}
-
-.standings-in-animation {
-	animation-name:standingsCardAnimationIn;
-	animation-timing-function: ease-in-out;
-	animation-duration: .75s;
-}
-
-.standing-card-animation {
-	animation-name:standingCardAnimation;
-	animation-duration: 1.5s;
-	animation-timing-function: ease;
-	animation-delay: 0s;
-}
-
-.standing-card-header-animation {
-	animation-name:standingCardHeaderAnimation;
-	animation-duration: 1.5s;
-	animation-timing-function: ease;
-	animation-delay: 0s;
-}
-
-.standing-card-header {
-	border-radius: 8px;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	margin: 5px;
-	margin-top: -25px;
-}
 
 .standing-card {
-	border-radius: 8px;
-	position: relative;
 	display: flex;
-	flex-direction: column;
-	margin: 5px;
-	margin-top: 2px;
-}
-
-.standing-info {
-    display: flex;
-    justify-content: flex-start;
-    padding:20px;
-}
-
-.field-small {
-    width: 15%;
-    margin-right: 5px;
-}
-
-.field {
-    width: 30%;
-    margin-right: 15px;
-}
-
-.rank-table {
-	width: 100%;
-	box-shadow: 0px 0px;
-	background: transparent;
+    justify-content: space-evenly;
+    align-items: center;
+	border-radius: 18px;
+	padding: 15px;
+	float: left;
+	margin-right: 5%;
+	box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
 .selected {

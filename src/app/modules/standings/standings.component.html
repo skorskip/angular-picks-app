@@ -2,46 +2,32 @@
     [title] ="'Standings'">
 </nav-bar>
 <div id="standings-card" class="standings-in-animation base-background secondary" *ngIf="!showUserPicks">
-  <table mat-table [dataSource]="dataSource" class="rank-table">
 
-    <ng-container matColumnDef="ranking">
-        <th mat-header-cell *matHeaderCellDef> Pos. </th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.ranking}} </td>
-      </ng-container>
-  
-    <ng-container matColumnDef="user_inits">
-      <th mat-header-cell *matHeaderCellDef> Inits </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.user_inits}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="wins">
-      <th mat-header-cell *matHeaderCellDef> Wins </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.wins}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="picks">
-      <th mat-header-cell *matHeaderCellDef> Picks </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.picks}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="win_pct">
-      <th mat-header-cell *matHeaderCellDef> Win % </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{ element.win_pct | number:'1.3-3'}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="arrow">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> 
-          <mat-icon class="row-arrow-icon">
-            keyboard_arrow_right
-          </mat-icon> 
-        </td>
-      </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="base-background"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-    [ngClass]="{'primary-background':row.user_id == currentUser.user_id}" (click)="getUserPicks(row)"></tr>
-  </table>
+  <div *ngFor="let standing of standings, let i = index">
+      <div 
+        class="standing-card quarternary-background base"
+        (click)="getUserPicks(standing)"
+        [ngClass]="{
+          'base':standing.user_id == currentUser.user_id, 
+          'primary-background':standing.user_id == currentUser.user_id
+        }">
+        <div class="rank">
+          {{standing.ranking}}
+        </div>
+        <div class="user">
+          {{standing.user_intis}}
+        </div>
+        <div class="wins">
+          {{standing.wins}}
+        </div>
+        <div class="picks">
+          {{standing.picks}}
+        </div>
+        <div class="win_pct">
+          {{standing.win_pct | number:'1.3-3'}}
+        </div>
+      </div>
+  </div>
 </div>
 <div *ngIf="showUserPicks">
   <div class="pick-header base-background tiertary" (click)="back()">
