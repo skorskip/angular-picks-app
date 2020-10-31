@@ -43,11 +43,15 @@ export class UserStatsComponent implements OnInit {
 
     this.weekService.getCurrentWeek().subscribe((week) => {
       this.picksService.getPicksByWeek(this.user, week.season, week.seasonType, week.week).subscribe((picks) => {
-        this.picks = picks.picks;
+        if(picks != null){
+          this.picks = picks.picks;
+        }
 
         this.userService.getStandingsByUser(week.season, week.seasonType, week.week, this.user).subscribe((results) => {
-          this.userStandings = results[0];
-          this.pickProgress = ((this.userStandings.picks + this.userStandings.pending_picks)/ this.settings.maxTotalPicks) * 100;
+          if(results != null){
+            this.userStandings = results[0];
+            this.pickProgress = ((this.userStandings.picks + this.userStandings.pending_picks)/ this.settings.maxTotalPicks) * 100;
+          }
         });
       });
     });
