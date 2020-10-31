@@ -29,7 +29,7 @@ export class WeekService {
 
     /** GET game by id. Will 404 if id not found */
     getWeek(season: number, seasonType: number, week: number, user: User): Observable<Week> {
-      const url = `${this.weekUrl}/season/${season}/seasonType/${seasonType}/week/${week}`;
+      const url = `${this.weekUrl}?season=${season}&seasonType=${seasonType}&week=${week}`;
       if (this.starGate.allowWeek("week", season, week)) {
         return this.http.post(url, user, httpOptions).pipe(
           tap((weekResponse: Week) => {
@@ -79,7 +79,7 @@ export class WeekService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.statusText.toLowerCase(),'', {duration:3000});
+      this.snackBar.open(error.message,'', {duration:3000,panelClass:"failure-background"});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

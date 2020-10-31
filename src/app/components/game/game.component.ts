@@ -104,14 +104,6 @@ export class GameComponent implements OnInit {
     return new Date(this.game.pick_submit_by_date) > new Date();
   }
 
-  getGameSpread(number:number) {
-    if(number > 0) {
-      return '+' + number;
-    } else {
-      return number;
-    }
-  }
-
   setTeams(game: Game, teams: Team[]) {
     for(var i = 0; i < teams.length; i++) {
       if(this.home_team_id.team_id != 0 && this.away_team_id.team_id != 0) {
