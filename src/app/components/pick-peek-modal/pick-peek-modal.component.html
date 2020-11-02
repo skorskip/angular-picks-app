@@ -1,0 +1,36 @@
+<div class="modal-container" id="modal-container">
+    <div class="user-modal quaternary-background secondary" id="user-modal" >
+        <div class="modal-header">
+            <mat-icon class="close-modal-icon" (click)="closeClick()">clear</mat-icon>
+        </div>
+        <div class="modal-title">
+            <div class="user-name">
+                <div class="init-icon primary">
+                    {{ inits }}
+                </div>
+                <div class="card-header-text">
+                    {{firstname}} {{lastname}}
+                </div>
+            </div>
+            <button *ngIf="!showLoader" mat-button class="view-picks-button base-background primary" (click)="viewPicks()">
+                <span class="primary">View Full Picks</span>
+            </button>
+        </div>
+        <div *ngIf="showLoader">
+            <picks-loader></picks-loader>
+        </div>
+        <div class=modal-content>
+            <div *ngIf="displayTeams.length === 0 && !showLoader" class="no-picks">
+                No Picks
+            </div>
+            <div *ngFor="let team of displayTeams" class="team-picks">
+                <team
+                    [team]="team"
+                    [gameLocked]="'false'"
+                    [size]="'medium'"
+                    (teamLoaded)="teamLoaded($event)">
+                </team>
+            </div>
+        </div>
+    </div>
+</div>

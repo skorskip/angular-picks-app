@@ -15,6 +15,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() title: string;
   @Input() gameLocked: boolean;
   @Input() spread = null;
+  @Input() size = null;
   @Output() teamLoaded = new EventEmitter();
 
   constructor(
@@ -29,7 +30,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.teamLoaded.emit(true);
+      this.teamLoaded.emit(this.team);
     });
   }
 

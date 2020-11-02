@@ -4,6 +4,7 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { CurrentWeek } from 'src/app/data-models/week/current-week';
 
 @Component({
   selector: 'app-standings',
@@ -16,15 +17,19 @@ export class StandingsComponent implements OnInit {
   currentUser = new User();
   showUserPicks = false;
   otherUser = new UserStanding();
+  peekUser = new UserStanding();
+  showPeekUser = false;
+  week = new CurrentWeek();
 
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
-    private weekService: WeekService,
+    private weekService: WeekService
   ) { }
 
   ngOnInit() {
     this.weekService.getCurrentWeek().subscribe( week => {
+      this.week = week;
       this.userService.getStandings(week.season, week.seasonType).subscribe((users: UserStanding[]) => {
         this.standings= users;
       });
@@ -33,9 +38,17 @@ export class StandingsComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
   }
 
+  getPeekUserPicks(row: UserStanding) {
+    this.showPeekUser = true;
+    this.peekUser = row;
+  }
+
   getUserPicks(row: UserStanding) {
-    this.showUserPicks = true;
     this.otherUser = row;
+  }
+
+  hidePeekUserPicks(event: boolean) {
+    this.showPeekUser = false;
   }
 
   back() {

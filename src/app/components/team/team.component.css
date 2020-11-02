@@ -10,10 +10,32 @@
 	box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
+.team-card-medium{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	border-radius: 18px;
+	width: 95px;
+	height:70px;
+	float: left;
+	margin-right: 5%;
+	box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
 .team-info {
 	border-radius: 18px;
 	width: 150px;
 	height: 110px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.team-info-medium {
+	border-radius: 18px;
+	width: 95px;
+	height: 70px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -35,6 +57,8 @@
 	margin:0; 
 	text-align:center;
 }
+
+
 
 .large-text-padding{
 	font-size:2em;
