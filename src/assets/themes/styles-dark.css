@@ -61,7 +61,7 @@
 }
 
 .mat-progress-spinner circle, .mat-spinner circle {
-    stroke:  #3ece7a !important;
+    stroke:  black !important;
 }
 
 .mat-progress-bar-fill::after {

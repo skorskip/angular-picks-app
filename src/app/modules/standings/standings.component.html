@@ -49,7 +49,7 @@
     (close)="hidePeekUserPicks($event)">
   </app-pick-peek-modal>
 </div>
-<div *ngIf="showUserPicks">
+<div *ngIf="showUserPicks" (swiperight)="back()">
   <div class="pick-header base-background tiertary" (click)="back()">
       <mat-icon class="week-arrow-icon secondary">
           keyboard_arrow_left
@@ -58,6 +58,16 @@
         {{otherUser.first_name}} {{otherUser.last_name}}
       </div>
   </div>
-  <app-my-picks-dashboard
-  [otherUser]="otherUser.user_id"></app-my-picks-dashboard>
+  <weeks
+  [number] = "week.week"
+  [seasonType] = "week.seasonType"
+  [season]= "week.season"
+  [view]="'none'">
+    <app-my-picks-dashboard
+      [otherUser]="otherUser.user_id"
+      [week]="week.week"
+      [seasonType]="week.seasonType"
+      [season]="week.season">
+    </app-my-picks-dashboard>
+  </weeks>
 </div>

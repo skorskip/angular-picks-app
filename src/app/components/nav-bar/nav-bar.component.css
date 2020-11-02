@@ -1,5 +1,6 @@
 .nav-container {
     position: fixed;
+    height: 50px;
     z-index: 3;
     top:0;
     display: flex;
@@ -31,6 +32,11 @@
     border-radius: 4px;
     margin: 5px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 64px;
 }
 
 .title-group {
@@ -57,4 +63,10 @@
     width: 15px;
     padding: 10px;
     font-size: 1.2em;
+}
+
+.edit-loader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

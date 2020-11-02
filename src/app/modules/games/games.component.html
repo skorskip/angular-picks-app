@@ -1,0 +1,78 @@
+<nav-bar
+  *ngIf="toggleType != 'none'"
+  [title] ="'Games'"
+  [subtitle] = "subtitle"
+  [subDisplayEditButton] = "displayEditButtonOnView()"
+  [subPicksUpdated] = "picksUpdated"
+  (navEditClicked) = "subNavEditClicked($event)"
+  (navSubmitEdit) = "subNavSubmitEdit($event)"
+  (navPicksUpdated) = "subNavPicksUpdated($event)">
+</nav-bar>
+<weeks
+  [number] = "week"
+  [seasonType] = "seasonType"
+  [season]= "season"
+  [view]="toggleType"
+  (viewType)="setView($event)">
+  <div class="slider" 
+    (swipeleft)="setView('picks')" 
+    (swiperight)="setView('games')">
+    <section 
+      id="games" 
+      [ngClass]="{
+        'swipe-right right' : view === 'games',
+        'swipe-left left hidden' : view === 'picks'
+      }">
+      <app-picks-dashboard
+        [week] = "week"
+        [seasonType] = "seasonType"
+        [season]= "season"
+        [currentWeek]="currentWeek"
+        [subSubmitPicks]="submitPicks"
+        [subPicksUpdated]="picksUpdated"
+        (title)="subSubtitleGames($event)"
+        (displaySubmitButton)="subDisplaySubmitButton($event)"
+        (picksSubmitted)="subPicksSubmitted($event)">
+      </app-picks-dashboard>
+    </section>
+    <section 
+      id="picks"
+      [ngClass]="{
+        'swipe-right right hidden' : view === 'games',
+        'swipe-left left' : view === 'picks'
+      }">
+      <app-my-picks-dashboard
+          [week] = "week"
+          [seasonType] = "seasonType"
+          [season]= "season"
+          [otherUser]="otherUsers"
+          [subNavEditClicked]="navEditClicked"
+          [subNavSubmitEdit]="navSubmitEdit"
+          [subPicksSubmit]="picksSubmitted"
+          (picksUpdated)="subPicksUpdated($event)"
+          (displayEditButton)="subDisplayEditButton($event)"
+          (title)="subSubtitlePicks($event)">
+      </app-my-picks-dashboard>
+    </section>
+  </div>
+  <div 
+    id="submit-container" 
+    [ngClass]="{
+      'hide-submit-button' : displaySubmitButton === false, 
+      'show-submit-button': displaySubmitButton === true,
+      'disable' : submitPicks,
+      'swipe-right right' : view === 'games',
+      'swipe-left left hidden' : view === 'picks'
+    }">
+    <button 
+      mat-button 
+      id="submit-button" 
+      class="primary-background base" 
+      (click)="submitPicksClick()">
+      <span *ngIf="!submitPicks">Submit</span>
+      <div class="submit-loader" *ngIf="submitPicks">
+        <mat-spinner [diameter]="35"></mat-spinner>
+      </div>
+    </button>
+  </div>
+</weeks>

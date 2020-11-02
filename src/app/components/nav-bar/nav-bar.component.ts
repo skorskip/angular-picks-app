@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, SimpleChange } from '@angular/core';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
 import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'nav-bar',
@@ -13,15 +14,20 @@ export class NavBarComponent implements OnInit, AfterViewInit {
 
   @Input() title = "";
   @Input() subtitle = "";
-  @Input() showEditButton = false;
 
-  @Output() editPickSelected = new EventEmitter();
-  @Output() submitEditsSelected = new EventEmitter();
+  @Input() subDisplayEditButton = false;
+  @Input() subPicksUpdated = false;
+
+  @Output() navEditClicked = new EventEmitter();
+  @Output() navSubmitEdit= new EventEmitter();
+  @Output() navPicksUpdated = new EventEmitter();
+
   user = new User();
 
   edit = false;
   messages = false;
   largeScreen = false;
+  loadingEdits = false;
 
   constructor(
     private sideNavService: SideNavService,
@@ -43,6 +49,14 @@ export class NavBarComponent implements OnInit, AfterViewInit {
     })
   }
 
+  ngOnChanges(changes: SimpleChange) {
+    if((changes["subPicksUpdated"]?.currentValue != changes["subPicksUpdated"]?.previousValue) && changes["subPicksUpdated"]?.currentValue) {
+      this.edit = false;
+      this.loadingEdits = false;
+      this.navPicksUpdated.emit(false);
+    }
+  }
+
   ngAfterViewInit() {
     this.resize(document.getElementById("side-nav").scrollWidth);
   }
@@ -53,12 +67,12 @@ export class NavBarComponent implements OnInit, AfterViewInit {
 
   editPicks(){
     this.edit = true;
-    this.editPickSelected.emit(true);
+    this.navEditClicked.emit(true);
   }
 
   submitEdits() {
-    this.edit = false;
-    this.submitEditsSelected.emit(true);
+    this.loadingEdits = true;
+    this.navSubmitEdit.emit(true);
   }
 
   resize(size: number) {

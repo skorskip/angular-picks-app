@@ -18,9 +18,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() size = null;
   @Output() teamLoaded = new EventEmitter();
 
-  constructor(
-    @Inject(DOCUMENT) document,
-    private teamService: TeamService) { }
+  constructor() { }
 
   ngOnInit() {
     if(this.score == null) {

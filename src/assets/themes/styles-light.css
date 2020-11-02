@@ -57,7 +57,7 @@
 }
 
 .mat-progress-spinner circle, .picks-loader circle {
-    stroke: #3e5dce !important;
+    stroke: white !important;
 }
 
 .mat-progress-bar-fill::after {

@@ -1,53 +1,38 @@
-<nav-bar
-  *ngIf="toggleType != 'none'"
-  [title] ="'Picks'"
-  [subtitle] = "getTitle()"
-  [showEditButton] = "showEditButton"
-  (editPickSelected) = editPicks()
-  (submitEditsSelected) = submitEdits()>
-</nav-bar>
-<weeks
-  [number] = "week.number"
-  [seasonType] = "week.seasonType"
-  [season]= "week.season"
-  [view]="toggleType">
-  
-  <div *ngIf = "picks.length == 0 && loader">
-    <picks-loader></picks-loader>
-  </div>
-  <div *ngIf = "picks.length == 0 && !loader" class="no-picks-view secondary">
-    No Picks Made
-  </div>
-  <div *ngIf="picks.length > 0" class="games-container">
-    <ng-container *ngFor="let myGame of myGames, let i = index">
-      <div *ngIf="showSubmitTime(i)" class="full-row">
-        <div class="game-card-date">
-          <div class="date-text primary">
-            Submit by: {{ submitDate(myGame) }}
-          </div>
-        </div>
-      </div> 
-      <div attr.id="game-container-{{myGame.game_id}}" class="game-container">
-        <game
-          [game] = "myGame"
-          [notSelectablePicks] = "notSelectablePicks" 
-          [pickSuccess] = "pickResult(myGame)"
-          [userGamePicks] = "weekUserPicks[myGame.game_id]"
-          [teams] = "myTeams"
-          (teamLoaded) = "teamLoaded($event)"
-          (click) = "changeTeam(myGame)">
-        </game>
-        <div *ngIf="showEdit(myGame)" class="edit-tools edit-animation">
-          <div attr.id="delete-{{myGame.game_id}}" class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
-            <mat-icon
-              matTooltip="delete"
-              matTooltipPosition="bottom"
-              class="failure">delete
-            </mat-icon>
-          </div>
+<div *ngIf = "picks.length == 0 && loader">
+  <picks-loader></picks-loader>
+</div>
+<div *ngIf = "picks.length == 0 && !loader" class="no-picks-view secondary">
+  No Picks Made
+</div>
+<div *ngIf="picks.length > 0" class="games-container">
+  <ng-container *ngFor="let myGame of myGames, let i = index">
+    <div *ngIf="showSubmitTime(i)" class="full-row">
+      <div class="game-card-date">
+        <div class="date-text primary">
+          Submit by: {{ submitDate(myGame) }}
         </div>
       </div>
-      <div class="separator tiertary"></div>
-    </ng-container>
-  </div>
-</weeks>
+    </div> 
+    <div attr.id="game-container-{{myGame.game_id}}" class="game-container">
+      <game
+        [game] = "myGame"
+        [notSelectablePicks] = "notSelectablePicks" 
+        [pickSuccess] = "pickResult(myGame)"
+        [userGamePicks] = "weekUserPicks[myGame.game_id]"
+        [teams] = "myTeams"
+        (teamLoaded) = "teamLoaded($event)"
+        (click) = "changeTeam(myGame)">
+      </game>
+      <div *ngIf="showEdit(myGame)" class="edit-tools" @slideDownAnimation>
+        <div attr.id="delete-{{myGame.game_id}}" class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">
+          <mat-icon
+            matTooltip="delete"
+            matTooltipPosition="bottom"
+            class="failure">delete
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="separator tiertary"></div>
+  </ng-container>
+</div>

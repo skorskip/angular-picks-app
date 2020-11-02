@@ -5,8 +5,21 @@ import {
     style,
     animate,
     group,
-    animateChild
+    animateChild,
+    state
  } from '@angular/animations';
+
+ export const slideDownAnimation = trigger('slideDownAnimation', [
+     transition(':enter', [
+          style({ transform: 'translateY(-50px)', opacity: '0%' }),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(0px)', opacity: '100%' })),
+     ]),
+     transition(':leave', [
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(-50px)', opacity: '0%'}))
+     ])
+ ]);
+
+
  export const slideInAnimation =
     trigger('routeAnimations', [
          transition('Picks => *', [

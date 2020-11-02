@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject, ComponentFactoryResolver } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../../data-models/game/game';
@@ -7,8 +6,6 @@ import { Week } from '../../data-models/week/week';
 import { WeekService } from '../../data-models/week/week.service';
 import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
-import { WeeksService } from '../../components/weeks/weeks.service';
-import { Subscription }   from 'rxjs';
 import { User } from 'src/app/data-models/user/user';
 import { Team } from 'src/app/data-models/team/team';
 import { TeamService } from 'src/app/data-models/team/team.service';
@@ -29,35 +26,37 @@ export class PicksDashboardComponent implements OnInit {
 
   games = [] as Game[];
   stagedPicks = [] as Pick[];
-  week = new Week();
+  weekObject = new Week();
   weeksView = false;
-  subscription: Subscription;
   user = new User();
   teams = [] as Team[];
   loader = false;
   userData = new UserStanding();
   maxTotalPicks = 0;
-  currentWeek = new CurrentWeek();
   weekUserPicks = [] as any[];
+  
+  @Input() currentWeek = new CurrentWeek();
+  @Input() week = 0;
+  @Input() seasonType = 0;
+  @Input() season = 0;
+
+  @Input() subSubmitPicks = false;
+  @Input() subPicksUpdated = false;
+
+  @Output() title = new EventEmitter();
+  @Output() displaySubmitButton = new EventEmitter();
+  @Output() picksSubmitted = new EventEmitter();
 
   constructor(
     public dialog: MatDialog, 
     private weekService: WeekService, 
     private pickService: PickService, 
-    public snackBar: MatSnackBar, 
-    private router:Router,
-    private weeksService:WeeksService,
+    public snackBar: MatSnackBar,
     private authService:AuthenticationService,
     private teamService:TeamService,
-    private route:ActivatedRoute,
     private userService: UserService,
     private dateFormatter: DateFormatterService,
     private leagueService: LeagueService) { 
-      this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => {
-        this.loader = true;
-        this.initWeek(weekSeason.season,weekSeason.seasonType, weekSeason.week)
-      });
-
       this.leagueService.getLeagueSettings().subscribe(settings => {
         this.maxTotalPicks = settings.maxTotalPicks;
       });
@@ -65,45 +64,43 @@ export class PicksDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
-    var season = +this.route.snapshot.paramMap.get('season') as number;
-    var seasonType = +this.route.snapshot.paramMap.get('seasonType') as number;
-    var week = +this.route.snapshot.paramMap.get('week') as number;
-    
-    this.loader = true;
+  }
 
-    this.weekService.getCurrentWeek().subscribe(currentWeek => {
-      this.currentWeek = currentWeek;
+  ngOnChanges(changes: SimpleChange) {
+    if(changes["week"]?.currentValue != changes["week"]?.previousValue) {
+      this.loader = true;
+      this.initWeek(this.season, this.seasonType, this.week);
+    }
 
-      if(season == 0 || week == 0 || seasonType == 0) {
-        season = this.currentWeek.season;
-        seasonType = this.currentWeek.seasonType;
-        week = this.currentWeek.week;
-      }
+    if((changes["subSubmitPicks"]?.currentValue != changes["subSubmitPicks"]?.previousValue) && changes["subSubmitPicks"]?.currentValue){
+      this.openDialog();
+    }
 
-      this.initWeek(season, seasonType, week);
-    });
+    if(changes["subPicksUpdated"]?.currentValue) {
+      this.initWeek(this.season, this.seasonType, this.week);
+    }
   }
 
   initWeek(season: number, seasonType: number, week: number) {
     this.games = [];
     this.teams = [];
 
+    this.userService.getStandingsByUser(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, this.user).subscribe((result:UserStanding[]) => {
+      if(result != null) {
+        this.userData = result[0];
+      }
+    });
+
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;
 
       this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
         if(week != null) {
-          this.week = week;
+          this.weekObject = week;
           this.teams = week.teams;
           this.games = week.games;
-      
-          this.userService.getStandingsByUser(week.season, week.seasonType, week.number, this.user).subscribe((result:UserStanding[]) => {
-            if(result != null) {
-              this.userData = result[0];
-            }
-          });
-      
           this.stagedPicks = this.pickService.getStagedPicks();
+          this.getTitle();
           this.loader = false;
         } else {
           this.loader = false;
@@ -115,7 +112,7 @@ export class PicksDashboardComponent implements OnInit {
   teamLoaded(event) {
     this.showSubmit();
     this.highlightGameResult(event);
-    if(this.week.number == this.currentWeek.week) {
+    if(this.weekObject.number == this.currentWeek.week) {
       this.highlightStagedPick(event);
     }
   }
@@ -125,30 +122,23 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   showSubmit() {
-    let submitOpened = (this.stagedPicks.length > 0) && (this.week.number == this.currentWeek.week);
-    if(submitOpened){
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "10px";
-      }
-    }else{
-      if(document.getElementById("submit-container") != null) {
-        document.getElementById("submit-container").style.bottom = "-65px";
-      }
-    }
+    let submitOpened = (this.stagedPicks.length > 0) && (this.weekObject.number == this.currentWeek.week);
+    this.displaySubmitButton.emit(submitOpened);
   }
 
   stageSelectedPick(selectedPick: Pick){
     selectedPick.user_id = this.user.user_id
     this.stagedPicks = this.pickService.addStagedPick(selectedPick);
+    this.getTitle();
   }
   
   openDialog() {
-
     var unsubmitableGame = false;
 
     for(var i = 0; i < this.games.length; i++) {
       let pickable = this.pickService.removeStagedPickPastSumbit(this.games[i]);
       this.stagedPicks = this.pickService.getStagedPicks();
+      this.getTitle();
       if(pickable === -1) {
         unsubmitableGame = true;
       }
@@ -167,16 +157,22 @@ export class PicksDashboardComponent implements OnInit {
         limit: limit,
         needed: needed
       }
+      this.picksSubmitted.emit(true);
       this.dialog.open(PicksOverLimitDialog,dialogConfig);
     } else if (unsubmitableGame) { 
+      this.picksSubmitted.emit(true);
       this.dialog.open(PicksErrorDialog,{width: '500px'});
     } else {
       this.pickService.addPicks(this.stagedPicks).subscribe(status => {
         if(status) {
+          this.picksSubmitted.emit(true);
           this.pickService.clearStagedPicks();
-          this.snackBar.open("picks submitted",'', {duration:3000, panelClass:"success-background"});
-          this.router.navigate(['/picks/' + this.week.season + '/' + this.week.seasonType + '/' + this.week.number]);
+          this.stagedPicks = this.pickService.getStagedPicks();
+          this.getTitle();
+          this.snackBar.open("picks submitted",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
+          this.initWeek(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number);
         } else {
+          this.picksSubmitted.emit(true);
           this.dialog.open(PicksErrorDialog,{width: '500px'});
         }
       });
@@ -213,20 +209,16 @@ export class PicksDashboardComponent implements OnInit {
     return this.dateFormatter.formatDate(new Date(game.pick_submit_by_date));
   }
 
-  getTitle(): string {
+  getTitle() {
     let title = "";
-    if(this.stagedPicks.length > 0 && (this.week.number == this.currentWeek.week)){
+    if(this.stagedPicks.length > 0 && (this.weekObject.number == this.currentWeek.week)){
       title += this.stagedPicks.length + " Selected"
     }
-    return title;
+    this.title.emit(title);
   }
 
   userCanSelect(): boolean {
     return this.user.type !== 'participant';
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }
 

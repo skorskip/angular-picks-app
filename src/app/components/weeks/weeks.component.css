@@ -87,6 +87,11 @@
 
 .toggle-container {
 	border-radius: 4px;
+	padding: 4px;
+}
+
+.week-content {
+	height: 100%;
 }
 
 @media only screen and (min-width: 650px) {
