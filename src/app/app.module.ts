@@ -22,7 +22,8 @@ import * as Hammer from 'hammerjs';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
-      'pan': {direction: Hammer.DIRECTION_HORIZONTAL, velocity: 0.4, threshold: 200}
+      'pan': {direction: Hammer.DIRECTION_HORIZONTAL, velocity: 0.4, threshold: 200},
+      'swipe': {direction: Hammer.DIRECTION_ALL}
   }
 }
 

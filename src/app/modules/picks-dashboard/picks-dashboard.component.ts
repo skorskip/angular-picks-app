@@ -15,6 +15,7 @@ import { UserService } from 'src/app/data-models/user/user.service';
 import { LeagueService } from 'src/app/data-models/league/league.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { PickData } from 'src/app/data-models/pick/pick-data';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -46,6 +47,7 @@ export class PicksDashboardComponent implements OnInit {
   @Output() title = new EventEmitter();
   @Output() displaySubmitButton = new EventEmitter();
   @Output() picksSubmitted = new EventEmitter();
+  @Output() peekUser = new EventEmitter();
 
   constructor(
     public dialog: MatDialog, 
@@ -219,6 +221,10 @@ export class PicksDashboardComponent implements OnInit {
 
   userCanSelect(): boolean {
     return this.user.type !== 'participant';
+  }
+
+  peekUserSelected(event){
+    this.peekUser.emit(event);
   }
 }
 

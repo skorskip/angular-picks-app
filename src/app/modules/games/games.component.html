@@ -32,7 +32,8 @@
         [subPicksUpdated]="picksUpdated"
         (title)="subSubtitleGames($event)"
         (displaySubmitButton)="subDisplaySubmitButton($event)"
-        (picksSubmitted)="subPicksSubmitted($event)">
+        (picksSubmitted)="subPicksSubmitted($event)"
+        (peekUser)="peekUserSelected($event)">
       </app-picks-dashboard>
     </section>
     <section 
@@ -51,7 +52,8 @@
           [subPicksSubmit]="picksSubmitted"
           (picksUpdated)="subPicksUpdated($event)"
           (displayEditButton)="subDisplayEditButton($event)"
-          (title)="subSubtitlePicks($event)">
+          (title)="subSubtitlePicks($event)"
+          (peekUser)="peekUserSelected($event)">
       </app-my-picks-dashboard>
     </section>
   </div>
@@ -76,3 +78,13 @@
     </button>
   </div>
 </weeks>
+<div *ngIf="showPeekUser">
+  <app-pick-peek-modal
+      [firstname]="peekUser.first_name"
+      [lastname]="peekUser.last_name"
+      [inits]="peekUser.user_inits"
+      [userId]="peekUser.user_id"
+      [week]="currentWeek"
+      (close)="hidePeekUserPicks($event)">
+  </app-pick-peek-modal>
+</div>

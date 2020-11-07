@@ -4,11 +4,11 @@
 <div class="standings-container" *ngIf="!showUserPicks">
   <div *ngFor="let standing of standings, let i = index">
       <div 
-        class="standing-card"
+        class="standing-card primary"
         (click)="getPeekUserPicks(standing)"
         [ngClass]="{
-          'base primary-background':standing.user_id == currentUser.user_id,
-          'quaternary-background secondary': standing.user_id != currentUser.user_id,
+          'primary-background':standing.user_id == currentUser.user_id,
+          'quaternary-background': standing.user_id != currentUser.user_id,
           'disable': peekUserPicks
         }">
         <div class="rank tiertary">
@@ -16,22 +16,38 @@
             [ngClass]="{
               'base': standing.user_id == currentUser.user_id, 
               'secondary': standing.user_id != currentUser.user_id
-          }">
+            }">
             {{standing.ranking}}
           </div>
         </div>
-        <div class="user">
+        <div class="user"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+        }">
           {{standing.user_inits}}
         </div>
-        <div class="stacked-stats">
+        <div class="stacked-stats"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
           {{standing.wins}}
           <span class="stacked-stats-font">wins</span>
         </div>
-        <div class="stacked-stats">
+        <div class="stacked-stats"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
           {{standing.picks}}
           <span class="stacked-stats-font">picks</span>
         </div>
-        <div class="win-pct">
+        <div class="win-pct"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
           {{standing.win_pct | number:'1.3-3'}}
         </div>
       </div>
@@ -43,10 +59,9 @@
     [lastname]="peekUser.last_name"
     [inits]="peekUser.user_inits"
     [userId]="peekUser.user_id"
-    [season]="week.season"
-    [seasonType]="week.seasonType"
-    [week]="week.week"
-    (close)="hidePeekUserPicks($event)">
+    [week]="week"
+    (close)="hidePeekUserPicks($event)"
+    (viewFullPicks)="showUserPicksFromParam($event)">
   </app-pick-peek-modal>
 </div>
 <div *ngIf="showUserPicks" (swiperight)="back()">

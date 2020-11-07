@@ -7,6 +7,7 @@ import { WeekService } from 'src/app/data-models/week/week.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { Subscription } from 'rxjs';
 import { WeeksService } from 'src/app/components/weeks/weeks.service';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-standings',
@@ -25,6 +26,8 @@ export class StandingsComponent implements OnInit {
   subscription: Subscription;
 
   constructor(
+    private router: Router,
+    private route:ActivatedRoute,
     private userService: UserService,
     private authService: AuthenticationService,
     private weekService: WeekService,
@@ -38,14 +41,26 @@ export class StandingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    var userParam = +this.route.snapshot.paramMap.get('userId') as number;
     this.weekService.getCurrentWeek().subscribe( week => {
       this.week = week;
       this.userService.getStandings(week.season, week.seasonType).subscribe((users: UserStanding[]) => {
         this.standings= users;
+        this.showUserPicksFromParam(userParam);
       });
     });
 
     this.currentUser = this.authService.currentUserValue;
+  }
+
+  showUserPicksFromParam(userId){
+    if(userId != null) {
+      this.standings.forEach(standing => {
+        if(standing.user_id === userId) {
+          this.getUserPicks(standing);
+        }
+      });
+    }
   }
 
   getPeekUserPicks(row: UserStanding) {
@@ -54,6 +69,7 @@ export class StandingsComponent implements OnInit {
   }
 
   getUserPicks(row: UserStanding) {
+    this.showUserPicks = true;
     this.otherUser = row;
   }
 

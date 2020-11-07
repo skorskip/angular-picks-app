@@ -1,5 +1,5 @@
-<div class="picks-data-container primary" (click)="picksDataClick()">
-    <div class="picks-data-overview" *ngIf="!showPickers">
+<div class="picks-data-container primary">
+    <div class="picks-data-overview" *ngIf="!showPickers" (click)="picksDataClick()">
         <div class="pick-data" name="away">
             <mat-icon class="pick-data-icon">
                 people_alt
@@ -19,14 +19,20 @@
     </div>
     <div class="picks-data-users" *ngIf="showPickers">
         <div class="users-column">
-            <div class="user-item" *ngFor="let pick of awayPicks">
+            <div class="user-item" *ngFor="let pick of awayPicks" (click)="setUserModal(pick)">
                 {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
             </div>
         </div>
         <div class="users-column">
-            <div class="user-item" *ngFor="let pick of homePicks">
+            <div class="user-item" *ngFor="let pick of homePicks" (click)="setUserModal(pick)">
                 {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
             </div>
         </div>
+    </div>
+    <div *ngIf="showPickers" (click)="closePicksData()" class="show-less-button secondary">
+        <div>
+            <mat-icon class="close-modal-icon">expand_less</mat-icon>
+        </div>
+        Show Less
     </div>
 </div>

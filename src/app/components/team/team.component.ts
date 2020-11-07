@@ -16,6 +16,8 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() gameLocked: boolean;
   @Input() spread = null;
   @Input() size = null;
+  @Input() highlight = false;
+  @Input() status = null;
   @Output() teamLoaded = new EventEmitter();
 
   constructor() { }

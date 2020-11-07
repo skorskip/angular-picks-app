@@ -5,7 +5,10 @@
     'team-card-medium': size == 'medium',
     'team-card': size == null
   }">
-    <div *ngIf="!gameLocked" attr.id="{{team.team_id}}-team-info" class="team-info {{team.display_color}}">
+    <div 
+      *ngIf="!gameLocked"
+      attr.id="{{team.team_id}}-team-info"
+      class="team-info {{team.display_color}} disabled">
       <div class="large-text-padding">{{score}}</div>
       <div class="small-text-middle">{{team.abbreviation}}</div>
     </div>
@@ -15,7 +18,8 @@
       class="team-info {{team.display_color}}"
       [ngClass]="{
         'team-info-medium' : size == 'medium',
-        'team-info': size == null
+        'team-info': size == null,
+        'highlight-team': highlight
       }">
       <p class="large-text">{{team.abbreviation}}</p>
     </div>

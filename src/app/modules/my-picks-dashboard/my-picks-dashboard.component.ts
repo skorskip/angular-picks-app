@@ -50,6 +50,7 @@ export class MyPicksDashboardComponent implements OnInit {
   @Output() title = new EventEmitter();
   @Output() displayEditButton = new EventEmitter();
   @Output() picksUpdated = new EventEmitter();
+  @Output() peekUser = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
@@ -341,6 +342,10 @@ export class MyPicksDashboardComponent implements OnInit {
     let title = "";
     title += this.myGames.length + " Picked"
     this.title.emit(title);
+  }
+
+  peekUserSelected(event){
+    this.peekUser.emit(event);
   }
 }
 

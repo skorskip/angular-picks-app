@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: '', component: GamesComponent, canActivate: [AuthGuard] },
   { path: 'games/:season/:seasonType:/:week', component: GamesComponent, canActivate: [AuthGuard], data: {animation: 'Games'}  },
   { path: 'games', component: GamesComponent, canActivate: [AuthGuard], data: {animation: 'Games'}  },
+  { path: 'standings/:userId', component: StandingsComponent, canActivate: [AuthGuard] },
   { path: 'standings', component: StandingsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },

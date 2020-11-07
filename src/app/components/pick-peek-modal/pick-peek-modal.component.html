@@ -1,7 +1,7 @@
 <div class="modal-container" id="modal-container">
-    <div class="user-modal quaternary-background secondary" id="user-modal" >
-        <div class="modal-header">
-            <mat-icon class="close-modal-icon" (click)="closeClick()">clear</mat-icon>
+    <div class="user-modal quaternary-background secondary" id="user-modal" @slideDownAnimation *ngIf="showModal">
+        <div class="modal-header" (swipedown)="closeClick()">
+            <mat-icon class="close-modal-icon">remove</mat-icon>
         </div>
         <div class="modal-title">
             <div class="user-name">
@@ -28,7 +28,7 @@
                     [team]="team"
                     [gameLocked]="'false'"
                     [size]="'medium'"
-                    (teamLoaded)="teamLoaded($event)">
+                    [highlight]="'true'">
                 </team>
             </div>
         </div>

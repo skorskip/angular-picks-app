@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WeeksService } from 'src/app/components/weeks/weeks.service';
+import { PickData } from 'src/app/data-models/pick/pick-data';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { WeekService } from 'src/app/data-models/week/week.service';
 
@@ -30,6 +31,8 @@ export class GamesComponent implements OnInit {
   gamesSubtitle = "";
   picksUpdated = false;
   displaySubmitButton = false;
+  showPeekUser = false;
+  peekUser = new PickData();
 
   @Input() otherUsers = null;
 
@@ -144,6 +147,15 @@ export class GamesComponent implements OnInit {
 
   subNavPicksUpdated(event: boolean) {
     this.picksUpdated = false;
+  }
+
+  peekUserSelected(event){
+    this.peekUser = event;
+    this.showPeekUser = true;
+  }
+
+  hidePeekUserPicks(event) {
+    this.showPeekUser = false;
   }
 
   ngOnDestroy() {

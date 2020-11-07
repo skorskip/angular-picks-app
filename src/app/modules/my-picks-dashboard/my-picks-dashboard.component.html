@@ -21,7 +21,8 @@
         [userGamePicks] = "weekUserPicks[myGame.game_id]"
         [teams] = "myTeams"
         (teamLoaded) = "teamLoaded($event)"
-        (click) = "changeTeam(myGame)">
+        (click) = "changeTeam(myGame)"
+        (peekUser)="peekUserSelected($event)">
       </game>
       <div *ngIf="showEdit(myGame)" class="edit-tools" @slideDownAnimation>
         <div attr.id="delete-{{myGame.game_id}}" class="edit-opt edit-icon-delete bottom-margin failure base-background" (click) = "deletePick(myGame)">

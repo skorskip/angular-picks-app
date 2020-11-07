@@ -33,6 +33,7 @@
   </div>
   <users-pick-data *ngIf="showPicksData()"
     [game]="game"
-    [picks]="userGamePicks">
+    [picks]="userGamePicks"
+    (peekUser)="peekUserSelected($event)">
   </users-pick-data>
 </div>

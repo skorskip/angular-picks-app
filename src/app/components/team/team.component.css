@@ -32,6 +32,11 @@
 	flex-direction: column;
 }
 
+.team-info:hover {
+	border: solid 3px;
+	box-shadow: 0px 0px 5px 0px;
+}
+
 .team-info-medium {
 	border-radius: 18px;
 	width: 95px;
@@ -98,4 +103,13 @@
 	height: 25px;
 	width:25px;
 	border-radius: 50%;
+}
+
+.highlight-team {
+	border: solid 3px;
+	box-shadow: 0px 0px 5px 0px;
+}
+
+.disabled {
+	pointer-events: none;
 }

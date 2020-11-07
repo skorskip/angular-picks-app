@@ -19,6 +19,26 @@ import {
      ])
  ]);
 
+ export const slideUpAnimation = trigger('slideDownAnimation', [
+     transition(':enter', [
+          style({ transform: 'translateY(400px)'}),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(0px)'})),
+     ]),
+     transition(':leave', [
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ transform: 'translateY(400px)'}))
+     ])
+ ]);
+
+ export const fadeAnimation = trigger('fadeAnimation', [
+     transition(':enter', [
+          style({ opacity: '100%'}),
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ opacity: '100%'})),
+     ]),
+     transition(':leave', [
+          animate('0.5s cubic-bezier(0.785000,0.135000,0.150000,0.860000)', style({ opacity: '0%'}))
+     ])
+ ]);
+
 
  export const slideInAnimation =
     trigger('routeAnimations', [
