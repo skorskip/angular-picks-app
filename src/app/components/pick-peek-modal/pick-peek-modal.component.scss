@@ -85,3 +85,14 @@
 .team-picks {
 	margin: 10px;
 }
+
+@media only screen and (min-width: 650px) {
+	.user-modal {
+		width: calc(100% - 300px);
+	}
+
+	.modal-container {
+		left: 300px;
+		width: calc(100% - 300px);
+	}
+}

@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resize(windowSize: number) {
-    if(windowSize > 950){
+    if(windowSize > 650){
       this.largeScreen = true;
       this.opened = true;
       this.sideMenuType = "side";

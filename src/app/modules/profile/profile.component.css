@@ -80,21 +80,6 @@
     padding: 10px;
 }
 
-.logout-button {
-    color: rgb(228, 46, 46);
-    border-radius: 4px;
-	cursor: pointer;
-    border: solid 1px;
-    margin:20px;
-    width: 60%;
-}
-
-.logout-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .init-icon {
     display: flex;
     justify-content: center;
@@ -110,6 +95,19 @@
     border-radius: 4px;
 	cursor: pointer;
     width: 100px;
+}
+
+.theme-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.theme-button {
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
 }
 
 .toggle-container {

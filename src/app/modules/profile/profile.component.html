@@ -79,11 +79,25 @@
         </div>
     </div>
 
-    <div class="card-bottom base-background secondary" *ngIf=!editSelected>
-      <div class="logout-container">
-        <button mat-button class="logout-button" (click)="logout()">
-          Logout
-        </button>
+    <div class="card base-background tiertary" *ngIf=!editSelected>
+      <div class="card-section secondary">
+          <div class="info-header">
+            Theme
+          </div>
+          <div class="theme-content">
+            <div *ngFor="let item of themeList">
+              <button 
+                mat-button 
+                (click)="toggleTheme(item.value)" 
+                class="theme-button" 
+                [ngClass]="{
+                  'primary-background base':theme == item.value,
+                  'secondary tiertary-light-background':theme != item.value
+                }">
+                  {{item.name}}
+                </button>
+            </div>
+          </div>
       </div>
     </div>
 

@@ -76,7 +76,7 @@ export class NavBarComponent implements OnInit, AfterViewInit {
   }
 
   resize(size: number) {
-    if(size > 950) {
+    if(size > 650) {
       this.largeScreen = true;
     } else {
       this.largeScreen = false;

@@ -47,7 +47,7 @@
 	margin: 10px;
 }
 
-@media only screen and (min-width: 665px) {
+@media only screen and (min-width: 650px) {
 	.games-container {
 		display: flex;
 		flex-direction: row;
@@ -55,16 +55,7 @@
 		justify-content: center;
 		align-items: center;
 	}
-}
 
-@media only screen and (min-width: 665px) {
-	#submit-container {
-		width: 500px;
-		left: calc(25%);
-	}
-}
-
-@media only screen and (min-width: 665px) {
 	.game-container {
 		margin-right: 60px;
 	}

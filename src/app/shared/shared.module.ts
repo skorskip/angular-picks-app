@@ -11,6 +11,7 @@ import { UsersPickDataComponent } from '../components/users-pick-data/users-pick
 import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
 import { PicksLoaderComponent } from '../components/picks-loader/picks-loader.component';
 import { PickPeekModalComponent } from '../components/pick-peek-modal/pick-peek-modal.component';
+import { PickLogoComponent } from '../components/pick-logo/pick-logo.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PickPeekModalComponent } from '../components/pick-peek-modal/pick-peek-
     NavBarComponent,
     UserStatsComponent,
     PicksLoaderComponent,
-    PickPeekModalComponent
+    PickPeekModalComponent,
+    PickLogoComponent
   ],
   exports: [
     UsersPickDataComponent,
@@ -39,7 +41,8 @@ import { PickPeekModalComponent } from '../components/pick-peek-modal/pick-peek-
     NavBarComponent,
     UserStatsComponent,
     PicksLoaderComponent,
-    PickPeekModalComponent
+    PickPeekModalComponent,
+    PickLogoComponent
   ]
 })
 export class SharedModule { }

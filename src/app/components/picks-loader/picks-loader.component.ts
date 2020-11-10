@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'picks-loader',
@@ -8,15 +7,8 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 })
 export class PicksLoaderComponent implements OnInit {
 
-  constructor(
-    private themeService: ThemeService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
-  
-  getLoader(): string {
-    return this.themeService.getTheme();
-  }
-
 }

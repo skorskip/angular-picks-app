@@ -33,8 +33,7 @@
 }
 
 .team-info:hover {
-	border: solid 3px;
-	box-shadow: 0px 0px 5px 0px;
+	border: solid 1px;
 }
 
 .team-info-medium {

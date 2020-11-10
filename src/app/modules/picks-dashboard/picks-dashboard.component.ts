@@ -69,7 +69,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChange) {
-    if(changes["week"]?.currentValue != changes["week"]?.previousValue) {
+    if(changes["week"]?.currentValue != changes["week"]?.previousValue && changes["week"]?.currentValue != 0) {
       this.loader = true;
       this.initWeek(this.season, this.seasonType, this.week);
     }

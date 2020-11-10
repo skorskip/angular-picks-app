@@ -24,6 +24,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   picks = [] as Pick[];
   pickProgress = 0;
   theme;
+  themeList = [
+    {
+      name : "Banana Split",
+      value : "banana-split"
+    }
+  ]
 
   constructor(
     private authService: AuthenticationService,

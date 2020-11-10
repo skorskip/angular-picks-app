@@ -1,7 +1,7 @@
 <div class="login-container" *ngIf="!registerSelected">
   <div class="login-header">
     <div>
-      <img class="icon" src="../../../assets/icons/pickem_logo_soft.svg">
+      <pick-logo [size]="'m'"></pick-logo>
     </div>
     <div class="login-title secondary">pickem</div>
   </div>
@@ -22,7 +22,7 @@
   </mat-form-field>
 
   <button mat-button (click)="attemptLogin(username.value, password.value)" class="login-button primary-background base noSelect">
-      login
+      Login
   </button>
 </div>
 <app-register *ngIf="registerSelected"

@@ -145,4 +145,9 @@ export class NavigationComponent implements OnInit {
       return "../../../assets/icons/pickem_logo_dark.svg"
     }
   }
+
+  logout() {
+    this.authService.logout();
+    window.location.reload();
+  }
 }
