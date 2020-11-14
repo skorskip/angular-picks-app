@@ -1,19 +1,15 @@
 
 /*<-------DARK COLORS-------->*/
 
-$primary:       #3e5dce;
-$primary-light: #3ece7a29;
+$primary:       #3ece7a;
 $secondary:     #adbbc9;
 $tiertary:      rgb(53, 53, 53);
 $quaternary:    #151515;
 $base:          black;
+$accent:        $primary;
 
 .primary {
     color:  $primary !important;
-}
-
-.primary-light {
-    color: $primary-light !important;
 }
 
 .secondary {
@@ -37,12 +33,12 @@ $base:          black;
     color: $base !important
 }
 
-.primary-background {
-    background-color:  $primary !important;
+.accent {
+    color: $accent !important;
 }
 
-.primary-light-background {
-    background-color: $primary-light!important;
+.primary-background {
+    background-color:  $primary !important;
 }
 
 .secondary-background {
@@ -63,6 +59,10 @@ $base:          black;
 
 .base-background {
     background-color: $base !important;
+}
+
+.accent-background {
+    background-color: $accent !important;
 }
 
 .primary-fill {

@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.themeService.setTheme(this.themeService.getTheme());
+    var theme = this.themeService.getTheme();
+    this.themeService.setTheme(theme.theme, theme.style);
   }
 
   forgotUsername() {

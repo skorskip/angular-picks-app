@@ -58,7 +58,7 @@ export class NavBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.resize(document.getElementById("side-nav").scrollWidth);
+    this.resize(document.getElementById("side-nav-container").scrollWidth);
   }
 
   toggleSideNav(){

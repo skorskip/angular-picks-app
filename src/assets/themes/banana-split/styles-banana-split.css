@@ -3,10 +3,6 @@
   color: #ffe135 !important;
 }
 
-.primary-light {
-  color: #3ece7a29 !important;
-}
-
 .secondary {
   color: #adbbc9 !important;
 }
@@ -27,12 +23,12 @@
   color: black !important;
 }
 
-.primary-background {
-  background-color: #ffe135 !important;
+.accent {
+  color: #adbbc9 !important;
 }
 
-.primary-light-background {
-  background-color: #3ece7a29 !important;
+.primary-background {
+  background-color: #ffe135 !important;
 }
 
 .secondary-background {
@@ -53,6 +49,10 @@
 
 .base-background {
   background-color: black !important;
+}
+
+.accent-background {
+  background-color: #adbbc9 !important;
 }
 
 .primary-fill {

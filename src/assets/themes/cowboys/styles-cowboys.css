@@ -1,0 +1,279 @@
+/*<-------DARK COLORS-------->*/
+.primary {
+  color: #041E42 !important;
+}
+
+.secondary {
+  color: #6d7275 !important;
+}
+
+.tiertary {
+  color: #d6d6d6 !important;
+}
+
+.tiertary-light {
+  color: #f5f3f3 !important;
+}
+
+.quaternary {
+  color: white !important;
+}
+
+.base {
+  color: white !important;
+}
+
+.accent {
+  color: #041E42 !important;
+}
+
+.primary-background {
+  background-color: #041E42 !important;
+}
+
+.secondary-background {
+  background-color: #6d7275 !important;
+}
+
+.tiertary-background {
+  background-color: #d6d6d6 !important;
+}
+
+.tiertary-light-background {
+  background-color: #f5f3f3 !important;
+}
+
+.quaternary-background {
+  background-color: white !important;
+}
+
+.base-background {
+  background-color: white !important;
+}
+
+.accent-background {
+  background-color: #041E42 !important;
+}
+
+.primary-fill {
+  fill: #041E42;
+}
+
+.secondary-fill {
+  fill: #6d7275;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: white !important;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: #041E42 !important;
+}
+
+.mat-progress-bar-buffer {
+  background-color: #d6d6d6 !important;
+}
+
+/*-----------TEAM COLORS----------*/
+.ruby {
+  color: #041E42;
+}
+
+.burgundy {
+  color: #041E42;
+}
+
+.teal {
+  color: #041E42;
+}
+
+.carolina-blue {
+  color: #041E42;
+}
+
+.star-command-blue {
+  color: #041E42;
+}
+
+.air-force-blue {
+  color: #041E42;
+}
+
+.midnight-blue {
+  color: #041E42;
+}
+
+.eerie-black {
+  color: #041E42;
+}
+
+.jungle-green {
+  color: #041E42;
+}
+
+.orange {
+  color: #041E42;
+}
+
+.brown {
+  color: #041E42;
+}
+
+.amaranth-red {
+  color: #041E42;
+}
+
+.violet {
+  color: #041E42;
+}
+
+.red {
+  color: #041E42;
+}
+
+.blue {
+  color: #041E42;
+}
+
+.navy {
+  color: #041E42;
+}
+
+.tan {
+  color: #041E42;
+}
+
+.midnight-green {
+  color: #041E42;
+}
+
+.gold {
+  color: #041E42;
+}
+
+.lime-green {
+  color: #041E42;
+}
+
+.grey {
+  color: #041E42;
+}
+
+.olive {
+  color: #041E42;
+}
+
+.green {
+  color: #041E42;
+}
+
+.yellow {
+  color: #041E42;
+}
+
+.purple {
+  color: #041E42;
+}
+
+.ruby-background {
+  background-color: #041E42;
+}
+
+.burgundy-background {
+  background-color: #041E42;
+}
+
+.teal-background {
+  background-color: #041E42;
+}
+
+.carolina-blue-background {
+  background-color: #041E42;
+}
+
+.star-command-blue-background {
+  background-color: #041E42;
+}
+
+.air-force-blue-background {
+  background-color: #041E42;
+}
+
+.midnight-blue-background {
+  background-color: #041E42;
+}
+
+.eerie-black-background {
+  background-color: #041E42;
+}
+
+.jungle-green-background {
+  background-color: #041E42;
+}
+
+.orange-background {
+  background-color: #041E42;
+}
+
+.brown-background {
+  background-color: #041E42;
+}
+
+.amaranth-red-background {
+  background-color: #041E42;
+}
+
+.violet-background {
+  background-color: #041E42;
+}
+
+.red-background {
+  background-color: #041E42;
+}
+
+.blue-background {
+  background-color: #041E42;
+}
+
+.navy-background {
+  background-color: #041E42;
+}
+
+.tan-background {
+  background-color: #041E42;
+}
+
+.midnight-green-background {
+  background-color: #041E42;
+}
+
+.gold-background {
+  background-color: #041E42;
+}
+
+.lime-green-background {
+  background-color: #041E42;
+}
+
+.grey-background {
+  background-color: #041E42;
+}
+
+.olive-background {
+  background-color: #041E42;
+}
+
+.green-background {
+  background-color: #041E42;
+}
+
+.yellow-background {
+  background-color: #041E42;
+}
+
+.purple-background {
+  background-color: #041E42;
+}
+
+/*# sourceMappingURL=styles-cowboys.css.map */

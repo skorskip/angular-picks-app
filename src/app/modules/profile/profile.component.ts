@@ -27,7 +27,63 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   themeList = [
     {
       name : "Banana Split",
-      value : "banana-split"
+      value : "banana-split",
+      style : "dark"
+    },
+    {
+      name : "Giants",
+      value : "giants",
+      style : "dark"
+    }, 
+    {
+      name : "Broncos",
+      value : "broncos",
+      style : "dark"
+    }, 
+    {
+      name : "Green Bay",
+      value : "green-bay",
+      style : "dark"
+    }, 
+    {
+      name : "Vikings",
+      value : "vikings",
+      style : "dark"
+    },
+    {
+      name : "Saints",
+      value : "saints",
+      style : "dark"
+    },
+    {
+      name : "Jets",
+      value : "jets",
+      style : "light"
+    },
+    {
+      name : "Lions",
+      value : "lions",
+      style : "light"
+    }, 
+    {
+      name : "49ers",
+      value : "49er",
+      style : "dark"
+    },
+    {
+      name : "Football Team",
+      value : "football-team",
+      style : "dark"
+    },
+    {
+      name : "Cowboys",
+      value : "cowboys",
+      style : "light"
+    },
+    {
+      name : "Seahawks",
+      value : "seahawks",
+      style : "dark"
     }
   ]
 
@@ -47,7 +103,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.toggleTheme(this.theme);
+    this.toggleTheme(this.theme.theme, this.theme.style);
   }
 
   setUserData(user: User) {
@@ -86,9 +142,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     window.location.reload();
   }
 
-  toggleTheme(theme: string) {
+  toggleTheme(theme: string, style: string) {
     this.theme = theme;
-    this.themeService.setTheme(theme);
+    this.themeService.setTheme(theme,style);
   }
 
   setPickProgress(pickTotal){

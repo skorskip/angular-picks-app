@@ -11,16 +11,29 @@ export class ThemeService {
 
   }
 
-  setTheme(theme: string) {
-    localStorage.setItem('theme', theme);
+  setTheme(theme: string, style: string) {
+    var themeObject = {
+      'theme' : theme,
+      'style' : style
+    }
+    localStorage.setItem('theme', JSON.stringify(themeObject));
     document.getElementById("theme").setAttribute("href", "assets/themes/" + theme +"/styles-" + theme + ".css");
+    if(style == 'dark') {
+      document.getElementById("angularTheme").setAttribute("href", "assets/themes/purple-green.css");
+    } else {
+      document.getElementById("angularTheme").setAttribute("href", "assets/themes/indigo-pink.css");
+    }
   }
 
   getTheme() {
     if(localStorage.getItem('theme') != null) {
-      return localStorage.getItem('theme');
+      console.log(localStorage.getItem('theme'));
+      return JSON.parse(localStorage.getItem('theme'));
     } else {
-      return 'light';
+      return {
+        theme : 'light',
+        style : 'light'
+      };
     }
   }
 }

@@ -42,7 +42,7 @@
 	padding-top: 10px;
 	padding-left: 10px;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .modal-title {
@@ -84,6 +84,11 @@
 
 .team-picks {
 	margin: 10px;
+}
+
+.close-modal-icon {
+	cursor: pointer;
+	padding: 10px;
 }
 
 @media only screen and (min-width: 650px) {

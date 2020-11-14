@@ -32,10 +32,6 @@
 	flex-direction: column;
 }
 
-.team-info:hover {
-	border: solid 1px;
-}
-
 .team-info-medium {
 	border-radius: 18px;
 	width: 95px;
@@ -111,4 +107,10 @@
 
 .disabled {
 	pointer-events: none;
+}
+
+@media only screen and (min-width: 650px) {
+	.team-info:hover {
+		border: solid 2px;
+	}
 }
