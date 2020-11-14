@@ -61,7 +61,10 @@
     <div class="card base-background tiertary" *ngIf=!editSelected>
       <div class="card-section secondary">
           <div class="info-header">
-            Settings
+            Theme
+          </div>
+          <div class ="info-subheader">
+            Default
           </div>
           <div class="info-content">
             <div class="info-field">
@@ -76,13 +79,8 @@
               </div>
             </div>
           </div>
-        </div>
-    </div>
-
-    <div class="card base-background tiertary" *ngIf=!editSelected>
-      <div class="card-section secondary">
-          <div class="info-header">
-            Theme
+          <div class ="info-subheader">
+            Team Themes
           </div>
           <div class="theme-content">
             <div *ngFor="let item of themeList">

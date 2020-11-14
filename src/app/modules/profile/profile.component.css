@@ -50,6 +50,11 @@
     align-items: center;
 }
 
+.info-subheader {
+    font-size: 1.1em;
+    padding: 15px;
+}
+
 .edit-button {
     border-radius: 4px;
 	cursor: pointer;
