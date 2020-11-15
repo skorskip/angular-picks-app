@@ -66,6 +66,11 @@ export class PicksDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.currentUserValue;
+    this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.user).subscribe((result:UserStanding[]) => {
+      if(result != null) {
+        this.userData = result[0];
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChange) {
@@ -86,12 +91,6 @@ export class PicksDashboardComponent implements OnInit {
   initWeek(season: number, seasonType: number, week: number) {
     this.games = [];
     this.teams = [];
-
-    this.userService.getStandingsByUser(this.weekObject.season, this.weekObject.seasonType, this.weekObject.number, this.user).subscribe((result:UserStanding[]) => {
-      if(result != null) {
-        this.userData = result[0];
-      }
-    });
 
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;

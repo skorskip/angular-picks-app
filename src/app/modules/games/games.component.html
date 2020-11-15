@@ -16,7 +16,8 @@
   (viewType)="setView($event)">
   <div class="slider" 
     (swipeleft)="setView('picks')" 
-    (swiperight)="setView('games')">
+    (swiperight)="setView('games')"
+    *ngIf="currentWeek.week != 0">
     <section 
       id="games" 
       [ngClass]="{
@@ -56,6 +57,9 @@
           (peekUser)="peekUserSelected($event)">
       </app-my-picks-dashboard>
     </section>
+  </div>
+  <div *ngIf="currentWeek.week == 0" class="slider">
+    <picks-loader></picks-loader>
   </div>
   <div 
     id="submit-container" 

@@ -83,3 +83,11 @@ h1.title {
 	height: 100%;
 	overflow: unset;
 }
+
+@media only screen and (min-width: 650px) {
+	.container-content {
+		margin-top: 65px;
+		touch-action: pan-y !important;
+		height: calc(100% - 65px);
+	}
+}
