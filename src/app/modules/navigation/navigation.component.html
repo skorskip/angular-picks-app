@@ -1,19 +1,12 @@
 <div class="nav-title">
     <mat-icon class="close-menu-icon" (click)="toggle()">clear</mat-icon>
-    <img class="icon" [src]="getLogo()">
+    <pick-logo [size]='"s"'></pick-logo>
 </div>
 <div class="user-header">
-  Welcome,<b> &nbsp; {{user.first_name}} {{user.last_name}}</b>
+  Welcome,<b>&nbsp;{{user.first_name}} {{user.last_name}}</b>
 </div>
 <app-user-stats></app-user-stats>
 <div class="separator tiertary"></div>
-<div class="sidenav-opt" id="my-picks" (mouseover) = "mouseover($event)"
-(mouseout)="mouseout($event)">
-  <nav>
-    <mat-icon class="sidenav-icon">touch_app</mat-icon>
-    <a (click)="toggle(); navigateToPage('picks')">Picks</a>
-  </nav>
-</div>
 <div class="sidenav-opt" id="weekly-games" (mouseover) = "mouseover($event)"
 (mouseout)="mouseout($event)" >
   <nav>
@@ -42,6 +35,11 @@
     <mat-icon class="sidenav-icon">person</mat-icon>
     <a (click)="toggle(); navigateToPage('profile'); goToMessagePage()">Profile</a>
   </nav>
+</div>
+<div class="logout-container">
+  <button mat-button class="logout-button" (click)="logout()">
+    Logout
+  </button>
 </div>
 <!-- Uncomment when new workspace ready -->
 <!-- <div class="sidenav-opt" id="shit-chat" (mouseover) = "mouseover($event)"

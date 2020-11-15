@@ -1,0 +1,279 @@
+/*<-------DARK COLORS-------->*/
+.primary {
+  color: #FB4F14 !important;
+}
+
+.secondary {
+  color: white !important;
+}
+
+.tiertary {
+  color: #0a1e58 !important;
+}
+
+.tiertary-light {
+  color: #0a173e !important;
+}
+
+.quaternary {
+  color: #0a173e !important;
+}
+
+.base {
+  color: #050f2b !important;
+}
+
+.accent {
+  color: white !important;
+}
+
+.primary-background {
+  background-color: #FB4F14 !important;
+}
+
+.secondary-background {
+  background-color: white !important;
+}
+
+.tiertary-background {
+  background-color: #0a1e58 !important;
+}
+
+.tiertary-light-background {
+  background-color: #0a173e !important;
+}
+
+.quaternary-background {
+  background-color: #0a173e !important;
+}
+
+.base-background {
+  background-color: #050f2b !important;
+}
+
+.accent-background {
+  background-color: white !important;
+}
+
+.primary-fill {
+  fill: #FB4F14;
+}
+
+.secondary-fill {
+  fill: white;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #050f2b !important;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: #FB4F14 !important;
+}
+
+.mat-progress-bar-buffer {
+  background-color: #0a1e58 !important;
+}
+
+/*-----------TEAM COLORS----------*/
+.ruby {
+  color: #FB4F14;
+}
+
+.burgundy {
+  color: #FB4F14;
+}
+
+.teal {
+  color: #FB4F14;
+}
+
+.carolina-blue {
+  color: #FB4F14;
+}
+
+.star-command-blue {
+  color: #FB4F14;
+}
+
+.air-force-blue {
+  color: #FB4F14;
+}
+
+.midnight-blue {
+  color: #FB4F14;
+}
+
+.eerie-black {
+  color: #FB4F14;
+}
+
+.jungle-green {
+  color: #FB4F14;
+}
+
+.orange {
+  color: #FB4F14;
+}
+
+.brown {
+  color: #FB4F14;
+}
+
+.amaranth-red {
+  color: #FB4F14;
+}
+
+.violet {
+  color: #FB4F14;
+}
+
+.red {
+  color: #FB4F14;
+}
+
+.blue {
+  color: #FB4F14;
+}
+
+.navy {
+  color: #FB4F14;
+}
+
+.tan {
+  color: #FB4F14;
+}
+
+.midnight-green {
+  color: #FB4F14;
+}
+
+.gold {
+  color: #FB4F14;
+}
+
+.lime-green {
+  color: #FB4F14;
+}
+
+.grey {
+  color: #FB4F14;
+}
+
+.olive {
+  color: #FB4F14;
+}
+
+.green {
+  color: #FB4F14;
+}
+
+.yellow {
+  color: #FB4F14;
+}
+
+.purple {
+  color: #FB4F14;
+}
+
+.ruby-background {
+  background-color: #FB4F14;
+}
+
+.burgundy-background {
+  background-color: #FB4F14;
+}
+
+.teal-background {
+  background-color: #FB4F14;
+}
+
+.carolina-blue-background {
+  background-color: #FB4F14;
+}
+
+.star-command-blue-background {
+  background-color: #FB4F14;
+}
+
+.air-force-blue-background {
+  background-color: #FB4F14;
+}
+
+.midnight-blue-background {
+  background-color: #FB4F14;
+}
+
+.eerie-black-background {
+  background-color: #FB4F14;
+}
+
+.jungle-green-background {
+  background-color: #FB4F14;
+}
+
+.orange-background {
+  background-color: #FB4F14;
+}
+
+.brown-background {
+  background-color: #FB4F14;
+}
+
+.amaranth-red-background {
+  background-color: #FB4F14;
+}
+
+.violet-background {
+  background-color: #FB4F14;
+}
+
+.red-background {
+  background-color: #FB4F14;
+}
+
+.blue-background {
+  background-color: #FB4F14;
+}
+
+.navy-background {
+  background-color: #FB4F14;
+}
+
+.tan-background {
+  background-color: #FB4F14;
+}
+
+.midnight-green-background {
+  background-color: #FB4F14;
+}
+
+.gold-background {
+  background-color: #FB4F14;
+}
+
+.lime-green-background {
+  background-color: #FB4F14;
+}
+
+.grey-background {
+  background-color: #FB4F14;
+}
+
+.olive-background {
+  background-color: #FB4F14;
+}
+
+.green-background {
+  background-color: #FB4F14;
+}
+
+.yellow-background {
+  background-color: #FB4F14;
+}
+
+.purple-background {
+  background-color: #FB4F14;
+}
+
+/*# sourceMappingURL=styles-broncos.css.map */

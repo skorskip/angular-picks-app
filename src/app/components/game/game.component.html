@@ -1,7 +1,7 @@
 <div class="game-card base-background tiertary" attr.id={{game.game_id}}-game-card>
   <div *ngIf="submitStatus()">
     <div class="game-card-date">
-      <div class="date-text primary">
+      <div class="date-text accent">
           {{ timeStatus() }}
       </div>
     </div>
@@ -33,6 +33,7 @@
   </div>
   <users-pick-data *ngIf="showPicksData()"
     [game]="game"
-    [picks]="userGamePicks">
+    [picks]="userGamePicks"
+    (peekUser)="peekUserSelected($event)">
   </users-pick-data>
 </div>

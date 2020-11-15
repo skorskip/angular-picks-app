@@ -15,11 +15,12 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() title: string;
   @Input() gameLocked: boolean;
   @Input() spread = null;
+  @Input() size = null;
+  @Input() highlight = false;
+  @Input() status = null;
   @Output() teamLoaded = new EventEmitter();
 
-  constructor(
-    @Inject(DOCUMENT) document,
-    private teamService: TeamService) { }
+  constructor() { }
 
   ngOnInit() {
     if(this.score == null) {
@@ -29,7 +30,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.teamLoaded.emit(true);
+      this.teamLoaded.emit(this.team);
     });
   }
 

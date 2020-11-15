@@ -53,10 +53,12 @@
 }
 .disable {
 	opacity: .3;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
 	pointer-events: none;
 }
 
-@media only screen and (min-width: 665px) {
+@media only screen and (min-width: 650px) {
 	.game-card  {
 		width: 100%;
 		margin: 10px;

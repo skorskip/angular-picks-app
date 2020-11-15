@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   picks = [] as Pick[];
   pickProgress = 0;
   theme;
+  themeList = [];
 
   constructor(
     private authService: AuthenticationService,
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private leagueService: LeagueService
   ) { 
     this.theme = this.themeService.getTheme();
+    this.themeList = this.themeService.getThemeList();
   }
 
   ngOnInit() {

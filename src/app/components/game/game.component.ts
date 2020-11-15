@@ -21,6 +21,7 @@ export class GameComponent implements OnInit {
   @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
   @Output() teamLoaded = new EventEmitter();
+  @Output() peekUser= new EventEmitter();
   
   submitDate = "";
   home_team_id = new Team();
@@ -120,6 +121,10 @@ export class GameComponent implements OnInit {
 
   picksDataClick(){
     this.showPickers = !this.showPickers;
+  }
+
+  peekUserSelected(event) {
+    this.peekUser.emit(event);
   }
 }
 

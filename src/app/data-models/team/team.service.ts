@@ -26,6 +26,7 @@ export class TeamService {
     
     if(teamInfo) {
       teamInfo.style.border = "0px";
+      teamInfo.style.boxShadow = "0px 0px 0px 0px";
     }
   }
 
@@ -37,6 +38,7 @@ export class TeamService {
     var teamInfo = document.getElementById(team.team_id + "-team-info");
     if(teamInfo) {
       teamInfo.style.border = "solid 3px";
+      teamInfo.style.boxShadow = "0px 0px 5px 0px";
     }
 
   } 

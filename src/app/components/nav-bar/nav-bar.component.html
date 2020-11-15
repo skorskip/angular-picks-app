@@ -14,12 +14,16 @@
             {{ subtitle }}
         </div>
     </div>
+    <span *ngIf="!subDisplayEditButton" ></span>
     <div class="button-group">
-        <button mat-button *ngIf="!edit && showEditButton" class="edit-button base-background primary" (click)="editPicks()">
+        <button mat-button *ngIf="!edit && subDisplayEditButton" class="edit-button base-background primary" (click)="editPicks()">
             <span class="primary">Edit</span>
         </button>
-        <button mat-button *ngIf="edit && showEditButton" class="edit-button primary-background base" (click)="submitEdits()">
-            <span class="base">Done</span>
+        <button mat-button *ngIf="edit && subDisplayEditButton" class="edit-button primary-background base" (click)="submitEdits()">
+            <span class="base" *ngIf="!loadingEdits">Done</span>
+            <div class="edit-loader" *ngIf="loadingEdits">
+                <mat-spinner [diameter]="20"></mat-spinner>
+            </div>
         </button>
     </div>
 </mat-toolbar>

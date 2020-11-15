@@ -1,0 +1,36 @@
+<div class="modal-container" id="modal-container">
+    <div class="user-modal quaternary-background secondary" id="user-modal" @slideDownAnimation *ngIf="showModal">
+        <div class="modal-header" (click)="closeClick()">
+            <mat-icon class="close-modal-icon">clear</mat-icon>
+        </div>
+        <div class="modal-title">
+            <div class="user-name">
+                <div class="init-icon primary">
+                    {{ inits }}
+                </div>
+                <div class="card-header-text">
+                    {{firstname}} {{lastname}}
+                </div>
+            </div>
+            <button *ngIf="!showLoader" mat-button class="view-picks-button base-background primary" (click)="viewPicks()">
+                <span class="primary">View Full Picks</span>
+            </button>
+        </div>
+        <div *ngIf="showLoader">
+            <picks-loader></picks-loader>
+        </div>
+        <div class=modal-content>
+            <div *ngIf="displayTeams.length === 0 && !showLoader" class="no-picks">
+                No Picks
+            </div>
+            <div *ngFor="let team of displayTeams" class="team-picks">
+                <team
+                    [team]="team"
+                    [gameLocked]="'false'"
+                    [size]="'medium'"
+                    [highlight]="'true'">
+                </team>
+            </div>
+        </div>
+    </div>
+</div>

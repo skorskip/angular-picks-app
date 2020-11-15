@@ -1,7 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Game } from 'src/app/data-models/game/game';
-import { PickService } from 'src/app/data-models/pick/pick.service';
-import { Pick } from 'src/app/data-models/pick/pick';
 import { PickData } from 'src/app/data-models/pick/pick-data';
 
 @Component({
@@ -13,20 +11,27 @@ export class UsersPickDataComponent implements OnInit {
 
   @Input() picks = [] as PickData[];
   @Input() game = new Game();
+  @Output() peekUser = new EventEmitter();
   showPickers = false;
   awayPicks = [] as PickData[];
   homePicks = [] as PickData[];
 
-  constructor(
-    private pickService: PickService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
       this.setPickArrays(this.picks);
   }
 
   picksDataClick(){
-    this.showPickers = !this.showPickers;
+    this.showPickers = true;
+  }
+
+  closePicksData() {
+    this.showPickers = false;
+  }
+
+  setUserModal(user: PickData) {
+    this.peekUser.emit(user)
   }
 
   setPickArrays(picks: PickData[]) {

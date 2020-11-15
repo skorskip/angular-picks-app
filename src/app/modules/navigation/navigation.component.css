@@ -6,7 +6,7 @@
 	justify-content: space-between;
 	cursor: pointer;
     padding: 10px;
-    width: 55%;
+    width: 85%;
 }
 
 .user-header {
@@ -14,6 +14,10 @@
     font-size: 1.3em;
     padding: 10px;
     justify-content: center;
+}
+
+.logo {
+	transform: scale(0.3);
 }
 
 .close-menu-icon {
@@ -76,4 +80,21 @@ a {
 	display: flex;
 	flex-direction: row;
 	border-bottom: 1px solid;
+}
+
+.logout-button {
+    color: rgb(228, 46, 46);
+    border-radius: 4px;
+	cursor: pointer;
+    border: solid 1px;
+    margin:20px;
+    width: 100%;
+}
+
+.logout-container {
+    display: flex;
+    flex-direction: row;
+	justify-content: center;
+	align-items: flex-end;
+	height: 100px;
 }

@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -10,14 +10,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ProfileModule } from './modules/profile/profile.module';
 import { StandingsModule} from './modules/standings/standings.module';
-import { MyPicksDashboardModule } from './modules/my-picks-dashboard/my-picks-dashboard.module';
-import { PicksDashboardModule } from './modules/picks-dashboard/picks-dashboard.module';
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { NavigationModule } from './modules/navigation/navigation.module';
-
+import { GamesModule } from './modules/games/games.module';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { WeekService } from './data-models/week/week.service';
+import * as Hammer from 'hammerjs';
+
+
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      'pan': {direction: Hammer.DIRECTION_HORIZONTAL, velocity: 0.4, threshold: 200},
+      'swipe': {direction: Hammer.DIRECTION_ALL}
+  }
+}
 
 @NgModule({
   declarations: [
@@ -25,21 +33,24 @@ import { WeekService } from './data-models/week/week.service';
   ],
   imports: [
     BrowserModule,
+    HammerModule,
     BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,
     MaterialModule,
     HttpClientModule,
     HomeModule,
-    MyPicksDashboardModule,
-    PicksDashboardModule,
     StandingsModule,
     ProfileModule,
     LoginModule,
     MessagesModule,
-    NavigationModule
+    NavigationModule,
+    GamesModule
   ],
-  providers: [WeekService],
+  providers: [WeekService, {
+    provide: HAMMER_GESTURE_CONFIG,
+    useClass: MyHammerConfig
+  }],
   bootstrap: [AppComponent]
 })
 

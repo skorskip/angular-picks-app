@@ -24,6 +24,9 @@ import { PicksDashboardComponent, SubmitPicksDialog, NoPicksDialog, PicksErrorDi
     NoPicksDialog,
     PicksErrorDialog,
     PicksOverLimitDialog
+  ],
+  exports: [
+    PicksDashboardComponent
   ]
 })
 export class PicksDashboardModule { }

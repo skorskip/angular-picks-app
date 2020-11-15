@@ -1,11 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit,Inject, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router, NavigationStart, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ThemeService } from 'src/app/services/theme/theme.service';
 import { SideNavService } from 'src/app/services/side-nav/side-nav.service';
-import { LeagueService } from 'src/app/data-models/league/league.service';
-import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
-import { slideInAnimation } from 'src/app/app-routing/app-routing-animation';
+import { slideInAnimation } from 'src/app/animations/app-routing-animation';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resize(windowSize: number) {
-    if(windowSize > 950){
+    if(windowSize > 650){
       this.largeScreen = true;
       this.opened = true;
       this.sideMenuType = "side";
@@ -75,6 +72,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(!event) {
       this.sideNavService.setSidebarVisibility(event);
     }
+  }
+
+  openMenu() {
+    this.sideNavService.setSidebarVisibility(true);
   }
 
   prepareRoute(outlet: RouterOutlet) {

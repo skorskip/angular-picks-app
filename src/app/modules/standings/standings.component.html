@@ -1,49 +1,79 @@
 <nav-bar
     [title] ="'Standings'">
 </nav-bar>
-<div id="standings-card" class="standings-in-animation base-background secondary" *ngIf="!showUserPicks">
-  <table mat-table [dataSource]="dataSource" class="rank-table">
-
-    <ng-container matColumnDef="ranking">
-        <th mat-header-cell *matHeaderCellDef> Pos. </th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.ranking}} </td>
-      </ng-container>
-  
-    <ng-container matColumnDef="user_inits">
-      <th mat-header-cell *matHeaderCellDef> Inits </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.user_inits}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="wins">
-      <th mat-header-cell *matHeaderCellDef> Wins </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.wins}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="picks">
-      <th mat-header-cell *matHeaderCellDef> Picks </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{element.picks}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="win_pct">
-      <th mat-header-cell *matHeaderCellDef> Win % </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> {{ element.win_pct | number:'1.3-3'}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="arrow">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" [ngClass]="{'base':element.user_id == currentUser.user_id}"> 
-          <mat-icon class="row-arrow-icon">
-            keyboard_arrow_right
-          </mat-icon> 
-        </td>
-      </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="base-background"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-    [ngClass]="{'primary-background':row.user_id == currentUser.user_id}" (click)="getUserPicks(row)"></tr>
-  </table>
+<div class="standings-container" *ngIf="!showUserPicks">
+  <div *ngFor="let standing of standings, let i = index">
+      <div 
+        class="standing-card primary"
+        (click)="getPeekUserPicks(standing)"
+        [ngClass]="{
+          'primary-background':standing.user_id == currentUser.user_id,
+          'quaternary-background': standing.user_id != currentUser.user_id,
+          'disable': peekUserPicks
+        }">
+        <div class="rank tiertary">
+          <div *ngIf="standing.ranking != 1"
+            [ngClass]="{
+              'base': standing.user_id == currentUser.user_id, 
+              'secondary': standing.user_id != currentUser.user_id
+            }">
+            {{standing.ranking}}
+          </div>
+          <div *ngIf="standing.ranking == 1"
+            [ngClass]="{
+              'base': standing.user_id == currentUser.user_id, 
+              'secondary': standing.user_id != currentUser.user_id
+            }">
+            <mat-icon class="leader-icon">
+              emoji_events
+            </mat-icon>
+          </div>
+        </div>
+        <div class="user"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+        }">
+          {{standing.user_inits}}
+        </div>
+        <div class="stacked-stats"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
+          {{standing.wins}}
+          <span class="stacked-stats-font">wins</span>
+        </div>
+        <div class="stacked-stats"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
+          {{standing.picks}}
+          <span class="stacked-stats-font">picks</span>
+        </div>
+        <div class="win-pct"
+          [ngClass]="{
+            'base': standing.user_id == currentUser.user_id, 
+            'secondary': standing.user_id != currentUser.user_id
+          }">
+          {{standing.win_pct | number:'1.3-3'}}
+        </div>
+      </div>
+  </div>
 </div>
-<div *ngIf="showUserPicks">
+<div *ngIf="!showUserPicks && showPeekUser">
+  <app-pick-peek-modal
+    [firstname]="peekUser.first_name"
+    [lastname]="peekUser.last_name"
+    [inits]="peekUser.user_inits"
+    [userId]="peekUser.user_id"
+    [week]="week"
+    (close)="hidePeekUserPicks($event)"
+    (viewFullPicks)="showUserPicksFromParam($event)">
+  </app-pick-peek-modal>
+</div>
+<div *ngIf="showUserPicks" (swiperight)="back()">
   <div class="pick-header base-background tiertary" (click)="back()">
       <mat-icon class="week-arrow-icon secondary">
           keyboard_arrow_left
@@ -52,6 +82,16 @@
         {{otherUser.first_name}} {{otherUser.last_name}}
       </div>
   </div>
-  <app-my-picks-dashboard
-  [otherUser]="otherUser.user_id"></app-my-picks-dashboard>
+  <weeks
+  [number] = "week.week"
+  [seasonType] = "week.seasonType"
+  [season]= "week.season"
+  [view]="'none'">
+    <app-my-picks-dashboard
+      [otherUser]="otherUser.user_id"
+      [week]="week.week"
+      [seasonType]="week.seasonType"
+      [season]="week.season">
+    </app-my-picks-dashboard>
+  </weeks>
 </div>
