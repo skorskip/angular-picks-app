@@ -20,7 +20,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    var theme = this.themeService.getTheme();
-    this.themeService.setTheme(theme.theme, theme.style);
+    this.themeService.setTheme(this.themeService.getTheme());
   }
 }

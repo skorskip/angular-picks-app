@@ -12,12 +12,21 @@
           'disable': peekUserPicks
         }">
         <div class="rank tiertary">
-          <div 
+          <div *ngIf="standing.ranking != 1"
             [ngClass]="{
               'base': standing.user_id == currentUser.user_id, 
               'secondary': standing.user_id != currentUser.user_id
             }">
             {{standing.ranking}}
+          </div>
+          <div *ngIf="standing.ranking == 1"
+            [ngClass]="{
+              'base': standing.user_id == currentUser.user_id, 
+              'secondary': standing.user_id != currentUser.user_id
+            }">
+            <mat-icon class="leader-icon">
+              emoji_events
+            </mat-icon>
           </div>
         </div>
         <div class="user"

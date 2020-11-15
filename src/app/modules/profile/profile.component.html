@@ -86,7 +86,7 @@
             <div *ngFor="let item of themeList">
               <button 
                 mat-button 
-                (click)="toggleTheme(item.value, item.style)" 
+                (click)="toggleTheme(item.value)" 
                 class="theme-button" 
                 [ngClass]="{
                   'primary-background base':theme == item.value,

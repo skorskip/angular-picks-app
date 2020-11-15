@@ -83,6 +83,12 @@
 	transform: scale(1);
 }
 
+.leader-icon {
+	display: flex;
+	align-items: center;
+	transform: scale(1.5);
+}
+
 @media only screen and (min-width: 650px) {
 	.standings-container {
         height: 100%;
