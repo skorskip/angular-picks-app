@@ -17,8 +17,13 @@ import { NavigationModule } from './modules/navigation/navigation.module';
 import { GamesModule } from './modules/games/games.module';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { WeekService } from './data-models/week/week.service';
+
+import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
+import Amplify from 'aws-amplify';
+import awsconfig from '../aws-exports';
 import * as Hammer from 'hammerjs';
 
+Amplify.configure(awsconfig);
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
