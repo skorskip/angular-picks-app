@@ -8,9 +8,10 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../user/user';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
+import { Auth } from 'aws-amplify';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
 @Injectable({ providedIn: 'root' })
@@ -18,6 +19,7 @@ export class WeekService {
     private weekUrl = environment.weekServiceURL + 'week';
     private currentWeek: BehaviorSubject<CurrentWeek>;
     private week: BehaviorSubject<Week>;
+    private authToken;
     
     constructor(
       private http: HttpClient,
@@ -25,6 +27,10 @@ export class WeekService {
       private starGate: StarGateService) { 
         this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
         this.week = new BehaviorSubject<Week>(JSON.parse(localStorage.getItem("week")));
+        Auth.currentSession().then(result => {
+          this.authToken = result.getIdToken();
+          httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.authToken});
+        });
       }
 
     /** GET game by id. Will 404 if id not found */
