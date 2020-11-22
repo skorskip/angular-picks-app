@@ -9,8 +9,8 @@ export class ThemeService {
 
   public themeList = [
     {
-      name : "Banana Split",
-      value : "banana-split",
+      name : "Steelers",
+      value : "steelers",
       style : "dark"
     },
     {
@@ -67,6 +67,11 @@ export class ThemeService {
       name : "Seahawks",
       value : "seahawks",
       style : "dark"
+    },
+    {
+      name : "Wolverine",
+      value : "wolverine",
+      style : "dark",
     }
   ];
 
