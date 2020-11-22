@@ -1,15 +1,20 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-angularpicksapp-dev-110528-authRole",
-      "UnauthRoleArn": "arn:aws:iam::099811887654:role/amplify-angularpicksapp-dev-110528-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::099811887654:role/amplify-angularpicksapp-dev-110528-authRole",
+      "AuthRoleName": "amplify-angularpicksapp-dev-204947-authRole",
+      "UnauthRoleArn": "arn:aws:iam::159370411434:role/amplify-angularpicksapp-dev-204947-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::159370411434:role/amplify-angularpicksapp-dev-204947-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-angularpicksapp-dev-110528-deployment",
-      "UnauthRoleName": "amplify-angularpicksapp-dev-110528-unauthRole",
-      "StackName": "amplify-angularpicksapp-dev-110528",
-      "StackId": "arn:aws:cloudformation:us-east-2:099811887654:stack/amplify-angularpicksapp-dev-110528/6204e1e0-2c13-11eb-bb0e-06f1edcd3eb8",
-      "AmplifyAppId": "d18830vz0tvf9b"
+      "DeploymentBucketName": "amplify-angularpicksapp-dev-204947-deployment",
+      "UnauthRoleName": "amplify-angularpicksapp-dev-204947-unauthRole",
+      "StackName": "amplify-angularpicksapp-dev-204947",
+      "StackId": "arn:aws:cloudformation:us-east-2:159370411434:stack/amplify-angularpicksapp-dev-204947/02f03db0-2c65-11eb-8858-0acdb02a9e76",
+      "AmplifyAppId": "d1r9mqqmmlrs4g"
+    },
+    "categories": {
+      "auth": {
+        "angularpicksappfeed7b60": {}
+      }
     }
   }
 }

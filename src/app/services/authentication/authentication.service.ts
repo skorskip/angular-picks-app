@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 import { User } from '../../data-models/user/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Auth } from 'aws-amplify';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,22 +30,32 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(user: User): Observable<User[]> {
+    login(user: User): Observable<any> {
+        return from(Auth.signIn(user.user_name, user.password)).pipe(map(signInUser => {
+            if(signInUser?.username) {
+                return signInUser;
+            } else {
+                this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
+                return null;
+            }
+        }));
+    }
+
+    getUserInfo(user: User): Observable<User[]> {
         const url = `${this.usersUrl}/login`;
         return this.http.post<User[]>(url, user, httpOptions)
             .pipe(map(users => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
                 if(users.length > 0){
                     if(users[0].status === "active") {
                         localStorage.setItem('currentUser', JSON.stringify(users[0]));
                         this.currentUserSubject.next(users[0]);
                         return users;
-                      } else {
-                        this.snackBar.open('Your account has been de-activated :(','', {duration:3000});
+                    } else {
+                        this.snackBar.open('Your account has been de-activated :(','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                         return users;
-                      }
+                    }
                 } else {
-                    this.snackBar.open('Wrong username or password','', {duration:3000});
+                    this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                 }
             }));
     }

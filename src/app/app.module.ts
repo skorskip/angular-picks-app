@@ -50,7 +50,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     LoginModule,
     MessagesModule,
     NavigationModule,
-    GamesModule
+    GamesModule,
+    AmplifyUIAngularModule
   ],
   providers: [WeekService, {
     provide: HAMMER_GESTURE_CONFIG,

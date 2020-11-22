@@ -7,7 +7,7 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": "dist/angular-picks-app",
-      "BuildCommand": "npm start",
+      "BuildCommand": "npm build",
       "StartCommand": "npm start"
     }
   },
