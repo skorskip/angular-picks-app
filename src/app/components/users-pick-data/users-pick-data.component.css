@@ -35,7 +35,9 @@
 .user-item {
 	padding: 5px;
 	font-size: 1.2em;
-	text-decoration: underline;
+	border-radius: 8px;
+	border: 1px solid;
+	margin: 5px;
 }
 
 .show-less-button {

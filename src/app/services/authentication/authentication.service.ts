@@ -33,7 +33,14 @@ export class AuthenticationService {
     login(user: User): Observable<any> {
         return from(Auth.signIn(user.user_name, user.password)).pipe(map(signInUser => {
             if(signInUser?.username) {
-                return signInUser;
+                if(signInUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+                    const { requiredAttrributes } = signInUser.challengeParam;
+                    Auth.completeNewPassword(signInUser, user.password, requiredAttrributes).then(signInNewUser => {
+                        return signInUser;
+                    })
+                } else {
+                    return signInUser;
+                }
             } else {
                 this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                 return null;

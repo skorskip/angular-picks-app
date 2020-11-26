@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
     user.password = password;
     
     this.authService.login(user).subscribe((loginUser) => {
-      console.log(loginUser);
       if(loginUser != null) {
         this.authService.getUserInfo(user).subscribe((users) => {
           if(users.length != 0) {

@@ -10,9 +10,7 @@ import { User } from '../user/user';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-  };
+let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
 
 @Injectable({ providedIn: 'root' })
 export class WeekService {
@@ -28,8 +26,7 @@ export class WeekService {
         this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
         this.week = new BehaviorSubject<Week>(JSON.parse(localStorage.getItem("week")));
         Auth.currentSession().then(result => {
-          this.authToken = result.getIdToken();
-          httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.authToken});
+          headers = headers.set('Authorization', result.getIdToken().getJwtToken());
         });
       }
 
@@ -37,7 +34,7 @@ export class WeekService {
     getWeek(season: number, seasonType: number, week: number, user: User): Observable<Week> {
       const url = `${this.weekUrl}?season=${season}&seasonType=${seasonType}&week=${week}`;
       if (this.starGate.allowWeek("week", season, week)) {
-        return this.http.post(url, user, httpOptions).pipe(
+        return this.http.post(url, user, {'headers' : headers}).pipe(
           tap((weekResponse: Week) => {
             console.log(`fetched week week=${week} season=${season}`);
             this.setWeek(season, week, weekResponse);
@@ -47,13 +44,12 @@ export class WeekService {
       } else {
         return this.week.asObservable();
       }
-
     }
 
     getCurrentWeek(): Observable<CurrentWeek> {
       const url = `${this.weekUrl}/current`;
       if(this.starGate.allow("currentWeek")) {
-        return this.http.get<CurrentWeek>(url).pipe(
+        return this.http.get<CurrentWeek>(url, {'headers' : headers}).pipe(
           tap((currentWeek: CurrentWeek) => {
             console.log(`fetched current week`);
             currentWeek.date = new Date();
