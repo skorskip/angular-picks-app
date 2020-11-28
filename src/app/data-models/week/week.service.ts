@@ -25,9 +25,7 @@ export class WeekService {
       private starGate: StarGateService) { 
         this.currentWeek = new BehaviorSubject<CurrentWeek>(JSON.parse(localStorage.getItem("currentWeek")));
         this.week = new BehaviorSubject<Week>(JSON.parse(localStorage.getItem("week")));
-        Auth.currentSession().then(result => {
-          headers = headers.set('Authorization', result.getIdToken().getJwtToken());
-        });
+        headers = headers.set('Authorization', localStorage.getItem("token"));
       }
 
     /** GET game by id. Will 404 if id not found */
@@ -81,7 +79,7 @@ export class WeekService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.message,'', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
+      this.snackBar.open('There was failure, please try again later.','', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

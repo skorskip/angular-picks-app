@@ -6,11 +6,9 @@ import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Announcements } from './announcements';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
+import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
+let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +28,7 @@ export class AnnouncementsService {
       });
 
       this.announcements = new BehaviorSubject<Announcements>(JSON.parse(localStorage.getItem("announcements")));
+      headers = headers.set('Authorization', localStorage.getItem("token"));
     }
 
   getAnnoucements(): Observable<Announcements> {
@@ -39,7 +38,7 @@ export class AnnouncementsService {
       var request = {} as any;
       request.lastCheckDate = this.getAnnouncementCheck();
   
-      return this.http.post(url, request, httpOptions).pipe(
+      return this.http.post(url, request, {'headers' : headers}).pipe(
         tap((announcements: Announcements) => {
           console.log(`fetched announcements`);
           announcements.date = new Date();
@@ -82,7 +81,7 @@ export class AnnouncementsService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.message,'', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
+      this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

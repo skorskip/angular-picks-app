@@ -36,10 +36,16 @@ export class AuthenticationService {
                 if(signInUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
                     const { requiredAttrributes } = signInUser.challengeParam;
                     Auth.completeNewPassword(signInUser, user.password, requiredAttrributes).then(signInNewUser => {
-                        return signInUser;
+                        Auth.currentSession().then(result => {
+                            localStorage.setItem("token", result.getIdToken().getJwtToken());
+                            return signInUser;
+                          });
                     })
                 } else {
-                    return signInUser;
+                    Auth.currentSession().then(result => {
+                        localStorage.setItem("token", result.getIdToken().getJwtToken());
+                        return signInUser;
+                    });
                 }
             } else {
                 this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});

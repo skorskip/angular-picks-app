@@ -9,10 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { Standings } from './standings';
+import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +36,12 @@ export class UserService {
       } else {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
+      headers = headers.set('Authorization', localStorage.getItem("token"));
     }
 
   register(user: User): Observable<boolean> {
     let url = `${this.usersUrl}/register`;
-    return this.http.post(url, user, httpOptions).pipe(
+    return this.http.post(url, user, {'headers' : headers}).pipe(
       map((response) => {
         return response == 'SUCCESS';
       }),
@@ -51,7 +51,7 @@ export class UserService {
 
   update(user: User): Observable<boolean> {
     let url = `${this.usersUrl}/${user.user_id}`;
-    return this.http.put(url, user, httpOptions).pipe(
+    return this.http.put(url, user, {'headers' : headers}).pipe(
       map((response) => {
         return response == 'SUCCESS';
       }),
@@ -91,7 +91,7 @@ export class UserService {
   getStandingsByUser(season: number, seasonType: number, week: number, user: User):Observable<UserStanding[]> {
     let url = `${this.usersUrl}/standings?season=${season}&seasonType=${seasonType}&week=${week}`;
     if(this.starGate.allow('userStandings') && user != null && season != 0){
-      return this.http.post(url, user, httpOptions).pipe(
+      return this.http.post(url, user, {'headers' : headers}).pipe(
         tap((userStanding: UserStanding[])=> {
           console.log(`get individual user standings`);
           var object = new Standings();
@@ -121,7 +121,7 @@ export class UserService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open(error.message,'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
+      this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 

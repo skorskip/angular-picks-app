@@ -11,10 +11,9 @@ import { WeekPicks } from './week-picks';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { WeekService } from '../../data-models/week/week.service';
 import { Game } from '../game/game';
+import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
 
 @Injectable({ providedIn: 'root' })
 export class PickService {
@@ -31,11 +30,12 @@ export class PickService {
           this.picks = new BehaviorSubject<WeekPicks>(JSON.parse(localStorage.getItem('picks')));
           this.picksByGame = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('picksByGame')));
           this.stagedPicks = new BehaviorSubject<StagedPicks>(JSON.parse(localStorage.getItem('stagedPicks')));
+          headers = headers.set('Authorization', localStorage.getItem("token"));
       }
 
     addPicks(picks: Pick[]): Observable<boolean> {
         const url = `${this.picksUrl}/create`;
-        return this.http.post(url, picks, httpOptions).pipe(
+        return this.http.post(url, picks, {'headers' : headers}).pipe(
             map((response) => {
                 console.log(`added picks`);
                 localStorage.setItem('picksUpdatedDate', new Date().toString());
@@ -47,7 +47,7 @@ export class PickService {
 
     deletePick(pickId: number): Observable<boolean> {
         const url = `${this.picksUrl}/${pickId}`;
-        return this.http.delete(url, httpOptions).pipe(
+        return this.http.delete(url, {'headers' : headers}).pipe(
             map((response) => {
                 console.log(`delete pick`);
                 localStorage.setItem('picksUpdatedDate', new Date().toString());
@@ -59,7 +59,7 @@ export class PickService {
     
     updatePick(pickUpdate:Pick): Observable<boolean> {
         const url = `${this.picksUrl}/${pickUpdate.pick_id}`;
-        return this.http.put(url, pickUpdate, httpOptions).pipe(
+        return this.http.put(url, pickUpdate, {'headers' : headers}).pipe(
             map((response) => {
                 console.log(`updated picks`);
                 localStorage.setItem('picksUpdatedDate', new Date().toString());
@@ -72,7 +72,7 @@ export class PickService {
     getWeekPicksByGame(season:number, seasonType: number, week:number): Observable<any> {
         const url = `${this.picksUrl}/games?season=${season}&seasonType=${seasonType}&week=${week}`;
         if(this.starGate.allowWeek('picksByGame', season, week)) {
-            return this.http.get(url, httpOptions).pipe(
+            return this.http.get(url, {'headers' : headers}).pipe(
                 tap((picks: any) => {
                     console.log(`get picks by game`);
                     this.setPicksByGame(season, week, picks);
@@ -87,7 +87,7 @@ export class PickService {
     getPicksByWeek(user: User, season:number, seasonType: number, week:number): Observable<WeekPicks> {
         const url = `${this.picksUrl}/week?season=${season}&seasonType=${seasonType}&week=${week}`;
         if(this.starGate.allowWeek('picks', season, week)) {
-            return this.http.post(url, user, httpOptions).pipe(
+            return this.http.post(url, user, {'headers' : headers}).pipe(
                 tap((picks: WeekPicks)  => {
                     console.log(`get picks`);
                     this.setPicks(season, week, picks);
@@ -122,7 +122,7 @@ export class PickService {
 
     getUsersPicksByWeek(userId:number, season:number, seasonType: number, week:number): Observable<WeekPicks> {
         const url = `${this.picksUrl}/others?user=${userId}&season=${season}&seasonType=${seasonType}&week=${week}`;
-        return this.http.get(url, httpOptions).pipe(
+        return this.http.get(url, {'headers' : headers}).pipe(
             tap((picks: WeekPicks)  => console.log(`get picks`)),
             catchError(this.handleError<WeekPicks>(`get picks`))
         );
@@ -223,7 +223,7 @@ export class PickService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-        this.snackBar.open(error.message,'', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
+        this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

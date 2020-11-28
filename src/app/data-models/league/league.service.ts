@@ -6,10 +6,9 @@ import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { League } from './league';
+import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +23,13 @@ export class LeagueService {
     private starGate: StarGateService
     ) { 
       this.settings = new BehaviorSubject<League>(JSON.parse(localStorage.getItem("settings")));
+      headers = headers.set('Authorization', localStorage.getItem("token"));
     }
 
     getLeagueSettings(): Observable<League> {
       const url = `${this.leagueUrl}/settings`;
       if(this.starGate.allow('settings')) {
-        return this.http.get(url, httpOptions).pipe(
+        return this.http.get(url, {'headers' : headers}).pipe(
             tap((league: League) => {
               console.log(`get settings`);
               league.date = new Date();
@@ -54,7 +54,7 @@ export class LeagueService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-        this.snackBar.open(error.message,'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
+        this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
