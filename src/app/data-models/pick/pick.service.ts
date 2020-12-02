@@ -13,7 +13,7 @@ import { WeekService } from '../../data-models/week/week.service';
 import { Game } from '../game/game';
 import { Auth } from 'aws-amplify';
 
-let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
+let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
 
 @Injectable({ providedIn: 'root' })
 export class PickService {

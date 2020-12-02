@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { catchError, tap } from 'rxjs/operators';
 
 import { User } from '../../data-models/user/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Auth } from 'aws-amplify';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
   
-
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
@@ -35,15 +33,18 @@ export class AuthenticationService {
             if(signInUser?.username) {
                 if(signInUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
                     const { requiredAttrributes } = signInUser.challengeParam;
-                    Auth.completeNewPassword(signInUser, user.password, requiredAttrributes).then(signInNewUser => {
-                        Auth.currentSession().then(result => {
+                    return Auth.completeNewPassword(signInUser, user.password, requiredAttrributes).then(signInNewUser => {
+                        return Auth.currentSession().then(result => {
                             localStorage.setItem("token", result.getIdToken().getJwtToken());
+                            headers = headers.set('Authorization', result.getIdToken().getJwtToken());
                             return signInUser;
                           });
                     })
                 } else {
-                    Auth.currentSession().then(result => {
+                    return Auth.currentSession().then(result => {
                         localStorage.setItem("token", result.getIdToken().getJwtToken());
+                        headers = headers.set('Authorization', result.getIdToken().getJwtToken());
+                        console.log("AWS::", headers);
                         return signInUser;
                     });
                 }
@@ -56,8 +57,9 @@ export class AuthenticationService {
 
     getUserInfo(user: User): Observable<User[]> {
         const url = `${this.usersUrl}/login`;
-        return this.http.post<User[]>(url, user, httpOptions)
-            .pipe(map(users => {
+        console.log("HEADERS::", headers);
+        return this.http.post<User[]>(url, user, {'headers' : headers})
+            .pipe(tap(users => {
                 if(users.length > 0){
                     if(users[0].status === "active") {
                         localStorage.setItem('currentUser', JSON.stringify(users[0]));
@@ -70,7 +72,7 @@ export class AuthenticationService {
                 } else {
                     this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                 }
-            }));
+            }), catchError(this.handleError<User[]>(`fetched current week`)));
     }
 
     logout() {
@@ -78,4 +80,26 @@ export class AuthenticationService {
         localStorage.clear();
         this.currentUserSubject.next(null);
     }
+
+    
+  // /**
+  //  * Handle Http operation that failed.
+  //  * Let the app continue.
+  //  * @param operation - name of the operation that failed
+  //  * @param result - optional value to return as the observable result
+  //  */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      this.snackBar.open('There was failure, please try again later.','', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 }

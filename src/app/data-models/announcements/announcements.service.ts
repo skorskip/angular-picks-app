@@ -8,7 +8,7 @@ import { Announcements } from './announcements';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { Auth } from 'aws-amplify';
 
-let headers = new HttpHeaders({ 'Content-Type' : 'applicatio/json' });
+let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
 
 @Injectable({
   providedIn: 'root'

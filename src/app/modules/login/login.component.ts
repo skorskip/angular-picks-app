@@ -59,18 +59,20 @@ export class LoginComponent implements OnInit {
     
     this.authService.login(user).subscribe((loginUser) => {
       if(loginUser != null) {
-        this.authService.getUserInfo(user).subscribe((users) => {
-          if(users.length != 0) {
-            if(users[0].status === "active") {
-              this.loginSucces = true;
-              this.router.navigate(['/games']);
-              setTimeout(() => {
-                window.location.reload();
-              });
+        setTimeout(() => {
+          this.authService.getUserInfo(user).subscribe((users) => {
+            if(users.length != 0) {
+              if(users[0].status === "active") {
+                this.loginSucces = true;
+                this.router.navigate(['/games']);
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              }
+            } else {
+              this.forgotten = true;
             }
-          } else {
-            this.forgotten = true;
-          }
+          });
         });
       }
     });
