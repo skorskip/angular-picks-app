@@ -24,6 +24,7 @@ export class StandingsComponent implements OnInit {
   showPeekUser = false;
   week = new CurrentWeek();
   subscription: Subscription;
+  loader = true;
 
   constructor(
     private router: Router,
@@ -46,6 +47,7 @@ export class StandingsComponent implements OnInit {
       this.week = week;
       this.userService.getStandings(week.season, week.seasonType).subscribe((users: UserStanding[]) => {
         this.standings= users;
+        this.loader = false;
         this.showUserPicksFromParam(userParam);
       });
     });

@@ -73,7 +73,7 @@ export class UserService {
   getStandings(season: number, seasonType: number):Observable<UserStanding[]> {
     let url = `${this.usersUrl}/standings?season=${season}&seasonType=${seasonType}`;
     if(this.starGate.allow('standings')) {
-      return this.http.get<UserStanding[]>(url).pipe(
+      return this.http.get<UserStanding[]>(url, {'headers' : headers}).pipe(
         tap((standings: UserStanding[]) => {
           console.log(`get user standings`);
           var object = new Standings();

@@ -1,6 +1,9 @@
 <nav-bar
     [title] ="'Standings'">
 </nav-bar>
+<div *ngIf = "standings.length == 0 && loader">
+  <picks-loader></picks-loader>
+</div>
 <div class="standings-container" *ngIf="!showUserPicks">
   <div *ngFor="let standing of standings, let i = index">
       <div 
