@@ -19,13 +19,13 @@
     </div>
     <div class="picks-data-users" *ngIf="showPickers">
         <div class="users-column">
-            <div class="user-item" *ngFor="let pick of awayPicks" (click)="setUserModal(pick)">
-                {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
+            <div class="user-item tiertary" *ngFor="let pick of awayPicks" (click)="setUserModal(pick)">
+                <div class="accent">{{ pick.first_name }} {{pick.last_name.substring(0,1)}}.</div>
             </div>
         </div>
         <div class="users-column">
-            <div class="user-item" *ngFor="let pick of homePicks" (click)="setUserModal(pick)">
-                {{ pick.first_name }} {{pick.last_name.substring(0,1)}}.
+            <div class="user-item tiertary" *ngFor="let pick of homePicks" (click)="setUserModal(pick)">
+                <div class="accent">{{ pick.first_name }} {{pick.last_name.substring(0,1)}}.</div>
             </div>
         </div>
     </div>
