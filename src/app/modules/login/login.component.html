@@ -24,7 +24,7 @@
   <button mat-button (click)="attemptLogin(username.value, password.value)" class="login-button primary-background base noSelect">
       <span *ngIf="!submitLogin">Login</span>
       <div class="submit-loader" *ngIf="submitLogin">
-        <mat-spinner [diameter]="30"></mat-spinner>
+        <mat-spinner [diameter]="25"></mat-spinner>
       </div>
   </button>
 </div>
