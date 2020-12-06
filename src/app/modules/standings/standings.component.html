@@ -1,8 +1,20 @@
 <nav-bar
     [title] ="'Standings'">
 </nav-bar>
+<div *ngIf = "standings.length == 0 && loader">
+  <picks-loader></picks-loader>
+</div>
 <div class="standings-container" *ngIf="!showUserPicks">
-  <div *ngFor="let standing of standings, let i = index">
+  <div class="input-container tiertary">
+    <mat-icon class="leader-icon">
+      search
+    </mat-icon>
+    <input class="input-search secondary base-background" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Search player" />
+    <mat-icon class="leader-icon secondary" (click)="clearSearch()">
+      clear
+    </mat-icon>
+  </div>
+  <div *ngFor="let standing of standings | filter:searchText">
       <div 
         class="standing-card primary"
         (click)="getPeekUserPicks(standing)"

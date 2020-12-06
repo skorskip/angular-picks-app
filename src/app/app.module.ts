@@ -17,6 +17,7 @@ import { NavigationModule } from './modules/navigation/navigation.module';
 import { GamesModule } from './modules/games/games.module';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { WeekService } from './data-models/week/week.service';
+
 import * as Hammer from 'hammerjs';
 
 

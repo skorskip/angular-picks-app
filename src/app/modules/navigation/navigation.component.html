@@ -1,5 +1,5 @@
-<div class="nav-title">
-    <mat-icon class="close-menu-icon" (click)="toggle()">clear</mat-icon>
+<div class="nav-title" (window:resize)="onResize($event)">
+    <mat-icon *ngIf="!largeScreen" class="close-menu-icon" (click)="toggle()">clear</mat-icon>
     <pick-logo [size]='"s"'></pick-logo>
 </div>
 <div class="user-header">

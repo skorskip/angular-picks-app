@@ -6,7 +6,6 @@ import { Week } from '../../data-models/week/week';
 import { WeekService } from '../../data-models/week/week.service';
 import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
-import { User } from 'src/app/data-models/user/user';
 import { Team } from 'src/app/data-models/team/team';
 import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -29,7 +28,6 @@ export class PicksDashboardComponent implements OnInit {
   stagedPicks = [] as Pick[];
   weekObject = new Week();
   weeksView = false;
-  user = new User();
   teams = [] as Team[];
   loader = false;
   userData = new UserStanding();
@@ -65,8 +63,7 @@ export class PicksDashboardComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
-    this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.user).subscribe((result:UserStanding[]) => {
+    this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.authService.currentUserValue).subscribe((result:UserStanding[]) => {
       if(result != null) {
         this.userData = result[0];
       }
@@ -94,8 +91,7 @@ export class PicksDashboardComponent implements OnInit {
 
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;
-
-      this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
+      this.weekService.getWeek(season, seasonType, week, this.authService.currentUserValue).subscribe(week => {
         if(week != null) {
           this.weekObject = week;
           this.teams = week.teams;
@@ -128,7 +124,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   stageSelectedPick(selectedPick: Pick){
-    selectedPick.user_id = this.user.user_id
+    selectedPick.user_id = this.authService.currentUserValue.user_id
     this.stagedPicks = this.pickService.addStagedPick(selectedPick);
     this.getTitle();
   }
@@ -219,7 +215,7 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   userCanSelect(): boolean {
-    return this.user.type !== 'participant';
+    return this.authService.currentUserValue.type !== 'participant';
   }
 
   peekUserSelected(event){

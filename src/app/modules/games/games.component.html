@@ -62,6 +62,7 @@
     <picks-loader></picks-loader>
   </div>
   <div 
+    *ngIf="view === 'games'"
     id="submit-container" 
     [ngClass]="{
       'hide-submit-button' : displaySubmitButton === false, 

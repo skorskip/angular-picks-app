@@ -51,11 +51,13 @@ a {
     display: flex;
     align-items: center;
 	margin-left: 40px;
-	margin-top:20px;
+	margin-top: 15px;
 	cursor: pointer;
 	margin-left: 0px;
 	padding-left: 20px;
 	border-radius: 4px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 .sidenav-icon {

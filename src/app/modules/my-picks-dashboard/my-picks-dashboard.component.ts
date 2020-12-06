@@ -5,7 +5,6 @@ import { Week } from '../../data-models/week/week';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
-import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +28,6 @@ export class MyPicksDashboardComponent implements OnInit {
   notSelectablePicks = true;
   weeksView = false;
   pickSuccess = null;
-  user = new User();
   stagedEdits = [] as Pick[];
   stagedDeletes = [] as Pick[];
   showEditButton = true;
@@ -61,9 +59,7 @@ export class MyPicksDashboardComponent implements OnInit {
     private authService:AuthenticationService) {}
 
   ngOnInit() {
-    if(this.otherUser == null) {
-      this.user= this.authService.currentUserValue;
-    } else {
+    if(this.otherUser != null) {
       this.toggleType = "none";
     }
   }
@@ -127,7 +123,7 @@ export class MyPicksDashboardComponent implements OnInit {
       if(reset) {
         this.populateGamesTeams(this.snapshot);
       } else {
-        this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
+        this.pickService.getPicksByWeek(this.authService.currentUserValue, season, seasonType, week).subscribe( picks => {  
           if(picks != null){
             this.populateGamesTeams(picks);
           } else {
