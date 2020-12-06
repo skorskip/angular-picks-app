@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   forgotten = false;
   registerSelected = false
+  submitLogin = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   attemptLogin(username, password) {
+    this.submitLogin = true;
     var user = new User();
     user.user_name = username;
     user.password = password;

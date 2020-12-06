@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   messageCount = 0;
   announcements = new Announcements();
   user = new User();
+  largeScreen = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -63,8 +64,9 @@ export class NavigationComponent implements OnInit {
       this.highlight("messages");
     }
   }
-
+  
   ngAfterViewInit() {
+    this.resize(document.getElementById("side-nav-container").scrollWidth);
     this.highlightByRoute(this.router.url);
     var element = document.getElementById(this.selected);
 
@@ -137,17 +139,20 @@ export class NavigationComponent implements OnInit {
   //   });
   // }
 
-  getLogo(): string {
-    var theme = this.themeService.getTheme();
-    if(theme == 'light'){
-      return "../../../assets/icons/pickem_logo_soft.svg";
-    } else {
-      return "../../../assets/icons/pickem_logo_dark.svg"
-    }
-  }
-
   logout() {
     this.authService.logout();
     window.location.reload();
+  }
+
+  resize(size: number) {
+    if(size > 650) {
+      this.largeScreen = true;
+    } else {
+      this.largeScreen = false;
+    }
+  }
+
+  onResize(event){
+    this.resize(event.target.innerWidth);
   }
 }
