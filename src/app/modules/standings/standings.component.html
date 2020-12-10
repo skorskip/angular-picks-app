@@ -1,9 +1,6 @@
 <nav-bar
     [title] ="'Standings'">
 </nav-bar>
-<div *ngIf = "standings.length == 0 && loader">
-  <picks-loader></picks-loader>
-</div>
 <div class="standings-container" *ngIf="!showUserPicks">
   <div class="input-container tiertary">
     <mat-icon class="leader-icon">
@@ -13,6 +10,9 @@
     <mat-icon class="leader-icon secondary" (click)="clearSearch()">
       clear
     </mat-icon>
+  </div>
+  <div *ngIf = "standings.length == 0 && loader">
+    <picks-loader></picks-loader>
   </div>
   <div *ngFor="let standing of standings | filter:searchText">
       <div 
@@ -85,7 +85,7 @@
     (viewFullPicks)="showUserPicksFromParam($event)">
   </app-pick-peek-modal>
 </div>
-<div *ngIf="showUserPicks" (swiperight)="back()">
+<div *ngIf="showUserPicks" (swiperight)="back()" class="other-picks-container">
   <div class="pick-header base-background tiertary" (click)="back()">
       <mat-icon class="week-arrow-icon secondary">
           keyboard_arrow_left
