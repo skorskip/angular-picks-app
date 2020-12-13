@@ -153,7 +153,7 @@ export class StarGateService {
       return true;
     } else {
       var limit = JSON.parse(localStorage.getItem(key));
-      var setDate = limit.date;
+      var setDate = new Date(limit.date);
       return this.isItNewWeek(setDate, new Date());
     }
   }

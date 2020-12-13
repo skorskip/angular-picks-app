@@ -40,7 +40,7 @@ export class UserService {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
 
-      this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userStandings')));
+      this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
     }
 
   register(user: User): Observable<boolean> {
@@ -118,7 +118,7 @@ export class UserService {
   }
 
   getUserPickLimit(season: number, seasonType: number, userId: number): Observable<UserPickLimit> {
-    let url = `${this.usersUrl}/userPicksLimit?season=${season}$seasonType=${seasonType}&userId=${userId}`;
+    let url = `${this.usersUrl}/userPicksLimit?season=${season}&seasonType=${seasonType}&userId=${userId}`;
     if(this.starGate.allow('userPickLimit') && season != 0){
       return this.http.get(url, httpOptions).pipe(
         map((result: UserPickLimit[])=> {
