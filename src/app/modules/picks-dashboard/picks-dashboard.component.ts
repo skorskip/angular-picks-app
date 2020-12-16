@@ -11,10 +11,8 @@ import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
-import { LeagueService } from 'src/app/data-models/league/league.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
-import { PickData } from 'src/app/data-models/pick/pick-data';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -55,12 +53,7 @@ export class PicksDashboardComponent implements OnInit {
     private authService:AuthenticationService,
     private teamService:TeamService,
     private userService: UserService,
-    private dateFormatter: DateFormatterService,
-    private leagueService: LeagueService) { 
-      this.leagueService.getLeagueSettings().subscribe(settings => {
-        this.maxTotalPicks = settings.maxTotalPicks;
-      });
-    }
+    private dateFormatter: DateFormatterService) {}
 
   ngOnInit() {
     this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.authService.currentUserValue).subscribe((result:UserStanding[]) => {
@@ -82,6 +75,15 @@ export class PicksDashboardComponent implements OnInit {
 
     if(changes["subPicksUpdated"]?.currentValue) {
       this.initWeek(this.season, this.seasonType, this.week);
+    }
+
+    if(changes["currentWeek"]?.currentValue) {
+      this.userService.getUserPickLimit(this.currentWeek.season, 
+        this.currentWeek.seasonType, 
+        this.authService.currentUserValue.user_id).subscribe((limit) => {
+          this.maxTotalPicks = limit.max_picks;
+          console.log("MAX PICKS::", this.maxTotalPicks);
+        });
     }
   }
 
