@@ -11,6 +11,7 @@ export class UsersPickDataComponent implements OnInit {
 
   @Input() picks = [] as PickData[];
   @Input() game = new Game();
+  @Input() selectable = true;
   @Output() peekUser = new EventEmitter();
   showPickers = false;
   awayPicks = [] as PickData[];

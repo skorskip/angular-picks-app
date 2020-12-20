@@ -252,7 +252,7 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject)=>{
         this.pickService.updatePick(this.stagedEdits[i]).subscribe((success) => {
           if(!success){reject();}
-          resolve();
+          resolve(null);
         });
       }));
     }
@@ -265,7 +265,7 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject) => {
         this.pickService.deletePick(this.stagedDeletes[i].pick_id).subscribe((success) => {
           if(!success){reject();}
-          resolve();
+          resolve(null);
         });
       }));
     }

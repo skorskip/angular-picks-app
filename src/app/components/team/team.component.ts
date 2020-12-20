@@ -18,7 +18,10 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() size = null;
   @Input() highlight = false;
   @Input() status = null;
+  @Input() selectable = true;
   @Output() teamLoaded = new EventEmitter();
+
+  tabable = 1;
 
   constructor() { }
 
@@ -26,6 +29,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
     if(this.score == null) {
       this.score = 0;
     }
+    this.tabable = this.selectable ? 1 : -1;
   }
 
   ngAfterViewInit() {

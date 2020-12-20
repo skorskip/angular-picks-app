@@ -13,6 +13,7 @@
       [score] = "game.away_team_score"
       [title] = "'AWAY'"
       [gameLocked] = "gameLocked()"
+      [selectable] = "!notSelectablePicks"
       (click)="selectTeam(away_team_id)">
     </team>
     <pick-status
@@ -27,6 +28,7 @@
       [spread] = "game.home_spread"
       [title] = "'HOME'"
       [gameLocked] = "gameLocked()"
+      [selectable] = "!notSelectablePicks"
       (click)="selectTeam(home_team_id)"
       (teamLoaded)="teamLoadedEvent($event)">
     </team>
@@ -34,6 +36,7 @@
   <users-pick-data *ngIf="showPicksData()"
     [game]="game"
     [picks]="userGamePicks"
+    [selectable]="!notSelectablePicks"
     (peekUser)="peekUserSelected($event)">
   </users-pick-data>
 </div>

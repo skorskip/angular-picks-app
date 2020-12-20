@@ -1,5 +1,5 @@
 <div class="picks-data-container accent">
-    <button mat-button class="picks-data-overview" *ngIf="!showPickers" (click)="picksDataClick()">
+    <button mat-button [disabled]="!selectable" class="picks-data-overview" *ngIf="!showPickers" (click)="picksDataClick()">
         <div class="pick-data-button-group">
             <div class="pick-data" name="away">
                 <mat-icon class="pick-data-icon">
