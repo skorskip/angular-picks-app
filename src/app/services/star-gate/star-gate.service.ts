@@ -23,6 +23,8 @@ export class StarGateService {
         return this.standingsAllow(service);
       case "userStandings":
         return this.standingsAllow(service);
+      case "userPickLimit":
+        return this.userPickLimitAllow(service);
       default:
         return true;
     }
@@ -143,6 +145,16 @@ export class StarGateService {
           return this.checkAfterIncrement(setDate, new Date());
         }
       }
+    }
+  }
+
+  userPickLimitAllow(key: string) {
+    if(localStorage.getItem(key) == null) {
+      return true;
+    } else {
+      var limit = JSON.parse(localStorage.getItem(key));
+      var setDate = new Date(limit.date);
+      return this.isItNewWeek(setDate, new Date());
     }
   }
 

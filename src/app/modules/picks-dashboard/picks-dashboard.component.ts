@@ -58,9 +58,16 @@ export class PicksDashboardComponent implements OnInit {
         this.initWeek(weekSeason.season,weekSeason.seasonType, weekSeason.week)
       });
 
-      this.leagueService.getLeagueSettings().subscribe(settings => {
-        this.maxTotalPicks = settings.maxTotalPicks;
-      });
+      // this.leagueService.getLeagueSettings().subscribe(settings => {
+      //   this.maxTotalPicks = settings.maxTotalPicks;
+      // });
+
+      this.userService.getUserPickLimit(this.currentWeek.season, 
+        this.currentWeek.seasonType, 
+        this.authService.currentUserValue.user_id).subscribe((limit) => {
+          this.maxTotalPicks = limit.max_picks;
+          console.log("MAX PICKS::", this.maxTotalPicks);
+        });
     }
 
   ngOnInit() {
