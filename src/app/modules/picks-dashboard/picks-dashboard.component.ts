@@ -15,7 +15,6 @@ import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
-import { LeagueService } from 'src/app/data-models/league/league.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
 
@@ -51,22 +50,16 @@ export class PicksDashboardComponent implements OnInit {
     private teamService:TeamService,
     private route:ActivatedRoute,
     private userService: UserService,
-    private dateFormatter: DateFormatterService,
-    private leagueService: LeagueService) { 
+    private dateFormatter: DateFormatterService) { 
       this.subscription = this.weeksService.weekSelected$.subscribe(weekSeason => {
         this.loader = true;
         this.initWeek(weekSeason.season,weekSeason.seasonType, weekSeason.week)
       });
 
-      // this.leagueService.getLeagueSettings().subscribe(settings => {
-      //   this.maxTotalPicks = settings.maxTotalPicks;
-      // });
-
       this.userService.getUserPickLimit(this.currentWeek.season, 
         this.currentWeek.seasonType, 
         this.authService.currentUserValue.user_id).subscribe((limit) => {
           this.maxTotalPicks = limit.max_picks;
-          console.log("MAX PICKS::", this.maxTotalPicks);
         });
     }
 
