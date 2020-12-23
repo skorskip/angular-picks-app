@@ -38,30 +38,6 @@
 	margin:0; 
 }
 
-.game-card-spread {
-	position: absolute;
-	float: left;
-	margin-left: 38%;
-	margin-top: -35px;
-    text-align: center;
-	border-radius: 50%;
-	padding: 5px;
-	border: solid 1px;
-}
-
-.game-card-spread-icon {
-	display: flex;
-    align-items: center;
-    justify-content: center;
-	font-size:1em; 
-	margin:0; 
-	text-align:center;
-	padding: 10px;
-	height: 25px;
-	width:25px;
-	border-radius: 50%;
-}
-
 .status-icon {
 	transform: scale(1.5);
 	margin-top: 35px;
@@ -84,29 +60,5 @@
 	.game-card  {
 		width: 100%;
 		margin: 10px;
-	}
-}
-
-@media only screen and (min-width: 950px) {
-	.game-card  {
-		width: 100%;
-		margin: 10px;
-	}
-	
-	.game-card-spread {
-		margin-left:300px;
-		margin-top: -60px;
-	}
-}
-
-@media only screen and (min-width: 1300px) {
-	.game-card  {
-		width: 100%;
-		margin: 10px;
-	}
-
-	.game-card-spread {
-		margin-left:300px;
-		margin-top: -60px;
 	}
 }

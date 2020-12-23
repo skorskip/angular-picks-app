@@ -49,7 +49,7 @@ export class StarGateService {
     } else {
       var settings = JSON.parse(localStorage.getItem(key));
       var setDate = new Date(settings.date);
-      return this.isItNewWeek(setDate, new Date());
+      return (setDate.getDay() != new Date().getDay()) && (setDate < new Date());
     }
   }
 
@@ -59,7 +59,7 @@ export class StarGateService {
     } else {
       var announcements = JSON.parse(localStorage.getItem(key));
       var setDate = new Date(announcements.date);
-      return (setDate.getDay() != new Date().getDay()) && (setDate < new Date());
+      return this.checkAfterIncrement(setDate, new Date(), 60);
     }
   }
 
@@ -84,7 +84,7 @@ export class StarGateService {
       if(updated > setDate) {
         return true;
       } else {
-        return this.checkAfterIncrement(setDate, new Date());
+        return this.checkAfterIncrement(setDate, new Date(), 15);
       }
     }
   }
@@ -109,7 +109,7 @@ export class StarGateService {
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkAfterIncrement(setDate, new Date());
+          return this.checkAfterIncrement(setDate, new Date(), 15);
         }
       }
     }
@@ -124,7 +124,7 @@ export class StarGateService {
       if(curr.season != season || curr.week != week) {
         return true;
       }
-      return this.checkAfterIncrement(new Date(picks.date), new Date());
+      return this.checkAfterIncrement(new Date(picks.date), new Date(), 15);
     }
   }
 
@@ -142,7 +142,7 @@ export class StarGateService {
         if(updated > setDate) {
           return true;
         } else {
-          return this.checkAfterIncrement(setDate, new Date());
+          return this.checkAfterIncrement(setDate, new Date(), 15);
         }
       }
     }
@@ -158,7 +158,7 @@ export class StarGateService {
     }
   }
 
-  checkAfterIncrement(date1: Date, date2: Date) {
+  checkAfterIncrement(date1: Date, date2: Date, increment: number) {
     if(date1.getDate() < date2.getDate()) {
       return true;
     } else if(date1.getHours() < date2.getHours()) {

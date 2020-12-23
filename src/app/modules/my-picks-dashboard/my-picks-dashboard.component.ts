@@ -111,7 +111,11 @@ export class MyPicksDashboardComponent implements OnInit {
         this.populateGamesTeams(this.snapshot);
       } else {
         this.pickService.getUsersPicksByWeek(this.otherUser, season, seasonType, week).subscribe( picks => {  
-          this.populateGamesTeams(picks);
+          if(picks != null){
+            this.populateGamesTeams(picks);
+          } else {
+            this.loader = false;
+          }
         });
       }
     } else {
@@ -119,7 +123,11 @@ export class MyPicksDashboardComponent implements OnInit {
         this.populateGamesTeams(this.snapshot);
       } else {
         this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
-          this.populateGamesTeams(picks);
+          if(picks != null){
+            this.populateGamesTeams(picks);
+          } else {
+            this.loader = false;
+          }
         });
       }
     }
