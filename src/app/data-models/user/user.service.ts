@@ -39,7 +39,7 @@ export class UserService {
       } else {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
-      this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
+      this.userPicksLimit = localStorage.getItem('userPickLimit') == null ? new BehaviorSubject<UserPickLimit>(null) : new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
 
     }
 
