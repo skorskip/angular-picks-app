@@ -17,6 +17,7 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
+import { UserPickLimit } from 'src/app/data-models/user/user-pick-limit';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -70,7 +71,7 @@ export class PicksDashboardComponent implements OnInit {
 
       this.userService.getUserPickLimit(this.currentWeek.season, 
         this.currentWeek.seasonType, 
-        this.authService.currentUserValue.user_id).subscribe((limit) => {
+        this.authService.currentUserValue.user_id).subscribe((limit: UserPickLimit) => {
           this.maxTotalPicks = limit.max_picks;
         });
 
