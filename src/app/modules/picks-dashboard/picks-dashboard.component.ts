@@ -82,7 +82,6 @@ export class PicksDashboardComponent implements OnInit {
         this.currentWeek.seasonType, 
         this.authService.currentUserValue.user_id).subscribe((limit) => {
           this.maxTotalPicks = limit.max_picks;
-          console.log("MAX PICKS::", this.maxTotalPicks);
         });
     }
   }

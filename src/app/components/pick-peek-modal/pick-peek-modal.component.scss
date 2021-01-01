@@ -3,7 +3,7 @@
 	position: fixed;
 	flex-direction: column;
 	bottom: 0;
-	height:70%;
+	height: 80%;
 	border-top-left-radius: 18px;
 	border-top-right-radius: 18px;
 	width: 100%;
@@ -12,19 +12,27 @@
 
 .init-icon {
     display: flex;
-    justify-content: center;
-    border: solid 2px;
+	justify-content: center;
+	align-items: center;
+    border: solid 4px;
     border-radius: 50%;
-    height: 20px;
-    width: 20px;
+    height: 60px;
+    width: 60px;
     padding: 10px;
-    font-size: 1em;
+	font-size: 2em;
+	position: absolute;
+	top: 50px;
+}
+
+.modal-init {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .card-header-text {
-	margin-top: 20px;
-	font-size:1.5em;
-    margin: 10px;
+	font-size: 1.5em;
 }
 
 .modal-container {
@@ -43,6 +51,10 @@
 	padding-left: 10px;
 	display: flex;
 	justify-content: flex-start;
+	height: 80px;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
+	margin-bottom: 45px;
 }
 
 .modal-title {
@@ -60,16 +72,13 @@
 }
 
 .modal-content {
-	padding:10px;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	flex-wrap: wrap;
+	flex-direction: column;
 	overflow: auto;
+	height: 70%;
 }
 
 .view-picks-button {
-    border:  1px solid;
     border-radius: 4px;
 	cursor: pointer;
 	margin: 10px;
@@ -83,12 +92,38 @@
 }
 
 .team-picks {
-	margin: 10px;
+	margin: 15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .close-modal-icon {
+	display: flex;
+	justify-content: start;
 	cursor: pointer;
 	padding: 10px;
+	width: calc(50% - 85px);
+}
+
+.week-title {
+	padding: 10px;
+}
+
+.separator {
+	display: flex;
+	flex-direction: row;
+	border-bottom: 1px solid;
+}
+
+.teams-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.game-icon {
+	font-size: 2.5em;
 }
 
 @media only screen and (min-width: 650px) {
