@@ -5,6 +5,7 @@ import { WeeksService } from 'src/app/components/weeks/weeks.service';
 import { PickData } from 'src/app/data-models/pick/pick-data';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { WeekService } from 'src/app/data-models/week/week.service';
+import { PickModalService } from 'src/app/services/pick-modal/pick-modal.service';
 
 @Component({
   selector: 'app-games',
@@ -40,6 +41,7 @@ export class GamesComponent implements OnInit {
     private route:ActivatedRoute,
     private weekService: WeekService,
     private weeksService: WeeksService,
+    private pickModalService: PickModalService
   ) { 
     this.subscription = this.weeksService.weekSelected$.subscribe(
       week => {
@@ -48,6 +50,15 @@ export class GamesComponent implements OnInit {
         this.week = week.week;
       }
     );
+
+    this.pickModalService.pickModalVisibilityChange.subscribe((pickData) => {
+      this.peekUser = pickData;
+      if(pickData != null) {
+        this.showPeekUser = true;
+      } else {
+        this.showPeekUser = false;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -149,13 +160,8 @@ export class GamesComponent implements OnInit {
     this.picksUpdated = false;
   }
 
-  peekUserSelected(event){
-    this.peekUser = event;
-    this.showPeekUser = true;
-  }
-
   hidePeekUserPicks(event) {
-    this.showPeekUser = false;
+    this.pickModalService.togglePickModalVisibility();
   }
 
   ngOnDestroy() {

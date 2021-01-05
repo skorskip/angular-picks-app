@@ -42,7 +42,6 @@ export class PicksDashboardComponent implements OnInit {
   @Output() title = new EventEmitter();
   @Output() displaySubmitButton = new EventEmitter();
   @Output() picksSubmitted = new EventEmitter();
-  @Output() peekUser = new EventEmitter();
 
   constructor(
     public dialog: MatDialog, 
@@ -185,10 +184,6 @@ export class PicksDashboardComponent implements OnInit {
 
   userCanSelect(): boolean {
     return this.authService.currentUserValue.type !== 'participant';
-  }
-
-  peekUserSelected(event){
-    this.peekUser.emit(event);
   }
 
   getStagedByGame(game: Game): Pick {

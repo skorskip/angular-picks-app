@@ -8,6 +8,7 @@ import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { Subscription } from 'rxjs';
 import { WeeksService } from 'src/app/components/weeks/weeks.service';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { PickModalService } from 'src/app/services/pick-modal/pick-modal.service';
 
 @Component({
   selector: 'app-standings',
@@ -33,13 +34,23 @@ export class StandingsComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private weekService: WeekService,
-    private weeksService: WeeksService
+    private weeksService: WeeksService,
+    private pickModalService: PickModalService
   ) { 
     this.subscription = this.weeksService.weekSelected$.subscribe(
       week => {
         this.week = week;
       }
     );
+
+    this.pickModalService.pickModalVisibilityChange.subscribe((pickData) => {
+      this.peekUser = pickData;
+      if(pickData != null) {
+        this.showPeekUser = true;
+      } else {
+        this.showPeekUser = false;
+      }
+    });
   }
 
   ngOnInit() {
@@ -77,7 +88,7 @@ export class StandingsComponent implements OnInit {
   }
 
   hidePeekUserPicks(event: boolean) {
-    this.showPeekUser = false;
+    this.pickModalService.togglePickModalVisibility();
   }
 
   back() {
