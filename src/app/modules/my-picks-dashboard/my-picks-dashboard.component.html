@@ -17,10 +17,9 @@
       <game
         [game] = "myGame"
         [notSelectablePicks] = "notSelectablePicks" 
-        [pickSuccess] = "pickResult(myGame)"
+        [pick] = "getPickByGame(myGame)"
         [userGamePicks] = "weekUserPicks[myGame.game_id]"
         [teams] = "myTeams"
-        (teamLoaded) = "teamLoaded($event)"
         (click) = "changeTeam(myGame)"
         (peekUser)="peekUserSelected($event)">
       </game>

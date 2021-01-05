@@ -19,10 +19,9 @@
                 [teams] = "teams"
                 [submitOpened] = "submitOpened"
                 [userGamePicks] = "weekUserPicks[game.game_id]"
+                [pick] = "getStagedByGame(game)"
                 [notSelectablePicks] = "userCanSelect()"
-                (openSubmit) = "teamClicked($event)"
                 (stageSelectedPick) = "stageSelectedPick($event)"
-                (teamLoaded) = "teamLoaded($event)"
                 (peekUser)="peekUserSelected($event)">
             </game>
         </div>

@@ -1,7 +1,5 @@
-import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit, EventEmitter, SimpleChange } from '@angular/core';
 import { Team } from '../../data-models/team/team';
-import { DOCUMENT } from '@angular/common';
-import { TeamService } from 'src/app/data-models/team/team.service';
 
 @Component({
   selector: 'team',
@@ -18,8 +16,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() size = null;
   @Input() highlight = false;
   @Input() status = null;
-  @Input() selectable = true;
-  @Output() teamLoaded = new EventEmitter();
+  @Input() fill = false;
 
   tabable = 1;
 
@@ -29,13 +26,24 @@ export class TeamComponent implements OnInit, AfterViewInit {
     if(this.score == null) {
       this.score = 0;
     }
-    this.tabable = this.selectable ? 1 : -1;
+  }
+
+  ngOnChanges(changes: SimpleChange) {
+    if(changes["gameLocked"].currentValue) {
+      this.tabable = !this.gameLocked ? 1 : -1;
+    }
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.teamLoaded.emit(this.team);
-    });
+    if(this.fill) {
+      var info = document.getElementById(this.team.team_id + "-team-info");
+      var team = document.getElementById(this.team.team_id + "-team-card");
+      info.classList.remove(this.team.display_color);
+      info.classList.add("base");
+      info.classList.add("team-info-result");
+      team.classList.remove("quaternary-background");
+      team.classList.add(this.team.display_color + "-background");
+    }
   }
 
   getGameSpread(number) {

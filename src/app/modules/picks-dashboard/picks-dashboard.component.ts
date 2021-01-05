@@ -7,7 +7,6 @@ import { WeekService } from '../../data-models/week/week.service';
 import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
 import { Team } from 'src/app/data-models/team/team';
-import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
@@ -51,7 +50,6 @@ export class PicksDashboardComponent implements OnInit {
     private pickService: PickService, 
     public snackBar: MatSnackBar,
     private authService:AuthenticationService,
-    private teamService:TeamService,
     private userService: UserService,
     private dateFormatter: DateFormatterService) {}
 
@@ -99,24 +97,13 @@ export class PicksDashboardComponent implements OnInit {
           this.games = week.games;
           this.stagedPicks = this.pickService.getStagedPicks();
           this.getTitle();
+          this.showSubmit();
           this.loader = false;
         } else {
           this.loader = false;
         }
       });
     });
-  }
-
-  teamLoaded(event) {
-    this.showSubmit();
-    this.highlightGameResult(event);
-    if(this.weekObject.number == this.currentWeek.week) {
-      this.highlightStagedPick(event);
-    }
-  }
-
-  teamClicked(opened: boolean){
-    this.showSubmit();
   }
 
   showSubmit() {
@@ -127,6 +114,7 @@ export class PicksDashboardComponent implements OnInit {
   stageSelectedPick(selectedPick: Pick){
     selectedPick.user_id = this.authService.currentUserValue.user_id
     this.stagedPicks = this.pickService.addStagedPick(selectedPick);
+    this.showSubmit();
     this.getTitle();
   }
   
@@ -177,26 +165,6 @@ export class PicksDashboardComponent implements OnInit {
     }
   }
 
-  highlightGameResult(game: Game){
-    if(game.game_status == 'COMPLETED'){
-      if(game.winning_team_id != null){
-        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.teams);
-        document.getElementById(game.winning_team_id + "-team-info").classList.remove(win_team.display_color);
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("quaternary-background");
-        document.getElementById(game.winning_team_id + "-team-info").classList.add("base");
-        document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
-      }
-    }
-  }
-
-  highlightStagedPick(game: Game){
-    var pick = this.pickService.removeStagedPickPastSumbit(game);
-    this.stagedPicks = this.pickService.getStagedPicks();
-    if(pick != null) {
-      this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick, this.teams));
-    }
-  }
-
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
       return new Date(this.games[index].pick_submit_by_date) > new Date()
@@ -221,6 +189,15 @@ export class PicksDashboardComponent implements OnInit {
 
   peekUserSelected(event){
     this.peekUser.emit(event);
+  }
+
+  getStagedByGame(game: Game): Pick {
+    if(this.weekObject.number == this.currentWeek.week) {
+      var pick = this.pickService.removeStagedPickPastSumbit(game);
+      this.stagedPicks = this.pickService.getStagedPicks();
+      return pick;
+    }
+    return null;
   }
 }
 

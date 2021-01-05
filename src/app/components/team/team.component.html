@@ -1,16 +1,19 @@
 <button 
   mat-button
-  [disabled]="!selectable"
-  attr.id="{{team.team_id}}-team-card" 
-  class="quaternary-background" 
+  [disabled]="tabable"
+  attr.id="{{team.team_id}}-team-card"
   [ngClass]="{
     'team-card-medium': size == 'medium',
     'team-card': size == null
-  }">
+  }"
+  >
     <div 
       *ngIf="!gameLocked"
       attr.id="{{team.team_id}}-team-info"
-      class="team-info {{team.display_color}} disabled">
+      class="team-info {{team.display_color}} disabled"
+      [ngClass]="{
+        'highlight-team': highlight
+      }">
       <div class="large-text-padding">{{score}}</div>
       <div class="small-text-middle">{{team.abbreviation}}</div>
     </div>
