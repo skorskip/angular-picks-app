@@ -35,8 +35,6 @@ export class GamesComponent implements OnInit {
   showPeekUser = false;
   peekUser = new PickData();
 
-  @Input() otherUsers = null;
-
   constructor(
     private route:ActivatedRoute,
     private weekService: WeekService,
@@ -79,10 +77,6 @@ export class GamesComponent implements OnInit {
         this.week = weekParam;
       }
     });
-
-    if(this.otherUsers != null) {
-      this.toggleType = 'none';
-    }
   }
 
   subSubtitlePicks(event: string) {
