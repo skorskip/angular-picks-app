@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { Standings } from './standings';
+import { UserPickLimit } from './user-pick-limit';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,6 +22,7 @@ export class UserService {
   private usersUrl = environment.userServiceURL + 'users';
   private standings: BehaviorSubject<UserStanding[]>;
   private userStandings: BehaviorSubject<UserStanding[]>;
+  private userPicksLimit: BehaviorSubject<UserPickLimit>;
 
   constructor(
     private http: HttpClient,
@@ -37,6 +39,7 @@ export class UserService {
       } else {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
+      this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
     }
 
   register(user: User): Observable<boolean> {
@@ -110,6 +113,26 @@ export class UserService {
       );
     } else {
       return this.userStandings.asObservable();
+    }
+  }
+
+  getUserPickLimit(season: number, seasonType: number, userId: number): Observable<UserPickLimit> {
+    let url = `${this.usersUrl}/userPicksLimit?season=${season}&seasonType=${seasonType}&userId=${userId}`;
+    if(this.starGate.allow('userPickLimit') && season != 0){
+      return this.http.get(url, httpOptions).pipe(
+        map((result: UserPickLimit[])=> {
+          console.log('get user picks limit');
+          var object = new UserPickLimit();
+          object = result[0];
+          object.date = new Date();
+          localStorage.setItem('userPickLimit', JSON.stringify(object));
+          this.userPicksLimit.next(object);
+          return object;       
+        }),
+        catchError(this.handleError<UserPickLimit>('get user picks limit'))
+      );
+    } else {
+      return this.userPicksLimit.asObservable();
     }
   }
 
