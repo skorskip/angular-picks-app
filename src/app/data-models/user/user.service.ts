@@ -39,7 +39,6 @@ export class UserService {
       } else {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
-
       this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
     }
 
@@ -123,9 +122,12 @@ export class UserService {
       return this.http.get(url, httpOptions).pipe(
         map((result: UserPickLimit[])=> {
           console.log('get user picks limit');
-          result[0].date = new Date();
-          localStorage.setItem('userPickLimit', JSON.stringify(result[0]));
-          return result[0];       
+          var object = new UserPickLimit();
+          object = result[0];
+          object.date = new Date();
+          localStorage.setItem('userPickLimit', JSON.stringify(object));
+          this.userPicksLimit.next(object);
+          return object;       
         }),
         catchError(this.handleError<UserPickLimit>('get user picks limit'))
       );
