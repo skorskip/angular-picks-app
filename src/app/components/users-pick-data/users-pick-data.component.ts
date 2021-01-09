@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Game } from 'src/app/data-models/game/game';
 import { PickData } from 'src/app/data-models/pick/pick-data';
+import { PickModalService } from 'src/app/services/pick-modal/pick-modal.service';
 
 @Component({
   selector: 'users-pick-data',
@@ -11,12 +12,12 @@ export class UsersPickDataComponent implements OnInit {
 
   @Input() picks = [] as PickData[];
   @Input() game = new Game();
-  @Output() peekUser = new EventEmitter();
+  @Input() selectable = true;
   showPickers = false;
   awayPicks = [] as PickData[];
   homePicks = [] as PickData[];
 
-  constructor() { }
+  constructor(private pickModalServie: PickModalService) { }
 
   ngOnInit() {
       this.setPickArrays(this.picks);
@@ -31,7 +32,7 @@ export class UsersPickDataComponent implements OnInit {
   }
 
   setUserModal(user: PickData) {
-    this.peekUser.emit(user)
+    this.pickModalServie.setPickModalVisibility(user);
   }
 
   setPickArrays(picks: PickData[]) {

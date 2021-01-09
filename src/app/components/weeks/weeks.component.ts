@@ -3,6 +3,7 @@ import { WeekService } from '../../data-models/week/week.service';
 import { WeeksService } from './weeks.service';
 import { Router } from '@angular/router';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'weeks',
@@ -19,10 +20,12 @@ export class WeeksComponent implements OnInit {
   weeks = [] as number[];
   hideToggle = false;
   currentWeek = new CurrentWeek();
+  spectator = false;
 
   constructor(
     private weekService: WeekService, 
     private weeksService: WeeksService,
+    private authService:AuthenticationService,
     private router:Router) { }
 
   ngOnInit() {
@@ -32,6 +35,11 @@ export class WeeksComponent implements OnInit {
     this.weekService.getCurrentWeek().subscribe( currentWeek => {
       this.currentWeek = currentWeek;
     });
+
+    if(this.authService.currentUserValue.type !== 'participant') {
+      this.hideToggle = true;
+      this.spectator = true;
+    }
   }
 
   ngOnChanges(changes: SimpleChange) {

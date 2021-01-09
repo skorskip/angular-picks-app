@@ -5,9 +5,9 @@
             <div class="pick-progress-group">
               <div class="pick-progress-numbers">
                 <div>Pick Count</div>
-                <div class="medium-font">{{ userStandings.picks + picks.length }} / {{ settings.maxTotalPicks }}</div>
+                <div class="medium-font">{{ pickProgress }} / {{ maxTotalPicks }}</div>
               </div>
-              <mat-progress-bar mode="determinate" value="{{ pickProgress }}"></mat-progress-bar>
+              <mat-progress-bar mode="determinate" value="{{ pickProgressBar }}"></mat-progress-bar>
             </div>
             <div class="picks-stat-card-group">
               <div class="pick-stat-card tiertary">

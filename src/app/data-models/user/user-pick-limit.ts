@@ -12,4 +12,4 @@ export class UserPickLimit {
         this.picks_penalty = 0;
         this.date = new Date();
     }
-}
+} 

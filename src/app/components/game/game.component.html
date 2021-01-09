@@ -8,27 +8,30 @@
   </div> 
   <div attr.id="game-{{game.game_id}}" class="team-group secondary" *ngIf="teams.length > 0">
     <team
-      *ngIf = "teams.length > 0"
+      *ngIf = "away_team_id.team_id != 0"
       [team] = "away_team_id"
       [score] = "game.away_team_score"
       [title] = "'AWAY'"
+      [highlight]="away_highlight"
       [gameLocked] = "gameLocked()"
+      [fill] = "away_team_id.team_id === game.winning_team_id"
       (click)="selectTeam(away_team_id)">
     </team>
     <pick-status
       class="pick-status base-background"
-      [pickSuccess]="pickSuccess"
+      [pickSuccess]="pickResult()"
       [game]="game">
     </pick-status>
     <team 
-      *ngIf = "teams.length > 0"
+      *ngIf = "home_team_id.team_id != 0"
       [team] = "home_team_id"
       [score] = "game.home_team_score"
       [spread] = "game.home_spread"
       [title] = "'HOME'"
+      [highlight]="home_highlight"
       [gameLocked] = "gameLocked()"
-      (click)="selectTeam(home_team_id)"
-      (teamLoaded)="teamLoadedEvent($event)">
+      [fill] = "home_team_id.team_id === game.winning_team_id"
+      (click)="selectTeam(home_team_id)">
     </team>
   </div>
   <users-pick-data *ngIf="showPicksData()"

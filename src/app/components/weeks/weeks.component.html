@@ -4,6 +4,16 @@
         <button mat-button (click)="toggleView('picks')" class="toggle-button secondary" [ngClass]="{'primary-background base':view == 'picks'}">Picks</button>
     </div>
 </div>
+<div class="toggle-picks-container" *ngIf="spectator">
+    <div class="spectator-container warn-background">
+        <mat-icon class="base spectator-icon">
+            face
+        </mat-icon>
+        <span class="base">
+            Spectator Mode
+        </span>
+    </div>
+</div>
 <div class="week-content" *ngIf="weeksView == false">
     <div class="week-header-container">
         <div class="week-header-next base-background tiertary" (click)="weekPrev()" *ngIf="showWeekPrev()">

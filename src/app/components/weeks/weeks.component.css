@@ -90,6 +90,20 @@
 	padding: 4px;
 }
 
+.spectator-container {
+	display: flex;
+	padding: 5px;
+	align-items: center;
+	justify-content: space-around;
+	border-radius: 4px;
+	padding-right: 10px;
+    padding-left: 10px;
+}
+
+.spectator-icon {
+	padding-right: 10px;
+}
+
 .week-content {
 	height: 100%;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
@@ -15,47 +15,48 @@ export class GameComponent implements OnInit {
   @Input() game: Game;
   @Input('submitOpened') submitOpened: boolean;
   @Input() notSelectablePicks = false;
-  @Input() pickSuccess = null;
+  @Input() pick: Pick;
   @Input() teams: Team[] = [];
   @Input() userGamePicks: PickData[] = [];
-  @Output() openSubmit = new EventEmitter<boolean> ();
   @Output() stageSelectedPick = new EventEmitter ();
-  @Output() teamLoaded = new EventEmitter();
-  @Output() peekUser= new EventEmitter();
   
   submitDate = "";
   home_team_id = new Team();
   away_team_id = new Team();
   showPickers = false;
+  home_highlight = false;
+  away_highlight = false;
   
   constructor(
-    private dateFormatter: DateFormatterService,
-    private teamService: TeamService) { }
+    private dateFormatter: DateFormatterService) { }
 
   ngOnInit(){
     this.setTeams(this.game, this.teams);
     this.submitDate = this.dateFormatter.formatDate(new Date(this.game.pick_submit_by_date));
-  }
-
-  teamLoadedEvent(event) {
-    this.teamLoaded.emit(this.game);
+    this.highlightPick();
   }
 
   selectTeam(selectedTeam:Team) {
     if(!this.notSelectablePicks && new Date(this.game.pick_submit_by_date) > new Date()){
 
-      var otherTeam = this.game.home_team_id == selectedTeam.team_id ? this.away_team_id : this.home_team_id;
-      
       this.stageSelectedPick.emit(this.stagePick(selectedTeam.team_id, this.game.game_id));
-      this.openSubmit.emit(true);
-      
-      if(document.getElementById(selectedTeam.team_id + "-team-card").classList.contains("selectedTeam")){
-        this.teamService.unSelectTeam(selectedTeam);
-      } else if(document.getElementById(otherTeam.team_id + "-team-card").classList.contains("selectedTeam")){
-        this.teamService.unSelectTeam(otherTeam);
-        this.teamService.highlightSelectTeam(selectedTeam);
+
+      if(this.home_highlight){
+        this.home_highlight = false;
+        if(selectedTeam.team_id == this.away_team_id.team_id) {
+          this.away_highlight = true;
+        }
+      } else if (this.away_highlight){
+        this.away_highlight = false;
+        if(selectedTeam.team_id == this.home_team_id.team_id) {
+          this.home_highlight = true;
+        }
       } else {
-        this.teamService.highlightSelectTeam(selectedTeam);
+        if(this.game.home_team_id == selectedTeam.team_id) {
+          this.home_highlight = true;
+        } else {
+          this.away_highlight = true;
+        }
       }
     }
   }
@@ -123,8 +124,29 @@ export class GameComponent implements OnInit {
     this.showPickers = !this.showPickers;
   }
 
-  peekUserSelected(event) {
-    this.peekUser.emit(event);
+  pickResult():string {
+    if(this.game.game_status == 'COMPLETED' && this.pick != null){
+      if(this.pick.team_id == this.game.winning_team_id) {
+        return "WIN";
+      } else if(this.game.winning_team_id == null) {
+        return "PUSH";
+      } else {
+        return "LOSE";
+      }
+    }
+    else {
+      return null;
+    }
+  }
+
+  highlightPick() {
+    if(this.pick != null) {
+      if(this.game.away_team_id === this.pick.team_id) {
+        this.away_highlight = true;
+      } else {
+        this.home_highlight = true;
+      }
+    }
   }
 }
 

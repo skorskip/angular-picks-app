@@ -1,35 +1,49 @@
 <div class="modal-container" id="modal-container">
-    <div class="user-modal quaternary-background secondary" id="user-modal" @slideDownAnimation *ngIf="showModal">
-        <div class="modal-header" (click)="closeClick()">
-            <mat-icon class="close-modal-icon">clear</mat-icon>
+    <div class="user-modal base-background secondary" id="user-modal" @slideDownAnimation *ngIf="showModal">
+        <div class="modal-header primary-background" (click)="closeClick()">
+            <mat-icon class="close-modal-icon base">clear</mat-icon>
+            <div class="base week-title">Week {{week.week}} Picks</div>
+        </div>
+        <div class="modal-init">
+            <div class="init-icon base primary-background">
+                {{ inits }}
+            </div>
         </div>
         <div class="modal-title">
-            <div class="user-name">
-                <div class="init-icon primary">
-                    {{ inits }}
-                </div>
+            <button *ngIf="!showLoader" mat-button class="view-picks-button secondary" (click)="viewPicks()">
                 <div class="card-header-text">
                     {{firstname}} {{lastname}}
-                </div>
-            </div>
-            <button *ngIf="!showLoader" mat-button class="view-picks-button base-background primary" (click)="viewPicks()">
-                <span class="primary">View Full Picks</span>
+                </div>            
             </button>
         </div>
         <div *ngIf="showLoader">
             <picks-loader></picks-loader>
         </div>
+        <div *ngIf="!showLoader && gameObjects.length === 0" class="no-picks">
+            No Picks
+        </div>
         <div class=modal-content>
-            <div *ngIf="displayTeams.length === 0 && !showLoader" class="no-picks">
-                No Picks
-            </div>
-            <div *ngFor="let team of displayTeams" class="team-picks">
-                <team
-                    [team]="team"
-                    [gameLocked]="'false'"
-                    [size]="'medium'"
-                    [highlight]="'true'">
-                </team>
+            <div *ngIf="!showLoader && gameObjects.length !== 0">
+                <div *ngFor="let gameObject of gameObjects" class="teams-container">
+                    <div class="team-picks">
+                        <team
+                            [team]="gameObject.awayTeam"
+                            [gameLocked]="'false'"
+                            [size]="'medium'"
+                            [highlight]="gameObject.awayTeam.team_id === gameObject.pick.team_id">
+                        </team>
+                        <div class="tiertary game-icon">
+                            @
+                        </div>
+                        <team
+                            [team]="gameObject.homeTeam"
+                            [gameLocked]="'false'"
+                            [size]="'medium'"
+                            [highlight]="gameObject.homeTeam.team_id === gameObject.pick.team_id">
+                        </team>
+                    </div>
+                    <div class="separator tiertary"></div>
+                </div>
             </div>
         </div>
     </div>
