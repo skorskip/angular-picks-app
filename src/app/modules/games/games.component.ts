@@ -151,7 +151,7 @@ export class GamesComponent implements OnInit {
   }
 
   subNavPicksUpdated(event: boolean) {
-    this.picksUpdated = false;
+    this.picksUpdated = true;
   }
 
   hidePeekUserPicks(event) {

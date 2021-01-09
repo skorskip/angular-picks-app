@@ -53,7 +53,7 @@ export class NavBarComponent implements OnInit, AfterViewInit {
     if((changes["subPicksUpdated"]?.currentValue != changes["subPicksUpdated"]?.previousValue) && changes["subPicksUpdated"]?.currentValue) {
       this.edit = false;
       this.loadingEdits = false;
-      this.navPicksUpdated.emit(false);
+      this.navPicksUpdated.emit(true);
     }
   }
 

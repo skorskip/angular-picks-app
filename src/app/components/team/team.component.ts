@@ -29,7 +29,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChange) {
-    if(changes["gameLocked"].currentValue) {
+    if(changes["gameLocked"]?.currentValue) {
       this.tabable = !this.gameLocked ? 1 : -1;
     }
   }

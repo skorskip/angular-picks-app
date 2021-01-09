@@ -12,7 +12,6 @@ import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
-import { UserPickLimit } from 'src/app/data-models/user/user-pick-limit';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -72,6 +71,7 @@ export class PicksDashboardComponent implements OnInit {
     }
 
     if(changes["subPicksUpdated"]?.currentValue) {
+      console.log("PICKS UPDATED??");
       this.initWeek(this.season, this.seasonType, this.week);
     }
 
