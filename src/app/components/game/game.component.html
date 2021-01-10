@@ -14,7 +14,7 @@
       [title] = "'AWAY'"
       [highlight]="away_highlight"
       [gameLocked] = "gameLocked()"
-      [fill] = "away_team_id.team_id === game.winning_team_id"
+      [fill] = "fillTeam(away_team_id)"
       (click)="selectTeam(away_team_id)">
     </team>
     <pick-status
@@ -30,7 +30,7 @@
       [title] = "'HOME'"
       [highlight]="home_highlight"
       [gameLocked] = "gameLocked()"
-      [fill] = "home_team_id.team_id === game.winning_team_id"
+      [fill] = "fillTeam(home_team_id)"
       (click)="selectTeam(home_team_id)">
     </team>
   </div>

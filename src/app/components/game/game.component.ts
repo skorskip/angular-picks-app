@@ -148,5 +148,9 @@ export class GameComponent implements OnInit {
       }
     }
   }
+
+  fillTeam(team: Team) {
+    return team.team_id === this.game.winning_team_id;
+  }
 }
 
