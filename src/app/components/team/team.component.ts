@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, AfterViewInit, EventEmitter, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { Team } from '../../data-models/team/team';
 
 @Component({
@@ -6,7 +6,7 @@ import { Team } from '../../data-models/team/team';
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
-export class TeamComponent implements OnInit, AfterViewInit {
+export class TeamComponent implements OnInit {
 
   @Input() team = new Team();
   @Input() score = 0;
@@ -34,16 +34,18 @@ export class TeamComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    if(this.fill) {
-      var info = document.getElementById(this.team.team_id + "-team-info");
-      var team = document.getElementById(this.team.team_id + "-team-card");
-      info.classList.remove(this.team.display_color);
-      info.classList.add("base");
-      info.classList.add("team-info-result");
-      team.classList.remove("quaternary-background");
-      team.classList.add(this.team.display_color + "-background");
-    }
+  getTeamInfoClass() {
+    var classList = 'team-info disabled ';
+    classList += this.highlight ? 'highlight-team ' : '';
+    classList += this.fill ? 'base team-info-result ' : this.team.display_color;
+    return classList;
+  }
+
+  getTeamCardClass() {
+    var classList = ""
+    classList += this.size == 'medium' ? 'team-card-medium ' : 'team-card ';
+    classList += this.fill ? this.team.display_color + '-background' : 'quaternary-background';
+    return classList;
   }
 
   getGameSpread(number) {
