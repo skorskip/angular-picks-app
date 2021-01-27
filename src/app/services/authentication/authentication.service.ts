@@ -44,7 +44,6 @@ export class AuthenticationService {
                     return Auth.currentSession().then(result => {
                         localStorage.setItem("token", result.getIdToken().getJwtToken());
                         headers = headers.set('Authorization', result.getIdToken().getJwtToken());
-                        console.log("AWS::", headers);
                         return signInUser;
                     });
                 }
@@ -57,7 +56,6 @@ export class AuthenticationService {
 
     getUserInfo(user: User): Observable<User[]> {
         const url = `${this.usersUrl}/login`;
-        console.log("HEADERS::", headers);
         return this.http.post<User[]>(url, user, {'headers' : headers})
             .pipe(tap(users => {
                 if(users.length > 0){
