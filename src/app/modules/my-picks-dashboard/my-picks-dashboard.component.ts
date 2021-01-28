@@ -5,7 +5,6 @@ import { Week } from '../../data-models/week/week';
 import { Game } from '../../data-models/game/game';
 import { Team } from '../../data-models/team/team';
 import { Pick } from '../../data-models/pick/pick';
-import { User } from 'src/app/data-models/user/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { WeekPicks } from 'src/app/data-models/pick/week-picks';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +28,6 @@ export class MyPicksDashboardComponent implements OnInit {
   notSelectablePicks = true;
   weeksView = false;
   pickSuccess = null;
-  user = new User();
   stagedEdits = [] as Pick[];
   stagedDeletes = [] as Pick[];
   showEditButton = true;
@@ -50,7 +48,6 @@ export class MyPicksDashboardComponent implements OnInit {
   @Output() title = new EventEmitter();
   @Output() displayEditButton = new EventEmitter();
   @Output() picksUpdated = new EventEmitter();
-  @Output() peekUser = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
@@ -61,9 +58,7 @@ export class MyPicksDashboardComponent implements OnInit {
     private authService:AuthenticationService) {}
 
   ngOnInit() {
-    if(this.otherUser == null) {
-      this.user= this.authService.currentUserValue;
-    } else {
+    if(this.otherUser != null) {
       this.toggleType = "none";
     }
   }
@@ -105,11 +100,6 @@ export class MyPicksDashboardComponent implements OnInit {
     });
   }
 
-  teamLoaded(event) {
-    this.highlightSelected(event);
-    this.highlightGameResult(event);
-  }
-
   getPicksByWeek(season: number, seasonType: number, week: number, reset: boolean) {
     if(this.otherUser != null) {
       if(reset) {
@@ -127,7 +117,7 @@ export class MyPicksDashboardComponent implements OnInit {
       if(reset) {
         this.populateGamesTeams(this.snapshot);
       } else {
-        this.pickService.getPicksByWeek(this.user, season, seasonType, week).subscribe( picks => {  
+        this.pickService.getPicksByWeek(this.authService.currentUserValue, season, seasonType, week).subscribe( picks => {  
           if(picks != null){
             this.populateGamesTeams(picks);
           } else {
@@ -256,7 +246,7 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject)=>{
         this.pickService.updatePick(this.stagedEdits[i]).subscribe((success) => {
           if(!success){reject();}
-          resolve();
+          resolve(null);
         });
       }));
     }
@@ -269,55 +259,20 @@ export class MyPicksDashboardComponent implements OnInit {
       promises_array.push(new Promise((resolve, reject) => {
         this.pickService.deletePick(this.stagedDeletes[i].pick_id).subscribe((success) => {
           if(!success){reject();}
-          resolve();
+          resolve(null);
         });
       }));
     }
     return Promise.all(promises_array);
   }
 
-  highlightSelected(game: Game){
-    this.picks.forEach(pick =>{
-      if(pick.game_id === game.game_id){
-        this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick.team_id, this.myTeams));
-      }
-    });
-  }
-
-  highlightGameResult(game: Game){
-    if(game.game_status == 'COMPLETED'){
-      if(game.winning_team_id != null){
-        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.myTeams);
-        var info = document.getElementById(game.winning_team_id + "-team-info");
-        var team = document.getElementById(game.winning_team_id + "-team-card");
-        info.classList.remove(win_team.display_color);
-        info.classList.add("base");
-        info.classList.add("team-info-result");
-        team.classList.remove("quaternary-background");
-        team.classList.add(win_team.display_color + "-background");
+  getPickByGame(game: Game): Pick {
+    for(var i = 0; i < this.picks.length; i++) {
+      if(this.picks[i].game_id === game.game_id) {
+        return this.picks[i];
       }
     }
-  }
-
-  pickResult(game: Game):string {
-    if(game.game_status == 'COMPLETED'){
-      for(var i = 0; i < this.picks.length; i ++) {
-        var pick = this.picks[i];
-        if(pick.game_id == game.game_id) {
-          if(pick.team_id == game.winning_team_id) {
-            return "WIN";
-          } else if(game.winning_team_id == null) {
-            return "PUSH";
-          } else {
-            return "LOSE";
-          }
-        }
-      }
-      return null;
-    }
-    else {
-      return null;
-    }
+    return null;
   }
 
   showSubmitTime(index: number): boolean {
@@ -342,10 +297,6 @@ export class MyPicksDashboardComponent implements OnInit {
     let title = "";
     title += this.myGames.length + " Picked"
     this.title.emit(title);
-  }
-
-  peekUserSelected(event){
-    this.peekUser.emit(event);
   }
 }
 

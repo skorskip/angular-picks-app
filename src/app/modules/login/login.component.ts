@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginSucces = false;
   hide = true;
   forgotten = false;
-  registerSelected = false;
+  registerSelected = false
   submitLogin = false;
 
   constructor(

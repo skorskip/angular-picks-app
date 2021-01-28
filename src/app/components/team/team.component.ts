@@ -1,14 +1,12 @@
-import { Component, OnInit, Input, Inject, Output, AfterViewInit, EventEmitter, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { Team } from '../../data-models/team/team';
-import { DOCUMENT } from '@angular/common';
-import { TeamService } from 'src/app/data-models/team/team.service';
 
 @Component({
   selector: 'team',
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
-export class TeamComponent implements OnInit, AfterViewInit {
+export class TeamComponent implements OnInit {
 
   @Input() team = new Team();
   @Input() score = 0;
@@ -18,7 +16,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
   @Input() size = null;
   @Input() highlight = false;
   @Input() status = null;
-  @Output() teamLoaded = new EventEmitter();
+  @Input() fill = false;
+
+  tabable = 1;
 
   constructor() { }
 
@@ -28,10 +28,24 @@ export class TeamComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.teamLoaded.emit(this.team);
-    });
+  ngOnChanges(changes: SimpleChange) {
+    if(changes["gameLocked"]?.currentValue) {
+      this.tabable = !this.gameLocked ? 1 : -1;
+    }
+  }
+
+  getTeamInfoClass() {
+    var classList = 'team-info disabled ';
+    classList += this.highlight ? 'highlight-team ' : '';
+    classList += this.fill ? 'base team-info-result ' : this.team.display_color;
+    return classList;
+  }
+
+  getTeamCardClass() {
+    var classList = ""
+    classList += this.size == 'medium' ? 'team-card-medium ' : 'team-card ';
+    classList += this.fill ? this.team.display_color + '-background' : 'quaternary-background';
+    return classList;
   }
 
   getGameSpread(number) {

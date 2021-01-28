@@ -6,6 +6,7 @@ import { TeamService } from 'src/app/data-models/team/team.service';
 import { slideUpAnimation, fadeAnimation } from 'src/app/animations/app-routing-animation';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { Router } from '@angular/router';
+import { Game } from 'src/app/data-models/game/game';
 
 @Component({
   selector: 'app-pick-peek-modal',
@@ -25,6 +26,8 @@ export class PickPeekModalComponent implements OnInit {
 
   teams = [] as Team[];
   picks = [] as Pick[];
+  games = [] as Game[];
+  gameObjects = [];
   displayTeams = [] as Team[];
   showLoader = false;
   showModal = false;
@@ -41,7 +44,8 @@ export class PickPeekModalComponent implements OnInit {
     this.picksService.getUsersPicksByWeek(this.userId, this.week.season, this.week.seasonType, this.week.week).subscribe((result) => {
       this.teams = JSON.parse(JSON.stringify(result.teams));
       this.picks = JSON.parse(JSON.stringify(result.picks));
-      this.getPickedTeams(this.picks, this.teams);
+      this.games = JSON.parse(JSON.stringify(result.games));
+      this.createGameObject(this.picks, this.teams, this.games);
     });
   }
 
@@ -54,10 +58,21 @@ export class PickPeekModalComponent implements OnInit {
     }
   }
 
-  getPickedTeams(picks: Pick[], teams: Team[]) {
-    picks.forEach((pick) => {
-      this.displayTeams.push(this.teamService.getTeamLocal(pick.team_id, teams));
-    });
+  createGameObject(picks: Pick[], teams: Team[], games: Game[]) {
+    picks.sort(this.gameSort);
+    games.sort(this.gameSort);
+    var list = [];
+    for(var i = 0; i < games.length; i++) {
+      var gameObject = {
+        game: games[i],
+        awayTeam: this.teamService.getTeamLocal(games[i].away_team_id, teams),
+        homeTeam: this.teamService.getTeamLocal(games[i].home_team_id, teams),
+        pick: picks[i]
+      }
+
+      list.push(gameObject);
+    }
+    this.gameObjects = list;
     this.showLoader = false;
   }
 
@@ -69,5 +84,11 @@ export class PickPeekModalComponent implements OnInit {
   closeClick() {
     this.showModal = false;
     this.close.emit(true);
+  }
+
+  gameSort(a, b) {
+    if(a.game_id > b.game_id) return 1;
+    if(b.game_id > a.game_id) return -1;
+    return 0;
   }
 }

@@ -165,13 +165,13 @@ export class PickService {
         return staged;
     }
 
-    removeStagedPickPastSumbit(game: Game): number {
+    removeStagedPickPastSumbit(game: Game): any {
         var staged = this.getStagedPicks();
 
         for(let i = 0; i < staged.length; i++) {
             let pick = staged[i];
             if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) > new Date())){
-                return pick.team_id;
+                return pick;
             } else if((pick.game_id == game.game_id) && (new Date(game.pick_submit_by_date) <= new Date())){
               staged.splice(i,1);
               this.setStagedPicks(staged);
@@ -223,7 +223,7 @@ export class PickService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-        this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
+        this.snackBar.open('There was a failure, please try again later.','', {duration:3000, panelClass: ["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

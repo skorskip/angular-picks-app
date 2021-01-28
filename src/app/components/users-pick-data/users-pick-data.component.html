@@ -1,38 +1,40 @@
 <div class="picks-data-container accent">
-    <div class="picks-data-overview" *ngIf="!showPickers" (click)="picksDataClick()">
-        <div class="pick-data" name="away">
-            <mat-icon class="pick-data-icon">
-                people_alt
-            </mat-icon>
-            <div class="pick-data-icon">
-                {{ awayPicks.length }}
+    <button mat-button [disabled]="!selectable" class="picks-data-overview" *ngIf="!showPickers" (click)="picksDataClick()">
+        <div class="pick-data-button-group">
+            <div class="pick-data" name="away">
+                <mat-icon class="pick-data-icon">
+                    people_alt
+                </mat-icon>
+                <div class="pick-data-icon">
+                    {{ awayPicks.length }}
+                </div>
+            </div>
+            <div class="pick-data" name="home">
+                <mat-icon class="pick-data-icon">
+                    people_alt
+                </mat-icon>
+                <div class="pick-data-icon">
+                    {{ homePicks.length }}
+                </div>
             </div>
         </div>
-        <div class="pick-data" name="home">
-            <mat-icon class="pick-data-icon">
-                people_alt
-            </mat-icon>
-            <div class="pick-data-icon">
-                {{ homePicks.length }}
-            </div>
-        </div>
-    </div>
+    </button>
     <div class="picks-data-users" *ngIf="showPickers">
         <div class="users-column">
-            <div class="user-item tiertary" *ngFor="let pick of awayPicks" (click)="setUserModal(pick)">
+            <button mat-button class="user-item tiertary" *ngFor="let pick of awayPicks" (click)="setUserModal(pick)">
                 <div class="accent">{{ pick.first_name }} {{pick.last_name.substring(0,1)}}.</div>
-            </div>
+            </button>
         </div>
         <div class="users-column">
-            <div class="user-item tiertary" *ngFor="let pick of homePicks" (click)="setUserModal(pick)">
+            <button mat-button class="user-item tiertary" *ngFor="let pick of homePicks" (click)="setUserModal(pick)">
                 <div class="accent">{{ pick.first_name }} {{pick.last_name.substring(0,1)}}.</div>
-            </div>
+            </button>
         </div>
     </div>
-    <div *ngIf="showPickers" (click)="closePicksData()" class="show-less-button secondary">
-        <div>
+    <button mat-button *ngIf="showPickers" (click)="closePicksData()" class="show-less-button secondary">
+        <div class="show-less-button-group">
             <mat-icon class="close-modal-icon">expand_less</mat-icon>
+            Show Less
         </div>
-        Show Less
-    </div>
+    </button>
 </div>

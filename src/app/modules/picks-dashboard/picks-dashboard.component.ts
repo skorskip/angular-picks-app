@@ -6,16 +6,12 @@ import { Week } from '../../data-models/week/week';
 import { WeekService } from '../../data-models/week/week.service';
 import { Pick } from '../../data-models/pick/pick';
 import { PickService } from '../../data-models/pick/pick.service';
-import { User } from 'src/app/data-models/user/user';
 import { Team } from 'src/app/data-models/team/team';
-import { TeamService } from 'src/app/data-models/team/team.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserStanding } from 'src/app/data-models/user/user-standing';
 import { UserService } from 'src/app/data-models/user/user.service';
-import { LeagueService } from 'src/app/data-models/league/league.service';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { DateFormatterService } from 'src/app/services/date-formatter/date-formatter.service';
-import { PickData } from 'src/app/data-models/pick/pick-data';
 
 @Component({
   selector: 'app-picks-dashboard',
@@ -29,7 +25,6 @@ export class PicksDashboardComponent implements OnInit {
   stagedPicks = [] as Pick[];
   weekObject = new Week();
   weeksView = false;
-  user = new User();
   teams = [] as Team[];
   loader = false;
   userData = new UserStanding();
@@ -47,7 +42,6 @@ export class PicksDashboardComponent implements OnInit {
   @Output() title = new EventEmitter();
   @Output() displaySubmitButton = new EventEmitter();
   @Output() picksSubmitted = new EventEmitter();
-  @Output() peekUser = new EventEmitter();
 
   constructor(
     public dialog: MatDialog, 
@@ -55,18 +49,11 @@ export class PicksDashboardComponent implements OnInit {
     private pickService: PickService, 
     public snackBar: MatSnackBar,
     private authService:AuthenticationService,
-    private teamService:TeamService,
     private userService: UserService,
-    private dateFormatter: DateFormatterService,
-    private leagueService: LeagueService) { 
-      this.leagueService.getLeagueSettings().subscribe(settings => {
-        this.maxTotalPicks = settings.maxTotalPicks;
-      });
-    }
+    private dateFormatter: DateFormatterService) {}
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
-    this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.user).subscribe((result:UserStanding[]) => {
+    this.userService.getStandingsByUser(this.currentWeek.season, this.currentWeek.seasonType, this.currentWeek.week, this.authService.currentUserValue).subscribe((result:UserStanding[]) => {
       if(result != null) {
         this.userData = result[0];
       }
@@ -84,7 +71,16 @@ export class PicksDashboardComponent implements OnInit {
     }
 
     if(changes["subPicksUpdated"]?.currentValue) {
+      console.log("PICKS UPDATED??");
       this.initWeek(this.season, this.seasonType, this.week);
+    }
+
+    if(changes["currentWeek"]?.currentValue) {
+      this.userService.getUserPickLimit(this.currentWeek.season, 
+        this.currentWeek.seasonType, 
+        this.authService.currentUserValue.user_id).subscribe((limit) => {
+          this.maxTotalPicks = limit.max_picks;
+        });
     }
   }
 
@@ -94,14 +90,14 @@ export class PicksDashboardComponent implements OnInit {
 
     this.pickService.getWeekPicksByGame(season, seasonType, week).subscribe((result:any) => {
       this.weekUserPicks = result;
-
-      this.weekService.getWeek(season, seasonType, week, this.user).subscribe(week => {
+      this.weekService.getWeek(season, seasonType, week, this.authService.currentUserValue).subscribe(week => {
         if(week != null) {
           this.weekObject = week;
           this.teams = week.teams;
           this.games = week.games;
           this.stagedPicks = this.pickService.getStagedPicks();
           this.getTitle();
+          this.showSubmit();
           this.loader = false;
         } else {
           this.loader = false;
@@ -110,26 +106,15 @@ export class PicksDashboardComponent implements OnInit {
     });
   }
 
-  teamLoaded(event) {
-    this.showSubmit();
-    this.highlightGameResult(event);
-    if(this.weekObject.number == this.currentWeek.week) {
-      this.highlightStagedPick(event);
-    }
-  }
-
-  teamClicked(opened: boolean){
-    this.showSubmit();
-  }
-
   showSubmit() {
     let submitOpened = (this.stagedPicks.length > 0) && (this.weekObject.number == this.currentWeek.week);
     this.displaySubmitButton.emit(submitOpened);
   }
 
   stageSelectedPick(selectedPick: Pick){
-    selectedPick.user_id = this.user.user_id
+    selectedPick.user_id = this.authService.currentUserValue.user_id
     this.stagedPicks = this.pickService.addStagedPick(selectedPick);
+    this.showSubmit();
     this.getTitle();
   }
   
@@ -180,26 +165,6 @@ export class PicksDashboardComponent implements OnInit {
     }
   }
 
-  highlightGameResult(game: Game){
-    if(game.game_status == 'COMPLETED'){
-      if(game.winning_team_id != null){
-        var win_team = this.teamService.getTeamLocal(game.winning_team_id, this.teams);
-        document.getElementById(game.winning_team_id + "-team-info").classList.remove(win_team.display_color);
-        document.getElementById(game.winning_team_id + "-team-card").classList.remove("quaternary-background");
-        document.getElementById(game.winning_team_id + "-team-info").classList.add("base");
-        document.getElementById(game.winning_team_id + "-team-card").classList.add(win_team.display_color + "-background");
-      }
-    }
-  }
-
-  highlightStagedPick(game: Game){
-    var pick = this.pickService.removeStagedPickPastSumbit(game);
-    this.stagedPicks = this.pickService.getStagedPicks();
-    if(pick != null) {
-      this.teamService.highlightSelectTeam(this.teamService.getTeamLocal(pick, this.teams));
-    }
-  }
-
   showSubmitTime(index: number): boolean {
     if((index == 0) || this.games[index - 1].pick_submit_by_date != this.games[index].pick_submit_by_date){
       return new Date(this.games[index].pick_submit_by_date) > new Date()
@@ -219,11 +184,16 @@ export class PicksDashboardComponent implements OnInit {
   }
 
   userCanSelect(): boolean {
-    return this.user.type !== 'participant';
+    return this.authService.currentUserValue.type !== 'participant';
   }
 
-  peekUserSelected(event){
-    this.peekUser.emit(event);
+  getStagedByGame(game: Game): Pick {
+    if(this.weekObject.number == this.currentWeek.week) {
+      var pick = this.pickService.removeStagedPickPastSumbit(game);
+      this.stagedPicks = this.pickService.getStagedPicks();
+      return pick;
+    }
+    return null;
   }
 }
 

@@ -77,203 +77,203 @@
 
 /*-----------TEAM COLORS----------*/
 .ruby {
-  color: #97233f;
+  color: #97233f !important;
 }
 
 .burgundy {
-  color: #a71931;
+  color: #a71931 !important;
 }
 
 .teal {
-  color: #006678;
+  color: #006678 !important;
 }
 
 .carolina-blue {
-  color: #0087CA;
+  color: #0087CA !important;
 }
 
 .star-command-blue {
-  color: #0076b6;
+  color: #0076b6 !important;
 }
 
 .air-force-blue {
-  color: #00348d;
+  color: #00348d !important;
 }
 
 .midnight-blue {
-  color: #211e98;
+  color: #211e98 !important;
 }
 
 .eerie-black {
-  color: #0b162a;
+  color: #0b162a !important;
 }
 
 .jungle-green {
-  color: #2a5446;
+  color: #2a5446 !important;
 }
 
 .orange {
-  color: #fb4f14;
+  color: #fb4f14 !important;
 }
 
 .brown {
-  color: #A5673F;
+  color: #A5673F !important;
 }
 
 .amaranth-red {
-  color: #cf2233;
+  color: #cf2233 !important;
 }
 
 .violet {
-  color: #4f2683;
+  color: #4f2683 !important;
 }
 
 .red {
-  color: #DB2828;
+  color: #DB2828 !important;
 }
 
 .blue {
-  color: #2185D0;
+  color: #2185D0 !important;
 }
 
 .navy {
-  color: #1a2f5f;
+  color: #1a2f5f !important;
 }
 
 .tan {
-  color: #d3bc8d;
+  color: #d3bc8d !important;
 }
 
 .midnight-green {
-  color: #004c54;
+  color: #004c54 !important;
 }
 
 .gold {
-  color: #ffb612;
+  color: #ffb612 !important;
 }
 
 .lime-green {
-  color: #69be28;
+  color: #69be28 !important;
 }
 
 .grey {
-  color: #767676;
+  color: #767676 !important;
 }
 
 .olive {
-  color: #B5CC18;
+  color: #B5CC18 !important;
 }
 
 .green {
-  color: #027202;
+  color: #027202 !important;
 }
 
 .yellow {
-  color: #FBBD08;
+  color: #FBBD08 !important;
 }
 
 .purple {
-  color: #A333C8;
+  color: #A333C8 !important;
 }
 
 .ruby-background {
-  background-color: #97233f;
+  background-color: #97233f !important;
 }
 
 .burgundy-background {
-  background-color: #a71931;
+  background-color: #a71931 !important;
 }
 
 .teal-background {
-  background-color: #006678;
+  background-color: #006678 !important;
 }
 
 .carolina-blue-background {
-  background-color: #0087CA;
+  background-color: #0087CA !important;
 }
 
 .star-command-blue-background {
-  background-color: #0076b6;
+  background-color: #0076b6 !important;
 }
 
 .air-force-blue-background {
-  background-color: #00348d;
+  background-color: #00348d !important;
 }
 
 .midnight-blue-background {
-  background-color: #211e98;
+  background-color: #211e98 !important;
 }
 
 .eerie-black-background {
-  background-color: #0b162a;
+  background-color: #0b162a !important;
 }
 
 .jungle-green-background {
-  background-color: #2a5446;
+  background-color: #2a5446 !important;
 }
 
 .orange-background {
-  background-color: #fb4f14;
+  background-color: #fb4f14 !important;
 }
 
 .brown-background {
-  background-color: #A5673F;
+  background-color: #A5673F !important;
 }
 
 .amaranth-red-background {
-  background-color: #cf2233;
+  background-color: #cf2233 !important;
 }
 
 .violet-background {
-  background-color: #4f2683;
+  background-color: #4f2683 !important;
 }
 
 .red-background {
-  background-color: #DB2828;
+  background-color: #DB2828 !important;
 }
 
 .blue-background {
-  background-color: #2185D0;
+  background-color: #2185D0 !important;
 }
 
 .navy-background {
-  background-color: #1a2f5f;
+  background-color: #1a2f5f !important;
 }
 
 .tan-background {
-  background-color: #d3bc8d;
+  background-color: #d3bc8d !important;
 }
 
 .midnight-green-background {
-  background-color: #004c54;
+  background-color: #004c54 !important;
 }
 
 .gold-background {
-  background-color: #ffb612;
+  background-color: #ffb612 !important;
 }
 
 .lime-green-background {
-  background-color: #69be28;
+  background-color: #69be28 !important;
 }
 
 .grey-background {
-  background-color: #767676;
+  background-color: #767676 !important;
 }
 
 .olive-background {
-  background-color: #B5CC18;
+  background-color: #B5CC18 !important;
 }
 
 .green-background {
-  background-color: #027202;
+  background-color: #027202 !important;
 }
 
 .yellow-background {
-  background-color: #FBBD08;
+  background-color: #FBBD08 !important;
 }
 
 .purple-background {
-  background-color: #A333C8;
+  background-color: #A333C8 !important;
 }
 
 /*# sourceMappingURL=styles-light.css.map */

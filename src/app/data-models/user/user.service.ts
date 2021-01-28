@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { StarGateService } from '../../services/star-gate/star-gate.service';
 import { Standings } from './standings';
 import { Auth } from 'aws-amplify';
+import { UserPickLimit } from './user-pick-limit';
 
 let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
 
@@ -20,6 +21,7 @@ export class UserService {
   private usersUrl = environment.userServiceURL + 'users';
   private standings: BehaviorSubject<UserStanding[]>;
   private userStandings: BehaviorSubject<UserStanding[]>;
+  private userPicksLimit: BehaviorSubject<UserPickLimit>;
 
   constructor(
     private http: HttpClient,
@@ -37,6 +39,7 @@ export class UserService {
         this.userStandings = new BehaviorSubject<UserStanding[]>(null);
       }
       headers = headers.set('Authorization', localStorage.getItem("token"));
+      this.userPicksLimit = new BehaviorSubject<UserPickLimit>(JSON.parse(localStorage.getItem('userPickLimit')));
     }
 
   register(user: User): Observable<boolean> {
@@ -113,6 +116,26 @@ export class UserService {
     }
   }
 
+  getUserPickLimit(season: number, seasonType: number, userId: number): Observable<UserPickLimit> {
+    let url = `${this.usersUrl}/userPicksLimit?season=${season}&seasonType=${seasonType}&userId=${userId}`;
+    if(this.starGate.allow('userPickLimit') && season != 0){
+      return this.http.get(url, {'headers':headers}).pipe(
+        map((result: UserPickLimit[])=> {
+          console.log('get user picks limit');
+          var object = new UserPickLimit();
+          object = result[0];
+          object.date = new Date();
+          localStorage.setItem('userPickLimit', JSON.stringify(object));
+          this.userPicksLimit.next(object);
+          return object;       
+        }),
+        catchError(this.handleError<UserPickLimit>('get user picks limit'))
+      );
+    } else {
+      return this.userPicksLimit.asObservable();
+    }
+  }
+
     // /**
   //  * Handle Http operation that failed.
   //  * Let the app continue.
@@ -121,7 +144,7 @@ export class UserService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open('There was failure, please try again later.','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
+      this.snackBar.open('There was a failure, please try again later.','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
