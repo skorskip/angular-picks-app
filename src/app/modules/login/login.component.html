@@ -1,33 +1,61 @@
 <div class="login-container" *ngIf="!registerSelected">
+
   <div class="login-header">
     <div>
       <pick-logo [size]="'m'"></pick-logo>
     </div>
-    <div class="login-title secondary">pickem</div>
+    <div *ngIf="!completeLoginForm" class="login-title secondary">pickem</div>
+    <div *ngIf="completeLoginForm" class="login-title secondary">Welcome!</div>
+    <div *ngIf="forgotPasswordForm" class="login-title secondary">Whoops...</div>
   </div>
-  <mat-form-field appearance="outline" class="login-input">
-    <mat-label>username</mat-label>
-    <input matInput placeholder="username" #username>
+
+  <mat-form-field *ngIf="!completeLoginForm" appearance="outline" class="login-input">
+    <mat-label>Username or Email</mat-label>
+    <input matInput placeholder="Username/email" #username>
     <mat-icon matSuffix class="secondary">person</mat-icon>
-    <mat-hint *ngIf="forgotten" (click)="forgotUsername()" class="error pointer">Forgot username?</mat-hint>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="login-input padding-bottom" (keyup.enter)="attemptLogin(username.value, password.value)">
-    <mat-label>password</mat-label>
-    <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" #password>
+  <mat-form-field *ngIf="forgotPasswordForm" appearance="outline" class="login-input">
+    <mat-label>Verification Code</mat-label>
+    <input matInput placeholder="Code" #code>
+    <mat-icon matSuffix class="secondary">vpn_key</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field 
+    appearance="outline" 
+    class="login-input padding-bottom" 
+    (keyup.enter)="(!completeLoginForm || !forgotPasswordForm) ? attemptLogin(username.value, password.value, null, null) : null">
+    <mat-label *ngIf="!completeLoginForm">Password</mat-label>
+    <mat-label *ngIf="completeLoginForm || forgotPasswordForm">New Password</mat-label>
+    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" #password>
     <div matSuffix (click)="hide = !hide">
       <mat-icon class="secondary">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </div>
-    <mat-hint *ngIf="forgotten" (click)="forgotPassword()" class="error pointer">Forgot password?</mat-hint>
+    <mat-hint *ngIf="forgotten" class="error pointer"><a (click)="forgotPassword(username.value)" >Forgot password?</a></mat-hint>
   </mat-form-field>
 
-  <button mat-button (click)="attemptLogin(username.value, password.value)" class="login-button primary-background base noSelect">
+  <mat-form-field 
+    *ngIf="completeLoginForm || forgotPasswordForm" 
+    appearance="outline" 
+    class="login-input padding-bottom" 
+    (keyup.enter)="attemptLogin(username.value, password.value, confirmPassword.value, code.value)">
+    <mat-label>Confirm password</mat-label>
+    <input matInput placeholder="Confirm password" [type]="hide ? 'password' : 'text'" #confirmPassword>
+    <div matSuffix (click)="hide1 = !hide1">
+      <mat-icon class="secondary">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </div>
+    <mat-hint *ngIf="notMatch" class="error pointer">Passwords don't match</mat-hint>
+  </mat-form-field>
+
+  <button mat-button (click)="attemptLogin(username.value, password.value, confirmPassword.value, code.value)" class="login-button primary-background base noSelect">
     <span *ngIf="!submitLogin">Login</span>
     <div class="submit-loader" *ngIf="submitLogin">
       <mat-spinner [diameter]="25"></mat-spinner>
     </div>
   </button>
+
 </div>
+
 <app-register *ngIf="registerSelected"
 [editUser]="false"
 (registered)="registered($event)">

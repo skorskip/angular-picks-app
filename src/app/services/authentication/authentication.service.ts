@@ -8,6 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { User } from '../../data-models/user/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Auth } from 'aws-amplify';
+import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 
 let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
   
@@ -28,18 +29,11 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(user: User): Observable<any> {
-        return from(Auth.signIn(user.user_name, user.password)).pipe(map(signInUser => {
+    login(username: string, password: string): Observable<any> {
+        return from(Auth.signIn({username: username, password: password})).pipe(map(signInUser => {
             if(signInUser?.username) {
                 if(signInUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
-                    const { requiredAttrributes } = signInUser.challengeParam;
-                    return Auth.completeNewPassword(signInUser, user.password, requiredAttrributes).then(signInNewUser => {
-                        return Auth.currentSession().then(result => {
-                            localStorage.setItem("token", result.getIdToken().getJwtToken());
-                            headers = headers.set('Authorization', result.getIdToken().getJwtToken());
-                            return signInUser;
-                          });
-                    })
+                    return signInUser;
                 } else {
                     return Auth.currentSession().then(result => {
                         localStorage.setItem("token", result.getIdToken().getJwtToken());
@@ -51,11 +45,37 @@ export class AuthenticationService {
                 this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                 return null;
             }
-        }));
+        }), catchError(this.handleError<any>(`attempt login`)));
     }
 
-    getUserInfo(user: User): Observable<User[]> {
+    completePasswordLogin(newPassword: string, authUser: any): Observable<any> {
+        const { requiredAttrributes } = authUser.challengeParam;
+        return from(Auth.completeNewPassword(authUser, newPassword, requiredAttrributes)).pipe(map(newUser => {
+            return Auth.currentSession().then(result => {
+                localStorage.setItem("token", result.getIdToken().getJwtToken());
+                headers = headers.set('Authorization', result.getIdToken().getJwtToken());
+                return newUser;
+              });
+        }), catchError(this.handleError<any>('attempt new password')));
+    }
+
+    forgotPassword(username, code, password): Observable<any> {
+        return from(Auth.forgotPasswordSubmit(username, code, password)).pipe(map(newUser => {
+            return Auth.currentSession().then(result => {
+                localStorage.setItem("token", result.getIdToken().getJwtToken());
+                headers = headers.set('Authorization', result.getIdToken().getJwtToken());
+                return newUser;
+              });
+        }), catchError(this.handleError<any>('attempt forgot password')));
+
+    }
+
+    getUserInfo(username: string, password: string): Observable<User[]> {
         const url = `${this.usersUrl}/login`;
+        var user = new User();
+        user.password = password;
+        user.user_name = username;
+
         return this.http.post<User[]>(url, user, {'headers' : headers})
             .pipe(tap(users => {
                 if(users.length > 0){
@@ -70,7 +90,7 @@ export class AuthenticationService {
                 } else {
                     this.snackBar.open('Wrong username or password','', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
                 }
-            }), catchError(this.handleError<User[]>(`fetched current week`)));
+            }), catchError(this.handleError<User[]>(`attempt login`)));
     }
 
     logout() {
@@ -88,7 +108,7 @@ export class AuthenticationService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open('There was failure, please try again later.','', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
+      this.snackBar.open('Incorrect username or password.','', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

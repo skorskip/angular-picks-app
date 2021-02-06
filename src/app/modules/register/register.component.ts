@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
 
   user = new User();
   hide = true;
+  hide1 = true;
   formType = "register";
   errorMessage = "";
   editUserForm;
@@ -60,10 +61,10 @@ export class RegisterComponent implements OnInit {
 
     this.userService.update(user).subscribe((success) =>{
       if(success) {
-        this.snackBar.open("update successful", '', {duration:3000});
+        this.snackBar.open("Update successful",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
         this.registered.emit(success);
       } else {
-        this.snackBar.open("update error",'', {duration:3000});
+        this.snackBar.open("There was a failure updating",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
       }
     });
   }
@@ -71,10 +72,10 @@ export class RegisterComponent implements OnInit {
   registerUser(user: User) {
     this.userService.register(user).subscribe((success) =>{
       if(success) {
-        this.snackBar.open("register successful", '', {duration:3000});
+        this.snackBar.open("Registration successful",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
         this.registered.emit(success);
       } else {
-        this.snackBar.open("register error",'', {duration:3000});
+        this.snackBar.open("There was a failure regsitering",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
       }
     });
   }

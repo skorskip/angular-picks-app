@@ -23,7 +23,7 @@ import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 import * as Hammer from 'hammerjs';
 
-Amplify.configure(awsconfig);
+Amplify.configure({...awsconfig, ssr: true});
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{

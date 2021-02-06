@@ -1,9 +1,6 @@
 <nav-bar
     [title] ="'Standings'">
 </nav-bar>
-<div *ngIf = "standings.length == 0 && loader">
-  <picks-loader></picks-loader>
-</div>
 <div class="standings-container" *ngIf="!showUserPicks">
   <div class="input-container tiertary">
     <mat-icon class="leader-icon">
