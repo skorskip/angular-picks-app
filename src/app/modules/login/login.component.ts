@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { User } from 'src/app/data-models/user/user';
+import { FormControl, FormGroup } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Router } from '@angular/router';
@@ -23,14 +23,21 @@ export class LoginComponent implements OnInit {
   submitLogin = false;
   completeLoginForm = false;
   forgotPasswordForm = false;
+  emptyUsername = false;
   authUser;
+  loginForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+    code: new FormControl(''),
+    confirmPassword: new FormControl('')
+  }) 
 
   constructor(
     private authService: AuthenticationService,
     public snackBar: MatSnackBar,
     private router: Router,
     private themeService: ThemeService
-  ) { }
+  ) {}
 
   ngOnInit() {
   }
@@ -39,13 +46,19 @@ export class LoginComponent implements OnInit {
     this.themeService.setTheme(this.themeService.getTheme());
   }
 
-  forgotPassword(username) {
-    this.forgotPasswordForm = true;
-    Auth.forgotPassword(username).then(data => {
-      this.snackBar.open("Email sent",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
-    }).catch(err => {
-      this.snackBar.open("Failed to send email",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
-    });
+  forgotPassword(form) {
+    this.forgotten = false;
+    this.loginForm.reset({password: '', username: form.username});
+    if(form.username == null || form.username == '') {
+      this.emptyUsername = true;
+    } else {
+      this.forgotPasswordForm = true;
+      Auth.forgotPassword(form.username).then(data => {
+        this.snackBar.open("Email sent",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
+      }).catch(err => {
+        this.snackBar.open("Failed to send email",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
+      });
+    }
   }
 
   register() {
@@ -59,14 +72,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  attemptLogin(username, password, confirmPassword, code) {
+  attemptLogin(form) {
     this.submitLogin = true;
     if(this.forgotPasswordForm) {
-      this.completeForgotPassword(username, password, confirmPassword, code);
+      this.completeForgotPassword(form.username, form.password, form.confirmPassword, form.code);
     } else if(this.completeLoginForm) {
-      this.completeLogin(username, password, confirmPassword);
+      this.completeLogin(form.username, form.password, form.confirmPassword);
     } else {
-      this.authorize(username, password);
+      this.authorize(form.username, form.password);
     }
   }
 
@@ -75,12 +88,15 @@ export class LoginComponent implements OnInit {
     if(!this.notMatch) {
       this.authService.forgotPassword(username, password, code).subscribe((loginUser) => {
         if(loginUser != null) {
+          this.snackBar.open("Password changed.",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
           this.getUserInfo(username, password);
         } else {
           this.forgotten = true;
           this.submitLogin = false;
         }
       })
+    } else {
+      this.snackBar.open("Passwords don't match.",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
     }
   }
 
@@ -89,12 +105,15 @@ export class LoginComponent implements OnInit {
     if(!this.notMatch) {
       this.authService.completePasswordLogin(password, this.authUser).subscribe((loginUser) => {
         if(loginUser != null) {
+          this.snackBar.open("Login complete.",'', {duration:3000, panelClass:["success-snack", "quaternary-background", "secondary"]});
           this.getUserInfo(username, password);
         } else {
           this.forgotten = true;
           this.submitLogin = false;
         }
       });
+    } else {
+      this.snackBar.open("Passwords don't match.",'', {duration:3000, panelClass:["failure-snack", "quaternary-background", "secondary"]});
     }
   }
 
@@ -102,8 +121,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(username,password).subscribe((loginUser) => {
       if(loginUser != null) {
         if(loginUser.challengeName != null && loginUser.challengeName === 'NEW_PASSWORD_REQUIRED') { 
+          this.submitLogin = false;
           this.authUser = loginUser;
           this.completeLoginForm = true;
+          this.loginForm.reset({password: '', username: username});
         } else {
           this.getUserInfo(username, password);
         }
@@ -118,7 +139,7 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.authService.getUserInfo(username, password).subscribe((users) => {
         this.submitLogin = false;
-        if(users.length != 0) {
+        if(users != null && users.length != 0) {
           if(users[0].status === "active") {
             this.router.navigate(['/games']);
             setTimeout(() => {window.location.reload()});

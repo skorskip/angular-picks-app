@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { MaterialModule } from '../../material/material.module';
 import { RegisterModule } from '../../modules/register/register.module';
 import { SharedModule } from '../../shared/shared.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     MaterialModule,
     RegisterModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [LoginComponent],
   exports: [

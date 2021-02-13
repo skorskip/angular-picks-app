@@ -24,7 +24,6 @@ export class NavigationComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router:Router, 
-    private themeService:ThemeService,
     private sideNavService: SideNavService,
     private announcementsService: AnnouncementsService
     ){
@@ -46,11 +45,14 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.announcementsService.getAnnoucements().subscribe((messages) => {
-      this.announcements = messages;
-      this.messageCount = messages.announcements;
-    });
     this.user = this.authService.currentUserValue;
+
+    if(this.user != null) {
+      this.announcementsService.getAnnoucements().subscribe((messages) => {
+        this.announcements = messages;
+        this.messageCount = messages.announcements;
+      });
+    }
   }
 
   highlightByRoute(route: string) {

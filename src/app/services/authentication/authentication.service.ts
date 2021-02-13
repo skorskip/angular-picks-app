@@ -59,7 +59,7 @@ export class AuthenticationService {
         }), catchError(this.handleError<any>('attempt new password')));
     }
 
-    forgotPassword(username, code, password): Observable<any> {
+    forgotPassword(username, password, code): Observable<any> {
         return from(Auth.forgotPasswordSubmit(username, code, password)).pipe(map(newUser => {
             return Auth.currentSession().then(result => {
                 localStorage.setItem("token", result.getIdToken().getJwtToken());
@@ -108,7 +108,7 @@ export class AuthenticationService {
   //  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      this.snackBar.open('Incorrect username or password.','', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
+        this.snackBar.open(`${error.message}`,'', {duration:3000,panelClass:["failure-snack", "quaternary-background", "secondary"]});
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
