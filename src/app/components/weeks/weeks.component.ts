@@ -4,6 +4,7 @@ import { WeeksService } from './weeks.service';
 import { Router } from '@angular/router';
 import { CurrentWeek } from 'src/app/data-models/week/current-week';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AnnouncementsService } from 'src/app/data-models/announcements/announcements.service';
 
 @Component({
   selector: 'weeks',
@@ -26,7 +27,7 @@ export class WeeksComponent implements OnInit {
     private weekService: WeekService, 
     private weeksService: WeeksService,
     private authService:AuthenticationService,
-    private router:Router) { }
+    private announcementService: AnnouncementsService) { }
 
   ngOnInit() {
     if(this.view == "none") {
@@ -75,6 +76,12 @@ export class WeeksComponent implements OnInit {
 
   showWeekNext() {
     return this.number != this.currentWeek.week;
+  }
+
+  openThread() {
+    this.announcementService.getChatThread().subscribe(chat => {
+      window.open(chat.permalink, '_blank');
+    });
   }
 
   weekSelected(weekSelected:number) {

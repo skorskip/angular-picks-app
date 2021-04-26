@@ -46,7 +46,7 @@
       <div matSuffix (click)="hide1 = !hide1">
         <mat-icon class="secondary">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </div>
-      <mat-hint *ngIf="notMatch" class="error pointer">Passwords don't match</mat-hint>
+      <mat-hint *ngIf="notMatch" class="failure pointer">Passwords don't match</mat-hint>
     </mat-form-field>
   
     <button mat-button type="submit" class="login-button primary-background base noSelect" #submitButton>
@@ -57,7 +57,6 @@
     </button>
   </form>
   
-
 </div>
 
 <app-register *ngIf="registerSelected"

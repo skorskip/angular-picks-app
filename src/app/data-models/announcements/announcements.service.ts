@@ -52,6 +52,14 @@ export class AnnouncementsService {
     }
   }
 
+  getChatThread(): Observable<any> {
+    const url = `${this.announcementsUrl}/chatThread`;
+
+    return this.http.get(url, {'headers' : headers}).pipe(
+      tap(), catchError(this.handleError<any>(`fetched thread`))
+    );
+  }
+
   setAnnouncementCheck(dateChecked: string) {
     this.announcementChange.next(false);
     localStorage.setItem('annoucementCheck', dateChecked);

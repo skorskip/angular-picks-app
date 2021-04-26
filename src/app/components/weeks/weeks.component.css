@@ -73,6 +73,11 @@
 	margin:10px;
 }
 
+.week-chat-icon {
+	transform: scale(1);
+	margin:17px;
+}
+
 .toggle-picks-container {
 	display: flex;
 	justify-content: center;

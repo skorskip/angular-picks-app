@@ -29,6 +29,11 @@
                 keyboard_arrow_up
             </mat-icon>
         </div>
+        <div class="week-header-next base-background tiertary" (click)="openThread()" *ngIf="!showWeekNext()">
+            <mat-icon class="week-chat-icon secondary">
+                insert_comment
+            </mat-icon>
+        </div>
         <div class="week-header-next base-background tiertary" (click)="weekNext()" *ngIf="showWeekNext()">
             <mat-icon class="week-arrow-next-icon secondary">
                 navigate_next
